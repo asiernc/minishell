@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/04/22 13:11:57 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/04/22 13:36:53 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME		=	minishell
 
 CC			=	gcc
 INCL	 	=	includes
-CFLAGS		=	-Wall -Wextra -Werror -g -lreadline -I$(INCL)
+CFLAGS		=	-Wall -Wextra -Werror -g -I$(INCL)
 RM			=	rm -f
 LIBFT		=	libft/
 LIBFT_A		=	$(addprefix $(LIBFT), libft.a)
@@ -29,7 +29,7 @@ OBJS		=	$(SRC:%.c=%.o)
 all:			$(NAME)
 
 $(NAME):		$(OBJS) $(LIBFT_A) Makefile #norm
-				@$(CC) $(CFLAGS) -L$(LIBFT) -lft -o $(NAME) $(OBJS)
+				@$(CC) $(CFLAGS) -L$(LIBFT) -lft -o $(NAME) $(OBJS) -lft -lreadline
 				@echo "Linked into executable \033[0;32mminishell\033[0m with norminette \033[0;32mOK\033[0m."
 
 $(LIBFT_A):
