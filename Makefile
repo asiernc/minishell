@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/04/22 11:13:45 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/04/22 13:11:57 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME		=	minishell
 
 CC			=	gcc
 INCL	 	=	includes
-CFLAGS		=	-Wall -Wextra -Werror -g -I$(INCL)
+CFLAGS		=	-Wall -Wextra -Werror -g -lreadline -I$(INCL)
 RM			=	rm -f
 LIBFT		=	libft/
 LIBFT_A		=	$(addprefix $(LIBFT), libft.a)

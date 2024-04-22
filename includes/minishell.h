@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/22 11:20:46 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:31:45 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 # include "libft.h"
 
-# include <stdio.h>
+# include <stdio.h> 
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <string.h>
+# include <fcntl.h> // Open 
+# include <string.h> //Macros
 # include <dirent.h>
-# include <sys/wait.h>
-# include <limits.h>
+# include <sys/wait.h> // wait waitpid
+# include <limits.h> // macros??
 # include <errno.h>
 # include <signal.h>
 
