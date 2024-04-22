@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/22 13:29:19 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:58:48 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,26 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-//struct
-//
+//structs
+
+typedef enum s_tokens
+{
+	PIPE = 1,
+	GREATER,
+	DOUBLE_GREATER,
+	LESS,
+	DOUBLE_LESS,
+}			t_tokens;
+
+typedef struct s_lexer
+{
+	char		*str;
+	t_tokens	*token;
+	int			i;
+	struct s_lexer		*previous;
+	struct s_lexer		*next;
+}
+
 
 
 #endif
