@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/23 10:03:15 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/04/23 14:17:24 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,22 @@
 
 //structs
 
-typedef enum s_tokens
+typedef enum s_operator
 {
-	PIPE = 1,
-	GREATER,
-	DOUBLE_GREATER,
-	LESS,
-	DOUBLE_LESS,
-}			t_tokens;
+	PIPE,
+	RED_IN,
+	RED_OUT,
+	HDOC,
+	RED_OUT_APP,
+}			t_operator;
+
+// | < > << >> order
 
 typedef struct s_lexer
 {
 	char		*str;
-	t_tokens	*token;
-	int			i;
-	struct s_lexer		*previous;
+	t_tokens	toke:x
+		n;
 	struct s_lexer		*next;
 }				t_lexer;
 
@@ -56,5 +57,12 @@ typedef struct s_mini
 }			t_mini;
 
 int mini_live(t_mini *mini);
+
+
+// Utils
+
+int	ft_new_node(char *str, int token);
+void	ft_node_add_back(t_lexer **lst, t_lexer *node);
+int		list_add_node(t_lexer **lst, t_tokens token, char *str)
 
 #endif

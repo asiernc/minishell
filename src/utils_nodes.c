@@ -1,0 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_nodes.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/23 10:47:44 by anovio-c          #+#    #+#             */
+/*   Updated: 2024/04/23 12:14:49 by anovio-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <minishell.h>
+
+int	list_add_node(t_lexer **lexer_list, t_tokens token, char *str)
+{
+	t_lexer	*node;
+
+	node = ft_new_node(str, token);
+	if (!node)
+		return (1);
+	ft_node_add_back(lexer_list, node);
+	return (0);
+}
+
+int ft_new_node(char *str, int token)
+{
+	t_lexer		*new;
+
+	new = (t_lexer *)malloc(sizeof(t_lexer));
+	if (!new)
+		return (1);
+	new->str = str;
+	new->token = token;
+	new->next = NULL;
+	return (0);
+}
+
+void	ft_node_add_back(t_lexer **lst, t_lexer *node)
+{
+	t_lexer	*tmp;
+
+	tmp = *lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = node;
+}
+
