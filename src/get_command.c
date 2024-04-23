@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 19:02:58 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/22 20:39:27 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:14:53 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,13 @@ int	main(int argc, char **argv)
 		}
 		str = ft_substr(argv[1], 0, index);
 		printf("after substr, str = %s\n", str);
-		str = ft_strtrim(str, " ");//space	
-		str = ft_strtrim(str, "	 ");//tab
+		while (str[i] == 32 || str[i] == 9)
+		{
+			str = ft_strtrim(str, " ");//space	
+			str = ft_strtrim(str, "	");//tab
+		}
+//		str = ft_strtrim(str, " ");//space	
+//		str = ft_strtrim(str, "	 ");//tab
 		printf("after strtrim, str = %s\n", str);
 		printf("the first command is: __%s__\n", str);
 		free(str);
