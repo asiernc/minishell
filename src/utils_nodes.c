@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:47:44 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/23 17:08:30 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:18:15 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	ft_node_add_back(t_lexer **lst, t_lexer *node)
 {
 	t_lexer	*tmp;
 
-	if (!lst || !node)
-		return ;
 	if (*lst == NULL)
 	{
 		*lst = node;
