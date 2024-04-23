@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/23 14:17:24 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:50:36 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ typedef enum s_operator
 typedef struct s_lexer
 {
 	char		*str;
-	t_tokens	toke:x
-		n;
+	t_operator	token;
 	struct s_lexer		*next;
 }				t_lexer;
 
@@ -58,11 +57,22 @@ typedef struct s_mini
 
 int mini_live(t_mini *mini);
 
+// Lexer
+
+int		lexer_tokens(t_mini *mini);
+int		put_word(char *str, int i, t_lexer **lst);
+int 	find_next_quote(char c, char *str, int i);
+int		put_token(char *str, int i, t_lexer **lst);
+int		find_token(int c);
+int 	check_token(int c);
+void	clear_line(t_mini *mini);
+
+
 
 // Utils
 
-int	ft_new_node(char *str, int token);
+t_lexer	*ft_new_node(char *str, int token);
 void	ft_node_add_back(t_lexer **lst, t_lexer *node);
-int		list_add_node(t_lexer **lst, t_tokens token, char *str)
+int		list_add_node(t_lexer **lst, t_operator token, char *str);
 
 #endif

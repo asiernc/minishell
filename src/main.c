@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/23 10:07:18 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:31:56 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	mini_live(t_mini *mini)
 	printf("%s\n", mini->line);
 	//if (!check_quotes(mini->line))
 	//	return (1); // display error
-	//if (!lexer(mini))
+	lexer_tokens(mini);
+	//if (lexer_tokens(mini) != 0)
 	//	return (1); //display_error
 	//lexer
 	//parser
@@ -41,4 +42,5 @@ int	main(int argc, char **argv, char **env)
 	}
 	printf("no %s%s\n", argv[0], env[1]);
 	mini_live(&mini);
+	return (0);
 }

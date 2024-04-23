@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/04/22 13:36:53 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/04/23 15:41:21 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ SRCDIR		=	src/
 OBJDIR		=	obj/
 
 SRC			=	src/main.c 			\
+				src/tokens.c		\
+				src/utils_nodes.c
 
 OBJS		=	$(SRC:%.c=%.o)
 
