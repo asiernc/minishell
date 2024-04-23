@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/22 15:58:48 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/23 10:03:15 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,15 @@ typedef struct s_lexer
 	int			i;
 	struct s_lexer		*previous;
 	struct s_lexer		*next;
-}
+}				t_lexer;
 
+typedef struct s_mini
+{
+	char	*line;
+	char	**env;
+	t_lexer	*lexer;
+}			t_mini;
 
+int mini_live(t_mini *mini);
 
 #endif

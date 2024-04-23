@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:49:26 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/22 17:57:10 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:18:52 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 // check num pairs or no of quotes
 //
 
-int	lexer(char *str)
+int	lexer(t_mini *mini)
 {
-	t_lexer		lexer;
 	int			i;
 	char	**line;
 
-	//line = readline("minihell🔥 >");
 	line = ft_split(str, ' ');
 	i = 0;
 	while (line[i])
@@ -29,6 +27,7 @@ int	lexer(char *str)
 		read_operators(line[i]);
 		i++;
 	}
+	return (0);
 }
 
 //check is_sace before calling thi function
