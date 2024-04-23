@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/04/22 13:36:53 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/04/22 20:19:59 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ LIBFT_A		=	$(addprefix $(LIBFT), libft.a)
 SRCDIR		=	src/
 OBJDIR		=	obj/
 
-SRC			=	src/main.c 			\
+SRC_FILES	=	get_command.c
+SRC			=	$(addprefix $(SRCDIR), $(SRC_FILES))
 
 OBJS		=	$(SRC:%.c=%.o)
 
