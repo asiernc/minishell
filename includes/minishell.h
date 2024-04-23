@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/23 14:17:24 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:15:24 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 typedef enum s_operator
 {
-	PIPE,
+	PIPE = 1,
 	RED_IN,
 	RED_OUT,
 	HDOC,
@@ -44,8 +44,7 @@ typedef enum s_operator
 typedef struct s_lexer
 {
 	char		*str;
-	t_tokens	toke:x
-		n;
+	t_operator	token;
 	struct s_lexer		*next;
 }				t_lexer;
 
@@ -61,8 +60,12 @@ int mini_live(t_mini *mini);
 
 // Utils
 
-int	ft_new_node(char *str, int token);
-void	ft_node_add_back(t_lexer **lst, t_lexer *node);
-int		list_add_node(t_lexer **lst, t_tokens token, char *str)
+int		ft_new_node(char *str, int token);
+void	ft_node_add_back(t_lexer **lst, t_operator *node);
+int		list_add_node(t_lexer **lst, t_operator token, char *str);
+
+//src/verify_quotes.c
+int		print_error(char *str);
+void	check_quotes(char *line);
 
 #endif
