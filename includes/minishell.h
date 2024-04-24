@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 13:50:53 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:59:43 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@
 
 typedef struct s_mini
 {
-	char			*line;
-	char			**env;
-	struct s_lexer	*lexer;
+	char					*line;
+	char					**env;
+	struct s_lexer			*lexer;
+	int						pipes;
+	struct s_simple_cmd		*simple_cmd;
 }			t_mini;
 
 //		Enum for operators
@@ -71,6 +73,11 @@ typedef struct s_simple_cmd
 	struct s_simple_cmd		*next;
 }				t_simple_cmd;
 
+// Test functions
+
+void	ft_print(t_mini *mini);
+
+
 // Minishell loop
 
 int mini_live(t_mini *mini);
@@ -85,12 +92,19 @@ int		put_operator(char *str, int i, t_lexer **lst);
 int		check_operator(int c);
 void	clear_line(t_mini *mini);
 
+// Parser
+
+int		parser(t_mini *mini);
+void	count_pipes(t_mini *mini);
+
 
 // Utils nodes
 
 t_lexer	*ft_new_node(char *str, int token);
 void	ft_node_add_back(t_lexer **lst, t_lexer *node);
 int		list_add_node(t_lexer **lst, t_operator token, char *str);
+t_lexer	*clear_one(t_lexer **lst);
+void	del_first_node(t_lexer **lst);
 
 // Random utils
 

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 13:22:50 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/24 17:03:00 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,13 @@ int	put_word(char *str, int i, t_lexer **lst)
 	return (j);
 }
 
-static void	ft_print(t_mini *mini)
+void	ft_print(t_mini *mini)
 {
 	t_lexer	*tmp;
 	int	i = 0;
 
 	tmp = mini->lexer;
-	while (tmp)
+	while (tmp != NULL)
 	{
 		i++;
 		printf("Node %d, str = %s  token(ope) = %d\n", i, tmp->str, tmp->token);

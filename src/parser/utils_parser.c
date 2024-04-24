@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 17:00:20 by anovio-c         ###   ########.fr       */
+/*   Created: 2024/04/24 16:01:02 by anovio-c          #+#    #+#             */
+/*   Updated: 2024/04/24 16:03:17 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parser(t_mini *mini)
+void	count_pipes(t_mini *mini)
 {
-	//t_simple_cmd *simple_cmd;
+	int	i;
+	int	count;
 
-	count_pipes(mini); //ok
-	printf("PIPES = %d\n", mini->pipes);
-	while (mini->lexer)
-	{
-		if (mini->lexer && mini->lexer->token == PIPE)
-			del_first_node(&mini->lexer);
-		ft_print(mini);
-	}
-	return (0);
+	i = -1;
+	count = 0;
+	while (mini->line[++i])
+		if (mini->line[i] == '|')
+			count++;
+		//i++;
+	mini->pipes = count;
 }

@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/04/24 10:25:43 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/04/24 16:03:30 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ OBJDIR		=	build/obj/
 
 SRC			=	src/main.c 			\
 				src/lexer/tokenizer.c		\
+				src/parser/parser.c		\
+				src/parser/utils_parser.c	\
 				src/utils/utils_nodes.c	\
 				src/utils/utils.c
 
