@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 12:44:50 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:22:40 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int mini_live(t_mini *mini);
 
 // Lexer
 
-int		lexer_tokens(t_mini *mini);
+int		lexer_tokenizer(t_mini *mini);
 int		put_word(char *str, int i, t_lexer **lst);
 int 	find_next_quote(char c, char *str, int i);
-int		put_token(char *str, int i, t_lexer **lst);
+int		put_operator(char *str, int i, t_lexer **lst);
 int		check_operator(int c);
 void	clear_line(t_mini *mini);
 

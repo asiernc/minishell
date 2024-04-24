@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.c                                           :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 12:44:07 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:22:50 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ int	check_operator(int c)
 
 // This function assigns a value to that operator as desired. The only 
 // different ones are '>>' and '<<', so we create a special case for 
-// each of them. If not, we assume it's '|', '<', or '>'.
+// each of them. If not, we assume it's '|', '<', or '>'. And add it as a new node.
 
-int	put_token(char *str, int i, t_lexer **lst)
+
+int	put_operator(char *str, int i, t_lexer **lst)
 {
 	t_operator	operator;
 
@@ -132,7 +133,7 @@ static void	ft_print(t_mini *mini)
 
 // This function separate the command line, distinguish between operator and word.
 
-int	lexer_tokens(t_mini *mini)
+int	lexer_tokenizer(t_mini *mini)
 {
 	int	i;
 	int	diff;
@@ -146,7 +147,7 @@ int	lexer_tokens(t_mini *mini)
 		while (mini->line[i] == ' ' || (mini->line[i] > 8 && mini->line[i] < 14))
 			i++;
 		if (check_operator(mini->line[i]) != 0)
-			diff = put_token(mini->line, i, &mini->lexer);
+			diff = put_operator(mini->line, i, &mini->lexer);
 		else
 			diff = put_word(mini->line, i, &mini->lexer);
 		if (diff < 0)
