@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 12:44:50 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:38:58 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ int		list_add_node(t_lexer **lst, t_operator token, char *str);
 
 // Random utils
 
-int	check_quotes(char *line);
+void	check_quotes(char *line);
 
 #endif
