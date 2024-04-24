@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 10:08:54 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/24 12:44:50 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,29 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-//structs
+// STRUCTS
+
+// 		Main struct
+
+typedef struct s_mini
+{
+	char			*line;
+	char			**env;
+	struct s_lexer	*lexer;
+}			t_mini;
+
+//		Enum for operators
 
 typedef enum s_operator
 {
-	PIPE = 1,
-	RED_IN,
-	RED_OUT,
-	HDOC,
-	RED_OUT_APP,
+	PIPE = 1, 		// |
+	RED_IN,			// <
+	RED_OUT,		// >
+	HDOC,			// <<
+	RED_OUT_APP,	// >>
 }			t_operator;
 
-// | < > << >> order
+//		Struct for the lexer/tokenizer
 
 typedef struct s_lexer
 {
@@ -48,14 +59,22 @@ typedef struct s_lexer
 	struct s_lexer		*next;
 }				t_lexer;
 
-typedef struct s_mini
+//		Struct for parser
+
+typedef struct s_simple_cmd
 {
-	char	*line;
-	char	**env;
-	t_lexer	*lexer;
-}			t_mini;
+	char					**str;
+	int						(*builtin)(t_mini *, struct s_simple_cmd *);
+	int						num_redirections;
+	char					*hd_filename;
+	t_lexer					*redirections;
+	struct s_simple_cmd		*next;
+}				t_simple_cmd;
+
+// Minishell loop
 
 int mini_live(t_mini *mini);
+
 
 // Lexer
 
@@ -65,7 +84,6 @@ int 	find_next_quote(char c, char *str, int i);
 int		put_token(char *str, int i, t_lexer **lst);
 int		check_operator(int c);
 void	clear_line(t_mini *mini);
-
 
 
 // Utils nodes

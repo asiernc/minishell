@@ -6,27 +6,28 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:07:20 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 10:29:18 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/24 12:43:30 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	find_next(char *line, int *counter, int i, int ch)
+static int	find_next(char *line, int *counter, int i, int lim)
 {
 	int	index;
 
 	index = 0;
 	*counter += 1;
-	if (line[i] == ch)
+	if (line[i] == lim)
 	{
 		index++;
-		while (line[index] && line[index] != ch)
+		while (line[index] && line[index] != lim)
 			index++;
 	}
 	//index++;
-	if (line[index] == ch)
+	if (line[index] == lim)
 		*counter += 1;
+	//index++;
 	return (index);
 }
 
