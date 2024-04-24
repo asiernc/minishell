@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/04/22 20:19:59 by simarcha         ###   ########.fr        #
+#    Updated: 2024/04/24 10:25:43 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,23 +20,29 @@ LIBFT		=	libft/
 LIBFT_A		=	$(addprefix $(LIBFT), libft.a)
 
 SRCDIR		=	src/
-OBJDIR		=	obj/
+LEXERDIR	=	src/lexer/
+UTILSDIR	=	src/utils/
+OBJDIR		=	build/obj/
 
-SRC_FILES	=	get_command.c
-SRC			=	$(addprefix $(SRCDIR), $(SRC_FILES))
+SRC			=	src/main.c 			\
+				src/lexer/tokenizer.c		\
+				src/utils/utils_nodes.c	\
+				src/utils/utils.c
 
-OBJS		=	$(SRC:%.c=%.o)
+#OBJS		=	$(addprefix $(OBJDIR), $(notdir $(patsubst %.c, %.o, $(src))))
+OBJS		= 	$(SRC:%.c=%.o)
 
 all:			$(NAME)
 
 $(NAME):		$(OBJS) $(LIBFT_A) Makefile #norm
-				@$(CC) $(CFLAGS) -L$(LIBFT) -lft -o $(NAME) $(OBJS) -lft -lreadline
+				@$(CC) $(CFLAGS) -L$(LIBFT) -o $(NAME) $(OBJS) -lft -lreadline
 				@echo "Linked into executable \033[0;32mminishell\033[0m with norminette \033[0;32mOK\033[0m."
 
 $(LIBFT_A):
 				@$(MAKE) -s -C $(LIBFT)
 				@echo "Compiled $(LIBFT_A)."
 
+#$(OBJDIR)%.o:: $(PATHS)%.c
 .c.o:
 				@$(CC) $(CFLAGS) -c $< -o $@
 				@echo "Compiling $<."

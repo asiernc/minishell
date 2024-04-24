@@ -6,13 +6,13 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:47:44 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/23 12:14:49 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/23 22:18:15 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	list_add_node(t_lexer **lexer_list, t_tokens token, char *str)
+int	list_add_node(t_lexer **lexer_list, t_operator token, char *str)
 {
 	t_lexer	*node;
 
@@ -23,23 +23,28 @@ int	list_add_node(t_lexer **lexer_list, t_tokens token, char *str)
 	return (0);
 }
 
-int ft_new_node(char *str, int token)
+t_lexer	*ft_new_node(char *str, int token)
 {
 	t_lexer		*new;
 
 	new = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new)
-		return (1);
+		return (0);
 	new->str = str;
 	new->token = token;
 	new->next = NULL;
-	return (0);
+	return (new);
 }
 
 void	ft_node_add_back(t_lexer **lst, t_lexer *node)
 {
 	t_lexer	*tmp;
 
+	if (*lst == NULL)
+	{
+		*lst = node;
+		return ;
+	}
 	tmp = *lst;
 	while (tmp->next)
 		tmp = tmp->next;
