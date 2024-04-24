@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/04/23 19:08:42 by asiercara        ###   ########.fr        #
+#    Updated: 2024/04/24 10:25:43 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,17 @@ LIBFT		=	libft/
 LIBFT_A		=	$(addprefix $(LIBFT), libft.a)
 
 SRCDIR		=	src/
-OBJDIR		=	obj/
+LEXERDIR	=	src/lexer/
+UTILSDIR	=	src/utils/
+OBJDIR		=	build/obj/
 
 SRC			=	src/main.c 			\
-				src/tokens.c		\
-				src/utils_nodes.c
+				src/lexer/tokenizer.c		\
+				src/utils/utils_nodes.c	\
+				src/utils/utils.c
 
-OBJS		=	$(SRC:%.c=%.o)
+#OBJS		=	$(addprefix $(OBJDIR), $(notdir $(patsubst %.c, %.o, $(src))))
+OBJS		= 	$(SRC:%.c=%.o)
 
 all:			$(NAME)
 
@@ -38,6 +42,7 @@ $(LIBFT_A):
 				@$(MAKE) -s -C $(LIBFT)
 				@echo "Compiled $(LIBFT_A)."
 
+#$(OBJDIR)%.o:: $(PATHS)%.c
 .c.o:
 				@$(CC) $(CFLAGS) -c $< -o $@
 				@echo "Compiling $<."

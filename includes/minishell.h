@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/23 23:31:53 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/04/24 10:08:54 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,14 @@ void	clear_line(t_mini *mini);
 
 
 
-// Utils
+// Utils nodes
 
 t_lexer	*ft_new_node(char *str, int token);
 void	ft_node_add_back(t_lexer **lst, t_lexer *node);
 int		list_add_node(t_lexer **lst, t_operator token, char *str);
+
+// Random utils
+
+int	check_quotes(char *line);
 
 #endif

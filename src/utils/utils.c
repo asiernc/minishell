@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   verify_quotes.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 12:58:37 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/24 10:06:41 by anovio-c         ###   ########.fr       */
+/*   Created: 2024/04/24 10:07:20 by anovio-c          #+#    #+#             */
+/*   Updated: 2024/04/24 10:29:18 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "../includes/minishell.h"
-#include <stdio.h>
+#include "minishell.h"
 
-//you have to check that in the line read, all the quotes are closed
-//and the end of the line is not a PIPE
-//=>Otherwise we gave error
-
-/*int	print_error(char *str)
-{
-	perror(str);
-	exit(1);
-}*/
-
-int	find_next_quote(char *line, int *counter, int i, int ch)
+static int	find_next(char *line, int *counter, int i, int ch)
 {
 	int	index;
 
@@ -53,27 +42,18 @@ int	check_quotes(char *line)
 	while (line[i])
 	{
 		if (line[i] == 39)//39 refers to ' in the ascii table
-			i += find_next_quote(line, &simple_quotes, i, 39);	
+			i += find_next(line, &simple_quotes, i, 39);
 		if (line[i] == 34)//34 refers to " in the ascii table
-			i += find_next_quote(line, &double_quotes, i, 34);
+			i += find_next(line, &double_quotes, i, 34);
 		i++;
 	}
 	if (simple_quotes % 2 == 0 || double_quotes % 2 == 0)// ||
 	//	line[i] == '|' || line[i] == '>' || line[i] == '<')
 	{
-		printf("The line was not well written. Please try again.");
-		return (1);
+		printf("everything's good\n");
+		return (0);
 	}
-	printf("everything's good");
-	return (0);
+	printf("The line was not well written. Please try again.\n");
+	return (1);
 	// Here's a function that looks for a pipe character and then continues searching to find any letter character
-}
-
-int	main(void)
-{
-	char str[50] = "echo 'hola 'm'undo''";
-
-	check_quotes(str);
-	//print_error("write something");
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/23 23:38:41 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/04/24 10:30:04 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ static int	reset(t_mini *mini)
 int	mini_live(t_mini *mini)
 {
 	mini->line = readline("minihell 🔥 >");
-	printf("%s\n", mini->line);
-	//if (!check_quotes(mini->line))
-	//	return (1); // display error
+	if (check_quotes(mini->line) != 0)
+		return (1); // display error
 	if (lexer_tokens(mini) != 0)
 		return (1); //display_error
 	//lexer
