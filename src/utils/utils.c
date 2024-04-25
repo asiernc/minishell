@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:07:20 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 13:38:17 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:13:05 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,54 +60,44 @@ int	check_quotes(char *line)
 }
 */
 
-int	print_error(char *str)
+void	print_error(char *str)
 {
 	perror(str);
-	exit(1);
+//	exit(1);//you don't have to exit => tu have to display a newline
 }
 
 void	check_quotes(char *line)
 {
 	int	i;
-	int	simple_quotes_counter;
-	int	double_quotes_counter;
 
 	i = 0;
-	simple_quotes_counter = 0;
-	double_quotes_counter = 0;
-	if (ft_strlen(line) == 1 && (line[i] == 34 || line[i] == 39))
-		print_error("The line was not well written. Please try again.");
 	while (line[i])
 	{
-//		count_simple_quotes(line, &i, &simple_quotes_counter);
-		if (i != ((int)ft_strlen(line) - 1) && line[i] == 39)//39 <=> '
+		if (line[i] == 34)//"
 		{
-			simple_quotes_counter++;
-			i++;
-			while (line[i] && line[i] != 39)
-				i++;
-			if (line[i] == 39)
-			{
-				simple_quotes_counter++;
-				i++;
-			}
-//			continue ;
-		}
-		else if (i != ((int)ft_strlen(line) - 1) && line[i] == 34)//34 <=> "
-		{
-			double_quotes_counter++;
 			i++;
 			while (line[i] && line[i] != 34)
-				i++;
-			if (line[i] == 34)
 			{
-				double_quotes_counter++;
-				i++;
+//				write(1, "out\n", 4);
+				if (line[i] == 92 && i < (int)ft_strlen(line) - 1)
+					i++;
+				i++;//in this condition, we can also add a string to catch what's inside the quotes
 			}
-//			continue ;
+			if (line[i] == '\0')
+				print_error("The line was not well written. Please try again.");
 		}
+		else if (line[i] == 39)//'
+		{
+			i++;
+			while (line[i] && line[i] != 39)
+			{
+				if (line[i] == 92 && i < (int)ft_strlen(line) - 1)
+					i++;
+				i++;//in this condition, we can also add a string to catch what's inside the quotes
+			}
+			if (line[i] == '\0')
+				print_error("The line was not well written. Please try again.");
+		}
+		i++;
 	}
-	if (simple_quotes_counter % 2 == 1 || double_quotes_counter % 2 == 1 ||
-		line[i] == '|' || line[i] == '>' || line[i] == '<')
-		print_error("The line was not well written. Please try again.");
 }
