@@ -6,11 +6,13 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:01:02 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 16:03:17 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:30:02 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// Function responsible for counting pipes, for further processing.
 
 void	count_pipes(t_mini *mini)
 {
@@ -22,6 +24,5 @@ void	count_pipes(t_mini *mini)
 	while (mini->line[++i])
 		if (mini->line[i] == '|')
 			count++;
-		//i++;
 	mini->pipes = count;
 }

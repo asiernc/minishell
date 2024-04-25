@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 17:03:00 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/25 14:52:03 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,13 @@ void	ft_print(t_mini *mini)
 {
 	t_lexer	*tmp;
 	int	i = 0;
+	int	len = lst_size(mini);
 
 	tmp = mini->lexer;
-	while (tmp != NULL)
+	while (i <= len)
 	{
 		i++;
-		printf("Node %d, str = %s  token(ope) = %d\n", i, tmp->str, tmp->token);
+		printf("Node %d, str = %s  token(ope) = %d\n", tmp->num_node, tmp->str, tmp->token);
 		tmp = tmp->next;
 	}
 }

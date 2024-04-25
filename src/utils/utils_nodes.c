@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:47:44 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 17:22:40 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:02:30 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ int	list_add_node(t_lexer **lexer_list, t_operator token, char *str)
 t_lexer	*ft_new_node(char *str, int token)
 {
 	t_lexer		*new;
+	static unsigned int	i = 0;
 
 	new = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new)
 		return (0);
 	new->str = str;
+	new->num_node = ++i;
 	new->token = token;
 	new->next = NULL;
 	return (new);
@@ -72,10 +74,59 @@ void	del_first_node(t_lexer **lst)
 	clear_one_node(&tmp);
 }
 
-/*void	delone_lexer(t_lexer **lst)
+int		lst_size(t_mini *mini)
 {
+	int	len;
 	t_lexer	*tmp;
 
-	tmp = lst->next;
-	free(*lst);
-*/
+	tmp = mini->lexer;
+	len = 0;
+	while (tmp->next)
+	{
+		len++;
+		tmp = tmp->next;
+	}
+	return (len);
+}
+
+t_simple_cmd *new_simple_cmd(char **str, int num_redirections, t_lexer *redirections)
+{ 
+	t_simple_cmd	*new;
+   
+	new = (t_simple_cmd *)malloc(sizeof(t_simple_cmd));
+   	if (!new) 
+		return (0); 
+	new->str = str;
+   	new->builtin = 0;
+   	new->hd_filename = NULL; 
+	new->num_redirections = num_redirections;
+   	new->redirections = redirections;
+	new->next = NULL; 
+	return (new);
+}
+
+void delone_node(int num_del, t_lexer **lst)
+{
+	t_lexer *node; 
+	t_lexer *prev;
+	t_lexer *start;
+	
+	start = *lst;
+	node = start;
+	if ((*lst)->num_node == num_del)
+	{
+		del_first_node(lst);
+		return ;
+	}
+	while (node && node->num_node != num_del)
+	{
+		prev = node;
+		node = node->next;
+	}
+	if (node)
+		prev->next = node->next;
+	else
+		prev->next = NULL;
+	clear_one_node(&node);
+	*lst = start;
+}

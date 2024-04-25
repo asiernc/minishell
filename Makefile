@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/04/24 16:03:30 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/04/25 12:30:17 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,12 @@ LEXERDIR	=	src/lexer/
 UTILSDIR	=	src/utils/
 OBJDIR		=	build/obj/
 
-SRC			=	src/main.c 			\
+SRC			=	src/main.c 					\
 				src/lexer/tokenizer.c		\
-				src/parser/parser.c		\
+				src/parser/parser.c			\
+				src/parser/redirections.c	\
 				src/parser/utils_parser.c	\
-				src/utils/utils_nodes.c	\
+				src/utils/utils_nodes.c		\
 				src/utils/utils.c
 
 #OBJS		=	$(addprefix $(OBJDIR), $(notdir $(patsubst %.c, %.o, $(src))))
