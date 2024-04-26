@@ -6,13 +6,13 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:07:20 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 12:43:30 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:13:05 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	find_next(char *line, int *counter, int i, int lim)
+/*static int	find_next(char *line, int *counter, int i, int lim)
 {
 	int	index;
 
@@ -57,4 +57,47 @@ int	check_quotes(char *line)
 	printf("The line was not well written. Please try again.\n");
 	return (1);
 	// Here's a function that looks for a pipe character and then continues searching to find any letter character
+}
+*/
+
+void	print_error(char *str)
+{
+	perror(str);
+//	exit(1);//you don't have to exit => tu have to display a newline
+}
+
+void	check_quotes(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == 34)//"
+		{
+			i++;
+			while (line[i] && line[i] != 34)
+			{
+//				write(1, "out\n", 4);
+				if (line[i] == 92 && i < (int)ft_strlen(line) - 1)
+					i++;
+				i++;//in this condition, we can also add a string to catch what's inside the quotes
+			}
+			if (line[i] == '\0')
+				print_error("The line was not well written. Please try again.");
+		}
+		else if (line[i] == 39)//'
+		{
+			i++;
+			while (line[i] && line[i] != 39)
+			{
+				if (line[i] == 92 && i < (int)ft_strlen(line) - 1)
+					i++;
+				i++;//in this condition, we can also add a string to catch what's inside the quotes
+			}
+			if (line[i] == '\0')
+				print_error("The line was not well written. Please try again.");
+		}
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 12:44:50 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/26 12:18:24 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 // STRUCTS
 
 // 		Main struct
-
 typedef struct s_mini
 {
 	char			*line;
@@ -40,7 +39,6 @@ typedef struct s_mini
 }			t_mini;
 
 //		Enum for operators
-
 typedef enum s_operator
 {
 	PIPE = 1, 		// |
@@ -51,7 +49,6 @@ typedef enum s_operator
 }			t_operator;
 
 //		Struct for the lexer/tokenizer
-
 typedef struct s_lexer
 {
 	char		*str;
@@ -60,11 +57,11 @@ typedef struct s_lexer
 }				t_lexer;
 
 //		Struct for parser
-
+//struct for the command 
 typedef struct s_simple_cmd
 {
-	char					**str;
-	int						(*builtin)(t_mini *, struct s_simple_cmd *);
+	char					**str;//array of cmd with flags
+	int						(*builtin)(t_mini *, struct s_simple_cmd *);//
 	int						num_redirections;
 	char					*hd_filename;
 	t_lexer					*redirections;
@@ -93,7 +90,11 @@ void	ft_node_add_back(t_lexer **lst, t_lexer *node);
 int		list_add_node(t_lexer **lst, t_operator token, char *str);
 
 // Random utils
+void	check_quotes(char *line);
+void	check_backslash(char *line);
 
-int	check_quotes(char *line);
+//src/builtin_1.c
+char	*builtin_pwd(char **env);
+char	**builtin_env(char **env);
 
 #endif
