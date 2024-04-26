@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/25 13:35:02 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/26 11:48:06 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_parser
 // Test functions
 
 void	ft_print(t_mini *mini);
+void	ft_print_parser(t_mini *mini);
 
 
 // Minishell loop
@@ -105,13 +106,20 @@ void	clear_line(t_mini *mini);
 
 int		parser(t_mini *mini);
 t_parser	init_struct(t_lexer *lexer, t_mini *mini);
-t_simple_cmd	*init_cmd(t_parser *parser);
-void	count_pipes(t_mini *mini);
+t_simple_cmd	*create_cmd(t_parser *parser);
 void	redirections(t_parser *parser);
 
 // Parser utils
 
 t_simple_cmd *new_simple_cmd(char **str, int num_redirects, t_lexer *redirections);
+void	count_pipes(t_mini *mini);
+int		count_args(t_lexer *lst);
+t_lexer	*move_to_next_cmd(t_lexer *lst);
+void	ft_node_add_back_parser(t_simple_cmd **lst, t_simple_cmd *node);
+
+int	lst_size_simple_cmd(t_mini *mini);
+
+
 
 
 // Utils nodes
