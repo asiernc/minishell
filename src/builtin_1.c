@@ -6,11 +6,12 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 15:42:11 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/25 18:10:23 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:13:48 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+void	print_error(char *str);
 
 /*typedef struct s_simple_cmd
 {
@@ -22,12 +23,6 @@
 	struct s_simple_cmd		*next;
 }				t_simple_cmd;
 */
-
-void	print_error(char *str)
-{
-	perror(str);
-//	exit(1);//you don't have to exit => tu have to display a newline
-}
 
 void	builtin_echo(char **command, char *line)
 {
@@ -70,6 +65,8 @@ char	**builtin_env(char **env)//to free once used
 	result_env[i] = NULL;
 	return (result_env);
 }
+
+
 /*
 int	main(int argc, char **argv, char **env)
 {
@@ -132,14 +129,18 @@ char	*builtin_pwd(char **env)//to free after having used it
 	
 }*/
 
-int	main(void)
+/*int	main(void)
 {
 	char	*path = "Users/simarcha/commonCore/";
 	int		chdir_result;
 	
-	chdir_result = chdir("/");
-	if (chdir_result == -1)
-		print_error("chdir function failed");
-	printf("chdir result = %i\n", chdir_result);
+	if (ft_strncmp(argv[0], "cd", 2) == 0)
+	{	
+		
+		chdir_result = chdir("/");
+		if (chdir_result == -1)
+			print_error("chdir function failed");
+		printf("chdir result = %i\n", chdir_result);
+	}
 	return (0);
-}
+}*/

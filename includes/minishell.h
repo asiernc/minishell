@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/25 12:57:00 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/04/26 12:18:24 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,11 @@ void	ft_node_add_back(t_lexer **lst, t_lexer *node);
 int		list_add_node(t_lexer **lst, t_operator token, char *str);
 
 // Random utils
-
 void	check_quotes(char *line);
 void	check_backslash(char *line);
+
+//src/builtin_1.c
+char	*builtin_pwd(char **env);
+char	**builtin_env(char **env);
 
 #endif
