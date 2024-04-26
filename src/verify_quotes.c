@@ -6,12 +6,57 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:58:37 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/24 10:06:41 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:24:41 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#include "../includes/minishell.h"
 #include <stdio.h>
+
+// NEW NEW NEW NEW
+
+void	print_error(char *str)
+{
+	perror(str);
+//	exit(1);//you don't have to exit => tu have to display a newline
+}
+
+void	check_quotes(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == 34)//"
+		{
+			i++;
+			while (line[i] && line[i] != 34)
+			{
+//				write(1, "out\n", 4);
+				if (line[i] == 92 && i < (int)ft_strlen(line) - 1)
+					i++;
+				i++;//in this condition, we can also add a string to catch what's inside the quotes
+			}
+			if (line[i] == '\0')
+				print_error("The line was not well written. Please try again.");
+		}
+		else if (line[i] == 39)//'
+		{
+			i++;
+			while (line[i] && line[i] != 39)
+			{
+				if (line[i] == 92 && i < (int)ft_strlen(line) - 1)
+					i++;
+				i++;//in this condition, we can also add a string to catch what's inside the quotes
+			}
+			if (line[i] == '\0')
+				print_error("The line was not well written. Please try again.");
+		}
+		i++;
+	}
+}
+
 
 //you have to check that in the line read, all the quotes are closed
 //and the end of the line is not a PIPE
@@ -23,7 +68,9 @@
 	exit(1);
 }*/
 
-int	find_next_quote(char *line, int *counter, int i, int ch)
+// PREVIOUS PREVIOUS PREVIOUS
+
+/*int	find_next_quote(char *line, int *counter, int i, int ch)
 {
 	int	index;
 
@@ -67,13 +114,4 @@ int	check_quotes(char *line)
 	printf("everything's good");
 	return (0);
 	// Here's a function that looks for a pipe character and then continues searching to find any letter character
-}
-
-int	main(void)
-{
-	char str[50] = "echo 'hola 'm'undo''";
-
-	check_quotes(str);
-	//print_error("write something");
-	return (0);
-}
+}*/
