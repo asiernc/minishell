@@ -6,33 +6,34 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/26 12:58:58 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/29 00:03:05 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 // printf final test struct
 
 void	ft_print_parser(t_mini *mini)
 {
 	t_simple_cmd	*tmp;
-	t_lexer			*tmp2;
+	//t_lexer			*tmp2;
 	int	i = 0;
 	int	len = lst_size_simple_cmd(mini);
 
 	tmp = mini->simple_cmd;
 	printf("LEN %d\n", len);
-	tmp2 = mini->simple_cmd->redirections;
+	//tmp2 = mini->simple_cmd->redirections;
 	while (i <= len)
 	{
-		printf("Node %d, str** = %s %s;",
-			   	i, tmp->str[0], tmp->str[1]);
-		if (tmp2->str)
-			printf("redirections str = %s, operator = %d", tmp2->str,
-				tmp2->token);
+		printf("Node %d, str** = %s;",
+			   	i, tmp->str[0]);
+		//if (tmp2->str)
+		//	printf("redirections str = %s, operator = %d", tmp2->str,
+		//		tmp2->token);
 		tmp = tmp->next;
-		tmp2 = tmp2->next;
+		//tmp2 = tmp2->next;
 		printf("\n");
 		i++;
 	}
@@ -91,17 +92,16 @@ int	parser(t_mini *mini)
 	{
 		if (mini->lexer && mini->lexer->token == PIPE)
 			del_first_node(&mini->lexer);
+		// val error si hay || o no hay cmd para no init struct rtrn obreak
 		parser = init_struct(mini->lexer, mini);
 		cmd = create_cmd(&parser);
 		//ft_print(mini);
 		//printf("--------------------------------------------\n");
+		//mini->simple_cmd = cmd
 		//ft_print(mini);
 		if (!cmd)
-			return (1); //error creating cmd node
-		//if (!mini->simple_cmd)
-		//	mini->simple_cmd = cmd;
-		//else
-			ft_node_add_back_parser(&mini->simple_cmd, cmd);
+			return (1); //error creating cmd node	
+		ft_node_add_back_parser(&mini->simple_cmd, cmd);
 		mini->lexer = parser.lexer;
 	}
 	ft_print_parser(mini);

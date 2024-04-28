@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:47:44 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/26 12:57:19 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/26 21:23:27 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ t_simple_cmd *new_simple_cmd(char **str, int num_redirections, t_lexer *redirect
 		return (0); 
 	new->str = str;
 	//if (str[0] == builtn
-   	new->builtin = 0; // identificar builtin
+   	new->builtin = find_builin(str[0]); // identificar builtin
    	new->hd_filename = NULL; 
 	new->num_redirections = num_redirections;
    	new->redirections = redirections;

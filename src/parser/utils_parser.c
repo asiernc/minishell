@@ -1,16 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:01:02 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/26 10:08:18 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:57:10 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// builtin test
+//int builtin_test(t_mini *mini, t_simple_cmd *simple_cmd);
+void	builtin_test(void)
+{
+	printf("inside builtin test");
+}
+
+builtin	*find_builtin(char *str)
+{
+	int					i;
+	static void *func[7][2] = 
+	{
+    	{"echo", builtin_test},
+		{"cd", builtin_test},
+		{"pwd", builtin_test},
+		{"export", builtin_test},
+		{"unset", builtin_test},
+		{"env", builtin_test},
+		{"exit", builtin_test}	
+	};
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (i < 7)
+	{
+		if (ft_strcmp(str, func[i][0]) == 0)
+			return (func[i][1]);
+		i++;
+	}
+	return (NULL);
+}
 
 // Function responsible for counting pipes, for further processing.
 

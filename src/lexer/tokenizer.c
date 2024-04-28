@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/25 14:52:03 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:51:39 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,14 @@ int	find_next_quote(char c, char *str, int i)
 
 int	put_word(char *str, int i, t_lexer **lst)
 {
+	static int k = 0;
 	int	j;
 
+	if (k == 0)
+	{
+		*lst = NULL;
+		k = 1;
+	}
 	j = 0;
 	//printf("STRRRRR: %s\n", str);
 	while (str[i + j] && check_operator(str[i + j]) == 0)

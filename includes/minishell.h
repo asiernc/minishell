@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/26 11:48:06 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:54:34 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,35 @@ typedef struct s_mini
 
 //		Enum for operators
 
-typedef enum s_operator
+enum t_operator
 {
 	PIPE = 1, 		// |
 	RED_IN,			// <
 	RED_OUT,		// >
 	HDOC,			// <<
 	RED_OUT_APP,	// >>
-}	t_operator;
+};
 
 //		Struct for the lexer/tokenizer
 
 typedef struct s_lexer
 {
-	char		*str;
-	t_operator	token;
-	int			num_node;
+	char				*str;
+	enum t_operator		token;
+	int					num_node;
 	struct s_lexer		*next;
 }	t_lexer;
 
 //		Struct for parser
+// Definición del tipo de función de los comandos
+// This is OK ==> t_mini *mini, s_simple_cmd *cmd);
+typedef void (*builtin)(void);
 
 typedef struct s_simple_cmd
 {
 	char					**str;
-	int						(*builtin)(t_mini *, struct s_simple_cmd *);
+	//int						(*builtin)(t_mini *, struct s_simple_cmd *);
+	builtin					func;
 	int						num_redirections;
 	char					*hd_filename;
 	t_lexer					*redirections;
@@ -86,6 +90,8 @@ typedef struct s_parser
 
 void	ft_print(t_mini *mini);
 void	ft_print_parser(t_mini *mini);
+void	builtin_test(void);
+
 
 
 // Minishell loop
@@ -120,13 +126,16 @@ void	ft_node_add_back_parser(t_simple_cmd **lst, t_simple_cmd *node);
 int	lst_size_simple_cmd(t_mini *mini);
 
 
+// Built-ins
+
+builtin *find_builtin(char *str);
 
 
 // Utils nodes
 
 t_lexer	*ft_new_node(char *str, int token);
 void	ft_node_add_back(t_lexer **lst, t_lexer *node);
-int		list_add_node(t_lexer **lst, t_operator token, char *str);
+int		list_add_node(t_lexer **lst, enum t_operator token, char *str);
 t_lexer	*clear_one(t_lexer **lst);
 void	del_first_node(t_lexer **lst);
 void	delone_node(int num_del, t_lexer **lst);
