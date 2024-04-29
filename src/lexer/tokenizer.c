@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/25 14:52:03 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/29 10:10:06 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void	clear_line(t_mini *mini)
 }
 
 // This function serves to check if that character is an operator. 
-// If so, we assign a value to that key (operator character).
-
+// If so, we assign a value to that token (operator character).
 int	check_operator(int c)
 {
 	int	i;

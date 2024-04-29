@@ -27,7 +27,7 @@ void	ft_print_parser(t_mini *mini)
 	while (i <= len)
 	{
 		printf("Node %d, str** = %s %s;",
-			   	i, tmp->str[0], tmp->str[1]);
+			i, tmp->str[0], tmp->str[1]);
 		if (tmp2->str)
 			printf("redirections str = %s, operator = %d", tmp2->str,
 				tmp2->token);
