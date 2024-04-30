@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/25 14:48:31 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:50:19 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // function for free all and call another time mini_live for create a loop
 
-static int	reset(t_mini *mini)
+int	reset(t_mini *mini)
 {
 	/*t_lexer	*tmp;
 
@@ -37,8 +37,7 @@ int	mini_live(t_mini *mini)
 	if (lexer_tokenizer(mini) != 0)
 		return (1); //display_error
 	//parser
-	if (parser(mini) != 0)
-		return (1);
+	parser(mini);
 	//executor
 	//free and reset
 	reset(mini);

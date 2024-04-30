@@ -6,13 +6,13 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:47:44 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/26 21:23:27 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/04/30 14:36:37 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	list_add_node(t_lexer **lexer_list, t_operator token, char *str)
+int	list_add_node(t_lexer **lexer_list, enum t_operator token, char *str)
 {
 	t_lexer	*node;
 
@@ -128,7 +128,7 @@ t_simple_cmd *new_simple_cmd(char **str, int num_redirections, t_lexer *redirect
 		return (0); 
 	new->str = str;
 	//if (str[0] == builtn
-   	new->builtin = find_builin(str[0]); // identificar builtin
+   	new->func = find_builtin(str[0]); // identificar builtin
    	new->hd_filename = NULL; 
 	new->num_redirections = num_redirections;
    	new->redirections = redirections;
@@ -160,4 +160,19 @@ void delone_node(int num_del, t_lexer **lst)
 		prev->next = NULL;
 	clear_one_node(&node);
 	*lst = start;
+}
+
+void	lst_clear_lexer(t_lexer **lst)
+{
+	t_lexer *tmp;
+
+	if (!*lst)
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		free(lst);
+		*lst = tmp;
+	}
+	*lst = NULL;
 }

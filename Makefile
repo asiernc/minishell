@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/04/25 12:30:17 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/04/30 12:57:02 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRC			=	src/main.c 					\
 				src/parser/redirections.c	\
 				src/parser/utils_parser.c	\
 				src/utils/utils_nodes.c		\
-				src/utils/utils.c
+				src/utils/utils.c			\
+				src/errors/parser_errors.c
 
 #OBJS		=	$(addprefix $(OBJDIR), $(notdir $(patsubst %.c, %.o, $(src))))
 OBJS		= 	$(SRC:%.c=%.o)

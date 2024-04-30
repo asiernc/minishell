@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:01:02 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/27 19:57:10 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/04/30 15:42:27 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	builtin_test(void)
 	printf("inside builtin test");
 }
 
-builtin	*find_builtin(char *str)
+builtin	find_builtin(char *str)
 {
 	int					i;
 	static void *func[7][2] = 
@@ -80,4 +80,19 @@ t_lexer	*move_to_next_cmd(t_lexer *lst)
 	while (lst && lst->token != PIPE)
 		lst = lst->next;
 	return (lst);
+}
+
+int	check_line(t_mini *mini, int token)
+{
+	if (token == PIPE)
+	{
+		parser_token_error(mini, token);
+		return (EXIT_FAILURE); //EXIT_FAILURE
+	}
+	else if (!mini->lexer)
+	{
+		print_error(mini, mini->lexer, 0);
+		return (EXIT_FAILURE); // EXIT_FAILURE
+	}
+	return (EXIT_SUCCESS); // EXIT_SUCCESS
 }

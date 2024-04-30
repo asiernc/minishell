@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/29 00:03:05 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/04/30 15:43:00 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,20 @@ int	parser(t_mini *mini)
 	{
 		if (mini->lexer && mini->lexer->token == PIPE)
 			del_first_node(&mini->lexer);
-		// val error si hay || o no hay cmd para no init struct rtrn obreak
+		if (check_line(mini, mini->lexer->token))
+			return (EXIT_FAILURE); //EXIT_FAILURE
 		parser = init_struct(mini->lexer, mini);
 		cmd = create_cmd(&parser);
+		if (!cmd)
+			print_error(mini, mini->lexer, 0);
 		//ft_print(mini);
 		//printf("--------------------------------------------\n");
 		//mini->simple_cmd = cmd
 		//ft_print(mini);
-		if (!cmd)
-			return (1); //error creating cmd node	
 		ft_node_add_back_parser(&mini->simple_cmd, cmd);
 		mini->lexer = parser.lexer;
 	}
 	ft_print_parser(mini);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
