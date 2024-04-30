@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/30 19:05:25 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:28:04 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,26 @@ static void	swap(t_builtin **lst)
 	*lst = second;
 }
 
-t_builtin	*sort_ascii(t_builtin *unsorted_lst)
+t_builtin	*sort_ascii(t_builtin lst)
 {
 	t_builtin	*tmp;
+	t_builtin	*current;
 	int			i;
 
-	tmp = unsorted_lst;
-	while ()
+	while (lst && lst->next)
 	{
-		while (unsorted_lst && unsorted_lst->next)
+		tmp = lst;
+		while (lst && lst->next)
 		{
-			if (ft_strcmp(unsorted_lst->key, unsorted_lst->next->key) < 0)
+			if (ft_strcmp(lst->key, lst->next->key) < 0)
 			{
-				swap(&unsorted_lst);
-				sort_ascii(unsorted_lst);
+				swap(&lst);
+				sort_ascii(lst);
 			}
-			unsorted_lst = unsorted_lst->next;
+			lst = lst->next;
 		}
 	}
-	return (unsorted_lst);
+	return (lst);
 }
 
 void	builtin_export(char **env)
