@@ -6,27 +6,30 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:32:02 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/30 10:36:24 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:56:36 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-typedef struct	store_env
+typedef struct	s_builtin
 {
 	char				*key;//the name of the variable in env
 	char				*value;
-	struct store_env	*next;
-}				t_env;
+	int					index;
+//	int					checker;//to check if the builtin is ENV or EXPORT
+	struct s_builtin	*next;
+}				t_builtin;//for ENV and EXPORT builtins
 
 char	*get_key_from_env(char *str);
 char	*get_value_from_env(char *str);
 
-t_env	*ft_lstnew_env(char *str)
+//str <=> one line of the env
+t_builtin	*ft_lstnew_builtin(char *str, int i)
 {
-	t_env	*node;
+	t_builtin	*node;
 
-	node = malloc(sizeof(t_env));
+	node = malloc(sizeof(t_builtin));
 	if (!node)
 		return (NULL);
 	node->key = get_key_from_env(str);
@@ -35,13 +38,14 @@ t_env	*ft_lstnew_env(char *str)
 	node->value = get_value_from_env(str);
 	if (!node->value)
 		return (free(node), NULL);
+	node->index = i;
 	node->next = NULL;
 	return (node);
 }
 
-void	ft_lstadd_back_env(t_env **lst, t_env *new)
+void	ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new)
 {
-	t_env	*tmp;
+	t_builtin	*tmp;
 
 	if (!lst || !new)
 		return ;
@@ -57,7 +61,7 @@ void	ft_lstadd_back_env(t_env **lst, t_env *new)
 }
 
 //to test
-void	print_list(t_env **lst_env)
+void	print_list(t_builtin **lst_env)
 {
 	int	i;
 
@@ -69,14 +73,28 @@ void	print_list(t_env **lst_env)
 		printf("memory adress [%p]\n", *lst_env);
 		printf("key: %s\n", (*lst_env)->key);
 		printf("value: %s\n", (*lst_env)->value);
+		printf("index: %i\n", (*lst_env)->index);
 		i++;
 		*lst_env = (*lst_env)->next;
 	}
 }
 
-void	ft_lstclear_env(t_env **lst)
+int	ft_lstsize_builtin(t_builtin *lst)
 {
-	t_env	*tmp;
+	int	i;
+
+	i = 0;
+	while (lst != NULL)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
+}
+
+void	ft_lstclear_builtin(t_builtin **lst)
+{
+	t_builtin	*tmp;
 
 	if (!lst)
 		return ;

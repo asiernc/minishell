@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/26 12:18:24 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:37:15 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ void	check_backslash(char *line);
 
 //src/builtin_1.c
 char	*builtin_pwd(char **env);
-char	**builtin_env(char **env);
+//char	**builtin_env(char **env);
 
 #endif

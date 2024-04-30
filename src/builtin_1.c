@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 15:42:11 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/26 14:13:48 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/04/30 11:33:02 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	builtin_echo(char **command, char *line)
 	}
 }
 
+//I created another function for the ENV builtin but with lists
 char	**builtin_env(char **env)//to free once used
 {
 	int		i;
