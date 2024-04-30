@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:01:02 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/29 16:41:20 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/04/27 19:57:10 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ builtin	*find_builtin(char *str)
 		return (NULL);
 	while (i < 7)
 	{
-		if (ft_strcmp(str, func[i][0]) == 0)// ECHO == echo
+		if (ft_strcmp(str, func[i][0]) == 0)
 			return (func[i][1]);
 		i++;
 	}

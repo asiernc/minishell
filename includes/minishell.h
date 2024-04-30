@@ -6,11 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/26 19:04:09 by simarcha         ###   ########.fr       */
-=======
 /*   Updated: 2024/04/27 19:54:34 by asiercara        ###   ########.fr       */
->>>>>>> 676ee8003003d013b9a386ef08589439ac8d4174
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +31,19 @@
 // STRUCTS
 
 // 		Main struct
-// 		This is the structure that will contain everything at the end
+
 typedef struct s_mini
 {
-	char					*line;//the line inputs by the user
-	char					**env;//env in the main
+	char					*line;
+	char					**env;
 	struct s_lexer			*lexer;
-	int						pipes;//count the pipes to execute pipe + 1 commands 
+	int						pipes;
 	struct s_simple_cmd		*simple_cmd;
 }	t_mini;
 
 //		Enum for operators
-<<<<<<< HEAD
-//		we gave a number to know which kind of operator/token it is
-//		0 if it's not
-typedef enum s_operator
-=======
 
 enum t_operator
->>>>>>> 676ee8003003d013b9a386ef08589439ac8d4174
 {
 	PIPE = 1, 		// |
 	RED_IN,			// <
@@ -63,31 +53,16 @@ enum t_operator
 };
 
 //		Struct for the lexer/tokenizer
-//		The goal of this structure is to divide every word and to assign a value
-//		We have the word
-//		we assign it a number to make the difference between a token and everything else
-//		and we gave it a number to know where it's located in the line
+
 typedef struct s_lexer
 {
-<<<<<<< HEAD
-	char				*str;//one word of the line
-	t_operator			token;//the id number to know if it's a token or a word
-	int					num_node;//the number of the token/word in the line inputed
-=======
 	char				*str;
 	enum t_operator		token;
 	int					num_node;
->>>>>>> 676ee8003003d013b9a386ef08589439ac8d4174
 	struct s_lexer		*next;
 }	t_lexer;
 
 //		Struct for parser
-<<<<<<< HEAD
-typedef struct s_simple_cmd
-{
-	char					**str;
-	int						(*builtin)(t_mini *, struct s_simple_cmd *);//NOT SURE: the name of the builtin to call
-=======
 // Definición del tipo de función de los comandos
 // This is OK ==> t_mini *mini, s_simple_cmd *cmd);
 typedef void (*builtin)(void);
@@ -97,7 +72,6 @@ typedef struct s_simple_cmd
 	char					**str;
 	//int						(*builtin)(t_mini *, struct s_simple_cmd *);
 	builtin					func;
->>>>>>> 676ee8003003d013b9a386ef08589439ac8d4174
 	int						num_redirections;
 	char					*hd_filename;
 	t_lexer					*redirections;
@@ -114,47 +88,42 @@ typedef struct s_parser
 
 // Test functions
 
-<<<<<<< HEAD
-void			ft_print(t_mini *mini);
-void			ft_print_parser(t_mini *mini);
-=======
 void	ft_print(t_mini *mini);
 void	ft_print_parser(t_mini *mini);
 void	builtin_test(void);
 
->>>>>>> 676ee8003003d013b9a386ef08589439ac8d4174
 
 
 // Minishell loop
 
-int				mini_live(t_mini *mini);
+int mini_live(t_mini *mini);
 
 
 // Lexer
 
-int				lexer_tokenizer(t_mini *mini);
-int				put_word(char *str, int i, t_lexer **lst);
-int				find_next_quote(char c, char *str, int i);
-int				put_operator(char *str, int i, t_lexer **lst);
-int				check_operator(int c);
-void			clear_line(t_mini *mini);
+int		lexer_tokenizer(t_mini *mini);
+int		put_word(char *str, int i, t_lexer **lst);
+int 	find_next_quote(char c, char *str, int i);
+int		put_operator(char *str, int i, t_lexer **lst);
+int		check_operator(int c);
+void	clear_line(t_mini *mini);
 
 // Parser
 
-int				parser(t_mini *mini);
-t_parser		init_struct(t_lexer *lexer, t_mini *mini);
+int		parser(t_mini *mini);
+t_parser	init_struct(t_lexer *lexer, t_mini *mini);
 t_simple_cmd	*create_cmd(t_parser *parser);
-void			redirections(t_parser *parser);
+void	redirections(t_parser *parser);
 
 // Parser utils
 
-t_simple_cmd	*new_simple_cmd(char **str, int num_redirects, t_lexer *redirections);
-void			count_pipes(t_mini *mini);
-int				count_args(t_lexer *lst);
-t_lexer			*move_to_next_cmd(t_lexer *lst);
-void			ft_node_add_back_parser(t_simple_cmd **lst, t_simple_cmd *node);
+t_simple_cmd *new_simple_cmd(char **str, int num_redirects, t_lexer *redirections);
+void	count_pipes(t_mini *mini);
+int		count_args(t_lexer *lst);
+t_lexer	*move_to_next_cmd(t_lexer *lst);
+void	ft_node_add_back_parser(t_simple_cmd **lst, t_simple_cmd *node);
 
-int				lst_size_simple_cmd(t_mini *mini);
+int	lst_size_simple_cmd(t_mini *mini);
 
 
 // Built-ins
@@ -164,15 +133,6 @@ builtin *find_builtin(char *str);
 
 // Utils nodes
 
-<<<<<<< HEAD
-t_lexer			*ft_new_node(char *str, int token);
-void			ft_node_add_back(t_lexer **lst, t_lexer *node);
-int				list_add_node(t_lexer **lst, t_operator token, char *str);
-t_lexer			*clear_one(t_lexer **lst);
-void			del_first_node(t_lexer **lst);
-void			delone_node(int num_del, t_lexer **lst);
-int				lst_size(t_mini *mini);
-=======
 t_lexer	*ft_new_node(char *str, int token);
 void	ft_node_add_back(t_lexer **lst, t_lexer *node);
 int		list_add_node(t_lexer **lst, enum t_operator token, char *str);
@@ -180,10 +140,9 @@ t_lexer	*clear_one(t_lexer **lst);
 void	del_first_node(t_lexer **lst);
 void	delone_node(int num_del, t_lexer **lst);
 int		lst_size(t_mini *mini);
->>>>>>> 676ee8003003d013b9a386ef08589439ac8d4174
 
 // Random utils
 
-void			check_quotes(char *line);
+void	check_quotes(char *line);
 
 #endif

@@ -27,19 +27,11 @@ void	ft_print_parser(t_mini *mini)
 	//tmp2 = mini->simple_cmd->redirections;
 	while (i <= len)
 	{
-<<<<<<< HEAD
-		printf("Node %d, str** = %s %s;",
-			i, tmp->str[0], tmp->str[1]);
-		if (tmp2->str)
-			printf("redirections str = %s, operator = %d", tmp2->str,
-				tmp2->token);
-=======
 		printf("Node %d, str** = %s;",
 			   	i, tmp->str[0]);
 		//if (tmp2->str)
 		//	printf("redirections str = %s, operator = %d", tmp2->str,
 		//		tmp2->token);
->>>>>>> 676ee8003003d013b9a386ef08589439ac8d4174
 		tmp = tmp->next;
 		//tmp2 = tmp2->next;
 		printf("\n");
