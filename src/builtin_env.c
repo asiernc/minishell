@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:11:30 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/30 19:06:09 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:30:46 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,15 @@ char	*get_key_from_env(char *str)//to free once used
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '=')
+		if (str[i] == '=' || (i < (int)ft_strlen(str) - 1
+			&& str[i] == '+' && str[i + 1] == '='))
 			break ;
 		i++;
 	}
 	len_str = i;
 	result = malloc((len_str + 1) * sizeof(char));
 	if (!result)
-		return (NULL);
+		return (perror("malloc failed to create the env key"), NULL);
 	i = 0;
 	while (i < len_str)
 	{
@@ -78,12 +79,31 @@ char	*get_value_from_env(char *str)//to free once used
 	len_str = i - j;
 	result = malloc((len_str + 1) * sizeof(char));
 	if (!result)
-		return (NULL);
+		return (perror("malloc failed to create the env value"), NULL);
 	i = 0;
 	while (j < (int)ft_strlen(str))
 		result[i++] = str[j++];
 	result[j] = '\0';
 	return (result);
+}
+
+//str <=> one line of the env
+t_builtin	*ft_lstnew_builtin(char *str, int i)
+{
+	t_builtin	*node;
+
+	node = malloc(sizeof(t_builtin));
+	if (!node)
+		return (NULL);
+	node->key = get_key_from_env(str);
+	if (!node->key)
+		return (free(node), NULL);
+	node->value = get_value_from_env(str);
+	if (!node->value)
+		return (free(node), NULL);
+	node->index = i;
+	node->next = NULL;
+	return (node);
 }
 
 t_builtin	*create_builtin_lst(char **env)//to free once used

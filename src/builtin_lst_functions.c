@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:32:02 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/30 18:56:36 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:32:12 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,6 @@ typedef struct	s_builtin
 
 char	*get_key_from_env(char *str);
 char	*get_value_from_env(char *str);
-
-//str <=> one line of the env
-t_builtin	*ft_lstnew_builtin(char *str, int i)
-{
-	t_builtin	*node;
-
-	node = malloc(sizeof(t_builtin));
-	if (!node)
-		return (NULL);
-	node->key = get_key_from_env(str);
-	if (!node->key)
-		return (free(node), NULL);
-	node->value = get_value_from_env(str);
-	if (!node->value)
-		return (free(node), NULL);
-	node->index = i;
-	node->next = NULL;
-	return (node);
-}
 
 void	ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new)
 {

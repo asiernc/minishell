@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/30 19:28:04 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:44:31 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ typedef struct	s_builtin
 }				t_builtin;//for ENV and EXPORT builtins
 
 t_builtin	*ft_lstnew_builtin(char *str, int i);
+char		*get_key_from_env(char *str);
 char		*get_value_from_env(char *str);
 void		print_list(t_builtin **lst_env);
+void		ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new);
 void		ft_lstclear_builtin(t_builtin **lst);
+t_builtin	*create_builtin_lst(char **env);
 t_builtin	*init_builtin_node(char **env);
 int			ft_lstsize_builtin(t_builtin *lst);
 
@@ -42,7 +45,7 @@ int	ft_strcmp(char *s1, char *s2)
 //si le resultat du strcmp est negatif, alors on swap les deu neouds de la liste
 //et on recommence au debut de la liste
 //sinon on itere au suivant
-static void	swap(t_builtin **lst)
+/*static void	swap(t_builtin **lst)
 {
 	t_builtin	*first;
 	t_builtin	*second;
@@ -56,50 +59,63 @@ static void	swap(t_builtin **lst)
 	first->next = second->next;
 	second->next = first;
 	*lst = second;
-}
+}*/
 
-t_builtin	*sort_ascii(t_builtin lst)
+t_builtin	*sort_ascii(t_builtin *lst_export)
 {
-	t_builtin	*tmp;
+	t_builtin	*sorted;
 	t_builtin	*current;
-	int			i;
-
-	while (lst && lst->next)
-	{
-		tmp = lst;
-		while (lst && lst->next)
-		{
-			if (ft_strcmp(lst->key, lst->next->key) < 0)
-			{
-				swap(&lst);
-				sort_ascii(lst);
-			}
-			lst = lst->next;
-		}
-	}
-	return (lst);
-}
-
-void	builtin_export(char **env)
-{
-	t_builtin	*lst_export;
+	t_builtin	*the_next;
 	t_builtin	*tmp;
 
-	lst_export = create_builtin_lst(env);
-	if (!lst_export)
-		perror("error creating the list for the env");
-	print_list(&lst_export);
-//	lst_export = sort_ascii(lst_export);
-	tmp = lst_export;
-	while (tmp)
+	current = lst_export;
+	sorted = NULL;
+	while (current)
 	{
-		printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
-		tmp = tmp->next;
+		the_next = current->next;
+		if (!sorted || ft_strcmp(current->key, sorted->key) < 0)
+		{
+			current->next = sorted;
+			sorted = current;
+		}
+		else
+		{
+			tmp = sorted;
+			while (tmp->next != NULL
+					&& ft_strcmp(current->key, tmp->next->key) >= 0)
+				tmp = tmp->next;
+			current->next = tmp->next;
+			tmp->next = current;
+		}
+		current = the_next;
 	}
-	ft_lstclear_builtin(&lst_export);
+	return (sorted);
+}
+
+//we want to check if everything is well written before the '='.
+//It means if there is a key name to the str.
+int	check_variable(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '=')
+	{
+		if (i == 0 && str[i] == 34)
+			i++;
+		else if (i == 0 && str[i] != '_' && !ft_isalpha(str[i]))
+			return (perror("export: not a valid identifier"), 0);
+		i++;
+	}
+	if (i > 0 && str[i] == '=' && str[i - 1] == '+')
+		return (2);
+	if (i > 0)
+		return (1);
+	return (0);
 }
 
 //in this function, str refers to the new export variable. ie: 'abc=test'
+//we may need an extra variable to know if there is a node to add or not
 void	add_export_variable(t_builtin *lst, char *str)
 {
 	t_builtin	*new_node;
@@ -108,15 +124,113 @@ void	add_export_variable(t_builtin *lst, char *str)
 	lst_size = ft_lstsize_builtin(lst);
 	new_node = ft_lstnew_builtin(str, lst_size - 1);
 	if (!new_node)
-		return (NULL);
+		perror("failed creating the new variable for the export");
 	ft_lstadd_back_builtin(&lst, new_node);
+	//sort the list
+}
+
+void	join_values(t_builtin **lst_export, char *str)
+{
+	t_builtin	*tmp;
+	char		*key_str;
+	char		*value_str;
+	char		*value_node;
+
+	key_str = get_key_from_env(str);
+	if (!key_str)
+		return ;
+	value_str = get_value_from_env(str);
+	if (!value_str)
+		return (free(key_str));
+	tmp = *lst_export;
+	while (ft_strcmp(tmp->key, key_str))//while it's different
+		tmp = tmp->next;
+	value_node = tmp->value;
+	free(tmp->value);
+	tmp->value = ft_strjoin(value_node, value_str);
+	free(key_str);
+	free(value_str);
+}
+
+void	builtin_export(char **env, char *str)
+{
+	t_builtin	*lst_export;
+	t_builtin	*tmp;
+
+	lst_export = create_builtin_lst(env);
+	if (!lst_export)
+		perror("error creating the list for the env");
+	if (str != NULL)
+	{
+		if (check_variable(str) == 1)
+			add_export_variable(lst_export, str);
+		else if (check_variable(str) == 2)
+			join_values(&lst_export, str);
+	}
+	lst_export = sort_ascii(lst_export);
+	tmp = lst_export;
+	while (tmp)
+	{
+		printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
+	ft_lstclear_builtin(&lst_export);//this line will be written at the very
+	//last step of the pgrm. Just before return (0) of the main
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	builtin_export(env);
+//	builtin_export(env, "PAGER+=TEEEEEEEEEEEEEEEST");
+	builtin_export(env, "PAGER+=SIIIIIIIIIIIIIIMON");
 	argc = 0;
 	argv[0] = "./a.out";
-	printf("%lu\n", sizeof(t_builtin));
+//	printf("%lu\n", sizeof(t_builtin));
+//	printf("%p\n", argc);
 	return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/*void	builtin_export(char **env, char *str)
+{
+	t_builtin	**lst_export;
+	t_builtin	*tmp;
+	char		*key_str;
+
+	*lst_export = create_builtin_lst(env);
+	if (!(*lst_export))
+		perror("error creating the list for the env");
+	if (str != NULL)
+	{
+		if (check_variable(str) == 1)
+			add_export_variable(*lst_export, str);
+		else if (check_variable(str) == 2)
+		{
+			key_str = get_key_from_env(str);
+			if (!key_str)
+				return ;
+//			tmp = *lst_export;
+			while (ft_strcmp((*lst_export)->key, key_str))//while it's different
+				*lst_export = (*lst_export)->next;
+			(*lst_export)->value = ft_strjoin((*lst_export)->value, key_str);
+		}
+	}
+//	lst_export = sort_ascii(lst_export);
+	tmp = *lst_export;
+	while (tmp)
+	{
+		printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
+	ft_lstclear_builtin(lst_export);
+}
+*/
