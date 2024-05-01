@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/01 18:44:31 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:54:12 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,35 +41,17 @@ int	ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-//on veut comparer le premier noeud de la liste avec le suivant
-//si le resultat du strcmp est negatif, alors on swap les deu neouds de la liste
-//et on recommence au debut de la liste
-//sinon on itere au suivant
-/*static void	swap(t_builtin **lst)
-{
-	t_builtin	*first;
-	t_builtin	*second;
-	t_builtin	*tmp;
+//I HAVE TO REMOVE THE NODE->KEY = _ BECAUSE IT ISN'T IN EXPORT
 
-	if (*lst == NULL || (*lst)->next == NULL)
-		return ;
-	first = *lst;
-	second = (*lst)->next;
-	tmp = first;
-	first->next = second->next;
-	second->next = first;
-	*lst = second;
-}*/
-
-t_builtin	*sort_ascii(t_builtin *lst_export)
+//there is a second argument whereas I really need one because I had norminette
+//issues. This second argument has to be set as NULL
+t_builtin	*sort_ascii(t_builtin *lst_export, t_builtin *sorted)
 {
-	t_builtin	*sorted;
 	t_builtin	*current;
 	t_builtin	*the_next;
 	t_builtin	*tmp;
 
 	current = lst_export;
-	sorted = NULL;
 	while (current)
 	{
 		the_next = current->next;
@@ -81,8 +63,7 @@ t_builtin	*sort_ascii(t_builtin *lst_export)
 		else
 		{
 			tmp = sorted;
-			while (tmp->next != NULL
-					&& ft_strcmp(current->key, tmp->next->key) >= 0)
+			while (tmp->next && ft_strcmp(current->key, tmp->next->key) >= 0)
 				tmp = tmp->next;
 			current->next = tmp->next;
 			tmp->next = current;
@@ -167,7 +148,7 @@ void	builtin_export(char **env, char *str)
 		else if (check_variable(str) == 2)
 			join_values(&lst_export, str);
 	}
-	lst_export = sort_ascii(lst_export);
+	lst_export = sort_ascii(lst_export, NULL);
 	tmp = lst_export;
 	while (tmp)
 	{
