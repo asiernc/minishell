@@ -6,13 +6,13 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:47:44 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/30 14:36:37 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:54:14 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	list_add_node(t_lexer **lexer_list, enum t_operator token, char *str)
+int	list_add_node(t_lexer **lexer_list, enum e_operator token, char *str)
 {
 	t_lexer	*node;
 

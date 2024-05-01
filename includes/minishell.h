@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/30 15:42:18 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:19:32 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_mini
 {
 	char					*line;
 	char					**env;
+	// struct env
+	// strcut export
 	struct s_lexer			*lexer;
 	int						pipes;
 	struct s_simple_cmd		*simple_cmd;
@@ -43,7 +45,7 @@ typedef struct s_mini
 
 //		Enum for operators
 
-enum t_operator
+enum e_operator
 {
 	PIPE = 1, 		// |
 	RED_IN,			// <
@@ -57,7 +59,7 @@ enum t_operator
 typedef struct s_lexer
 {
 	char				*str;
-	enum t_operator		token;
+	enum e_operator		token;
 	int					num_node;
 	struct s_lexer		*next;
 }	t_lexer;
@@ -135,7 +137,7 @@ builtin			find_builtin(char *str);
 
 t_lexer			*ft_new_node(char *str, int token);
 void			ft_node_add_back(t_lexer **lst, t_lexer *node);
-int				list_add_node(t_lexer **lst, enum t_operator token, char *str);
+int				list_add_node(t_lexer **lst, enum e_operator token, char *str);
 t_lexer			*clear_one(t_lexer **lst);
 void			del_first_node(t_lexer **lst);
 void			delone_node(int num_del, t_lexer **lst);

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/30 15:53:35 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:57:25 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@ void	print_error(t_mini *mini, t_lexer *lexer, int keycode)
 {
 	ft_putstr_fd("minihell: ", STDERR_FILENO);
 	if (keycode == 0)
-		ft_putstr_fd("syntax error near unexpected token", STDERR_FILENO);
-	if (keycode == 1)
-		ft_putstr_fd("in: No such file or directory", STDERR_FILENO);
+		ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
+	else if (keycode == 1)
+		ft_putstr_fd("malloc: cannot allocate memory\n", STDERR_FILENO);
+	if (keycode == 2)
+		ft_putstr_fd("in: No such file or directory\n", STDERR_FILENO);
 	if (lexer)
 		lst_clear_lexer(&lexer); // posiblemente de error de segfault si mandamos error por ejemplo infile.
 	reset(mini);
-}	
+}
 
 void	parser_token_error(t_mini *mini, int token)
 {

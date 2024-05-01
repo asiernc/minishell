@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/30 15:43:00 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/01 13:02:13 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	ft_print_parser(t_mini *mini)
 	{
 		printf("Node %d, str** = %s;",
 			   	i, tmp->str[0]);
+		//printf("Node %d, str** = %s;",
+			   //	i, tmp->str[1]);
+
 		//if (tmp2->str)
 		//	printf("redirections str = %s, operator = %d", tmp2->str,
 		//		tmp2->token);
@@ -63,7 +66,7 @@ t_simple_cmd	*create_cmd(t_parser *parser)
 	num_args = count_args(parser->lexer);
 	str = ft_calloc(num_args, sizeof(char *));
 	if (!str)
-		return (NULL) ; // error allocation memory
+		print_error(parser->mini, parser->mini->lexer, 1);
 	i = 0;
 	tmp = parser->lexer;
 	while (i < num_args)
@@ -106,6 +109,8 @@ int	parser(t_mini *mini)
 		mini->lexer = parser.lexer;
 	}
 	ft_print_parser(mini);
+	print_error(mini, mini->lexer, 0);
+	//reset(mini);
 	return (EXIT_SUCCESS);
 }
 

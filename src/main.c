@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/30 15:50:19 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/01 11:45:17 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	reset(t_mini *mini)
 		tmp = tmp->next;
 		free(tmp);
 	}*/
+	lst_clear_lexer(&mini->lexer);
 	mini_live(mini);
 	return (0);
 }
@@ -35,7 +36,7 @@ int	mini_live(t_mini *mini)
 	mini->line = readline("minihell 🔥 >");
 	//check_quotes(mini->line);
 	if (lexer_tokenizer(mini) != 0)
-		return (1); //display_error
+		print_error(mini, mini->lexer, 1); //display_error
 	//parser
 	parser(mini);
 	//executor
@@ -48,12 +49,13 @@ int	main(int argc, char **argv, char **env)
 {
   t_mini	mini;
 
-	if (argc != 1)
+	if (argc != 1 && argv[0])
 	{
 		printf("Don't write any argument");
 		exit(0);
 	}
-	printf("no %s%s\n", argv[0], env[1]);
+	mini.env = env;
+	//printf("no %s%s\n", argv[0], env[1]);
 	mini_live(&mini);
 	return (0);
 }
