@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/01 11:57:25 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:26:32 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	print_error(t_mini *mini, t_lexer *lexer, int keycode)
 	if (keycode == 2)
 		ft_putstr_fd("in: No such file or directory\n", STDERR_FILENO);
 	if (lexer)
-		lst_clear_lexer(&lexer); // posiblemente de error de segfault si mandamos error por ejemplo infile.
+		printf("ok");
+	if (mini->lexer)
+		lst_clear_lexer(&mini->lexer); // posiblemente de error de segfault si mandamos error por ejemplo infile.
+	//if (mini->simple_cmd)
+	//	lst_clear_parser(&mini->simple_cmd);
 	reset(mini);
 }
 

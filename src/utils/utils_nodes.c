@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:47:44 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/01 11:54:14 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:14:07 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,6 @@ void	ft_node_add_back(t_lexer **lst, t_lexer *node)
 	tmp->next = node;
 }
 
-void	ft_node_add_back_parser(t_simple_cmd **lst, t_simple_cmd *node)
-{
-	t_simple_cmd *tmp;
-
-	if (*lst == NULL)
-	{
-		*lst = node;
-		return ;
-	}
-	tmp = *lst;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = node;
-}
-
 t_lexer	*clear_one_node(t_lexer **lst)
 {
 	if ((*lst)->str)
@@ -89,21 +74,6 @@ void	del_first_node(t_lexer **lst)
 	clear_one_node(&tmp);
 }
 
-int		lst_size_simple_cmd(t_mini *mini)
-{
-	int	len;
-	t_simple_cmd	*tmp;
-
-	len = 0;
-	tmp = mini->simple_cmd;
-	while (tmp->next)
-	{
-		len++;
-		tmp = tmp->next;
-	}
-	return (len);
-}
-
 int		lst_size(t_mini *mini)
 {
 	int	len;
@@ -117,23 +87,6 @@ int		lst_size(t_mini *mini)
 		tmp = tmp->next;
 	}
 	return (len);
-}
-
-t_simple_cmd *new_simple_cmd(char **str, int num_redirections, t_lexer *redirections)
-{ 
-	t_simple_cmd	*new;
-   
-	new = (t_simple_cmd *)malloc(sizeof(t_simple_cmd));
-   	if (!new) 
-		return (0); 
-	new->str = str;
-	//if (str[0] == builtn
-   	new->func = find_builtin(str[0]); // identificar builtin
-   	new->hd_filename = NULL; 
-	new->num_redirections = num_redirections;
-   	new->redirections = redirections;
-	new->next = NULL; 
-	return (new);
 }
 
 void delone_node(int num_del, t_lexer **lst)
@@ -176,3 +129,4 @@ void	lst_clear_lexer(t_lexer **lst)
 	}
 	*lst = NULL;
 }
+

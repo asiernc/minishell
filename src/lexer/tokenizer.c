@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/30 12:34:42 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:07:30 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	check_operator(int c)
 
 int	put_operator(char *str, int i, t_lexer **lst)
 {
-	enum t_operator	operator;
+	enum e_operator	operator;
 
 	operator = check_operator(str[i]);
 	if (operator == RED_IN && check_operator(str[i + 1]) == RED_IN)

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/01 13:19:32 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:13:40 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,13 @@ typedef struct s_lexer
 }	t_lexer;
 
 //		Struct for parser
-// Definición del tipo de función de los comandos
-// This is OK ==> t_mini *mini, s_simple_cmd *cmd);
-typedef void (*builtin)(void);
+
+//typedef void (*builtin)(t_mini *mini, t_simple_cmd *cmd);
 
 typedef struct s_simple_cmd
 {
 	char					**str;
-	builtin					func;
+	char					*builtin;
 	int						num_redirections;
 	char					*hd_filename;
 	t_lexer					*redirections;
@@ -115,6 +114,7 @@ int				parser(t_mini *mini);
 t_parser		init_struct(t_lexer *lexer, t_mini *mini);
 t_simple_cmd	*create_cmd(t_parser *parser);
 void			redirections(t_parser *parser);
+void			lst_clear_parser(t_simple_cmd **lst);
 
 // Parser utils
 
@@ -130,7 +130,7 @@ int				lst_size_simple_cmd(t_mini *mini);
 
 // Built-ins
 
-builtin			find_builtin(char *str);
+//builtin			find_builtin(char *str);
 
 
 // Utils nodes

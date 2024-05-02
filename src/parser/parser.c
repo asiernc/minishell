@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/01 13:02:13 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:58:59 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	ft_print_parser(t_mini *mini)
 	tmp = mini->simple_cmd;
 	printf("LEN %d\n", len);
 	//tmp2 = mini->simple_cmd->redirections;
-	while (i <= len)
+	while (i < len)
 	{
 		printf("Node %d, str** = %s;",
 			   	i, tmp->str[0]);
-		//printf("Node %d, str** = %s;",
-			   //	i, tmp->str[1]);
+		printf("Node %d, str** = %s;",
+			   	i, tmp->str[1]);
 
 		//if (tmp2->str)
 		//	printf("redirections str = %s, operator = %d", tmp2->str,
@@ -85,32 +85,27 @@ t_simple_cmd	*create_cmd(t_parser *parser)
 
 int	parser(t_mini *mini)
 {
-	//int	i = 0;
 	t_parser		parser;
 	t_simple_cmd	 *cmd;
 
-	count_pipes(mini); //ok
+	count_pipes(mini);
 	printf("PIPES = %d\n", mini->pipes);
-	while (mini->lexer)//&& i < lst_size(mini)) //TEST i < lst_size TEST
+	while (mini->lexer)
 	{
 		if (mini->lexer && mini->lexer->token == PIPE)
 			del_first_node(&mini->lexer);
 		if (check_line(mini, mini->lexer->token))
-			return (EXIT_FAILURE); //EXIT_FAILURE
+			return (EXIT_FAILURE);
 		parser = init_struct(mini->lexer, mini);
 		cmd = create_cmd(&parser);
 		if (!cmd)
 			print_error(mini, mini->lexer, 0);
-		//ft_print(mini);
-		//printf("--------------------------------------------\n");
-		//mini->simple_cmd = cmd
-		//ft_print(mini);
 		ft_node_add_back_parser(&mini->simple_cmd, cmd);
 		mini->lexer = parser.lexer;
 	}
 	ft_print_parser(mini);
-	print_error(mini, mini->lexer, 0);
-	//reset(mini);
+	//print_error(mini, mini->lexer, 0);
+	reset(mini);
 	return (EXIT_SUCCESS);
 }
 
