@@ -6,35 +6,43 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/02 15:54:01 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 08:22:32 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_builtin(t_simple_cmd *cmd)
+char	*generate_filename(void)
 {
-	int	i;
+	static int	i = 1;
+	char		*str;
 
-	i = 0;
-	if (cmd->builtin == "echo")
-		builtin_echo(cmd);
-	else if (cmd->builtin == "cd")
-		builtin_cd(cmd);
-	else if (cmd->builtin == "pwd")
-		builtin_pwd(cmd);
-	else if (cmd->builtin == "export")
-		builtin_export(cmd);
-	else if (cmd->builtin == "unset")
-		builtin_unset(cmd);
-	else if (cmd->builtin == "env")
-		builtin_env(cmd);
-	else if (cmd->builtin == "exit")
-		builtin_exit(cmd);
-	else
-		return ;
+	str = ft_strjoin("./tmp/.tmp_heredoc_file", ft_itoa(i));
+	i++;
+	return (str);
 }
 
+int	create_heredoc(t_mini *mini, t_simple_cmd *cmd, char *filename)
+{
+	char	*line;
+	int		fd;
+
+	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	line = readline(">");
+	while (line && 
+
+int	ft_heredoc(t_mini *mini, t_simple_cmd *cmd)
+{
+	t_lexer	*tmp;
+	int		error;
+
+	tmp = cmd->redirections;
+	error = EXIT_SUCCESS;
+	while (tmp)
+	{
+		if (tmp->token == HDOC)
+			tmp->filename = generate_filename();
+		error = create_heredoc(mini, cmd, tmp->filename);
 
 int executor(t_mini *mini)
 {
@@ -42,8 +50,19 @@ int executor(t_mini *mini)
 	// checkear si tiene redirects, si es asi abrir y dup, infile y outfile || HDOC
 	// simple cmd
 	// multiple cmd
-	if (mini->pipes == 0 && check_builtin(mini->simple
-	if (mini->pipes == 0)
-		simple_command(mini->simple_cmd);
-	else
+	int	fds[2];
+	int	fd_in;
+
+	fd_in = STDIN_FILENO;
+	while (mini->simple_cmd)
+	{
+		//llamar al expander aqui??
+		if (mini->pipes != 0)
+			pipe(fds);
+		ft_heredoc(mini, mini->simple_cmd);
+
+		//abrir HDOC
+		//forks
+		//closes
+		//
 

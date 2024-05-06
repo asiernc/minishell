@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/02 12:58:59 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/03 10:36:46 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,25 @@
 void	ft_print_parser(t_mini *mini)
 {
 	t_simple_cmd	*tmp;
-	//t_lexer			*tmp2;
+	t_lexer			*tmp2;
 	int	i = 0;
 	int	len = lst_size_simple_cmd(mini);
 
 	tmp = mini->simple_cmd;
 	printf("LEN %d\n", len);
-	//tmp2 = mini->simple_cmd->redirections;
+	tmp2 = mini->simple_cmd->redirections;
 	while (i < len)
 	{
 		printf("Node %d, str** = %s;",
 			   	i, tmp->str[0]);
-		printf("Node %d, str** = %s;",
-			   	i, tmp->str[1]);
+		/*printf("Node %d, str** = %s;",
+			   	i, tmp->str[1]);*/
 
-		//if (tmp2->str)
-		//	printf("redirections str = %s, operator = %d", tmp2->str,
-		//		tmp2->token);
+		if (tmp2->str)
+			printf("redirections str = %s, operator = %d", tmp2->str,
+				tmp2->token);
 		tmp = tmp->next;
-		//tmp2 = tmp2->next;
+		tmp2 = tmp2->next;
 		printf("\n");
 		i++;
 	}

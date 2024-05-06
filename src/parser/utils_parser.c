@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:01:02 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/30 15:42:27 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/03 10:34:58 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	builtin_test(void)
 	printf("inside builtin test");
 }
 
-builtin	find_builtin(char *str)
+/*builtin	find_builtin(char *str)
 {
 	int					i;
 	static void *func[7][2] = 
@@ -43,7 +43,7 @@ builtin	find_builtin(char *str)
 		i++;
 	}
 	return (NULL);
-}
+}*/
 
 // Function responsible for counting pipes, for further processing.
 
