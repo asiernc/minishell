@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 12:16:35 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:12:32 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,16 @@ int	create_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename, bool quotes)
 	return (EXIT_SUCCESS);
 }
 
+void	remove_quotes(t_lexer *node)
+{
+	char	*str;
+
+	str = node->str;
+	free(node->str);
+	if (str[0] == '\"' || str[0] == '\'')
+		node->str = ft_substr(str, 1, ft_strlen(str) - 1);
+}
+
 int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 {
 	int		error;
@@ -56,14 +66,15 @@ int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 	len = ft_strlen(str) - 1;
 	if ((str[0] == '\"' && str[len] == '\"')
 		|| (str[0] == '\'' && str[len] == '\''))
+	{
+		remove_quotes(redir);
 		quotes = true;
+	}
 	else
 		quotes = false;
 	error = create_hdoc(mini, redir, hdoc_filename, quotes);
 	return (error);
 }
-
-
 
 int	ft_heredoc(t_mini *mini, t_simple_cmd *cmd)
 {

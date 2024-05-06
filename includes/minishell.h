@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 12:44:40 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:57:40 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,20 @@ typedef struct s_mini
 	// strcut export
 	struct s_lexer			*lexer;
 	int						pipes;
+	int						*pid;
 	struct s_simple_cmd		*simple_cmd;
 }	t_mini;
+
+//		Enum for code errors
+
+enum	e_error_codes
+{
+	SINTAX_ERROR = 1,
+	MALLOC_ERROR,		// allocation error
+	IN_ERROR,			// infile error
+	OUT_ERROR,			// outfile error
+	PIPE_ERROR,
+	FORK_ERROR,
 
 //		Enum for operators
 

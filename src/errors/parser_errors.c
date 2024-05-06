@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/02 10:26:32 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:57:34 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 void	print_error(t_mini *mini, t_lexer *lexer, int keycode)
 {
 	ft_putstr_fd("minihell: ", STDERR_FILENO);
-	if (keycode == 0)
+	if (keycode == SINTAX_ERROR)
 		ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
-	else if (keycode == 1)
+	else if (keycode == MALLOC_ERROR)
 		ft_putstr_fd("malloc: cannot allocate memory\n", STDERR_FILENO);
-	if (keycode == 2)
+	else if (keycode == IN_ERROR)
 		ft_putstr_fd("in: No such file or directory\n", STDERR_FILENO);
-	if (lexer)
-		printf("ok");
+	else if (keycode == OUT_ERROR)
+		ft_putstr_fd("out: No such file or directory\n", STDERR_FILENO);
+	else if (keycode == PIPE_ERROR)
+		ft_putstr_fd("pipe: Error\n", STDERR_FILENO);
+	else if (keycode == FORK_ERROR)
+		ft_putstr_fd("fork: Error\n", STDERR_FILENO);
 	if (mini->lexer)
 		lst_clear_lexer(&mini->lexer); // posiblemente de error de segfault si mandamos error por ejemplo infile.
 	//if (mini->simple_cmd)
