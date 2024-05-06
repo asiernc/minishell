@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/02 11:13:40 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:44:40 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_simple_cmd
 	char					**str;
 	char					*builtin;
 	int						num_redirections;
-	char					*hd_filename;
+	char					*hdoc_filename;
 	t_lexer					*redirections;
 	struct s_simple_cmd		*next;
 }	t_simple_cmd;
@@ -132,6 +132,17 @@ int				lst_size_simple_cmd(t_mini *mini);
 
 //builtin			find_builtin(char *str);
 
+
+// Executor
+
+int				executor(t_mini *mini);
+
+// Hdoc
+
+int				ft_heredoc(t_mini *mini, t_simple_cmd *cmd);
+char			*generate_filename(void);
+int				check_eof(t_mini *mini, t_lexer	*redir, char *hdoc_filename);
+int				create_hdoc
 
 // Utils nodes
 
