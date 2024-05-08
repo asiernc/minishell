@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 10:47:44 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/02 11:14:07 by anovio-c         ###   ########.fr       */
+/*   Created: 2024/05/06 10:47:44 by anovio-c          #+#    #+#             */
+/*   Updated: 2024/05/06 20:32:52 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	list_add_node(t_lexer **lexer_list, enum e_operator token, char *str)
 {
@@ -73,60 +73,3 @@ void	del_first_node(t_lexer **lst)
 	*lst = tmp->next;
 	clear_one_node(&tmp);
 }
-
-int		lst_size(t_mini *mini)
-{
-	int	len;
-	t_lexer	*tmp;
-
-	tmp = mini->lexer;
-	len = 0;
-	while (tmp->next)
-	{
-		len++;
-		tmp = tmp->next;
-	}
-	return (len);
-}
-
-void delone_node(int num_del, t_lexer **lst)
-{
-	t_lexer *node; 
-	t_lexer *prev;
-	t_lexer *start;
-	
-	start = *lst;
-	node = start;
-	if ((*lst)->num_node == num_del)
-	{
-		del_first_node(lst);
-		return ;
-	}
-	while (node && node->num_node != num_del)
-	{
-		prev = node;
-		node = node->next;
-	}
-	if (node)
-		prev->next = node->next;
-	else
-		prev->next = NULL;
-	clear_one_node(&node);
-	*lst = start;
-}
-
-void	lst_clear_lexer(t_lexer **lst)
-{
-	t_lexer *tmp;
-
-	if (!*lst)
-		return ;
-	while (*lst)
-	{
-		tmp = (*lst)->next;
-		free(lst);
-		*lst = tmp;
-	}
-	*lst = NULL;
-}
-

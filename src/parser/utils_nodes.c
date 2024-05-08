@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_simple_cmd.c                                 :+:      :+:    :+:   */
+/*   utils_nodes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:30:58 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/02 11:13:20 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:35:06 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_simple_cmd *new_simple_cmd(char **str, int num_redirections, t_lexer *redirect
 		return (0);
 	new->str = str;
    	new->builtin = str[0]; // find_builtin(str[0]) works well
-   	new->hd_filename = NULL;
+   	new->hdoc_filename = NULL;
 	new->num_redirections = num_redirections;
    	new->redirections = redirections;
 	new->next = NULL;

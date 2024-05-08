@@ -6,18 +6,13 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:01:02 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/03 10:34:58 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/06 20:27:47 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// builtin test
 //int builtin_test(t_mini *mini, t_simple_cmd *simple_cmd);
-void	builtin_test(void)
-{
-	printf("inside builtin test");
-}
 
 /*builtin	find_builtin(char *str)
 {
@@ -87,12 +82,12 @@ int	check_line(t_mini *mini, int token)
 	if (token == PIPE)
 	{
 		parser_token_error(mini, token);
-		return (EXIT_FAILURE); //EXIT_FAILURE
+		return (EXIT_FAILURE);
 	}
 	else if (!mini->lexer)
 	{
 		print_error(mini, mini->lexer, 0);
-		return (EXIT_FAILURE); // EXIT_FAILURE
+		return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS); // EXIT_SUCCESS
+	return (EXIT_SUCCESS);
 }

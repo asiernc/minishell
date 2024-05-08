@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 16:57:40 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:38:54 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ enum	e_error_codes
 	OUT_ERROR,			// outfile error
 	PIPE_ERROR,
 	FORK_ERROR,
-
+};
 //		Enum for operators
 
 enum e_operator
@@ -154,17 +154,17 @@ int				executor(t_mini *mini);
 int				ft_heredoc(t_mini *mini, t_simple_cmd *cmd);
 char			*generate_filename(void);
 int				check_eof(t_mini *mini, t_lexer	*redir, char *hdoc_filename);
-int				create_hdoc
+//int				create_hdoc
 
 // Utils nodes
 
 t_lexer			*ft_new_node(char *str, int token);
 void			ft_node_add_back(t_lexer **lst, t_lexer *node);
 int				list_add_node(t_lexer **lst, enum e_operator token, char *str);
-t_lexer			*clear_one(t_lexer **lst);
+t_lexer			*clear_one_node(t_lexer **lst);
 void			del_first_node(t_lexer **lst);
 void			delone_node(int num_del, t_lexer **lst);
-int				lst_size(t_mini *mini);
+int				lst_size_lexer(t_mini *mini);
 void			lst_clear_lexer(t_lexer **lst);
 
 // Random utils

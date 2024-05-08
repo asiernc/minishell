@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 16:57:34 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:36:11 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	print_error(t_mini *mini, t_lexer *lexer, int keycode)
 		ft_putstr_fd("pipe: Error\n", STDERR_FILENO);
 	else if (keycode == FORK_ERROR)
 		ft_putstr_fd("fork: Error\n", STDERR_FILENO);
+	if (lexer)//test
+		printf("");//test
 	if (mini->lexer)
 		lst_clear_lexer(&mini->lexer); // posiblemente de error de segfault si mandamos error por ejemplo infile.
 	//if (mini->simple_cmd)

@@ -6,42 +6,11 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/02 10:07:30 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:17:23 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// 
-
-void	clear_line(t_mini *mini)
-{
-	char	*tmp;
-
-	tmp = ft_strtrim(mini->line, " ");
-	free(mini->line);
-	mini->line = tmp;
-	printf("%s\n", mini->line);
-}
-
-// This function serves to check if that character is an operator. 
-// If so, we assign a value to that key (operator character).
-
-int	check_operator(int c)
-{
-	int	i;
-	int operator[3][2] = {
-		{'|', PIPE},
-		{'<', RED_IN},
-		{'>', RED_OUT},
-	};
-
-	i = -1;
-	while (++i <= 2)
-		if (operator[i][0] == c)
-			return (operator[i][1]);
-	return (0);
-}
 
 // This function assigns a value to that operator as desired. The only 
 // different ones are '>>' and '<<', so we create a special case for 
@@ -77,33 +46,18 @@ int	put_operator(char *str, int i, t_lexer **lst)
 	return (0);
 }
 
-// Traverse the string from that quote until the next character that
-// matches the first one.
-
-int	find_next_quote(char c, char *str, int i)
-{
-	int	j;
-
-	j = 1;
-	while (str[i + j] && str[i + j] != c)
-	   j++;
-	j++;
-	//printf("valor j: %d\n", j);
-	return (j);
-}	
-
 // Identify the word, trim it from spaces, and add it as a new node.
 // Also, identify quotes.
 
 int	put_word(char *str, int i, t_lexer **lst)
 {
-	static int k = 0;
-	int	j;
+	static int	flag = 0;
+	int			j;
 
-	if (k == 0)
+	if (flag == 0)
 	{
 		*lst = NULL;
-		k = 1;
+		flag = 1;
 	}
 	j = 0;
 	//printf("STRRRRR: %s\n", str);
@@ -121,21 +75,6 @@ int	put_word(char *str, int i, t_lexer **lst)
 	if (list_add_node(lst, 0, ft_substr(str, i, j)))
 		return (1);
 	return (j);
-}
-
-void	ft_print(t_mini *mini)
-{
-	t_lexer	*tmp;
-	int	i = 0;
-	int	len = lst_size(mini);
-
-	tmp = mini->lexer;
-	while (i <= len)
-	{
-		i++;
-		printf("Node %d, str = %s  token(ope) = %d\n", tmp->num_node, tmp->str, tmp->token);
-		tmp = tmp->next;
-	}
 }
 
 // This function separate the command line, distinguish between operator and word.
