@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 20:38:54 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/08 15:57:33 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdbool.h>
 
 // STRUCTS
 
@@ -40,8 +41,10 @@ typedef struct s_mini
 	// strcut export
 	struct s_lexer			*lexer;
 	int						pipes;
+	int						flag_hdoc;
 	int						*pid;
-	struct s_simple_cmd		*simple_cmd;
+	int						error_code;
+	struct s_cmd		*cmd;
 }	t_mini;
 
 //		Enum for code errors
@@ -54,6 +57,9 @@ enum	e_error_codes
 	OUT_ERROR,			// outfile error
 	PIPE_ERROR,
 	FORK_ERROR,
+	DUP2_ERROR,
+	CMD_NOT_FOUND_ERROR,
+	EXECVE_ERROR,
 };
 //		Enum for operators
 
@@ -78,17 +84,17 @@ typedef struct s_lexer
 
 //		Struct for parser
 
-//typedef void (*builtin)(t_mini *mini, t_simple_cmd *cmd);
+//typedef void (*builtin)(t_mini *mini, t_cmd *cmd);
 
-typedef struct s_simple_cmd
+typedef struct s_cmd
 {
 	char					**str;
 	char					*builtin;
 	int						num_redirections;
 	char					*hdoc_filename;
 	t_lexer					*redirections;
-	struct s_simple_cmd		*next;
-}	t_simple_cmd;
+	struct s_cmd		*next;
+}	t_cmd;
 
 typedef struct s_parser
 {
@@ -124,20 +130,20 @@ void			clear_line(t_mini *mini);
 
 int				parser(t_mini *mini);
 t_parser		init_struct(t_lexer *lexer, t_mini *mini);
-t_simple_cmd	*create_cmd(t_parser *parser);
+t_cmd			*create_cmd(t_parser *parser);
 void			redirections(t_parser *parser);
-void			lst_clear_parser(t_simple_cmd **lst);
+void			lst_clear_parser(t_cmd **lst);
 
 // Parser utils
 
-t_simple_cmd	 *new_simple_cmd(char **str, int num_redirects, t_lexer *redirections);
+t_cmd	 *new_cmd(char **str, int num_redirects, t_lexer *redirections);
 void			count_pipes(t_mini *mini);
 int				count_args(t_lexer *lst);
 t_lexer			*move_to_next_cmd(t_lexer *lst);
-void			ft_node_add_back_parser(t_simple_cmd **lst, t_simple_cmd *node);
+void			ft_node_add_back_parser(t_cmd **lst, t_cmd *node);
 int				check_line(t_mini *mini, int token);
 
-int				lst_size_simple_cmd(t_mini *mini);
+int				lst_size_cmd(t_mini *mini);
 
 
 // Built-ins
@@ -148,13 +154,20 @@ int				lst_size_simple_cmd(t_mini *mini);
 // Executor
 
 int				executor(t_mini *mini);
+int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
+void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
+void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
+char			*find_check_path(char *cmd, char **env);
+void			wait_pipes(t_mini *mini, int *pid, int pipes);
+
 
 // Hdoc
 
-int				ft_heredoc(t_mini *mini, t_simple_cmd *cmd);
+int				ft_heredoc(t_mini *mini, t_cmd *cmd);
 char			*generate_filename(void);
 int				check_eof(t_mini *mini, t_lexer	*redir, char *hdoc_filename);
-//int				create_hdoc
+int				create_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename, bool quotes);
+void			remove_quotes(t_lexer *node);
 
 // Utils nodes
 

@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-t_simple_cmd *new_simple_cmd(char **str, int num_redirections, t_lexer *redirections)
+t_cmd *new_cmd(char **str, int num_redirections, t_lexer *redirections)
 {
-	t_simple_cmd	*new;
+	t_cmd	*new;
 
-	new = (t_simple_cmd *)malloc(sizeof(t_simple_cmd));
+	new = (t_cmd *)malloc(sizeof(t_cmd));
    	if (!new)
 		return (0);
 	new->str = str;
@@ -28,9 +28,9 @@ t_simple_cmd *new_simple_cmd(char **str, int num_redirections, t_lexer *redirect
 	return (new);
 }
 
-void	ft_node_add_back_parser(t_simple_cmd **lst, t_simple_cmd *node)
+void	ft_node_add_back_parser(t_cmd **lst, t_cmd *node)
 {
-	t_simple_cmd *tmp;
+	t_cmd *tmp;
 
 	if (*lst == NULL)
 	{
@@ -43,13 +43,13 @@ void	ft_node_add_back_parser(t_simple_cmd **lst, t_simple_cmd *node)
 	tmp->next = node;
 }
 
-int		lst_size_simple_cmd(t_mini *mini)
+int		lst_size_cmd(t_mini *mini)
 {
 	int	len;
-	t_simple_cmd	*tmp;
+	t_cmd	*tmp;
 
 	len = 1;
-	tmp = mini->simple_cmd;
+	tmp = mini->cmd;
 	while (tmp->next)
 	{
 		len++;
@@ -59,9 +59,9 @@ int		lst_size_simple_cmd(t_mini *mini)
 }
 
 // no hay malloc en parser!
-void	lst_clear_parser(t_simple_cmd **lst)
+void	lst_clear_parser(t_cmd **lst)
 {
-	t_simple_cmd	*tmp;
+	t_cmd	*tmp;
 
 	if (!*lst)
 		return ;

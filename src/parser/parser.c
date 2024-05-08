@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 10:55:33 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:18:48 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 
 void	ft_print_parser(t_mini *mini)
 {
-	t_simple_cmd	*tmp;
-	t_lexer			*tmp2;
+	t_cmd	*tmp;
+	//t_lexer			*tmp2;
 	int	i = 0;
-	int	len = lst_size_simple_cmd(mini);
+	int	len = lst_size_cmd(mini);
 
-	tmp = mini->simple_cmd;
+	tmp = mini->cmd;
 	printf("LEN %d\n", len);
-	tmp2 = mini->simple_cmd->redirections;
+	//tmp2 = mini->simple_cmd->redirections;
 	while (i < len)
 	{
 		printf("Node %d, str** = %s;",
@@ -32,11 +32,11 @@ void	ft_print_parser(t_mini *mini)
 		/*printf("Node %d, str** = %s;",
 			   	i, tmp->str[1]);*/
 
-		if (tmp2->str)
-			printf("redirections str = %s, operator = %d", tmp2->str,
-				tmp2->token);
+		//if (tmp2->str)
+		//	printf("redirections str = %s, operator = %d", tmp2->str,
+		//		tmp2->token);
 		tmp = tmp->next;
-		tmp2 = tmp2->next;
+		//tmp2 = tmp2->next;
 		printf("\n");
 		i++;
 	}
@@ -55,7 +55,7 @@ t_parser	init_struct(t_lexer *lexer, t_mini *mini)
 	return (parser);
 }
 
-t_simple_cmd	*create_cmd(t_parser *parser)
+t_cmd	*create_cmd(t_parser *parser)
 {
 	char	**str;
 	int		i;
@@ -80,13 +80,13 @@ t_simple_cmd	*create_cmd(t_parser *parser)
 		}
 		i++;
 	}
-	return (new_simple_cmd(str, parser->num_redirections, parser->redirections));
+	return (new_cmd(str, parser->num_redirections, parser->redirections));
 }
 
 int	parser(t_mini *mini)
 {
 	t_parser		parser;
-	t_simple_cmd	 *cmd;
+	t_cmd	 *cmd;
 
 	count_pipes(mini);
 	printf("PIPES = %d\n", mini->pipes);
@@ -100,7 +100,7 @@ int	parser(t_mini *mini)
 		cmd = create_cmd(&parser);
 		if (!cmd)
 			print_error(mini, mini->lexer, 0);
-		ft_node_add_back_parser(&mini->simple_cmd, cmd);
+		ft_node_add_back_parser(&mini->cmd, cmd);
 		mini->lexer = parser.lexer;
 	}
 	ft_print_parser(mini);

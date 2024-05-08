@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 16:12:32 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:56:00 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void	remove_quotes(t_lexer *node)
 
 int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 {
-	int		error;
-	int		str;
-	int		len;
-	bool	quotes;
+	int			error;
+	char		*str;
+	int			len;
+	bool		quotes;
 
 	error = EXIT_SUCCESS;
 	str = redir->str;
@@ -76,7 +76,23 @@ int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 	return (error);
 }
 
-int	ft_heredoc(t_mini *mini, t_simple_cmd *cmd)
+int	sends_hdoc(t_mini *mini, t_cmd *cmd, int fds[2])
+{
+	int	fd_in;
+
+	fd_in = 0;
+	if (mini->flag_hdoc == 1)
+	{
+		mini->flag_hdoc = 0;
+		close(fds[0]);
+		fd_in = open(cmd->hdoc_filename, 0644);
+	}
+	else
+		fd_in = fds[0];
+	return (fd_in);
+}
+
+int	ft_heredoc(t_mini *mini, t_cmd *cmd)
 {
 	t_lexer	*tmp;
 	int		error;
@@ -95,4 +111,5 @@ int	ft_heredoc(t_mini *mini, t_simple_cmd *cmd)
 		cmd = cmd->next;
 	}
 	cmd = tmp;
+	mini->flag_hdoc = 1;
 }
