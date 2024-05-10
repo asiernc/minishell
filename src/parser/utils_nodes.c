@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:30:58 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 20:35:06 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/10 11:57:51 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_cmd *new_cmd(char **str, int num_redirections, t_lexer *redirections)
    	if (!new)
 		return (0);
 	new->str = str;
-   	new->builtin = str[0]; // find_builtin(str[0]) works well
+   	new->builtin = prepare_builtin(str[0]); // find_builtin(str[0]) works well
    	new->hdoc_filename = NULL;
 	new->num_redirections = num_redirections;
    	new->redirections = redirections;

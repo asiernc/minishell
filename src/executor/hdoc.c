@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/08 15:56:00 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:35:50 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 	error = EXIT_SUCCESS;
 	str = redir->str;
 	len = ft_strlen(str) - 1;
+	// hacer un strchr que encuentre la pareja, si hay alguna comilla no se expande
 	if ((str[0] == '\"' && str[len] == '\"')
 		|| (str[0] == '\'' && str[len] == '\''))
 	{
@@ -96,20 +97,26 @@ int	ft_heredoc(t_mini *mini, t_cmd *cmd)
 {
 	t_lexer	*tmp;
 	int		error;
+	int		count;
 
 	tmp = cmd->redirections;
 	error = EXIT_SUCCESS;
+	count = 0;
 	while (cmd->redirections)
 	{
+		if (count >= 16)
+			//bash: maximum here-document count exceeded == exit (sale de bash)
 		if (cmd->redirections->token == HDOC)
 		{
+			count++;
 			cmd->hdoc_filename = generate_filename();
 			error = check_eof(mini, cmd, cmd->hdoc_filename);
-			if (error)
+			if (error) // error == exitFAILURE
 				reset(mini);
 		}
 		cmd = cmd->next;
 	}
 	cmd = tmp;
 	mini->flag_hdoc = 1;
+	return (error);
 }

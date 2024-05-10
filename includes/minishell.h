@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/08 15:57:33 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/10 14:10:19 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,20 @@ typedef struct s_mini
 	int						error_code;
 	struct s_cmd		*cmd;
 }	t_mini;
+
+//		Enum for builtins
+
+enum	e_builtins
+{
+	ECHO = 1,
+	CD,
+	PWD,
+	EXPORT,
+	UNSET,
+	ENV,
+	EXIT,
+	NOT_HAVE,
+}
 
 //		Enum for code errors
 
@@ -89,7 +103,7 @@ typedef struct s_lexer
 typedef struct s_cmd
 {
 	char					**str;
-	char					*builtin;
+	enum e_builtin			builtin;
 	int						num_redirections;
 	char					*hdoc_filename;
 	t_lexer					*redirections;
@@ -137,6 +151,7 @@ void			lst_clear_parser(t_cmd **lst);
 // Parser utils
 
 t_cmd	 *new_cmd(char **str, int num_redirects, t_lexer *redirections);
+e_builtin		prepare_builtin(char *str);
 void			count_pipes(t_mini *mini);
 int				count_args(t_lexer *lst);
 t_lexer			*move_to_next_cmd(t_lexer *lst);
@@ -153,12 +168,16 @@ int				lst_size_cmd(t_mini *mini);
 
 // Executor
 
+int				pre_executor(t_mini *mini);
+void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
+
 int				executor(t_mini *mini);
 int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
 char			*find_check_path(char *cmd, char **env);
 void			wait_pipes(t_mini *mini, int *pid, int pipes);
+
 
 
 // Hdoc
