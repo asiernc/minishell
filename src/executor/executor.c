@@ -6,30 +6,11 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 19:54:39 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/10 21:39:05 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
-{
-	char	*cmd;
-	char	*path;
-
-	cmd = cmd->str[0];
-	path = find_check_path(cmd, mini->env);
-	if (!path)
-	{
-		printf("%s: ", cmd); // mirar como $? == 127, como escalar el codigo error
-		print_error(mini, mini->lexer, CMD_NOT_FOUND_ERROR);
-	}
-	if (execve(path, cmd->str, mini->env) == -1)
-	{
-		path = perror;
-		print_error(mini, mini->lexer, EXECVE_ERROR);
-	}
-}
 
 void	ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in)
 {
@@ -64,7 +45,7 @@ int	ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in)
 void	wait_pipes(t_mini *mini, int *pid, int pipes)
 {
 	int	i;
-	int	*status;
+	int	status;
 
 	i = 0;
 	while (i <= pipes)
@@ -85,7 +66,7 @@ int executor(t_mini *mini)
 	int	count_pipes;
 
 	count_pipes = mini->pipes;
-	mini->pid = ft_calloc((count_pipes + 2) * sizeof(int));
+	mini->pid = ft_calloc((count_pipes + 2), sizeof(int));
 	if (!mini->pid)
 		print_error(mini, mini->lexer, MALLOC_ERROR);
 	fd_in = STDIN_FILENO;
@@ -94,7 +75,7 @@ int executor(t_mini *mini)
 		//llamar al expander aqui??
 		if (count_pipes > 0 && pipe(fds) == -1) //mini->cmd->next
 			print_error(mini, mini->lexer, PIPE_ERROR);
-		ft_heredoc(mini, mini->cmd);
+		//ft_heredoc(mini, mini->cmd);
 		ft_fork(mini, mini->cmd, fds, fd_in);
 		close(fds[1]);
 		fd_in = sends_hdoc(mini, mini->cmd, fds);
@@ -105,6 +86,8 @@ int executor(t_mini *mini)
 		count_pipes--;
 	}
 	wait_pipes(mini, mini->pid, mini->pipes);
+	return (0);
+	// hacer limpieza recursiva o guardar/mover puntero cmd nodo al primero para free
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:01:02 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 11:45:02 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:06:34 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@
 	return (NULL);
 }*/
 
-e_builtin	prepare_builtin(char *str)
+int	prepare_builtin(char *str)
 {
-	if (ft_strcmp(str, "echo" == 0))
+	if (ft_strcmp(str, "echo") == 0)
 		return (ECHO);
-	else if (ft_strcmp(str, "cd" == 0))
+	else if (ft_strcmp(str, "cd") == 0)
 		return (CD);
-	else if (ft_strcmp(str, "pwd" == 0))
+	else if (ft_strcmp(str, "pwd") == 0)
 		return (PWD);
-	else if (ft_strcmp(str, "export" == 0))
+	else if (ft_strcmp(str, "export") == 0)
 		return (EXPORT);
-	else if (ft_strcmp(str, "unset" == 0))
+	else if (ft_strcmp(str, "unset") == 0)
 		return (UNSET);
-	else if (ft_strcmp(str, "env" == 0))
+	else if (ft_strcmp(str, "env") == 0)
 		return (ENV);
-	else if (ft_strcmp(str, "exit" == 0))
+	else if (ft_strcmp(str, "exit") == 0)
 		return (EXIT);
 	else
 		return (NOT_HAVE);

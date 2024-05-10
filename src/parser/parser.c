@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/08 16:18:48 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/10 22:18:32 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ void	ft_print_parser(t_mini *mini)
 	int	i = 0;
 	int	len = lst_size_cmd(mini);
 
+	printf("1111111111STRING : %s\n", mini->cmd->next->str[0]);
 	tmp = mini->cmd;
 	printf("LEN %d\n", len);
 	//tmp2 = mini->simple_cmd->redirections;
-	while (i < len)
+	while (tmp)
 	{
+		printf("1\n");
 		printf("Node %d, str** = %s;",
 			   	i, tmp->str[0]);
 		/*printf("Node %d, str** = %s;",
@@ -64,7 +66,7 @@ t_cmd	*create_cmd(t_parser *parser)
 
 	redirections(parser);
 	num_args = count_args(parser->lexer);
-	str = ft_calloc(num_args, sizeof(char *));
+	str = malloc((num_args + 1) * sizeof(char *));
 	if (!str)
 		print_error(parser->mini, parser->mini->lexer, 1);
 	i = 0;
@@ -74,6 +76,7 @@ t_cmd	*create_cmd(t_parser *parser)
 		if (tmp->str)
 		{
 			str[i] = ft_strdup(tmp->str);
+			printf("NEW CMD: %s\n", str[i]);
 			delone_node(tmp->num_node, &parser->lexer);
 			//del_first_node(&parser->lexer);
 			tmp = parser->lexer;
@@ -86,7 +89,7 @@ t_cmd	*create_cmd(t_parser *parser)
 int	parser(t_mini *mini)
 {
 	t_parser		parser;
-	t_cmd	 *cmd;
+	t_cmd			 *cmd;
 
 	count_pipes(mini);
 	printf("PIPES = %d\n", mini->pipes);
@@ -98,14 +101,19 @@ int	parser(t_mini *mini)
 			return (EXIT_FAILURE);
 		parser = init_struct(mini->lexer, mini);
 		cmd = create_cmd(&parser);
+		printf("parser inside : %s\n", cmd->str[0]);
 		if (!cmd)
 			print_error(mini, mini->lexer, 0);
-		ft_node_add_back_parser(&mini->cmd, cmd);
+		if (!mini->cmd)
+			mini->cmd = cmd;
+		else
+			ft_node_add_back_parser(&mini->cmd, cmd);
 		mini->lexer = parser.lexer;
 	}
-	ft_print_parser(mini);
+	mini->cmd = mini->cmd->next;
+	//ft_print_parser(mini);
 	//print_error(mini, mini->lexer, 0);
-	reset(mini);
+	//reset(mini);
 	return (EXIT_SUCCESS);
 }
 

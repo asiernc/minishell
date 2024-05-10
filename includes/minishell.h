@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 14:10:19 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:06:53 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ enum	e_builtins
 	ENV,
 	EXIT,
 	NOT_HAVE,
-}
+};
 
 //		Enum for code errors
 
@@ -103,7 +103,7 @@ typedef struct s_lexer
 typedef struct s_cmd
 {
 	char					**str;
-	enum e_builtin			builtin;
+	enum e_builtins			builtin;
 	int						num_redirections;
 	char					*hdoc_filename;
 	t_lexer					*redirections;
@@ -150,8 +150,8 @@ void			lst_clear_parser(t_cmd **lst);
 
 // Parser utils
 
-t_cmd	 *new_cmd(char **str, int num_redirects, t_lexer *redirections);
-e_builtin		prepare_builtin(char *str);
+t_cmd			 *new_cmd(char **str, int num_redirects, t_lexer *redirections);
+int				prepare_builtin(char *str);
 void			count_pipes(t_mini *mini);
 int				count_args(t_lexer *lst);
 t_lexer			*move_to_next_cmd(t_lexer *lst);
@@ -176,6 +176,9 @@ int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
 char			*find_check_path(char *cmd, char **env);
+int				do_cmd(t_mini *mini, t_cmd *cmd);
+int				do_builtin(t_mini *mini, t_cmd *cmd);
+void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
 void			wait_pipes(t_mini *mini, int *pid, int pipes);
 
 
@@ -187,6 +190,7 @@ char			*generate_filename(void);
 int				check_eof(t_mini *mini, t_lexer	*redir, char *hdoc_filename);
 int				create_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename, bool quotes);
 void			remove_quotes(t_lexer *node);
+int				sends_hdoc(t_mini *mini, t_cmd *cmd, int fds[2]);
 
 // Utils nodes
 

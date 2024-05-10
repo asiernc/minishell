@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 13:35:50 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:15:06 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,14 @@ int	create_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename, bool quotes)
 	while (line && ft_strcmp(redir->str, line) != 0)
 	{
 		if (quotes == false)
-			line = expand_line(mini, line);
+			write(1, "", 1);
+		//	line = expand_line(mini, line);
 		ft_putendl_fd(line, fd);
 		free(line);
 		line = readline(">");
 	}
+	if (mini)
+		write(1, "", 1);
 	free(line);
 	if (!line)
 		return (EXIT_FAILURE);
@@ -65,6 +68,7 @@ int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 	str = redir->str;
 	len = ft_strlen(str) - 1;
 	// hacer un strchr que encuentre la pareja, si hay alguna comilla no se expande
+	// hacer un check quotes, que sea par
 	if ((str[0] == '\"' && str[len] == '\"')
 		|| (str[0] == '\'' && str[len] == '\''))
 	{
@@ -110,13 +114,13 @@ int	ft_heredoc(t_mini *mini, t_cmd *cmd)
 		{
 			count++;
 			cmd->hdoc_filename = generate_filename();
-			error = check_eof(mini, cmd, cmd->hdoc_filename);
+			error = check_eof(mini, mini->cmd->redirections, cmd->hdoc_filename);
 			if (error) // error == exitFAILURE
 				reset(mini);
 		}
 		cmd = cmd->next;
 	}
-	cmd = tmp;
+	cmd->redirections = tmp;
 	mini->flag_hdoc = 1;
 	return (error);
 }

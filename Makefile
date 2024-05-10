@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/05/06 20:32:19 by asiercara        ###   ########.fr        #
+#    Updated: 2024/05/10 20:02:13 by asiercara        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,10 @@ SRC			=	src/main.c 						\
 				src/parser/redirections.c		\
 				src/parser/utils_parser.c		\
 				src/parser/utils_nodes.c		\
+				src/executor/executor.c			\
+				src/executor/hdoc.c				\
+				src/executor/run_cmds.c			\
+				src/executor/utils.c			\
 				src/utils/utils.c				\
 				src/errors/parser_errors.c
 
