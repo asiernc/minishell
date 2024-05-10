@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 14:10:22 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/10 19:54:39 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,3 @@ int executor(t_mini *mini)
 }
 
 
-
-int	cmd_not_found(char *str)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(str, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	return (127);
-}
