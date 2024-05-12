@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/01 18:54:12 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:33:58 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,52 @@ int	ft_strcmp(char *s1, char *s2)
 }
 
 //I HAVE TO REMOVE THE NODE->KEY = _ BECAUSE IT ISN'T IN EXPORT
+//on va ajouter une fonction qui free le noeud _
+/*t_builtin	*delete_special_node(t_builtin *lst)
+{
+	t_builtin	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->next->key, "_", 1))
+		{
+			free(tmp->next->key);
+			free(tmp->next->value);
+			free(tmp->next);
+			tmp->next = tmp->next->next;
+		}
+		tmp = tmp->next;
+	}
+	return (lst);
+}*/
+
+void	remove_node(t_builtin **head)
+{
+	t_builtin	*current;
+	t_builtin	*previous;
+
+	previous = NULL;
+	current = *head;
+	if (*head == NULL)
+		return ;
+	while (current)
+	{
+		if (ft_strcmp(current->key, "_") == 0)
+		{
+			if (previous == NULL)
+				*head = current->next;
+			else
+				previous->next = current->next;
+			free(current->key);
+			free(current->value);
+			free(current);
+			return ;
+		}
+		previous = current;
+		current = current->next;
+	}
+}
 
 //there is a second argument whereas I really need one because I had norminette
 //issues. This second argument has to be set as NULL
@@ -133,7 +179,7 @@ void	join_values(t_builtin **lst_export, char *str)
 	free(value_str);
 }
 
-void	builtin_export(char **env, char *str)
+int	builtin_export(char **env, char *str)
 {
 	t_builtin	*lst_export;
 	t_builtin	*tmp;
@@ -150,6 +196,8 @@ void	builtin_export(char **env, char *str)
 	}
 	lst_export = sort_ascii(lst_export, NULL);
 	tmp = lst_export;
+	remove_node(&tmp);
+	//before printing the list, we want to free the _ node
 	while (tmp)
 	{
 		printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
@@ -157,6 +205,7 @@ void	builtin_export(char **env, char *str)
 	}
 	ft_lstclear_builtin(&lst_export);//this line will be written at the very
 	//last step of the pgrm. Just before return (0) of the main
+	return (1);
 }
 
 int	main(int argc, char **argv, char **env)
