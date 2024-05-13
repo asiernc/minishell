@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 22:07:33 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/11 17:20:06 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	//int		error_code;
 
 	cmd_head = cmd->str[0];
+	printf("inside do cmd\n");
 	path = find_check_path(cmd_head, mini->env);
 	if (!path)
 	{

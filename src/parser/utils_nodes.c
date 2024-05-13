@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:30:58 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 21:44:29 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/11 16:58:39 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_cmd *new_cmd(char **str, int num_redirections, t_lexer *redirections)
 	new->num_redirections = num_redirections;
    	new->redirections = redirections;
 	new->next = NULL;
+	new->previous = NULL;
 	return (new);
 }
 
@@ -41,6 +42,7 @@ void	ft_node_add_back_parser(t_cmd **lst, t_cmd *node)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = node;
+	tmp->previous = tmp;
 }
 
 int		lst_size_cmd(t_mini *mini)

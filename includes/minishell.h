@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 20:06:53 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/11 16:58:03 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_cmd
 	char					*hdoc_filename;
 	t_lexer					*redirections;
 	struct s_cmd		*next;
+	struct s_cmd		*previous;
 }	t_cmd;
 
 typedef struct s_parser

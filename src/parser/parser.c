@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 22:18:32 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/11 17:13:34 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int	parser(t_mini *mini)
 		mini->lexer = parser.lexer;
 	}
 	mini->cmd = mini->cmd->next;
+	mini->cmd->previous = NULL;
 	//ft_print_parser(mini);
 	//print_error(mini, mini->lexer, 0);
 	//reset(mini);

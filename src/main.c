@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 21:37:04 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/11 15:19:14 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	reset(t_mini *mini)
 int	mini_live(t_mini *mini)
 {
 	// valorar hacer un bucle para no forzar a que entre dentor de una funcion de otra de otra de otra
-	mini->line = readline("minihell 🔥 >");
+	mini->line = readline("shelldone 🔥 >");
 	//check_quotes(mini->line);
 	if (lexer_tokenizer(mini) != 0)
 		print_error(mini, mini->lexer, 1); //display_error

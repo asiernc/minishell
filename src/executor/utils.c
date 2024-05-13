@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 21:42:03 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/11 15:36:14 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int		pre_executor(t_mini *mini)
 		executor(mini);
 	return (0);
 }
+
+
+// esta bien que pase por env de inicio, pero valorar de donde leer, 
+// si de env de shell o de env de nuestra shell
 
 char	*find_check_path(char *cmd, char **env)
 {

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 21:39:05 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/11 17:18:56 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 void	ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in)
 {
-	static int	i = 0;
+//	static int	i = 0;
 
 	//first cmd
-	if (i == 0 && dup2(fd_in, STDIN_FILENO) == -1)
+	if (cmd->previous && dup2(fd_in, STDIN_FILENO) == -1)
+		print_error(mini, mini->lexer, DUP2_ERROR);
+//	i++;
+	close(fds[0]);
+	// last cmd
+	if (cmd->next && dup2(fds[1], STDOUT_FILENO) == -1)
 		print_error(mini, mini->lexer, DUP2_ERROR);
 	close(fds[1]);
-	// last cmd
-	if (cmd->next == NULL && dup2(fds[1], STDOUT_FILENO) == -1)
-		print_error(mini, mini->lexer, DUP2_ERROR);
-	close(fds[0]);
+	if (cmd->previous)
+		close(fd_in);
 	ft_exec_cmd(mini, cmd);
 }
 
@@ -48,7 +51,7 @@ void	wait_pipes(t_mini *mini, int *pid, int pipes)
 	int	status;
 
 	i = 0;
-	while (i <= pipes)
+	while (i < pipes)
 	{
 		waitpid(pid[i], &status, 0);
 		i++;
@@ -73,17 +76,19 @@ int executor(t_mini *mini)
 	while (mini->cmd)
 	{
 		//llamar al expander aqui??
-		if (count_pipes > 0 && pipe(fds) == -1) //mini->cmd->next
+		if (mini->cmd->next && pipe(fds) == -1) //mini->cmd->next
 			print_error(mini, mini->lexer, PIPE_ERROR);
 		//ft_heredoc(mini, mini->cmd);
 		ft_fork(mini, mini->cmd, fds, fd_in);
 		close(fds[1]);
+		if (mini->cmd->previous)
+			close(fd_in);
 		fd_in = sends_hdoc(mini, mini->cmd, fds);
 		if (mini->cmd->next)
 			mini->cmd = mini->cmd->next;
 		else
 			break ;
-		count_pipes--;
+		//count_pipes--;
 	}
 	wait_pipes(mini, mini->pid, mini->pipes);
 	return (0);
