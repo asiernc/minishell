@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/11 15:36:14 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/13 16:08:26 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		pre_executor(t_mini *mini)
 {
-	printf("IIIIIIIIIIIIIIIIIIIIIII\n");
 	if (mini->cmd->next == NULL && mini->pipes == 0)
 		handle_single_cmd(mini, mini->cmd);
 	else
@@ -25,7 +24,7 @@ int		pre_executor(t_mini *mini)
 
 // esta bien que pase por env de inicio, pero valorar de donde leer, 
 // si de env de shell o de env de nuestra shell
-
+// hacer otro loop con las env de simon
 char	*find_check_path(char *cmd, char **env)
 {
 	char	**paths;

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 10:55:42 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:06:14 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_cmd	*create_cmd(t_parser *parser)
 		if (tmp->str)
 		{
 			str[i] = ft_strdup(tmp->str);
-			printf("NEW CMD: %s\n", str[i]);
+			//printf("NEW CMD: %s\n", str[i]);
 			delone_node(tmp->num_node, &parser->lexer);
 			//del_first_node(&parser->lexer);
 			tmp = parser->lexer;
@@ -92,7 +92,7 @@ int	parser(t_mini *mini)
 	t_cmd			 *cmd;
 
 	count_pipes(mini);
-	printf("PIPES = %d\n", mini->pipes);
+	//printf("PIPES = %d\n", mini->pipes);
 	while (mini->lexer)
 	{
 		if (mini->lexer && mini->lexer->token == PIPE)

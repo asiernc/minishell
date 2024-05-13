@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/05/13 11:07:26 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/05/13 14:00:21 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,22 +24,33 @@ LEXERDIR	=	src/lexer/
 UTILSDIR	=	src/utils/
 OBJDIR		=	build/obj/
 
-SRC			=	src/main.c 						\
-				src/lexer/tokenizer.c			\
-				src/lexer/utils_lexer.c			\
-				src/lexer/utils_nodes.c			\
-				src/lexer/utils_nodes_aux.c		\
-				src/parser/parser.c				\
-				src/parser/redirections.c		\
-				src/parser/utils_parser.c		\
-				src/parser/utils_nodes.c		\
-				src/executor/executor.c			\
-				src/executor/hdoc.c				\
-				src/executor/run_cmds.c			\
-				src/executor/redirections.c		\
-				src/executor/utils.c			\
-				src/utils/utils.c				\
+SRC			=	src/main.c 							\
+				src/lexer/tokenizer.c				\
+				src/lexer/utils_lexer.c				\
+				src/lexer/utils_nodes.c				\
+				src/lexer/utils_nodes_aux.c			\
+				src/parser/parser.c					\
+				src/parser/redirections.c			\
+				src/parser/utils_parser.c			\
+				src/parser/utils_nodes.c			\
+				src/executor/executor.c				\
+				src/executor/hdoc.c					\
+				src/executor/run_cmds.c				\
+				src/executor/redirections.c			\
+				src/executor/utils.c				\
+				src/builtins/builtin_pwd.c	 		\
+				src/utils/utils.c					\
 				src/errors/parser_errors.c
+
+				#src/builtins/builtin_echo.c			\
+				#src/builtins/builtin_cd.c			\
+				#src/builtins/builtin_env.c			\
+				#src/builtins/builtin_export.c		\
+				#src/builtins/builtin_unset.c		\
+				#src/builtins/builtin_exit.c			\
+				#src/builtins/builtin_utils_nodes.c	\
+
+
 
 #OBJS		=	$(addprefix $(OBJDIR), $(notdir $(patsubst %.c, %.o, $(src))))
 OBJS		= 	$(SRC:%.c=%.o)

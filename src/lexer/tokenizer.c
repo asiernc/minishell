@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 20:17:23 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/13 16:04:28 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	put_word(char *str, int i, t_lexer **lst)
 			break ;
 	}
 	//printf("VALOR J: %d\n", j);
-	printf("SUBSTRING - %s\n", ft_substr(str, i, j));
+	//printf("SUBSTRING - %s\n", ft_substr(str, i, j));
 	if (list_add_node(lst, 0, ft_substr(str, i, j)))
 		return (1);
 	return (j);
@@ -103,6 +103,6 @@ int	lexer_tokenizer(t_mini *mini)
 		//printf("VALOR DE i después de sumar diff: %d\n", i);
 	}
 //	printf("str1: %s\n", mini->lexer->str);
-	ft_print(mini);
+	//ft_print(mini);
 	return (0);
 }

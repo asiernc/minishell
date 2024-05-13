@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 10:50:51 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:53:02 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,13 @@ typedef struct s_mini
 	// strcut export
 	struct s_lexer			*lexer;
 	int						pipes;
+	int						count_infiles;
 	int						flag_hdoc;
 	int						*pid;
 	int						error_code;
 	struct s_cmd		*cmd;
+	// meter tu estructura de builtins
+	//t_builtin
 }	t_mini;
 
 //		Enum for builtins
@@ -165,6 +168,8 @@ int				lst_size_cmd(t_mini *mini);
 // Built-ins
 
 //builtin			find_builtin(char *str);
+
+int				builtin_pwd(t_mini *mini);
 
 
 // Executor

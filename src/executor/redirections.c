@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:27:35 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 11:41:10 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:12:30 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,19 @@ int do_redirections(t_mini *mini, t_cmd *cmd)
 	}
 	cmd->redirections = tmp;
 	return (EXIT_SUCCESS);
+}
+
+void	have_infile(t_mini *mini, t_lexer *red)
+{
+	t_lexer	*tmp;
+
+
+	tmp = red;
+	while (red)
+	{
+		if (red->token == RED_IN)
+			mini->count_infiles++;
+		red = red->next;
+	}
+	red = tmp;
 }

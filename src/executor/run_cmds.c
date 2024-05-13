@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 11:57:15 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:08:11 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	// escalar exit code?
 	if (cmd->redirections)
 		do_redirections(mini, cmd);
-	/*if (cmd->builtin != NOT_HAVE)
-		exit_err = do_builtin(mini, cmd);*/
+	if (cmd->builtin != NOT_HAVE)
+		exit_err = do_builtin(mini, cmd);
 	if (cmd->str)
 		exit_err = do_cmd(mini, cmd);
 	exit(exit_err);
@@ -33,12 +33,11 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	char	*path;
 	//int		error_code;
 
-
 	cmd_head = cmd->str[0];
 	if (cmd->redirections)
 		if (do_redirections(mini, cmd) == EXIT_FAILURE)
 			exit(1); 
-	printf("inside do cmd\n");
+	//printf("inside do cmd\n");
 	path = find_check_path(cmd_head, mini->env);
 	if (!path)
 	{
@@ -50,29 +49,30 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 		//path = perror;
 		print_error(mini, mini->lexer, EXECVE_ERROR);
 	}
-	return (0);
+	return (1); //return (EXIT_SUCCESS)
 }
 
-/*int	do_builtin(t_mini *mini, t_cmd *cmd)
+int	do_builtin(t_mini *mini, t_cmd *cmd)
 {
 	int	exit;
 
-	if (cmd->builtin == ECHO)
+	exit = 0;
+	/*if (cmd->builtin == ECHO)
 		exit = builtin_echo(mini, cmd);
 	else if (cmd->builtin == CD)
-		exit = builtin_cd(mini, cmd);
-	else if (cmd->builtin == PWD)
-		exit = builtin_pwd(mini, cmd);
-	else if (cmd->builtin == EXPORT)
+		exit = builtin_cd(mini, cmd);*/
+	if (cmd->builtin == PWD)
+		exit = builtin_pwd(mini);
+	/*else if (cmd->builtin == EXPORT)
 		exit = builtin_export(mini, cmd);
 	else if (cmd->builtin == UNSET)
 		exit = builtin_unset(mini, cmd);
 	else if (cmd->builtin == ENV)
 		exit = builtin_env(mini, cmd);
 	else if (cmd->builtin == EXIT)
-		exit = builtin_exit(mini, cmd);
+		exit = builtin_exit(mini, cmd);*/
 	return (exit);
-}*/
+}
 
 void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 {
@@ -82,8 +82,10 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	// expander
 	// comentado para test abajo!
 	if (cmd->builtin != NOT_HAVE)
-		write(1, "", 1);
-		//do_builtin(mini, cmd);
+	{	//write(1, "", 1);
+		do_builtin(mini, cmd);
+		exit(0);
+	}
 	// hdoc
 	//ft_heredoc(mini, mini->cmd);
 	pid = fork();
