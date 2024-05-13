@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 16:08:11 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:20:11 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 
 	cmd_head = cmd->str[0];
 	if (cmd->redirections)
-		if (do_redirections(mini, cmd) == EXIT_FAILURE)
-			exit(1); 
+		if (do_redirections(mini, cmd))
+			exit(0); 
 	//printf("inside do cmd\n");
 	path = find_check_path(cmd_head, mini->env);
 	if (!path)
@@ -46,10 +46,11 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	}
 	if (execve(path, cmd->str, mini->env) == -1)
 	{
-		//path = perror;
+		//path = perror; 
+		//Down cooment for control for errors
 		print_error(mini, mini->lexer, EXECVE_ERROR);
 	}
-	return (1); //return (EXIT_SUCCESS)
+	exit(0);
 }
 
 int	do_builtin(t_mini *mini, t_cmd *cmd)
@@ -78,6 +79,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 {
 	int	pid;
 	int	status;
+	//int	flag = 0;
 
 	// expander
 	// comentado para test abajo!
@@ -91,6 +93,13 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	pid = fork();
 	if (pid == -1)
 		print_error(mini, mini->lexer, FORK_ERROR);
+	//if (flag == 0)
+	//{
+	//	printf("STDIN %d STDOUT %d\n", STDIN_FILENO, STDOUT_FILENO);
+	//	flag = 1;
+	//}
+//	if (flag == 1)
+//		return ;
 	if (pid == 0)
 		do_cmd(mini, cmd);
 	waitpid(pid, &status, 0);
