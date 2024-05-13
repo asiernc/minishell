@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/11 17:20:06 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/13 11:57:15 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 
 	exit_err = 0;
 	// escalar exit code?
-	//if (cmd->redirections)
-	//	do_redirections(cmd);
+	if (cmd->redirections)
+		do_redirections(mini, cmd);
 	/*if (cmd->builtin != NOT_HAVE)
 		exit_err = do_builtin(mini, cmd);*/
 	if (cmd->str)
@@ -33,7 +33,11 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	char	*path;
 	//int		error_code;
 
+
 	cmd_head = cmd->str[0];
+	if (cmd->redirections)
+		if (do_redirections(mini, cmd) == EXIT_FAILURE)
+			exit(1); 
 	printf("inside do cmd\n");
 	path = find_check_path(cmd_head, mini->env);
 	if (!path)
@@ -77,12 +81,11 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 
 	// expander
 	// comentado para test abajo!
-	printf("ONEONEONEONEONEone cmd\n");
 	if (cmd->builtin != NOT_HAVE)
 		write(1, "", 1);
 		//do_builtin(mini, cmd);
 	// hdoc
-	ft_heredoc(mini, mini->cmd);
+	//ft_heredoc(mini, mini->cmd);
 	pid = fork();
 	if (pid == -1)
 		print_error(mini, mini->lexer, FORK_ERROR);

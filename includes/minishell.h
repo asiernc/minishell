@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/11 16:58:03 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/13 10:50:51 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,13 @@ int				do_cmd(t_mini *mini, t_cmd *cmd);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
 void			wait_pipes(t_mini *mini, int *pid, int pipes);
+
+// Redirections
+
+int				do_redirections(t_mini *mini, t_cmd *cmd);
+int				put_infile(t_mini *mini, char *filename);
+int				pre_outfile(t_lexer *lex, char *filename);
+int				put_outfile(t_mini *mini, t_lexer *lex, char *filename);
 
 
 
