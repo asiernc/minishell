@@ -1,55 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.c                                           :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/24 12:44:07 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:04:28 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// 
-
-void	clear_line(t_mini *mini)
-{
-	char	*tmp;
-
-	tmp = ft_strtrim(mini->line, " ");
-	free(mini->line);
-	mini->line = tmp;
-	printf("%s\n", mini->line);
-}
-
-// This function serves to check if that character is an operator. 
-// If so, we assign a value to that key (operator character).
-
-int	check_operator(int c)
-{
-	int	i;
-	int operator[3][2] = {
-		{'|', PIPE},
-		{'<', RED_IN},
-		{'>', RED_OUT},
-	};
-
-	i = -1;
-	while (++i <= 2)
-		if (operator[i][0] == c)
-			return (operator[i][1]);
-	return (0);
-}
-
 // This function assigns a value to that operator as desired. The only 
 // different ones are '>>' and '<<', so we create a special case for 
-// each of them. If not, we assume it's '|', '<', or '>'.
+// each of them. If not, we assume it's '|', '<', or '>'. And add it as a new node.
 
-int	put_token(char *str, int i, t_lexer **lst)
+
+int	put_operator(char *str, int i, t_lexer **lst)
 {
-	t_operator	operator;
+	enum e_operator	operator;
 
 	operator = check_operator(str[i]);
 	if (operator == RED_IN && check_operator(str[i + 1]) == RED_IN)
@@ -76,28 +46,19 @@ int	put_token(char *str, int i, t_lexer **lst)
 	return (0);
 }
 
-// Traverse the string from that quote until the next character that
-// matches the first one.
-
-int	find_next_quote(char c, char *str, int i)
-{
-	int	j;
-
-	j = 1;
-	while (str[i + j] && str[i + j] != c)
-	   j++;
-	j++;
-	//printf("valor j: %d\n", j);
-	return (j);
-}	
-
 // Identify the word, trim it from spaces, and add it as a new node.
 // Also, identify quotes.
 
 int	put_word(char *str, int i, t_lexer **lst)
 {
-	int	j;
+	static int	flag = 0;
+	int			j;
 
+	if (flag == 0)
+	{
+		*lst = NULL;
+		flag = 1;
+	}
 	j = 0;
 	//printf("STRRRRR: %s\n", str);
 	while (str[i + j] && check_operator(str[i + j]) == 0)
@@ -110,29 +71,15 @@ int	put_word(char *str, int i, t_lexer **lst)
 			break ;
 	}
 	//printf("VALOR J: %d\n", j);
-	printf("SUBSTRING - %s\n", ft_substr(str, i, j));
+	//printf("SUBSTRING - %s\n", ft_substr(str, i, j));
 	if (list_add_node(lst, 0, ft_substr(str, i, j)))
 		return (1);
 	return (j);
 }
 
-static void	ft_print(t_mini *mini)
-{
-	t_lexer	*tmp;
-	int	i = 0;
-
-	tmp = mini->lexer;
-	while (tmp)
-	{
-		i++;
-		printf("Node %d, str = %s  token(ope) = %d\n", i, tmp->str, tmp->token);
-		tmp = tmp->next;
-	}
-}
-
 // This function separate the command line, distinguish between operator and word.
 
-int	lexer_tokens(t_mini *mini)
+int	lexer_tokenizer(t_mini *mini)
 {
 	int	i;
 	int	diff;
@@ -146,7 +93,7 @@ int	lexer_tokens(t_mini *mini)
 		while (mini->line[i] == ' ' || (mini->line[i] > 8 && mini->line[i] < 14))
 			i++;
 		if (check_operator(mini->line[i]) != 0)
-			diff = put_token(mini->line, i, &mini->lexer);
+			diff = put_operator(mini->line, i, &mini->lexer);
 		else
 			diff = put_word(mini->line, i, &mini->lexer);
 		if (diff < 0)
@@ -156,6 +103,6 @@ int	lexer_tokens(t_mini *mini)
 		//printf("VALOR DE i después de sumar diff: %d\n", i);
 	}
 //	printf("str1: %s\n", mini->lexer->str);
-	ft_print(mini);
+	//ft_print(mini);
 	return (0);
 }

@@ -6,24 +6,26 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/26 12:29:15 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:01:52 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
 // function for free all and call another time mini_live for create a loop
 
-static int	reset(t_mini *mini)
+int	reset(t_mini *mini)
 {
-	t_lexer	*tmp;
+	/*t_lexer	*tmp;
 
 	tmp = mini->lexer;
 	while (tmp->next)
 	{
 		tmp = tmp->next;
 		free(tmp);
-	}
+	}*/
+	//lst_clear_lexer(&mini->lexer);
 	mini_live(mini);
 	return (0);
 }
@@ -32,56 +34,29 @@ static int	reset(t_mini *mini)
 
 int	mini_live(t_mini *mini)
 {
-	mini->line = readline("minihell 🔥 >");
-	check_quotes(mini->line);
-	printf("ft_strlen(line) = %i\n", (int)ft_strlen(mini->line));
-//	check_backslash(mini->line);
-	if (lexer_tokens(mini) != 0)
-		return (1); //display_error
-	//lexer
-	//parser
-	//executor
+	// valorar hacer un bucle para no forzar a que entre dentor de una funcion de otra de otra de otra
+	mini->line = readline("shelldone 🔥 >");
+	//check_quotes(mini->line);
+	if (lexer_tokenizer(mini) != 0)
+		print_error(mini, mini->lexer, 1); //display_error
+	parser(mini);
+	pre_executor(mini);
 	//free and reset
+	reset(mini);
 	return (0);
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	t_mini	mini;
-	char	**test_env;
-	char	*test_pwd;
-	int		i = 0;
 
-	if (argc != 1)
+	if (argc != 1 && argv[0])
 	{
 		printf("Don't write any argument");
 		exit(0);
 	}
-	printf("no %s%s\n", argv[0], env[1]);
+	mini.env = env;
+	//printf("no %s%s\n", argv[0], env[1]);
 	mini_live(&mini);
-	if (ft_strncmp(mini.line, "cd", 2) == 0)
-	{	
-		write(1, "ENTERED\n", 8);
-		test_env = builtin_env(env);
-		while (test_env[i])
-		{
-			printf("%s\n", test_env[i]);
-			i++;
-		}
-		test_pwd = builtin_pwd(env);
-		printf("\npwd = %s\n", test_pwd);
-		if (chdir("/") == -1)
-			perror("chdir function failed");
-		i = 0;
-		test_env = builtin_env(env);
-		while (test_env[i])
-		{
-			printf("%s\n", test_env[i]);
-			i++;
-		}
-		test_pwd = builtin_pwd(env);
-		printf("\npwd = %s\n", test_pwd);
-	}
-	reset(&mini);
 	return (0);
 }

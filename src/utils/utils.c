@@ -6,9 +6,11 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:07:20 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/25 17:13:05 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:45:09 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 #include "minishell.h"
 
@@ -60,12 +62,6 @@ int	check_quotes(char *line)
 }
 */
 
-void	print_error(char *str)
-{
-	perror(str);
-//	exit(1);//you don't have to exit => tu have to display a newline
-}
-
 void	check_quotes(char *line)
 {
 	int	i;
@@ -84,7 +80,7 @@ void	check_quotes(char *line)
 				i++;//in this condition, we can also add a string to catch what's inside the quotes
 			}
 			if (line[i] == '\0')
-				print_error("The line was not well written. Please try again.");
+				print_error(NULL, NULL, 0);
 		}
 		else if (line[i] == 39)//'
 		{
@@ -96,7 +92,7 @@ void	check_quotes(char *line)
 				i++;//in this condition, we can also add a string to catch what's inside the quotes
 			}
 			if (line[i] == '\0')
-				print_error("The line was not well written. Please try again.");
+				print_error(NULL, NULL, 0);
 		}
 		i++;
 	}

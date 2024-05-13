@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 10:47:44 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/23 22:18:15 by asiercara        ###   ########.fr       */
+/*   Created: 2024/05/06 10:47:44 by anovio-c          #+#    #+#             */
+/*   Updated: 2024/05/06 20:32:52 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
-int	list_add_node(t_lexer **lexer_list, t_operator token, char *str)
+int	list_add_node(t_lexer **lexer_list, enum e_operator token, char *str)
 {
 	t_lexer	*node;
 
@@ -26,11 +26,13 @@ int	list_add_node(t_lexer **lexer_list, t_operator token, char *str)
 t_lexer	*ft_new_node(char *str, int token)
 {
 	t_lexer		*new;
+	static unsigned int	i = 0;
 
 	new = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new)
 		return (0);
 	new->str = str;
+	new->num_node = ++i;
 	new->token = token;
 	new->next = NULL;
 	return (new);
@@ -51,3 +53,23 @@ void	ft_node_add_back(t_lexer **lst, t_lexer *node)
 	tmp->next = node;
 }
 
+t_lexer	*clear_one_node(t_lexer **lst)
+{
+	if ((*lst)->str)
+	{
+		free((*lst)->str);
+		(*lst)->str = NULL;
+	}
+	free(*lst);
+	*lst = NULL;
+	return (NULL);
+}
+
+void	del_first_node(t_lexer **lst)
+{
+	t_lexer	*tmp;
+
+	tmp = *lst;
+	*lst = tmp->next;
+	clear_one_node(&tmp);
+}

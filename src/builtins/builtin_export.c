@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/13 12:30:40 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:45:01 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,13 @@ void		ft_lstclear_builtin(t_builtin **lst);
 t_builtin	*create_builtin_lst(char **env);
 t_builtin	*init_builtin_node(char **env);
 int			ft_lstsize_builtin(t_builtin *lst);
+//void		unset_builtin(t_builtin **head, char *str);
 
-int	ft_strcmp(char *s1, char *s2)
+
+
+// mirar ft_strcmp libft minishell
+
+/*int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
@@ -39,7 +44,7 @@ int	ft_strcmp(char *s1, char *s2)
 	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
-}
+}*/
 
 //I HAVE TO REMOVE THE NODE->KEY = _ BECAUSE IT ISN'T IN EXPORT
 void	remove_node(t_builtin **head)
@@ -159,7 +164,6 @@ void	join_values(t_builtin **lst_export, char *str)
 	free(value_str);
 }
 
-void	unset_builtin(t_builtin **head, char *str);
 int	builtin_export(char **env, char *str)
 {
 	t_builtin	*lst_export;
@@ -179,7 +183,7 @@ int	builtin_export(char **env, char *str)
 	tmp = lst_export;
 	remove_node(&tmp);
 	//before printing the list, we want to free the _ node
-	unset_builtin(&tmp, "HOME");
+//	unset_builtin(&tmp, "HOME");
 	while (tmp)
 	{
 		printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
@@ -191,7 +195,7 @@ int	builtin_export(char **env, char *str)
 	return (1);
 }
 
-int	main(int argc, char **argv, char **env)
+/*int	main(int argc, char **argv, char **env)
 {
 //	builtin_export(env, "PAGER+=TEEEEEEEEEEEEEEEST");
 	builtin_export(env, "PAGER+=SIIIIIIIIIIIIIIMON");
@@ -201,7 +205,7 @@ int	main(int argc, char **argv, char **env)
 //	printf("%lu\n", sizeof(t_builtin));
 //	printf("%p\n", argc);
 	return (0);
-}
+}*/
 
 
 

@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:25:52 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/13 12:29:58 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:07:16 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	unset_builtin(t_builtin **head, char *str)
 	while (current)
 	{
 		if (ft_strlen(current->key) == ft_strlen(str) &&
-			ft_strcmp(current->key, str) == 0)
+			ft_strcmp_simple(current->key, str) == 0)
 		{
 			if (previous == NULL)
 			{
