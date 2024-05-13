@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:11:30 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/01 15:30:46 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/10 11:50:50 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ t_builtin	*create_builtin_lst(char **env)//to free once used
 	return (lst_env);
 }
 
-void	builtin_env(char **env)
+int	builtin_env(char **env)
 {
 	t_builtin	*lst_env;
 	t_builtin	*tmp;
@@ -140,6 +140,7 @@ void	builtin_env(char **env)
 		tmp = tmp->next;
 	}
 	ft_lstclear_builtin(&lst_env);
+	return (1);
 }
 
 /*int	main(int argc, char **argv, char **env)
