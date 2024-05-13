@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 15:53:02 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:30:52 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_mini
 	int						flag_hdoc;
 	int						*pid;
 	int						error_code;
-	struct s_cmd		*cmd;
+	struct s_cmd			*cmd;
 	// meter tu estructura de builtins
 	//t_builtin
 }	t_mini;
@@ -110,8 +110,8 @@ typedef struct s_cmd
 	int						num_redirections;
 	char					*hdoc_filename;
 	t_lexer					*redirections;
-	struct s_cmd		*next;
-	struct s_cmd		*previous;
+	struct s_cmd			*next;
+	struct s_cmd			*previous;
 }	t_cmd;
 
 typedef struct s_parser
@@ -154,7 +154,7 @@ void			lst_clear_parser(t_cmd **lst);
 
 // Parser utils
 
-t_cmd			 *new_cmd(char **str, int num_redirects, t_lexer *redirections);
+t_cmd			*new_cmd(char **str, int num_redirects, t_lexer *redirections);
 int				prepare_builtin(char *str);
 void			count_pipes(t_mini *mini);
 int				count_args(t_lexer *lst);
@@ -165,11 +165,30 @@ int				check_line(t_mini *mini, int token);
 int				lst_size_cmd(t_mini *mini);
 
 
-// Built-ins
+// Builtins
+typedef struct	s_builtin
+{
+	char				*key;
+	char				*value;
+	int					index;//this variable may be useless
+	struct s_builtin	*next;
+}				t_builtin;
 
-//builtin			find_builtin(char *str);
+t_builtin		*create_builtin_lst(char **env);
+t_builtin		*ft_lstnew_builtin(char *str, int i);
+void			ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new);
+void			ft_lstclear_builtin(t_builtin **lst);
+int				ft_lstsize_builtin(t_builtin *lst);
+void			print_list(t_builtin **lst_env);//do you really use it ?
+char			*get_key_from_env(char *str);
+char			*get_value_from_env(char *str);
+t_builtin		*init_builtin_node(char **env);
 
+int				builtin_exit(void);
 int				builtin_pwd(t_mini *mini);
+int				builtin_env(t_mini *mini);
+int				builtin_export(t_mini *mini, char **cmd);
+void			builtin_unset(t_builtin **head, char *str);
 
 
 // Executor

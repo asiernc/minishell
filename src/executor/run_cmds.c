@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 17:20:11 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:29:15 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 
 	cmd_head = cmd->str[0];
 	if (cmd->redirections)
-		if (do_redirections(mini, cmd))
-			exit(0); 
+		if (do_redirections(mini, cmd) == EXIT_FAILURE)
+			exit(1); 
 	//printf("inside do cmd\n");
 	path = find_check_path(cmd_head, mini->env);
 	if (!path)
@@ -46,11 +46,10 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	}
 	if (execve(path, cmd->str, mini->env) == -1)
 	{
-		//path = perror; 
-		//Down cooment for control for errors
+		//path = perror;
 		print_error(mini, mini->lexer, EXECVE_ERROR);
 	}
-	exit(0);
+	return (1); //return (EXIT_SUCCESS)
 }
 
 int	do_builtin(t_mini *mini, t_cmd *cmd)
@@ -64,14 +63,14 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 		exit = builtin_cd(mini, cmd);*/
 	if (cmd->builtin == PWD)
 		exit = builtin_pwd(mini);
-	/*else if (cmd->builtin == EXPORT)
-		exit = builtin_export(mini, cmd);
-	else if (cmd->builtin == UNSET)
-		exit = builtin_unset(mini, cmd);
+	else if (cmd->builtin == EXPORT)
+		exit = builtin_export(mini, cmd->str);
+	/*else if (cmd->builtin == UNSET)
+		exit = builtin_unset(mini, cmd);*/
 	else if (cmd->builtin == ENV)
-		exit = builtin_env(mini, cmd);
+		exit = builtin_env(mini);
 	else if (cmd->builtin == EXIT)
-		exit = builtin_exit(mini, cmd);*/
+		exit = builtin_exit();//to perfection
 	return (exit);
 }
 
@@ -79,27 +78,20 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 {
 	int	pid;
 	int	status;
-	//int	flag = 0;
 
 	// expander
 	// comentado para test abajo!
 	if (cmd->builtin != NOT_HAVE)
 	{	//write(1, "", 1);
 		do_builtin(mini, cmd);
-		exit(0);
+		printf("\n\nBUILTIN DONE ⬆️ \n\n\nAsier Business ⬇️ \n");
+//		exit(0);
 	}
 	// hdoc
 	//ft_heredoc(mini, mini->cmd);
 	pid = fork();
 	if (pid == -1)
 		print_error(mini, mini->lexer, FORK_ERROR);
-	//if (flag == 0)
-	//{
-	//	printf("STDIN %d STDOUT %d\n", STDIN_FILENO, STDOUT_FILENO);
-	//	flag = 1;
-	//}
-//	if (flag == 1)
-//		return ;
 	if (pid == 0)
 		do_cmd(mini, cmd);
 	waitpid(pid, &status, 0);
