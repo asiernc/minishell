@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:25:52 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/13 12:25:26 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:29:58 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void	unset_builtin(t_builtin **head, char *str)
 			ft_strcmp(current->key, str) == 0)
 		{
 			if (previous == NULL)
+			{
 				*head = current->next;
+				return ;
+			}
 			else
 				previous->next = current->next;
 			free(current->key);

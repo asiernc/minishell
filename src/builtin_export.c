@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/13 12:26:46 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:30:40 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ int	builtin_export(char **env, char *str)
 	tmp = lst_export;
 	remove_node(&tmp);
 	//before printing the list, we want to free the _ node
-	unset_builtin(&tmp, "COLORFGBG");
+	unset_builtin(&tmp, "HOME");
 	while (tmp)
 	{
 		printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
