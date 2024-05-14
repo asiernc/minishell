@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:25:52 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/13 18:17:13 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/14 13:04:40 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 //**head refers to the env builtin list
 //the str refers to the variable to remove (for example PWD)
+//this function is basically remove a node
 void	builtin_unset(t_builtin **head, char *str)
 {
 	t_builtin	*current;
