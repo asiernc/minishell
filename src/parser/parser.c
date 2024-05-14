@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 16:06:14 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:38:47 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int	parser(t_mini *mini)
 			return (EXIT_FAILURE);
 		parser = init_struct(mini->lexer, mini);
 		cmd = create_cmd(&parser);
-		printf("parser inside : %s\n", cmd->str[0]);
 		if (!cmd)
 			print_error(mini, mini->lexer, 0);
 		if (!mini->cmd)
@@ -110,11 +109,12 @@ int	parser(t_mini *mini)
 			ft_node_add_back_parser(&mini->cmd, cmd);
 		mini->lexer = parser.lexer;
 	}
+	// !! siguientes dos lineas son para mac m2 !!!
 	//mini->cmd = mini->cmd->next;
 	//mini->cmd->previous = NULL;
+	del_first_cmd(&mini->cmd);
 	//ft_print_parser(mini);
 	//print_error(mini, mini->lexer, 0);
-	//reset(mini);
 	return (EXIT_SUCCESS);
 }
 

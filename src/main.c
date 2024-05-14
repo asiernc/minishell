@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 16:01:52 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:14:15 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	reset(t_mini *mini)
 		tmp = tmp->next;
 		free(tmp);
 	}*/
-	//lst_clear_lexer(&mini->lexer);
+	lst_clear_lexer(&mini->lexer);
 	mini_live(mini);
 	return (0);
 }

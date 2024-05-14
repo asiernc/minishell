@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:30:58 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/11 16:58:39 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/13 21:38:17 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,25 @@ void	lst_clear_parser(t_cmd **lst)
 		*lst = tmp;
 	}
 	*lst = NULL;
+}
+
+t_cmd	*clear_one_cmd(t_cmd **lst)
+{
+	if ((*lst)->str)
+	{
+		free((*lst)->str);
+		(*lst)->str = NULL;
+	}
+	free(*lst);
+	*lst = NULL;
+	return (NULL);
+}
+
+void	del_first_cmd(t_cmd **lst)
+{
+	t_cmd	*tmp;
+
+	tmp = *lst;
+	*lst = tmp->next;
+	clear_one_cmd(&tmp);
 }

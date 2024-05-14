@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 20:12:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 20:39:46 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/13 21:09:34 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	clear_line(t_mini *mini)
 	tmp = ft_strtrim(mini->line, " ");
 	free(mini->line);
 	mini->line = tmp;
-	printf("%s\n", mini->line);
 }
 
 // Traverse the string from that quote until the next character that

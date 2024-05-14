@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 17:20:11 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:25:00 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	if (cmd->redirections)
 		do_redirections(mini, cmd);
 	if (cmd->builtin != NOT_HAVE)
+	{
 		exit_err = do_builtin(mini, cmd);
+		exit(exit_err);
+	}
 	if (cmd->str)
 		exit_err = do_cmd(mini, cmd);
 	exit(exit_err);
@@ -36,21 +39,17 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	cmd_head = cmd->str[0];
 	if (cmd->redirections)
 		if (do_redirections(mini, cmd))
-			exit(0); 
+			exit(1); 
 	//printf("inside do cmd\n");
 	path = find_check_path(cmd_head, mini->env);
 	if (!path)
 	{
 		printf("%s: ", cmd_head);
 		print_error(mini, mini->lexer, CMD_NOT_FOUND_ERROR);
-	}
-	if (execve(path, cmd->str, mini->env) == -1)
-	{
-		//path = perror; 
-		//Down cooment for control for errors
-		print_error(mini, mini->lexer, EXECVE_ERROR);
-	}
-	exit(0);
+	};
+	execve(path, cmd->str, mini->env);
+	print_error(mini, mini->lexer, EXECVE_ERROR);
+	exit(127);
 }
 
 int	do_builtin(t_mini *mini, t_cmd *cmd)
@@ -93,13 +92,6 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	pid = fork();
 	if (pid == -1)
 		print_error(mini, mini->lexer, FORK_ERROR);
-	//if (flag == 0)
-	//{
-	//	printf("STDIN %d STDOUT %d\n", STDIN_FILENO, STDOUT_FILENO);
-	//	flag = 1;
-	//}
-//	if (flag == 1)
-//		return ;
 	if (pid == 0)
 		do_cmd(mini, cmd);
 	waitpid(pid, &status, 0);

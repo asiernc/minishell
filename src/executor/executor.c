@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 12:24:05 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:35:23 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void	wait_pipes(t_mini *mini, int *pid, int pipes)
 
 int executor(t_mini *mini)
 {
-	// simple cmd
-	// multiple cmd
 	int	fds[2];
 	int	fd_in;
 	int	count_pipes;

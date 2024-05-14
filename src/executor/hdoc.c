@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 20:15:06 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/13 21:33:07 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	sends_hdoc(t_mini *mini, t_cmd *cmd, int fds[2])
 {
 	int	fd_in;
 
-	fd_in = 0;
+//	fd_in = 0;
 	if (mini->flag_hdoc == 1)
 	{
 		mini->flag_hdoc = 0;
