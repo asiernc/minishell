@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 21:25:00 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/14 17:01:10 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,57 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	// escalar exit code?
 	if (cmd->redirections)
 		do_redirections(mini, cmd);
-	if (cmd->builtin != NOT_HAVE)
+	if(cmd->builtin != NOT_HAVE)
 	{
+		printf("bad\n");
 		exit_err = do_builtin(mini, cmd);
 		exit(exit_err);
 	}
-	if (cmd->str)
-		exit_err = do_cmd(mini, cmd);
+	if (cmd->str)//[0][0] != '\0')
+		/*exit_err = */do_cmd(mini, cmd);
+	//fprintf(stderr, "EXIT ERR %d\n", exit_err);
 	exit(exit_err);
 }
 
-int	do_cmd(t_mini *mini, t_cmd *cmd)
+void	do_cmd(t_mini *mini, t_cmd *cmd)
 {
 	char	*cmd_head;
 	char	*path;
+	static int	i = 0;
 	//int		error_code;
 
 	cmd_head = cmd->str[0];
+	fprintf(stderr, "HEAD %s", cmd_head);
+	//cmd_head = "asier";
+	fprintf(stderr, "STR %s\n", cmd->str[0]);
 	if (cmd->redirections)
 		if (do_redirections(mini, cmd))
 			exit(1); 
+	write(2, "inside cmd\n", 11);
 	//printf("inside do cmd\n");
 	path = find_check_path(cmd_head, mini->env);
+	if (access(path, F_OK | X_OK) == 0)
+		fprintf(stderr, "ACCESS OK\n");
+	fprintf(stderr, "PATH: %s\n", path);
 	if (!path)
 	{
-		printf("%s: ", cmd_head);
+		printf("1'%s: ", cmd_head);
 		print_error(mini, mini->lexer, CMD_NOT_FOUND_ERROR);
-	};
-	execve(path, cmd->str, mini->env);
-	print_error(mini, mini->lexer, EXECVE_ERROR);
-	exit(127);
+	}
+	//fprintf(stderr, "FD: %d\n", STDOUT_FILENO);
+	//fprintf(stderr, "CMD_>STR == %s %s %s %s\n", cmd->str[0], cmd->str[1], cmd->str[2], cmd->str[3]);
+	if (i < 2 && cmd->str[2] != NULL)
+	{
+		cmd->str[2] = NULL;
+		i++;
+	}
+		//fprintf(stderr, "OKOKOKOKOK\n");
+	if (execve(path, cmd->str, mini->env) == -1)
+		print_error(mini, mini->lexer, EXECVE_ERROR);
+	//execve(path, cmd->str, mini->env);
+	//printf("wrong\n");
+	exit(1);
+	//exit(127);
 }
 
 int	do_builtin(t_mini *mini, t_cmd *cmd)
@@ -73,6 +94,26 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 		exit = builtin_exit(mini, cmd);*/
 	return (exit);
 }
+
+/*int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
+{
+	int		i;
+	char	*mycmd;
+
+	i = 0;
+	cmd->str = resplit_str(cmd->str);
+	if (!access(cmd->str[0], F_OK))
+		execve(cmd->str[0], cmd->str, tools->envp);
+	while (tools->paths[i])
+	{
+		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
+		if (!access(mycmd, F_OK))
+			execve(mycmd, cmd->str, tools->envp);
+		free(mycmd);
+		i++;
+	}
+	return (cmd_not_found(cmd->str[0]));
+}*/
 
 void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 {

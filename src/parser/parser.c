@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 21:38:47 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/14 16:51:32 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_cmd	*create_cmd(t_parser *parser)
 int	parser(t_mini *mini)
 {
 	t_parser		parser;
-	t_cmd			 *cmd;
+	t_cmd			 *new;
 
 	count_pipes(mini);
 	//printf("PIPES = %d\n", mini->pipes);
@@ -100,19 +100,23 @@ int	parser(t_mini *mini)
 		if (check_line(mini, mini->lexer->token))
 			return (EXIT_FAILURE);
 		parser = init_struct(mini->lexer, mini);
-		cmd = create_cmd(&parser);
-		if (!cmd)
+		new = create_cmd(&parser);
+		//printf("string %s\n", cmd->str[0]);
+		if (!new)
 			print_error(mini, mini->lexer, 0);
 		if (!mini->cmd)
-			mini->cmd = cmd;
+			mini->cmd = new;
 		else
-			ft_node_add_back_parser(&mini->cmd, cmd);
+			ft_node_add_back_parser(&mini->cmd, new);
 		mini->lexer = parser.lexer;
 	}
+//	printf("node 1 ls == %s\nnode 2 wc == %s\n", mini->cmd->str[0], mini->cmd->next->str[0]);
 	// !! siguientes dos lineas son para mac m2 !!!
 	//mini->cmd = mini->cmd->next;
 	//mini->cmd->previous = NULL;
-	del_first_cmd(&mini->cmd);
+	int size = lst_size_cmd(mini);
+	printf("SIZE %d\n", size);
+	//del_first_cmd(&mini->cmd);
 	//ft_print_parser(mini);
 	//print_error(mini, mini->lexer, 0);
 	return (EXIT_SUCCESS);

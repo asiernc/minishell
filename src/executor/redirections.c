@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:27:35 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 21:12:09 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/14 10:44:47 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,23 @@ int do_redirections(t_mini *mini, t_cmd *cmd)
 		if (cmd->redirections->token == RED_IN)
 		{
 			//printf("RED_IN\n");
+			fprintf(stderr, "wrong\n");
 			put_infile(mini, cmd->redirections->str);
 		}
 		else if (cmd->redirections->token == RED_OUT
 				|| cmd->redirections->token == RED_OUT_APP)
+		{
+			fprintf(stderr, "wrong\n");
 			put_outfile(mini, cmd->redirections, cmd->redirections->str);
+		}
 		else if (cmd->redirections->token == HDOC)
+		{
+			fprintf(stderr, "wrong\n");
 			put_infile(mini, cmd->hdoc_filename);
+		}
 		cmd->redirections = cmd->redirections->next;
 	}
+	printf("good\n");
 	cmd->redirections = tmp;
 	return (EXIT_SUCCESS);
 }

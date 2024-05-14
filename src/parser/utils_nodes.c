@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:30:58 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 21:38:17 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/14 12:02:18 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void	ft_node_add_back_parser(t_cmd **lst, t_cmd *node)
 {
 	t_cmd *tmp;
 
+	tmp = *lst;
 	if (*lst == NULL)
 	{
 		*lst = node;
 		return ;
 	}
-	tmp = *lst;
-	while (tmp->next)
+	while (tmp->next != NULL)
 		tmp = tmp->next;
 	tmp->next = node;
-	tmp->previous = tmp;
+	node->previous = tmp;
 }
 
 int		lst_size_cmd(t_mini *mini)
@@ -52,7 +52,7 @@ int		lst_size_cmd(t_mini *mini)
 
 	len = 0;
 	tmp = mini->cmd;
-	while (tmp->next)
+	while (tmp->next != NULL)
 	{
 		len++;
 		tmp = tmp->next;

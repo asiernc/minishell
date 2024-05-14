@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 21:35:23 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/14 16:51:30 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in)
 	static int	i = 0; //valorar sobrescribir guardandome el ultimo pid que es el
 	// contiene el error code
 
+	//printf("valor de i %d\n", i);
 	mini->pid[i] = fork();
 	if (mini->pid[i] == -1)
 		print_error(mini, mini->lexer, FORK_ERROR);
@@ -71,16 +72,22 @@ int executor(t_mini *mini)
 	if (!mini->pid)
 		print_error(mini, mini->lexer, MALLOC_ERROR);
 	fd_in = STDIN_FILENO;
+	//printf("first cmd == %s token 0str== %s\n", mini->cmd->str[0], mini->cmd->next->str[0]);
+	//fprintf(stderr, "redire %s\n", mini->cmd->next->redirections->str);
 	while (mini->cmd)
 	{
+		//write(2, "in\n", 3);
 		//llamar al expander aqui??
 		if (mini->cmd->next && pipe(fds) == -1) //mini->cmd->next
 			print_error(mini, mini->lexer, PIPE_ERROR);
 		//ft_heredoc(mini, mini->cmd);
 		ft_fork(mini, mini->cmd, fds, fd_in);
 		close(fds[1]);
-		if (mini->cmd->previous)
+		if (mini->cmd->previous == NULL)
+		{
 			close(fd_in);
+			printf("mini->previous++\n");
+		}
 		fd_in = sends_hdoc(mini, mini->cmd, fds);
 		if (mini->cmd->next)
 			mini->cmd = mini->cmd->next;
@@ -92,5 +99,3 @@ int executor(t_mini *mini)
 	return (0);
 	// hacer limpieza recursiva o guardar/mover puntero cmd nodo al primero para free
 }
-
-

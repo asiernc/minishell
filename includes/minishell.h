@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 21:41:20 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/14 11:41:20 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
 char			*find_check_path(char *cmd, char **env);
-int				do_cmd(t_mini *mini, t_cmd *cmd);
+void				do_cmd(t_mini *mini, t_cmd *cmd);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
 void			wait_pipes(t_mini *mini, int *pid, int pipes);
