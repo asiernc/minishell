@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/15 12:00:47 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:15:13 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_builtin	*sort_ascii(t_builtin *lst_export, t_builtin *sorted)
 				tmp = tmp->next;
 			current->next = tmp->next;
 			tmp->next = current;
-			sorted = tmp;
 		}
 		current = the_next;
 	}
@@ -77,9 +76,9 @@ t_builtin	*sort_ascii(t_builtin *lst_export, t_builtin *sorted)
 //here: str <=> 'simon=test'
 int	check_variable(char *str)
 {
-	int			i;
+	int	i;
+	
 	i = 0;
-
 	while (str[i] != '=')
 	{
 		if (i == 0 && str[i] == 34)
@@ -114,4 +113,3 @@ char	*trim_quotes(char *str)//YOU MIGHT HAVE A LEAK HERE BECAUSE YOU MALLOC WITH
 	len = j - i;
 	return (ft_substr(str, i, len));
 }
-

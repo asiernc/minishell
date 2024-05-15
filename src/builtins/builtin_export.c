@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/15 12:43:51 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:13:57 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	join_values(t_builtin **lst_export, char *str)
 
 //if the variable already exists and we want to change it complelty
 char	*check_key_already_exists(t_builtin *lst_export, char *str)
-{	
+{
 	t_builtin	*tmp;
 	char		*key_str;
 
@@ -103,7 +103,6 @@ int	builtin_export(t_mini *mini, char **cmd)
 	t_builtin	*lst_export;
 	char		*key_str;
 	char		*value_trimmed;
-	t_builtin	*tmp;
 
 	lst_export = create_builtin_lst(mini->env);
 	if (!lst_export)
@@ -114,7 +113,7 @@ int	builtin_export(t_mini *mini, char **cmd)
 		{
 			key_str = check_key_already_exists(lst_export, cmd[1]);
 			if (key_str)
-				builtin_unset(&lst_export, key_str);	
+				builtin_unset(&lst_export, key_str);
 			value_trimmed = trim_quotes(cmd[1]);
 			if (!value_trimmed)
 				return (0);
@@ -123,17 +122,7 @@ int	builtin_export(t_mini *mini, char **cmd)
 		else if (check_variable(cmd[1]) == 2)
 			join_values(&lst_export, cmd[1]);
 	}
-//	lst_export = sort_ascii(lst_export, NULL);
-	tmp = lst_export;
-	remove_special_node(&tmp);
-	while (tmp)
-	{
-		printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
-		tmp = tmp->next;
-	}
-//	ft_lstclear_builtin(&lst_export);//this line will be written at the very last step of the pgrm. Just before return (0) of the main
-	return (1);
-//	return (builtin_export_1(lst_export));
+	return (builtin_export_1(lst_export));
 }
 
 /*int	main(int argc, char **argv, char **env)
