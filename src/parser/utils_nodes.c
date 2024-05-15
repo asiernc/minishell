@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:30:58 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 12:02:18 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 21:09:34 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		lst_size_cmd(t_mini *mini)
 	int	len;
 	t_cmd	*tmp;
 
-	len = 0;
+	len = 1;
 	tmp = mini->cmd;
 	while (tmp->next != NULL)
 	{

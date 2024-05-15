@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 21:33:07 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/14 21:51:16 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,20 @@ char	*generate_filename(void)
 	static int	i = 1;
 	char		*str;
 
-	str = ft_strjoin("./tmp/.tmp_hdoc_file", ft_itoa(i));
+	//str = ft_strjoin("src/tmp/hdoc_file", ft_itoa(i));
+	str = ft_strjoin("hdoc_file", ft_itoa(i)); // test before expander
+	str = ft_strjoin(str, ".c");
 	i++;
 	return (str);
 }
 
-int	create_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename, bool quotes)
+int	create_hdoc(/*t_mini *mini, */t_lexer *redir, char *hdoc_filename, bool quotes)
 {
 	char	*line;
 	int		fd;
 
-	fd = open(hdoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fprintf(stderr, "inside good\n");
+	fd = open(hdoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	line = readline(">");
 	while (line && ft_strcmp(redir->str, line) != 0)
 	{
@@ -38,8 +41,6 @@ int	create_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename, bool quotes)
 		free(line);
 		line = readline(">");
 	}
-	if (mini)
-		write(1, "", 1);
 	free(line);
 	if (!line)
 		return (EXIT_FAILURE);
@@ -57,7 +58,7 @@ void	remove_quotes(t_lexer *node)
 		node->str = ft_substr(str, 1, ft_strlen(str) - 1);
 }
 
-int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
+int	check_eof(t_lexer *redir, char *hdoc_filename)
 {
 	int			error;
 	char		*str;
@@ -77,7 +78,7 @@ int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 	}
 	else
 		quotes = false;
-	error = create_hdoc(mini, redir, hdoc_filename, quotes);
+	error = create_hdoc(redir, hdoc_filename, quotes);
 	return (error);
 }
 
@@ -86,6 +87,7 @@ int	sends_hdoc(t_mini *mini, t_cmd *cmd, int fds[2])
 	int	fd_in;
 
 //	fd_in = 0;
+	fprintf(stderr, "filename %s\n", cmd->hdoc_filename);
 	if (mini->flag_hdoc == 1)
 	{
 		mini->flag_hdoc = 0;
@@ -109,12 +111,14 @@ int	ft_heredoc(t_mini *mini, t_cmd *cmd)
 	while (cmd->redirections)
 	{
 		if (count >= 16)
+			break ;
 			//bash: maximum here-document count exceeded == exit (sale de bash)
 		if (cmd->redirections->token == HDOC)
 		{
+			fprintf(stderr, "inside good\n");
 			count++;
 			cmd->hdoc_filename = generate_filename();
-			error = check_eof(mini, mini->cmd->redirections, cmd->hdoc_filename);
+			error = check_eof(mini->cmd->redirections, cmd->hdoc_filename);
 			if (error) // error == exitFAILURE
 				reset(mini);
 		}

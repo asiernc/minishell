@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 17:01:10 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 21:17:25 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	do_cmd(t_mini *mini, t_cmd *cmd)
 {
 	char	*cmd_head;
 	char	*path;
-	static int	i = 0;
+	//static int	i = 0;
 	//int		error_code;
 
 	cmd_head = cmd->str[0];
@@ -59,11 +59,11 @@ void	do_cmd(t_mini *mini, t_cmd *cmd)
 	}
 	//fprintf(stderr, "FD: %d\n", STDOUT_FILENO);
 	//fprintf(stderr, "CMD_>STR == %s %s %s %s\n", cmd->str[0], cmd->str[1], cmd->str[2], cmd->str[3]);
-	if (i < 2 && cmd->str[2] != NULL)
+	/*if (i < 2 && cmd->str[2] != NULL)
 	{
 		cmd->str[2] = NULL;
 		i++;
-	}
+	}*/
 		//fprintf(stderr, "OKOKOKOKOK\n");
 	if (execve(path, cmd->str, mini->env) == -1)
 		print_error(mini, mini->lexer, EXECVE_ERROR);
@@ -95,26 +95,6 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 	return (exit);
 }
 
-/*int	find_cmd(t_simple_cmds *cmd, t_tools *tools)
-{
-	int		i;
-	char	*mycmd;
-
-	i = 0;
-	cmd->str = resplit_str(cmd->str);
-	if (!access(cmd->str[0], F_OK))
-		execve(cmd->str[0], cmd->str, tools->envp);
-	while (tools->paths[i])
-	{
-		mycmd = ft_strjoin(tools->paths[i], cmd->str[0]);
-		if (!access(mycmd, F_OK))
-			execve(mycmd, cmd->str, tools->envp);
-		free(mycmd);
-		i++;
-	}
-	return (cmd_not_found(cmd->str[0]));
-}*/
-
 void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 {
 	int	pid;
@@ -129,7 +109,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 		exit(0);
 	}
 	// hdoc
-	//ft_heredoc(mini, mini->cmd);
+	ft_heredoc(mini, mini->cmd);
 	pid = fork();
 	if (pid == -1)
 		print_error(mini, mini->lexer, FORK_ERROR);

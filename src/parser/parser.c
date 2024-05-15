@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 16:51:32 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:34:18 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ int	parser(t_mini *mini)
 	}
 //	printf("node 1 ls == %s\nnode 2 wc == %s\n", mini->cmd->str[0], mini->cmd->next->str[0]);
 	// !! siguientes dos lineas son para mac m2 !!!
-	//mini->cmd = mini->cmd->next;
-	//mini->cmd->previous = NULL;
+	mini->cmd = mini->cmd->next;
+	mini->cmd->previous = NULL;
 	int size = lst_size_cmd(mini);
 	printf("SIZE %d\n", size);
 	//del_first_cmd(&mini->cmd);
