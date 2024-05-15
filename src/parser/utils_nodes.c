@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:30:58 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 21:09:34 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/15 13:10:39 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,17 @@ void	del_first_cmd(t_cmd **lst)
 	tmp = *lst;
 	*lst = tmp->next;
 	clear_one_cmd(&tmp);
+}
+
+void	lst_clear_cmds(t_cmd **cmd)
+{
+	t_cmd *end;
+
+	end = *cmd;
+	while (end->previous)
+		end = end->previous;
+	*cmd = end;
+	while (*cmd)
+		del_first_cmd(cmd);
+	cmd = NULL;
 }

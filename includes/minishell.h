@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 21:20:39 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/15 13:08:38 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int				count_args(t_lexer *lst);
 t_lexer			*move_to_next_cmd(t_lexer *lst);
 void			ft_node_add_back_parser(t_cmd **lst, t_cmd *node);
 int				check_line(t_mini *mini, int token);
-
+void			lst_clear_cmds(t_cmd **cmd);
 int				lst_size_cmd(t_mini *mini);
 t_cmd			*clear_one_cmd(t_cmd **lst);
 void			del_first_cmd(t_cmd **lst);

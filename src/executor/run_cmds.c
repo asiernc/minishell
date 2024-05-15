@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 21:17:25 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/15 12:42:20 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 		exit_err = do_builtin(mini, cmd);
 		exit(exit_err);
 	}
-	if (cmd->str)//[0][0] != '\0')
+	if (cmd->str[0][0] != '\0')
 		/*exit_err = */do_cmd(mini, cmd);
 	//fprintf(stderr, "EXIT ERR %d\n", exit_err);
 	exit(exit_err);
@@ -40,18 +40,20 @@ void	do_cmd(t_mini *mini, t_cmd *cmd)
 	//int		error_code;
 
 	cmd_head = cmd->str[0];
-	fprintf(stderr, "HEAD %s", cmd_head);
+	//fprintf(stderr, "HEAD %s", cmd_head);
 	//cmd_head = "asier";
-	fprintf(stderr, "STR %s\n", cmd->str[0]);
 	if (cmd->redirections)
+	{
+		fprintf(stderr, "wrong wrong");
 		if (do_redirections(mini, cmd))
 			exit(1); 
-	write(2, "inside cmd\n", 11);
+	}
+	//write(2, "inside cmd\n", 11);
 	//printf("inside do cmd\n");
 	path = find_check_path(cmd_head, mini->env);
-	if (access(path, F_OK | X_OK) == 0)
-		fprintf(stderr, "ACCESS OK\n");
-	fprintf(stderr, "PATH: %s\n", path);
+	//if (access(path, F_OK | X_OK) == 0)
+	//	fprintf(stderr, "ACCESS OK\n");
+	//fprintf(stderr, "PATH: %s\n", path);
 	if (!path)
 	{
 		printf("1'%s: ", cmd_head);
@@ -59,8 +61,11 @@ void	do_cmd(t_mini *mini, t_cmd *cmd)
 	}
 	//fprintf(stderr, "FD: %d\n", STDOUT_FILENO);
 	//fprintf(stderr, "CMD_>STR == %s %s %s %s\n", cmd->str[0], cmd->str[1], cmd->str[2], cmd->str[3]);
-	/*if (i < 2 && cmd->str[2] != NULL)
+	/*if (i < 2 && cmd->str[2] != NULL && cmd->str[2][0] != '\0')
 	{
+		if (cmd->str[2][0] != '-')
+			//exit(127);
+			print_error(mini, mini->lexer, 3);
 		cmd->str[2] = NULL;
 		i++;
 	}*/

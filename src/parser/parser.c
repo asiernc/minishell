@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 18:34:18 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/15 11:47:00 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ t_cmd	*create_cmd(t_parser *parser)
 
 	redirections(parser);
 	num_args = count_args(parser->lexer);
-	str = malloc((num_args + 1) * sizeof(char *));
+	//fprintf(stderr, "COUNT ARGS X CMD : %d\n", num_args);
+	//str = malloc((num_args + 1) * sizeof(char *));
+	str = ft_calloc(num_args + 1, sizeof(char *));
 	if (!str)
 		print_error(parser->mini, parser->mini->lexer, 1);
 	i = 0;
@@ -76,12 +78,14 @@ t_cmd	*create_cmd(t_parser *parser)
 		if (tmp->str)
 		{
 			str[i] = ft_strdup(tmp->str);
+			//fprintf(stderr, "STR = %s\n", str[i]);
 			//printf("NEW CMD: %s\n", str[i]);
 			delone_node(tmp->num_node, &parser->lexer);
 			//del_first_node(&parser->lexer);
 			tmp = parser->lexer;
 		}
 		i++;
+		//fprintf(stderr, "STR BEFORE WHILE : %s\n", str[i]);
 	}
 	return (new_cmd(str, parser->num_redirections, parser->redirections));
 }
@@ -112,13 +116,12 @@ int	parser(t_mini *mini)
 	}
 //	printf("node 1 ls == %s\nnode 2 wc == %s\n", mini->cmd->str[0], mini->cmd->next->str[0]);
 	// !! siguientes dos lineas son para mac m2 !!!
-	mini->cmd = mini->cmd->next;
-	mini->cmd->previous = NULL;
+	//mini->cmd = mini->cmd->next;
+	//mini->cmd->previous = NULL;
 	int size = lst_size_cmd(mini);
 	printf("SIZE %d\n", size);
 	//del_first_cmd(&mini->cmd);
 	//ft_print_parser(mini);
-	//print_error(mini, mini->lexer, 0);
 	return (EXIT_SUCCESS);
 }
 
