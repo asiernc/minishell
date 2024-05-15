@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/05/14 14:37:58 by simarcha         ###   ########.fr        #
+#    Updated: 2024/05/15 12:13:26 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC			=	src/main.c 							\
 				src/executor/utils.c				\
 				src/builtins/builtin_pwd.c	 		\
 				src/builtins/builtin_env.c			\
+				src/builtins/builtin_export_helper.c\
 				src/builtins/builtin_export.c		\
 				src/builtins/builtin_unset.c		\
 				src/builtins/builtin_exit.c			\

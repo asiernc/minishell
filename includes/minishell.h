@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 18:30:52 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/15 12:00:38 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,13 @@ t_builtin		*init_builtin_node(char **env);
 
 int				builtin_exit(void);
 int				builtin_pwd(t_mini *mini);
+
 int				builtin_env(t_mini *mini);
+void			remove_special_node(t_builtin **head);
+t_builtin		*sort_ascii(t_builtin *lst_export, t_builtin *sorted);
+int				check_variable(char *str);
+char			*trim_quotes(char *str);//YOU MIGHT HAVE A LEAK HERE BECAUSE YOU MALLOC WITHOUT FREE THE PREVIOUS CONTENT
+	
 int				builtin_export(t_mini *mini, char **cmd);
 void			builtin_unset(t_builtin **head, char *str);
 
