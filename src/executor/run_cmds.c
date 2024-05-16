@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/16 17:23:48 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:51:52 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 	int	exit;
 
 	exit = 0;
-	if (mini && cmd)
-		fprintf(stderr, "");
-	/*if (cmd->builtin == ECHO)
+//	if (mini && cmd)
+//		fprintf(stderr, "");
+	if (cmd->builtin == ECHO)
 		exit = builtin_echo(mini, cmd);
-	else if (cmd->builtin == CD)
+/*	else if (cmd->builtin == CD)
 		exit = builtin_cd(mini, cmd);*/
 //	if (cmd->builtin == PWD)
 //		exit = builtin_pwd(mini);
@@ -87,9 +87,9 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	// expander
 	// comentado para test abajo!
 	if (cmd->builtin != NOT_HAVE)
-	{	//write(1, "", 1);
+	{
 		do_builtin(mini, cmd);
-		exit(0);
+		printf("➡️ Command Line Back>\n\n\nAsier Business ⬇️ \n");
 	}
 	// hdoc
 	ft_heredoc(mini, mini->cmd);

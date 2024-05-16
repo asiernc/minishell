@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/16 16:56:05 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:42:48 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,6 @@ void			free_cmd_line(char **str);
 
 // Built-ins
 
-//builtin			find_builtin(char *str);
-
 int				builtin_pwd(t_mini *mini);
 int				builtin_exit(void);
 int				builtin_pwd(t_mini *mini);
@@ -202,6 +200,7 @@ char			*get_key_from_env(char *str);
 char			*get_value_from_env(char *str);
 t_builtin		*init_builtin_node(char **env);
 
+int				builtin_echo(t_mini *mini, t_cmd *command);
 
 // Executor
 

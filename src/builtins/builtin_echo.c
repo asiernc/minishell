@@ -3,33 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 12:52:06 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/16 17:21:27 by anovio-c         ###   ########.fr       */
+/*   Created: 2024/05/16 18:29:34 by simarcha          #+#    #+#             */
+/*   Updated: 2024/05/16 18:49:18 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_echo(char **command, char *line)
+//we want to count the lines of the array
+int	lines_counter(char **array)
 {
-	if (ft_strncmp(command[0], "echo", 4) == 0)
-	//comprobar si funciona igual ft_strcmp(command[0], "echo") pq strcmp compara len de ambos
+	int	i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
+
+static int	builtin_echo_flag_n(t_mini *mini, t_cmd *command, int i, int wc)
+{
+	while (command->str[i])
 	{
-		if (!ft_strncmp(command[1], "-n", 2))
-		{
-			if (write(1, line, ft_strlen(line)) == -1)
-				//line means what's after echo => the characters we want to write
-				print_error("write failed in src/builtin_echo");
-		}
-		else// if (ft_strncmp(command[1], "-n", 2))//if the flag is NOT -n
-		{
-			if (write(1, line, ft_strlen(line)) == -1)
-				//line means what's after echo => the characters we want to write
-				print_error("write failed in src/builtin_echo");
-			if (write(1, "\n", 1) == -1)
-				print_error(NULL, NULL, "write failed in src/builtin_echo");
-		}
+		if (write(1, command->str[i], ft_strlen(command->str[i])) == -1)
+			return (print_error(mini, 0, 0), 0);//keycode = write has failed
+		if (i < wc - 1)
+			if (write(1, " ", 1) == -1)
+				return (print_error(mini, 0, 0), 0);//keycode = write has failed
+		i++;
 	}
+	return (1);
+}
+
+int	builtin_echo(t_mini *mini, t_cmd *command)
+{
+	int	wordcount;
+	int	i;
+
+	wordcount = lines_counter(command->str);
+	i = 1;
+	if (command->str[1]	&& ft_strcmp_simple(command->str[1], "-n") == 0)
+		return (builtin_echo_flag_n(mini, command, 2, wordcount));
+	else
+	{
+		while (command->str[i])
+		{
+			if (write(1, command->str[i], ft_strlen(command->str[i])) == -1)
+				print_error(mini, 0, 0);//keycode = write has failed
+			if (i < wordcount - 1)
+				if (write(1, " ", 1) == -1)
+					return (print_error(mini, 0, 0), 0);//keycode = write has failed
+			i++;
+		}
+		if (write(1, "\n", 1) == -1)
+			return (print_error(mini, 0, 0), 0);//keycode = write has failed
+	}
+	return (1);
 }
