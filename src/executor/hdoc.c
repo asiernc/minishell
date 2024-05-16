@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 21:51:16 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/16 16:50:34 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*generate_filename(void)
 	static int	i = 1;
 	char		*str;
 
-	//str = ft_strjoin("src/tmp/hdoc_file", ft_itoa(i));
 	str = ft_strjoin("hdoc_file", ft_itoa(i)); // test before expander
 	str = ft_strjoin(str, ".c");
 	i++;
@@ -121,10 +120,10 @@ int	ft_heredoc(t_mini *mini, t_cmd *cmd)
 			error = check_eof(mini->cmd->redirections, cmd->hdoc_filename);
 			if (error) // error == exitFAILURE
 				reset(mini);
+			mini->flag_hdoc = 1;
 		}
 		cmd = cmd->next;
 	}
 	cmd->redirections = tmp;
-	mini->flag_hdoc = 1;
 	return (error);
 }

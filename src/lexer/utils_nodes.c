@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 10:47:44 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/06 20:32:52 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/16 15:16:44 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,21 @@ void	del_first_node(t_lexer **lst)
 	tmp = *lst;
 	*lst = tmp->next;
 	clear_one_node(&tmp);
+}
+
+void	lexer_clear(t_lexer **list)
+{
+	t_lexer	*tmp;
+
+	if (!*list)
+		return ;
+	while (*list)
+	{
+		tmp = (*list)->next;
+		if ((*list)->str)
+			free((*list)->str);
+		free(*list);
+		*list = tmp;
+	}
+	*list = NULL;
 }

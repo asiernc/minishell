@@ -6,16 +6,26 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:25:52 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/14 13:04:40 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:07:16 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//**head refers to the env builtin list
+typedef struct	s_builtin
+{
+	char				*key;//the name of the variable in env
+	char				*value;
+	int					index;
+//	int					checker;//to check if the builtin is ENV or EXPORT
+	struct s_builtin	*next;
+}				t_builtin;//for ENV and EXPORT builtins
+
+int	ft_strcmp(char *s1, char *s2);
+size_t	ft_strlen(const char *str);
+
 //the str refers to the variable to remove (for example PWD)
-//this function is basically remove a node
-void	builtin_unset(t_builtin **head, char *str)
+void	unset_builtin(t_builtin **head, char *str)
 {
 	t_builtin	*current;
 	t_builtin	*previous;
@@ -36,7 +46,10 @@ void	builtin_unset(t_builtin **head, char *str)
 			}
 			else
 				previous->next = current->next;
-			return (free(current->key), free(current->value), free(current));
+			free(current->key);
+			free(current->value);
+			free(current);
+			return ;
 		}
 		previous = current;
 		current = current->next;

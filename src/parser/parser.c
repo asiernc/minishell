@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/15 11:47:00 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/16 15:11:41 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ t_cmd	*create_cmd(t_parser *parser)
 
 	redirections(parser);
 	num_args = count_args(parser->lexer);
-	//fprintf(stderr, "COUNT ARGS X CMD : %d\n", num_args);
-	//str = malloc((num_args + 1) * sizeof(char *));
-	str = ft_calloc(num_args + 1, sizeof(char *));
+	str = ft_calloc((num_args + 1), sizeof(char *));
 	if (!str)
 		print_error(parser->mini, parser->mini->lexer, 1);
 	i = 0;
@@ -78,22 +76,20 @@ t_cmd	*create_cmd(t_parser *parser)
 		if (tmp->str)
 		{
 			str[i] = ft_strdup(tmp->str);
-			//fprintf(stderr, "STR = %s\n", str[i]);
 			//printf("NEW CMD: %s\n", str[i]);
 			delone_node(tmp->num_node, &parser->lexer);
 			//del_first_node(&parser->lexer);
 			tmp = parser->lexer;
 		}
 		i++;
-		//fprintf(stderr, "STR BEFORE WHILE : %s\n", str[i]);
 	}
 	return (new_cmd(str, parser->num_redirections, parser->redirections));
 }
 
 int	parser(t_mini *mini)
 {
-	t_parser		parser;
-	t_cmd			 *new;
+	t_parser	parser;
+	t_cmd		*new;
 
 	count_pipes(mini);
 	//printf("PIPES = %d\n", mini->pipes);
@@ -122,6 +118,7 @@ int	parser(t_mini *mini)
 	printf("SIZE %d\n", size);
 	//del_first_cmd(&mini->cmd);
 	//ft_print_parser(mini);
+	//print_error(mini, mini->lexer, 0);
 	return (EXIT_SUCCESS);
 }
 

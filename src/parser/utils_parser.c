@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:01:02 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/10 20:06:34 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/16 15:47:47 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,3 +112,19 @@ int	check_line(t_mini *mini, int token)
 	}
 	return (EXIT_SUCCESS);
 }
+
+void	free_cmd_line(char **str)
+{
+	int	i;
+	
+	i = 0;
+	while (str[i])
+		i++;
+	while (i > 0)
+	{
+		free(str[i]);
+		i--;
+	}
+	free(str);
+}
+

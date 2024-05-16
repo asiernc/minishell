@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:30:58 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/15 13:10:39 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/16 15:14:27 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,26 @@ void	del_first_cmd(t_cmd **lst)
 
 void	lst_clear_cmds(t_cmd **cmd)
 {
-	t_cmd *end;
+	t_cmd	*tmp_cmd;
+	t_lexer	*tmp_redirects;
 
-	end = *cmd;
-	while (end->previous)
-		end = end->previous;
-	*cmd = end;
+    if (!*cmd)
+        return;
+    tmp_cmd = *cmd;
+    while (tmp_cmd && tmp_cmd->previous)
+        tmp_cmd = tmp_cmd->previous;
+	*cmd = tmp_cmd;
 	while (*cmd)
-		del_first_cmd(cmd);
-	cmd = NULL;
+	{
+		tmp_cmd = (*cmd)->next;
+		tmp_redirects = (*cmd)->redirections;
+		lexer_clear(&tmp_redirects);
+		if ((*cmd)->hdoc_filename)
+			free((*cmd)->hdoc_filename);
+		if ((*cmd)->str)
+			free_cmd_line((*cmd)->str);
+		free(*cmd);
+		*cmd = tmp_cmd;
+	}
+	*cmd = NULL;
 }

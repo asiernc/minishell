@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/15 13:08:38 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:56:05 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,15 @@ typedef struct s_parser
 	struct s_mini	*mini;
 }	t_parser;
 
+// Builtins
+typedef struct	s_builtin
+{
+	char				*key;
+	char				*value;
+	int					index;//this variable may be useless
+	struct s_builtin	*next;
+}				t_builtin;
+
 // Test functions
 
 void			ft_print(t_mini *mini);
@@ -161,16 +170,37 @@ int				count_args(t_lexer *lst);
 t_lexer			*move_to_next_cmd(t_lexer *lst);
 void			ft_node_add_back_parser(t_cmd **lst, t_cmd *node);
 int				check_line(t_mini *mini, int token);
-void			lst_clear_cmds(t_cmd **cmd);
+
 int				lst_size_cmd(t_mini *mini);
 t_cmd			*clear_one_cmd(t_cmd **lst);
 void			del_first_cmd(t_cmd **lst);
+void			lst_clear_cmds(t_cmd **cmd);
+void			free_cmd_line(char **str);
 
 // Built-ins
 
 //builtin			find_builtin(char *str);
 
 int				builtin_pwd(t_mini *mini);
+int				builtin_exit(void);
+int				builtin_pwd(t_mini *mini);
+int				builtin_env(t_mini *mini);
+int				builtin_export(t_mini *mini, char **cmd);
+void			builtin_unset(t_builtin **head, char *str);
+// cd
+
+// Utils builtins
+
+
+t_builtin		*create_builtin_lst(char **env);
+t_builtin		*ft_lstnew_builtin(char *str, int i);
+void			ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new);
+void			ft_lstclear_builtin(t_builtin **lst);
+int				ft_lstsize_builtin(t_builtin *lst);
+void			print_list(t_builtin **lst_env);//do you really use it ?
+char			*get_key_from_env(char *str);
+char			*get_value_from_env(char *str);
+t_builtin		*init_builtin_node(char **env);
 
 
 // Executor
@@ -183,7 +213,7 @@ int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
 char			*find_check_path(char *cmd, char **env);
-void				do_cmd(t_mini *mini, t_cmd *cmd);
+int				do_cmd(t_mini *mini, t_cmd *cmd);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
 void			wait_pipes(t_mini *mini, int *pid, int pipes);
@@ -216,7 +246,7 @@ void			del_first_node(t_lexer **lst);
 void			delone_node(int num_del, t_lexer **lst);
 int				lst_size_lexer(t_mini *mini);
 void			lst_clear_lexer(t_lexer **lst);
-
+void			lexer_clear(t_lexer **list);
 // Random utils
 
 void			check_quotes(char *line);

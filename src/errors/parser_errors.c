@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/15 11:07:06 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:20:51 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_error(t_mini *mini, t_lexer *lexer, int keycode)
 	else if (keycode == IN_ERROR)
 		ft_putstr_fd("in: RNo such file or directory\n", STDERR_FILENO);
 	else if (keycode == OUT_ERROR)
-		ft_putstr_fd("out: No such file or directory\n", STDERR_FILENO);
+		ft_putstr_fd("out: RNo such file or directory\n", STDERR_FILENO);
 	else if (keycode == PIPE_ERROR)
 		ft_putstr_fd("pipe: Error\n", STDERR_FILENO);
 	else if (keycode == FORK_ERROR)

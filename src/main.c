@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/15 13:10:41 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:49:56 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@
 
 int	reset(t_mini *mini)
 {
-	/*t_lexer	*tmp;
-
-	tmp = mini->lexer;
-	while (tmp->next)
-	{
-		tmp = tmp->next;
-		free(tmp);
-	}*/
 	if (mini->cmd)
 		lst_clear_cmds(&mini->cmd);
 	if (mini->lexer)
