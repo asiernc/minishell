@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/15 12:00:38 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:56:05 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_mini
 	int						flag_hdoc;
 	int						*pid;
 	int						error_code;
-	struct s_cmd			*cmd;
+	struct s_cmd		*cmd;
 	// meter tu estructura de builtins
 	//t_builtin
 }	t_mini;
@@ -110,8 +110,8 @@ typedef struct s_cmd
 	int						num_redirections;
 	char					*hdoc_filename;
 	t_lexer					*redirections;
-	struct s_cmd			*next;
-	struct s_cmd			*previous;
+	struct s_cmd		*next;
+	struct s_cmd		*previous;
 }	t_cmd;
 
 typedef struct s_parser
@@ -121,6 +121,15 @@ typedef struct s_parser
 	int				num_redirections;
 	struct s_mini	*mini;
 }	t_parser;
+
+// Builtins
+typedef struct	s_builtin
+{
+	char				*key;
+	char				*value;
+	int					index;//this variable may be useless
+	struct s_builtin	*next;
+}				t_builtin;
 
 // Test functions
 
@@ -154,7 +163,7 @@ void			lst_clear_parser(t_cmd **lst);
 
 // Parser utils
 
-t_cmd			*new_cmd(char **str, int num_redirects, t_lexer *redirections);
+t_cmd			 *new_cmd(char **str, int num_redirects, t_lexer *redirections);
 int				prepare_builtin(char *str);
 void			count_pipes(t_mini *mini);
 int				count_args(t_lexer *lst);
@@ -163,16 +172,25 @@ void			ft_node_add_back_parser(t_cmd **lst, t_cmd *node);
 int				check_line(t_mini *mini, int token);
 
 int				lst_size_cmd(t_mini *mini);
+t_cmd			*clear_one_cmd(t_cmd **lst);
+void			del_first_cmd(t_cmd **lst);
+void			lst_clear_cmds(t_cmd **cmd);
+void			free_cmd_line(char **str);
 
+// Built-ins
 
-// Builtins
-typedef struct	s_builtin
-{
-	char				*key;
-	char				*value;
-	int					index;//this variable may be useless
-	struct s_builtin	*next;
-}				t_builtin;
+//builtin			find_builtin(char *str);
+
+int				builtin_pwd(t_mini *mini);
+int				builtin_exit(void);
+int				builtin_pwd(t_mini *mini);
+int				builtin_env(t_mini *mini);
+int				builtin_export(t_mini *mini, char **cmd);
+void			builtin_unset(t_builtin **head, char *str);
+// cd
+
+// Utils builtins
+
 
 t_builtin		*create_builtin_lst(char **env);
 t_builtin		*ft_lstnew_builtin(char *str, int i);
@@ -183,18 +201,6 @@ void			print_list(t_builtin **lst_env);//do you really use it ?
 char			*get_key_from_env(char *str);
 char			*get_value_from_env(char *str);
 t_builtin		*init_builtin_node(char **env);
-
-int				builtin_exit(void);
-int				builtin_pwd(t_mini *mini);
-
-int				builtin_env(t_mini *mini);
-void			remove_special_node(t_builtin **head);
-t_builtin		*sort_ascii(t_builtin *lst_export, t_builtin *sorted);
-int				check_variable(char *str);
-char			*trim_quotes(char *str);//YOU MIGHT HAVE A LEAK HERE BECAUSE YOU MALLOC WITHOUT FREE THE PREVIOUS CONTENT
-	
-int				builtin_export(t_mini *mini, char **cmd);
-void			builtin_unset(t_builtin **head, char *str);
 
 
 // Executor
@@ -225,8 +231,8 @@ int				put_outfile(t_mini *mini, t_lexer *lex, char *filename);
 
 int				ft_heredoc(t_mini *mini, t_cmd *cmd);
 char			*generate_filename(void);
-int				check_eof(t_mini *mini, t_lexer	*redir, char *hdoc_filename);
-int				create_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename, bool quotes);
+int				check_eof(t_lexer	*redir, char *hdoc_filename);
+int				create_hdoc(t_lexer *redir, char *hdoc_filename, bool quotes);
 void			remove_quotes(t_lexer *node);
 int				sends_hdoc(t_mini *mini, t_cmd *cmd, int fds[2]);
 
@@ -240,7 +246,7 @@ void			del_first_node(t_lexer **lst);
 void			delone_node(int num_del, t_lexer **lst);
 int				lst_size_lexer(t_mini *mini);
 void			lst_clear_lexer(t_lexer **lst);
-
+void			lexer_clear(t_lexer **list);
 // Random utils
 
 void			check_quotes(char *line);

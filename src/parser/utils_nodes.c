@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:30:58 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/11 16:58:39 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/16 15:14:27 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void	ft_node_add_back_parser(t_cmd **lst, t_cmd *node)
 {
 	t_cmd *tmp;
 
+	tmp = *lst;
 	if (*lst == NULL)
 	{
 		*lst = node;
 		return ;
 	}
-	tmp = *lst;
-	while (tmp->next)
+	while (tmp->next != NULL)
 		tmp = tmp->next;
 	tmp->next = node;
-	tmp->previous = tmp;
+	node->previous = tmp;
 }
 
 int		lst_size_cmd(t_mini *mini)
@@ -50,9 +50,9 @@ int		lst_size_cmd(t_mini *mini)
 	int	len;
 	t_cmd	*tmp;
 
-	len = 0;
+	len = 1;
 	tmp = mini->cmd;
-	while (tmp->next)
+	while (tmp->next != NULL)
 	{
 		len++;
 		tmp = tmp->next;
@@ -74,4 +74,51 @@ void	lst_clear_parser(t_cmd **lst)
 		*lst = tmp;
 	}
 	*lst = NULL;
+}
+
+t_cmd	*clear_one_cmd(t_cmd **lst)
+{
+	if ((*lst)->str)
+	{
+		free((*lst)->str);
+		(*lst)->str = NULL;
+	}
+	free(*lst);
+	*lst = NULL;
+	return (NULL);
+}
+
+void	del_first_cmd(t_cmd **lst)
+{
+	t_cmd	*tmp;
+
+	tmp = *lst;
+	*lst = tmp->next;
+	clear_one_cmd(&tmp);
+}
+
+void	lst_clear_cmds(t_cmd **cmd)
+{
+	t_cmd	*tmp_cmd;
+	t_lexer	*tmp_redirects;
+
+    if (!*cmd)
+        return;
+    tmp_cmd = *cmd;
+    while (tmp_cmd && tmp_cmd->previous)
+        tmp_cmd = tmp_cmd->previous;
+	*cmd = tmp_cmd;
+	while (*cmd)
+	{
+		tmp_cmd = (*cmd)->next;
+		tmp_redirects = (*cmd)->redirections;
+		lexer_clear(&tmp_redirects);
+		if ((*cmd)->hdoc_filename)
+			free((*cmd)->hdoc_filename);
+		if ((*cmd)->str)
+			free_cmd_line((*cmd)->str);
+		free(*cmd);
+		*cmd = tmp_cmd;
+	}
+	*cmd = NULL;
 }

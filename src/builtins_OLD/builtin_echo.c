@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:52:06 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/16 17:21:27 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:00:50 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	builtin_echo(char **command, char *line)
 				//line means what's after echo => the characters we want to write
 				print_error("write failed in src/builtin_echo");
 			if (write(1, "\n", 1) == -1)
-				print_error(NULL, NULL, "write failed in src/builtin_echo");
+				print_error("write failed in src/builtin_echo");
 		}
 	}
 }

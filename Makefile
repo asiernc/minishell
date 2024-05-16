@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/05/15 12:13:26 by simarcha         ###   ########.fr        #
+#    Updated: 2024/05/16 17:22:13 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,18 +38,20 @@ SRC			=	src/main.c 							\
 				src/executor/run_cmds.c				\
 				src/executor/redirections.c			\
 				src/executor/utils.c				\
-				src/builtins/builtin_pwd.c	 		\
-				src/builtins/builtin_env.c			\
-				src/builtins/builtin_export_helper.c\
-				src/builtins/builtin_export.c		\
-				src/builtins/builtin_unset.c		\
-				src/builtins/builtin_exit.c			\
-				src/builtins/builtin_utils_nodes.c	\
 				src/utils/utils.c					\
 				src/errors/parser_errors.c
 				#src/builtins/builtin_echo.c			\
-				#src/builtins/builtin_cd.c			\
+				src/builtins/builtin_pwd.c	 		\
+				src/builtins/builtin_env.c			\
+				src/builtins/builtin_export.c		\
+				src/builtins/builtin_export_helper.c\
+				src/builtins/builtin_unset.c		\
+				src/builtins/builtin_utils_nodes.c	\
+				src/utils/utils.c					\
+				src/errors/parser_errors.c
 
+				#src/builtins/builtin_cd.c			\
+				#src/builtins/builtin_exit.c			\
 
 
 #OBJS		=	$(addprefix $(OBJDIR), $(notdir $(patsubst %.c, %.o, $(src))))

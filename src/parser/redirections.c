@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 10:23:50 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/26 12:03:27 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:10:13 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,9 @@ void	new_redirection(t_parser *parser, t_lexer *tmp)
 	ft_node_add_back(&parser->redirections, node);
 	parser->num_redirections++;
 	num_node_delete = tmp->num_node;
-	printf("AFTER\n");
-	//printf("BEFORE\n");
 	delone_node(num_node_delete, &parser->lexer);
 	num_node_delete++;
 	delone_node(num_node_delete, &parser->lexer);
-	//ft_print(parser->mini);	
 }
 
 // Begin redirections, shift the node until the redirect (making verifications),

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 16:08:26 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/14 12:00:10 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		pre_executor(t_mini *mini)
 {
-	if (mini->cmd->next == NULL && mini->pipes == 0)
+	if (/*mini->cmd->next == NULL && */mini->pipes == 0)
 		handle_single_cmd(mini, mini->cmd);
 	else
 		executor(mini);
@@ -31,6 +31,7 @@ char	*find_check_path(char *cmd, char **env)
 	char	*cmd_path;
 	char	*tmp;
 
+	//valorar hacer access por el caso que nos den la ruta absoluta example ./bin/var/cat
 	while (*env && !ft_strnstr(*env, "PATH=", 5))
 		env++;
 	tmp = ft_substr(*env, 5, ft_strlen(*env) - 5);
