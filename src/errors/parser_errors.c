@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/19 14:06:30 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/19 15:08:14 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	print_error(t_mini *mini, t_lexer *lexer, int keycode)
 	else if (keycode == EXECVE_ERROR)
 		ft_putstr_fd("execve error\n", STDERR_FILENO);
 	else if (keycode == EXIT_ERROR)
+	{
 		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
+		exit(255);
+	}
 	if (lexer)//test
 		printf("");//test
 	if (mini->lexer)
