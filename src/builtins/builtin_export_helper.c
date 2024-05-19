@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/15 14:15:13 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:40:45 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ t_builtin	*sort_ascii(t_builtin *lst_export, t_builtin *sorted)
 
 //we want to check if everything is well written before the '='.
 //It means if there is a key name to the str.
-//we check if it's writtent like this: for+=example || for=example
-//here: str <=> 'simon=test'
+//we check if it's written like this: for+=example || for=example
+//here: str <=> simon=test
 int	check_variable(char *str)
 {
 	int	i;

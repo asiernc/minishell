@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/19 14:11:25 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:14:25 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ enum	e_error_codes
 	CMD_NOT_FOUND_ERROR,
 	EXECVE_ERROR,
 	EXIT_ERROR,
+	CD_ERROR,
 };
 //		Enum for operators
 
