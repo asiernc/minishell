@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/16 18:49:18 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/19 19:27:43 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,38 @@ int	lines_counter(char **array)
 	return (i);
 }
 
+//we have to check if the flag of the echo command is written in that way :
+//-nnnnnnnnnnnnn -> that is also considered as correct
+int	check_flag(char *flag)
+{
+	int	i;
+	int	check;
+
+	i = 0;
+	check = 0;
+	while (flag[i])
+	{
+		if (flag[i] == '-' && i == 0)
+		{
+			i++;
+			check = 1;
+		}
+		if (flag[i] != 'n')
+			return (0);
+		i++;
+	}
+	if (check == 1 && i == (int)ft_strlen(flag))
+		return (1);
+	return (0);
+}
+
 static int	builtin_echo_flag_n(t_mini *mini, t_cmd *command, int i, int wc)
 {
 	while (command->str[i])
 	{
+		while (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
+				|| check_flag(command->str[i]) == 1))
+			i++;
 		if (write(1, command->str[i], ft_strlen(command->str[i])) == -1)
 			return (print_error(mini, 0, 0), 0);//keycode = write has failed
 		if (i < wc - 1)
@@ -44,7 +72,8 @@ int	builtin_echo(t_mini *mini, t_cmd *command)
 
 	wordcount = lines_counter(command->str);
 	i = 1;
-	if (command->str[1]	&& ft_strcmp_simple(command->str[1], "-n") == 0)
+	if (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
+		|| check_flag(command->str[i]) == 1))
 		return (builtin_echo_flag_n(mini, command, 2, wordcount));
 	else
 	{
