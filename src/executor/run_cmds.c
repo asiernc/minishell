@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/16 18:51:52 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:11:02 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,17 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 		exit = builtin_echo(mini, cmd);
 /*	else if (cmd->builtin == CD)
 		exit = builtin_cd(mini, cmd);*/
-//	if (cmd->builtin == PWD)
-//		exit = builtin_pwd(mini);
-	//if (cmd->builtin == EXPORT)
-	//	exit = builtin_export(mini, cmd->str);
-	/*else if (cmd->builtin == UNSET)
-		exit = builtin_unset(mini, cmd);*/
-//	else if (cmd->builtin == ENV)
-//		exit = builtin_env(mini);
-//	else if (cmd->builtin == EXIT)
-//		exit = builtin_exit();//to perfection
+	else if (cmd->builtin == PWD)
+		exit = builtin_pwd(mini);
+	else if (cmd->builtin == EXPORT)
+		exit = builtin_export(mini, cmd->str);
+	else if (cmd->builtin == UNSET)
+		exit = builtin_export(mini, cmd->str);//check yourunset
+		//exit = builtin_unset(mini, cmd->str);
+	else if (cmd->builtin == ENV)
+		exit = builtin_env(mini);
+	else if (cmd->builtin == EXIT)
+		exit = builtin_exit(mini, cmd);
 	return (exit);
 }
 

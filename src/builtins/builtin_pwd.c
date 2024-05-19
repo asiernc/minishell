@@ -6,12 +6,13 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:47:49 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 13:55:09 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:28:29 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//maybe it won't work if the user change the directory => to check
 int	builtin_pwd(t_mini *mini)//to free after having used it
 {
 	char	**env_cpy;

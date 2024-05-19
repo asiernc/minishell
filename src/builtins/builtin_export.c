@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/15 14:13:57 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/19 13:32:22 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	builtin_export_1(t_builtin *lst_export)
 {
 	t_builtin	*tmp;
 
-	lst_export = sort_ascii(lst_export, NULL);
+//	lst_export = sort_ascii(lst_export, NULL);
 	tmp = lst_export;
 	remove_special_node(&tmp);
 	while (tmp)
@@ -94,7 +94,7 @@ int	builtin_export_1(t_builtin *lst_export)
 		tmp = tmp->next;
 	}
 //	ft_lstclear_builtin(&lst_export);//this line will be written at the very last step of the pgrm. Just before return (0) of the main
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 //I had norminette issues so I had to cut this functions in two
@@ -116,7 +116,7 @@ int	builtin_export(t_mini *mini, char **cmd)
 				builtin_unset(&lst_export, key_str);
 			value_trimmed = trim_quotes(cmd[1]);
 			if (!value_trimmed)
-				return (0);
+				return (EXIT_FAILURE);
 			lst_export = add_export_variable(lst_export, cmd[1], value_trimmed);
 		}
 		else if (check_variable(cmd[1]) == 2)

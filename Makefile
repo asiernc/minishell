@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/05/16 18:42:34 by simarcha         ###   ########.fr        #
+#    Updated: 2024/05/19 14:07:37 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,17 +40,17 @@ SRC			=	src/main.c 							\
 				src/executor/utils.c				\
 				src/utils/utils.c					\
 				src/errors/parser_errors.c			\
-				src/builtins/builtin_echo.c			
-				#src/builtins/builtin_pwd.c	 		\
+				src/builtins/builtin_echo.c			\
+				src/builtins/builtin_pwd.c	 		\
+				src/builtins/builtin_utils_nodes.c	\
 				src/builtins/builtin_env.c			\
 				src/builtins/builtin_export.c		\
 				src/builtins/builtin_export_helper.c\
 				src/builtins/builtin_unset.c		\
-				src/builtins/builtin_utils_nodes.c	\
-				src/utils/utils.c					\
+				src/builtins/builtin_exit.c			\
+				#src/utils/utils.c					\
 				src/errors/parser_errors.c
 				#src/builtins/builtin_cd.c			\
-				#src/builtins/builtin_exit.c			\
 
 
 #OBJS		=	$(addprefix $(OBJDIR), $(notdir $(patsubst %.c, %.o, $(src))))
