@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/19 19:36:34 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:05:27 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ int	builtin_echo(t_mini *mini, t_cmd *command)
 	if (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
 			|| check_flag(command->str[i]) == 1))
 		return (builtin_echo_flag_n(mini, command, 2, wordcount));
-	else if (command->str[i] && (ft_strcmp(command->str[i], "$?") == 0))
-		//printf("%i\n", last_exit_status);
+	//you have to check if the first letter of the flag is a $ => $expander && $?
+	//else if (command->str[i] && (ft_strcmp(command->str[i], "$?") == 0))
+		//printf("%i\n", mini->last_exit_status);
 	else
 	{
 		while (command->str[i])
