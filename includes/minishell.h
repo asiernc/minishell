@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/18 18:09:36 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/20 16:45:40 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
+# define QUOTE	39
+# define DQUOTE	34
 
 // STRUCTS
 
@@ -37,8 +39,7 @@ typedef struct s_mini
 {
 	char					*line;
 	char					**env;
-	// struct env
-	// strcut export
+	struct t_builtin		*original_env;
 	struct s_lexer			*lexer;
 	int						pipes;
 	int						count_infiles;
@@ -208,6 +209,7 @@ void			remove_special_node(t_builtin **head);
 t_builtin		*sort_ascii(t_builtin *lst_export, t_builtin *sorted);
 int				check_variable(char *str);
 char			*trim_quotes(char *str);//YOU MIGHT HAVE A LEAK 
+int				create_env(t_mini *mini);
 
 
 // Expander
@@ -221,6 +223,7 @@ char			**expand_cmd_line(t_mini *mini, char **str);
 
 int is_dollar(char *str);
 int is_equal(char *str);
+int				check_all_quotes_closed(char *str);
 
 // Executor
 

@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/05/18 17:57:36 by asiercara        ###   ########.fr        #
+#    Updated: 2024/05/20 16:14:34 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC			=	src/main.c 							\
 				src/builtins/builtin_env.c			\
 				src/builtins/builtin_exit.c			\
 				src/builtins/builtin_utils_nodes.c	\
+				src/expander/manage_quotes.c		\
 				#src/builtins/builtin_export.c		\
 				src/builtins/builtin_export_helper.c\
 				src/builtins/builtin_unset.c		\

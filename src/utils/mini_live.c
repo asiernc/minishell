@@ -6,7 +6,7 @@
 /*   By: asiercara <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/05/18 18:11:12 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/20 16:46:10 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,12 @@ int	mini_live(t_mini *mini)
 
 void	init_mini(t_mini *mini)
 {
-	mini->line = NULL;
-	//mini->env = builtin_env??
-	mini->lexer = NULL;
-	mini->cmd = NULL;
-	mini->flag_hdoc = 0;
-	mini->pid = NULL;
-	//min->pwd = find_pwd;
+    mini->line = NULL;
+    mini->original_env = create_env(mini);
+    mini->lexer = NULL;
+    mini->cmd = NULL;
+    mini->flag_hdoc = 0;
+    mini->pid = NULL;
 	//cd exit success get current directory pwd = getcurrent directory
 }
 

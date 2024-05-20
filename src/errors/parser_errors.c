@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 11:20:51 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:32:24 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	print_error(t_mini *mini, int keycode)
 		ft_putstr_fd("execve error\n", STDERR_FILENO);
 	else if (keycode == EXIT_ERROR)
 	{
-		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);//necesitas escribir tb la string
+		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);//necesitas escribir la string tb
 		exit(255);
 	}
 	else if (keycode == CD_ERROR)
-		ft_putstr_fd("cd: No such file or directory\n", STDERR_FILENO);//necesitas escribir tb la string
+		ft_putstr_fd("cd: No such file or directory\n", STDERR_FILENO);//necesitas escribir la string tb
 	mini_reset(mini);
 }
 

@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:11:30 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/13 17:45:00 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:47:37 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*get_key_from_env(char *str)//to free once used
 	len_str = i;
 	result = malloc((len_str + 1) * sizeof(char));
 	if (!result)
-		return (perror("malloc failed to create the env key"), NULL);
+		return (NULL);
 	i = 0;
 	while (i < len_str)
 	{
@@ -65,7 +65,7 @@ char	*get_value_from_env(char *str)//to free once used
 	len_str = i - j;
 	result = malloc((len_str + 1) * sizeof(char));
 	if (!result)
-		return (perror("malloc failed to create the env value"), NULL);
+		return (NULL);
 	i = 0;
 	while (j < (int)ft_strlen(str))
 		result[i++] = str[j++];
@@ -111,14 +111,14 @@ t_builtin	*create_builtin_lst(char **env)//to free once used
 	return (lst_env);
 }
 
-int	builtin_env(t_mini *mini)
+/*int	builtin_env(t_mini *mini)
 {
 	t_builtin	*lst_env;
 	t_builtin	*tmp;
 
 	lst_env = create_builtin_lst(mini->env);
 	if (!lst_env)
-		perror("error creating the list for the env"); //print error
+		print_error(mini, 2);
 	tmp = lst_env;
 	while (tmp)
 	{
@@ -127,6 +127,40 @@ int	builtin_env(t_mini *mini)
 	}
 	ft_lstclear_builtin(&lst_env);
 	return (EXIT_SUCCESS);
+}*/
+
+///////////////cambios
+
+int	create_env(t_mini *mini)
+{
+	t_builtin	*lst_env;
+	//t_builtin	*tmp;
+
+	if (mini->env)
+		ft_lstclear_builtin(mini->env);
+	lst_env = create_builtin_lst(mini, mini->original_env);
+	if (!lst_env)
+		print_error(mini, 2); //print error
+	/*tmp = lst_env;
+	while (tmp)
+	{
+		printf("%s=%s\n", tmp->key, tmp->value);
+		tmp = tmp->next;
+	}*/
+	//ft_lstclear_builtin(&lst_env);
+	return (EXIT_SUCCESS);
+}
+
+int	builtin_env(t_mini *mini)
+{
+	t_builtin	*tmp;
+	
+	tmp = mini->env;
+	while (tmp)
+	{
+		printf("%s=%s\n", tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
 }
 
 /*int	main(int argc, char **argv, char **env)

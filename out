@@ -1,1 +1,13 @@
-test
+Makefile
+hdoc_file1.c
+hdoc_file2.c
+hdoc_file3.c
+hdoc_tmp_file1.c
+hdoc_tmp_file2.c
+hola.c
+includes
+libft
+minishell
+oldmini.zip
+out
+src

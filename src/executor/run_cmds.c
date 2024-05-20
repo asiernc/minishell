@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/18 17:24:40 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/20 16:22:01 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	int	exit_code;
 
 	exit_code = 0;
+		printf("simon\n");
+		printf("check_all_quotes_closed = %i\n", check_all_quotes_closed(mini->line));
 	if (cmd->redirections)
 		do_redirections(mini, cmd);
 	if(cmd->builtin != NOT_HAVE)
@@ -79,10 +81,10 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	// expander
 	// comentado para test abajo!
 	if (cmd->builtin != NOT_HAVE)
-	{	//write(1, "", 1);
+	{	
 		do_builtin(mini, cmd);
-		fprintf(stderr, "own\n");
-		exit(0); // reset
+	//	fprintf(stderr, "own\n");
+	//	exit(0); // reset
 	}
 	check_if_exists_hdoc(mini, mini->cmd);
 	pid = fork();
