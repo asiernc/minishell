@@ -114,6 +114,7 @@ typedef struct s_cmd
 	struct s_cmd		*previous;
 }	t_cmd;
 
+
 typedef struct s_parser
 {
 	t_lexer			*lexer;
@@ -203,6 +204,18 @@ char			*get_key_from_env(char *str);
 char			*get_value_from_env(char *str);
 t_builtin		*init_builtin_node(char **env);
 
+
+// Expander
+
+void			run_expander(t_mini *mini, t_cmd *cmd);
+char   			*expand_str_line(t_mini *mini, char *str);
+char			**expand_cmd_line(t_mini *mini, char **str);
+
+
+// Utils expander
+
+int is_dollar(char *str);
+int is_equal(char *str);
 
 // Executor
 

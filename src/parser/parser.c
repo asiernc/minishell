@@ -86,7 +86,7 @@ t_cmd	*create_cmd(t_parser *parser)
 
 int	parser(t_mini *mini)
 {
-	static int	flag = 0;
+	//static int	flag = 0;
 	t_parser	parser;
 	t_cmd		*new;
 
@@ -111,12 +111,12 @@ int	parser(t_mini *mini)
 	}
 //	printf("node 1 ls == %s\nnode 2 wc == %s\n", mini->cmd->str[0], mini->cmd->next->str[0]);
 	// !! siguientes dos lineas son para mac m2 !!!
-	if (flag == 0)
+	/*if (flag == 0)
 	{
 		mini->cmd = mini->cmd->next;
 		mini->cmd->previous = NULL;
 		flag = 1;
-	}
+	}*/
 	//del_first_cmd(&mini->cmd);
 	//ft_print_parser(mini);
 	//print_error(mini, mini->lexer, 0);

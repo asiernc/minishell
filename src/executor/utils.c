@@ -45,6 +45,10 @@ void	remove_eof_quotes(t_lexer *node)
 // esta bien que pase por env de inicio, pero valorar de donde leer, 
 // si de env de shell o de env de nuestra shell
 // hacer otro loop con las env de simon
+
+
+
+// mandar 127 is command not found
 char	*find_check_path(char *cmd, char **env)
 {
 	char	**paths;

@@ -26,6 +26,7 @@ int executor(t_mini *mini)
 	while (mini->cmd)
 	{
 		//llamar al expander aqui??
+		//run_expander(mini, mini->cmd);
 		if (mini->cmd->next && pipe(fds) == -1) //mini->cmd->next
 			print_error(mini, PIPE_ERROR);
 		check_if_exists_hdoc(mini, mini->cmd);

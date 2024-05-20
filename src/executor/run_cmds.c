@@ -14,19 +14,19 @@
 
 void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 {
-	int	exit_err;
+	int	exit_code;
 
-	exit_err = 0;
+	exit_code = 0;
 	if (cmd->redirections)
 		do_redirections(mini, cmd);
 	if(cmd->builtin != NOT_HAVE)
 	{
-		exit_err = do_builtin(mini, cmd);
-		exit(exit_err);
+		exit_code = do_builtin(mini, cmd);
+		exit(exit_code);
 	}
 	if (cmd->str)
-		exit_err = do_cmd(mini, cmd);
-	exit(exit_err);
+		exit_code = do_cmd(mini, cmd);
+	exit(exit_code);
 }
 
 int	do_cmd(t_mini *mini, t_cmd *cmd)
@@ -38,7 +38,7 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	if (cmd->redirections)
 		if (do_redirections(mini, cmd))
 			exit(1); 
-	path = find_check_path(cmd_head, mini->env);
+	path = find_check_path(cmd_head, mini->env); // mandar 127 si no lo encuentra
 	if (!path)
 		print_error(mini, CMD_NOT_FOUND_ERROR);
 	execve(path, cmd->str, mini->env);
