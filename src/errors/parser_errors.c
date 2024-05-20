@@ -32,6 +32,13 @@ void	print_error(t_mini *mini, int keycode)
 		ft_putstr_fd("command not found\n", STDERR_FILENO);
 	else if (keycode == EXECVE_ERROR)
 		ft_putstr_fd("execve error\n", STDERR_FILENO);
+	else if (keycode == EXIT_ERROR)
+	{
+		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);//necesitas escribir tb la string
+		exit(255);
+	}
+	else if (keycode == CD_ERROR)
+		ft_putstr_fd("cd: No such file or directory\n", STDERR_FILENO);//necesitas escribir tb la string
 	mini_reset(mini);
 }
 

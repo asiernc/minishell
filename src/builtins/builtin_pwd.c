@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+//int get_pwd
 
 int	builtin_pwd(t_mini *mini)//to free after having used it
 {
@@ -22,7 +23,7 @@ int	builtin_pwd(t_mini *mini)//to free after having used it
 	env_cpy = mini->env;
 	path_prefix = ft_strdup("PWD=");
 	if (!path_prefix)
-		print_error(mini, mini->lexer, 5); //Allocation memory error
+		print_error(mini, 5); //Allocation memory error
 	i = 0;
 	while (env_cpy[i])
 	{
@@ -31,12 +32,18 @@ int	builtin_pwd(t_mini *mini)//to free after having used it
 			free(path_prefix);
 			result = ft_strdup(env_cpy[i] + 4);
 			if (!result)
-				print_error(mini, mini->lexer, 5);
+				print_error(mini, 5);
 			ft_putendl_fd(result, 1);
 			free(result);
 			return (EXIT_SUCCESS);
 		}
 		i++;
 	}
+	//mini->pwd = result;
 	return (EXIT_FAILURE);
 }
+
+/*int	builtin_pwd(t_mini *mini)
+{
+	ft_putendl_fd(mini->pwd, 1);
+}*/

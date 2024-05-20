@@ -51,22 +51,23 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 	int	exit;
 
 	exit = 0;
-	if (mini && cmd)
-		fprintf(stderr, "");
-	/*if (cmd->builtin == ECHO)
+//	if (mini && cmd)
+//		fprintf(stderr, "");
+	if (cmd->builtin == ECHO)
 		exit = builtin_echo(mini, cmd);
-	else if (cmd->builtin == CD)
+/*	else if (cmd->builtin == CD)
 		exit = builtin_cd(mini, cmd);*/
-//	if (cmd->builtin == PWD)
-//		exit = builtin_pwd(mini);
-	//if (cmd->builtin == EXPORT)
-	//	exit = builtin_export(mini, cmd->str);
-	/*else if (cmd->builtin == UNSET)
-		exit = builtin_unset(mini, cmd);*/
-//	else if (cmd->builtin == ENV)
-//		exit = builtin_env(mini);
-//	else if (cmd->builtin == EXIT)
-//		exit = builtin_exit();//to perfection
+	else if (cmd->builtin == PWD)
+		exit = builtin_pwd(mini);
+//	else if (cmd->builtin == EXPORT)
+//		exit = builtin_export(mini, cmd->str);
+//	else if (cmd->builtin == UNSET)
+//		exit = builtin_export(mini, cmd->str);//check yourunset
+		//exit = builtin_unset(mini, cmd->str);
+	else if (cmd->builtin == ENV)
+		exit = builtin_env(mini);
+	else if (cmd->builtin == EXIT)
+		exit = builtin_exit(mini, cmd);
 	return (exit);
 }
 
@@ -80,7 +81,8 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	if (cmd->builtin != NOT_HAVE)
 	{	//write(1, "", 1);
 		do_builtin(mini, cmd);
-		exit(0);
+		fprintf(stderr, "own\n");
+		exit(0); // reset
 	}
 	check_if_exists_hdoc(mini, mini->cmd);
 	pid = fork();

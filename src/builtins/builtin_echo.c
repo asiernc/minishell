@@ -3,33 +3,94 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 12:52:06 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/16 17:21:27 by anovio-c         ###   ########.fr       */
+/*   Created: 2024/05/16 18:29:34 by simarcha          #+#    #+#             */
+/*   Updated: 2024/05/20 11:05:27 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_echo(char **command, char *line)
+//we want to count the lines of the array
+int	lines_counter(char **array)
 {
-	if (ft_strncmp(command[0], "echo", 4) == 0)
-	//comprobar si funciona igual ft_strcmp(command[0], "echo") pq strcmp compara len de ambos
+	int	i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
+
+//we have to check if the flag of the echo command is written in that way :
+//-nnnnnnnnnnnnn -> that is also considered as correct
+static int	check_flag(char *flag)
+{
+	int	i;
+	int	check;
+
+	i = 0;
+	check = 0;
+	while (flag[i])
 	{
-		if (!ft_strncmp(command[1], "-n", 2))
+		if (flag[i] == '-' && i == 0)
 		{
-			if (write(1, line, ft_strlen(line)) == -1)
-				//line means what's after echo => the characters we want to write
-				print_error(NULL, "write failed in src/builtin_echo");
+			i++;
+			check = 1;
 		}
-		else// if (ft_strncmp(command[1], "-n", 2))//if the flag is NOT -n
-		{
-			if (write(1, line, ft_strlen(line)) == -1)
-				//line means what's after echo => the characters we want to write
-				print_error(NULL, "write failed in src/builtin_echo");
-			if (write(1, "\n", 1) == -1)
-				print_error(NULL, "write failed in src/builtin_echo");
-		}
+		if (flag[i] != 'n')
+			return (0);
+		i++;
 	}
+	if (check == 1 && i == (int)ft_strlen(flag))
+		return (1);
+	return (0);
+}
+
+static int	builtin_echo_flag_n(t_mini *mini, t_cmd *command, int i, int wc)
+{
+	while (command->str[i])
+	{
+		while (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
+				|| check_flag(command->str[i]) == 1))
+			i++;
+		if (write(1, command->str[i], ft_strlen(command->str[i])) == -1)
+			return (print_error(mini, 0), 0);//keycode = write has failed
+		if (i < wc - 1)
+			if (write(1, " ", 1) == -1)
+				return (print_error(mini, 0), 0);//keycode = write has failed
+		i++;
+	}
+	return (1);
+}
+
+int	builtin_echo(t_mini *mini, t_cmd *command)
+{
+	int	wordcount;
+	int	i;
+
+	wordcount = lines_counter(command->str);
+	i = 1;
+	if (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
+			|| check_flag(command->str[i]) == 1))
+		return (builtin_echo_flag_n(mini, command, 2, wordcount));
+	//you have to check if the first letter of the flag is a $ => $expander && $?
+	//else if (command->str[i] && (ft_strcmp(command->str[i], "$?") == 0))
+		//printf("%i\n", mini->exit_code);
+	else
+	{
+		while (command->str[i])
+		{
+			if (write(1, command->str[i], ft_strlen(command->str[i])) == -1)
+				print_error(mini, 0);//keycode = write has failed
+			if (i < wordcount - 1)
+				if (write(1, " ", 1) == -1)
+					return (print_error(mini, 0), 0);//keycode = write has failed
+			i++;
+		}
+		if (write(1, "\n", 1) == -1)
+			return (print_error(mini, 0), 0);//keycode = write has failed
+	}
+	return (1);
 }

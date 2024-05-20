@@ -118,7 +118,7 @@ int	builtin_env(t_mini *mini)
 
 	lst_env = create_builtin_lst(mini->env);
 	if (!lst_env)
-		perror("error creating the list for the env");
+		perror("error creating the list for the env"); //print error
 	tmp = lst_env;
 	while (tmp)
 	{

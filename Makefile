@@ -40,19 +40,17 @@ SRC			=	src/main.c 							\
 				src/executor/utils.c				\
 				src/utils/utils.c					\
 				src/utils/mini_live.c				\
-				src/errors/parser_errors.c
-				#src/builtins/builtin_echo.c			\
+				src/errors/parser_errors.c			\
+				src/builtins/builtin_echo.c			\
 				src/builtins/builtin_pwd.c	 		\
 				src/builtins/builtin_env.c			\
-				src/builtins/builtin_export.c		\
+				src/builtins/builtin_exit.c			\
+				src/builtins/builtin_utils_nodes.c	\
+				#src/builtins/builtin_export.c		\
 				src/builtins/builtin_export_helper.c\
 				src/builtins/builtin_unset.c		\
 				src/builtins/builtin_utils_nodes.c	\
-				src/utils/utils.c					\
-				src/errors/parser_errors.c
-
-				#src/builtins/builtin_cd.c			\
-				#src/builtins/builtin_exit.c			\
+				src/builtins/builtin_cd.c			\
 
 
 #OBJS		=	$(addprefix $(OBJDIR), $(notdir $(patsubst %.c, %.o, $(src))))

@@ -42,6 +42,8 @@ void	init_mini(t_mini *mini)
 	mini->cmd = NULL;
 	mini->flag_hdoc = 0;
 	mini->pid = NULL;
+	//min->pwd = find_pwd;
+	//cd exit success get current directory pwd = getcurrent directory
 }
 
 

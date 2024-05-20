@@ -77,6 +77,8 @@ enum	e_error_codes
 	DUP2_ERROR,
 	CMD_NOT_FOUND_ERROR,
 	EXECVE_ERROR,
+	EXIT_ERROR,
+	CD_ERROR,
 };
 //		Enum for operators
 
@@ -181,18 +183,17 @@ void			free_cmd_line(char **str);
 
 // Built-ins
 
-//builtin			find_builtin(char *str);
-
 int				builtin_pwd(t_mini *mini);
-int				builtin_exit(void);
+int				builtin_exit(t_mini *mini, t_cmd *cmd);
 int				builtin_pwd(t_mini *mini);
 int				builtin_env(t_mini *mini);
 int				builtin_export(t_mini *mini, char **cmd);
-void			builtin_unset(t_builtin **head, char *str);
+//void			builtin_unset(t_builtin **head, char *str);
+int				builtin_unset(t_builtin **head, char *str);
+int				builtin_echo(t_mini *mini, t_cmd *command);
 // cd
 
 // Utils builtins
-
 
 t_builtin		*create_builtin_lst(char **env);
 t_builtin		*ft_lstnew_builtin(char *str, int i);
@@ -203,6 +204,10 @@ void			print_list(t_builtin **lst_env);//do you really use it ?
 char			*get_key_from_env(char *str);
 char			*get_value_from_env(char *str);
 t_builtin		*init_builtin_node(char **env);
+void			remove_special_node(t_builtin **head);
+t_builtin		*sort_ascii(t_builtin *lst_export, t_builtin *sorted);
+int				check_variable(char *str);
+char			*trim_quotes(char *str);//YOU MIGHT HAVE A LEAK 
 
 
 // Expander
