@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/16 15:11:41 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/18 16:20:35 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ void	ft_print_parser(t_mini *mini)
 	while (tmp)
 	{
 		printf("1\n");
-		printf("Node %d, str** = %s;",
-			   	i, tmp->str[0]);
-		/*printf("Node %d, str** = %s;",
-			   	i, tmp->str[1]);*/
+		printf("Node %d, str** = %s;", i, tmp->str[0]);
+		/*printf("Node %d, str** = %s;", i, tmp->str[1]);*/
 
 		//if (tmp2->str)
 		//	printf("redirections str = %s, operator = %d", tmp2->str,
@@ -68,7 +66,7 @@ t_cmd	*create_cmd(t_parser *parser)
 	num_args = count_args(parser->lexer);
 	str = ft_calloc((num_args + 1), sizeof(char *));
 	if (!str)
-		print_error(parser->mini, parser->mini->lexer, 1);
+		print_error(parser->mini, 1);
 	i = 0;
 	tmp = parser->lexer;
 	while (i < num_args)
@@ -88,6 +86,7 @@ t_cmd	*create_cmd(t_parser *parser)
 
 int	parser(t_mini *mini)
 {
+	static int	flag = 0;
 	t_parser	parser;
 	t_cmd		*new;
 
@@ -103,19 +102,21 @@ int	parser(t_mini *mini)
 		new = create_cmd(&parser);
 		//printf("string %s\n", cmd->str[0]);
 		if (!new)
-			print_error(mini, mini->lexer, 0);
-		if (!mini->cmd)
-			mini->cmd = new;
-		else
-			ft_node_add_back_parser(&mini->cmd, new);
+			print_error(mini, 0);
+		//if (!mini->cmd)
+		//	mini->cmd = new;
+		//else
+		ft_node_add_back_parser(&mini->cmd, new);
 		mini->lexer = parser.lexer;
 	}
 //	printf("node 1 ls == %s\nnode 2 wc == %s\n", mini->cmd->str[0], mini->cmd->next->str[0]);
 	// !! siguientes dos lineas son para mac m2 !!!
-	//mini->cmd = mini->cmd->next;
-	//mini->cmd->previous = NULL;
-	int size = lst_size_cmd(mini);
-	printf("SIZE %d\n", size);
+	if (flag == 0)
+	{
+		mini->cmd = mini->cmd->next;
+		mini->cmd->previous = NULL;
+		flag = 1;
+	}
 	//del_first_cmd(&mini->cmd);
 	//ft_print_parser(mini);
 	//print_error(mini, mini->lexer, 0);

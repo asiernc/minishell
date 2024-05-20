@@ -27,6 +27,7 @@ void	ft_print(t_mini *mini)
 	}
 }
 
+
 // Function to clear spaces from the beginning, and from the end of the command line.
 
 void	clear_line(t_mini *mini)
@@ -36,6 +37,7 @@ void	clear_line(t_mini *mini)
 	tmp = ft_strtrim(mini->line, " ");
 	free(mini->line);
 	mini->line = tmp;
+	//free(tmp); // esto soluciona los leaks que hay del trim
 }
 
 // Traverse the string from that quote until the next character that
@@ -47,7 +49,7 @@ int	find_next_quote(char c, char *str, int i)
 
 	j = 1;
 	while (str[i + j] && str[i + j] != c)
-	   j++;
+		j++;
 	j++;
 	//printf("valor j: %d\n", j);
 	return (j);

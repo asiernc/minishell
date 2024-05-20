@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/13 16:04:28 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:02:21 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	put_operator(char *str, int i, t_lexer **lst)
 
 int	put_word(char *str, int i, t_lexer **lst)
 {
-	static int	flag = 0;
+	static unsigned int	flag = 0;
 	int			j;
 
 	if (flag == 0)
@@ -84,7 +84,6 @@ int	lexer_tokenizer(t_mini *mini)
 	int	i;
 	int	diff;
 
-	clear_line(mini);
 	i = 0;
 	while (mini->line[i])
 	{

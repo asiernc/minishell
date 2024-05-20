@@ -107,7 +107,7 @@ int	check_line(t_mini *mini, int token)
 	}
 	else if (!mini->lexer)
 	{
-		print_error(mini, mini->lexer, 0);
+		print_error(mini, 0);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

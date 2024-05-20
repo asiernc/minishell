@@ -21,15 +21,15 @@ void	builtin_echo(char **command, char *line)
 		{
 			if (write(1, line, ft_strlen(line)) == -1)
 				//line means what's after echo => the characters we want to write
-				print_error("write failed in src/builtin_echo");
+				print_error(NULL, "write failed in src/builtin_echo");
 		}
 		else// if (ft_strncmp(command[1], "-n", 2))//if the flag is NOT -n
 		{
 			if (write(1, line, ft_strlen(line)) == -1)
 				//line means what's after echo => the characters we want to write
-				print_error("write failed in src/builtin_echo");
+				print_error(NULL, "write failed in src/builtin_echo");
 			if (write(1, "\n", 1) == -1)
-				print_error(NULL, NULL, "write failed in src/builtin_echo");
+				print_error(NULL, "write failed in src/builtin_echo");
 		}
 	}
 }

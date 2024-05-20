@@ -6,25 +6,54 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/16 16:51:30 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:48:45 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int executor(t_mini *mini)
+{
+	int	fds[2];
+	int	fd_in;
+	int	count_pipes;
+
+	count_pipes = mini->pipes;
+	mini->pid = ft_calloc((count_pipes + 2), sizeof(int));
+	if (!mini->pid)
+		print_error(mini, MALLOC_ERROR);
+	fd_in = STDIN_FILENO;
+	while (mini->cmd)
+	{
+		//llamar al expander aqui??
+		if (mini->cmd->next && pipe(fds) == -1) //mini->cmd->next
+			print_error(mini, PIPE_ERROR);
+		check_if_exists_hdoc(mini, mini->cmd);
+		ft_fork(mini, mini->cmd, fds, fd_in);
+		//close(fds[1]);
+		if (mini->cmd->previous != NULL)
+			close(fd_in);
+		fd_in = check_next_fd_in(mini, mini->cmd, fds);
+		if (mini->cmd->next)
+			mini->cmd = mini->cmd->next;
+		else
+			break ;
+	}
+	wait_pipes(mini, mini->pid, mini->pipes);
+	//close(fd_in);
+	return (0);
+}
+
 int	ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in)
 {
-	// unsigned ??
-	static int	i = 0; //valorar sobrescribir guardandome el ultimo pid que es el
-	// contiene el error code
+	static unsigned int	index = 0;
 
-	fprintf(stderr, "FORK\n");
-	mini->pid[i] = fork();
-	if (mini->pid[i] == -1)
-		print_error(mini, mini->lexer, FORK_ERROR);
-	if (mini->pid[i] == 0)
+	mini->pid[index] = fork();
+	if (mini->pid[index] == -1)
+		print_error(mini, FORK_ERROR);
+	if (mini->pid[index] == 0)
 		ft_dup(mini, cmd, fds, fd_in);
-	i++;
+	index++;
 	close(fds[1]);
 	return (EXIT_SUCCESS);
 }
@@ -34,13 +63,14 @@ void	ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in)
 	if (cmd->previous)
 	{
 		if (dup2(fd_in, STDIN_FILENO) == -1)
-			print_error(mini, mini->lexer, DUP2_ERROR);
+			print_error(mini, DUP2_ERROR);
 		close(fds[0]);
+		//close(fd_in);
 	}
 	if (cmd->next)
 	{
 		if (dup2(fds[1], STDOUT_FILENO) == -1)
-			print_error(mini, mini->lexer, DUP2_ERROR);
+			print_error(mini, DUP2_ERROR);
 		close(fds[1]);
 	}
 	if (cmd->previous)
@@ -48,6 +78,21 @@ void	ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in)
 	ft_exec_cmd(mini, cmd);
 }
 
+int check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2])
+{
+	int	fd_in;
+
+	fd_in = 0;
+	if (mini->flag_hdoc == 1)
+	{
+		mini->flag_hdoc = 0;
+		close(fds[0]);
+		fd_in = open(cmd->hdoc_filename, 0644);
+	}
+	else
+		fd_in = fds[0];
+	return (fd_in);
+}
 
 void	wait_pipes(t_mini *mini, int *pid, int pipes)
 {
@@ -62,36 +107,4 @@ void	wait_pipes(t_mini *mini, int *pid, int pipes)
 	}
 	if (WIFEXITED(status) == false)
 		mini->error_code = WEXITSTATUS(status);
-}
-
-int executor(t_mini *mini)
-{
-	int	fds[2];
-	int	fd_in;
-	int	count_pipes;
-
-	count_pipes = mini->pipes;
-	mini->pid = ft_calloc((count_pipes + 2), sizeof(int));
-	if (!mini->pid)
-		print_error(mini, mini->lexer, MALLOC_ERROR);
-	fd_in = STDIN_FILENO;
-	while (mini->cmd)
-	{
-		//llamar al expander aqui??
-		if (mini->cmd->next && pipe(fds) == -1) //mini->cmd->next
-			print_error(mini, mini->lexer, PIPE_ERROR);
-		ft_heredoc(mini, mini->cmd);
-		ft_fork(mini, mini->cmd, fds, fd_in);
-		if (mini->cmd->previous != NULL)
-			close(fd_in);
-		fd_in = sends_hdoc(mini, mini->cmd, fds);
-		if (mini->cmd->next)
-			mini->cmd = mini->cmd->next;
-		else
-			break ;
-	}
-	wait_pipes(mini, mini->pid, mini->pipes);
-	close(fd_in);
-	return (0);
-	// hacer limpieza recursiva o guardar/mover puntero cmd nodo al primero para free
 }

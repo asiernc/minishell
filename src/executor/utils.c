@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 12:00:10 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/18 17:22:35 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,33 @@
 
 int		pre_executor(t_mini *mini)
 {
-	if (/*mini->cmd->next == NULL && */mini->pipes == 0)
+	if (mini->pipes == 0)
 		handle_single_cmd(mini, mini->cmd);
 	else
 		executor(mini);
 	return (0);
 }
 
+char	*generate_filename(void)
+{
+	static int	i = 1;
+	char		*str;
+
+	str = ft_strjoin("hdoc_tmp_file", ft_itoa(i));
+	str = ft_strjoin(str, ".c");
+	i++;
+	return (str);
+}
+
+void	remove_eof_quotes(t_lexer *node)
+{
+	char	*str;
+	
+	str = node->str;
+	free(node->str);
+	if (str[0] == '\"' || str[0] == '\'')
+		node->str = ft_substr(str, 1, ft_strlen(str) -1);
+}
 
 // esta bien que pase por env de inicio, pero valorar de donde leer, 
 // si de env de shell o de env de nuestra shell

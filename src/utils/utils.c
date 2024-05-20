@@ -80,7 +80,7 @@ void	check_quotes(char *line)
 				i++;//in this condition, we can also add a string to catch what's inside the quotes
 			}
 			if (line[i] == '\0')
-				print_error(NULL, NULL, 0);
+				print_error(NULL, 0);
 		}
 		else if (line[i] == 39)//'
 		{
@@ -92,7 +92,7 @@ void	check_quotes(char *line)
 				i++;//in this condition, we can also add a string to catch what's inside the quotes
 			}
 			if (line[i] == '\0')
-				print_error(NULL, NULL, 0);
+				print_error(NULL, 0);
 		}
 		i++;
 	}

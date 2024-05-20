@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-void	print_error(t_mini *mini, t_lexer *lexer, int keycode)
+void	print_error(t_mini *mini, int keycode)
 {
 	ft_putstr_fd("minihell: ", STDERR_FILENO);
 	if (keycode == SINTAX_ERROR)
@@ -32,13 +32,7 @@ void	print_error(t_mini *mini, t_lexer *lexer, int keycode)
 		ft_putstr_fd("command not found\n", STDERR_FILENO);
 	else if (keycode == EXECVE_ERROR)
 		ft_putstr_fd("execve error\n", STDERR_FILENO);
-	if (lexer)//test
-		printf("");//test
-	if (mini->lexer)
-		lst_clear_lexer(&mini->lexer); // posiblemente de error de segfault si mandamos error por ejemplo infile.
-	//if (mini->simple_cmd)
-	//	lst_clear_parser(&mini->simple_cmd);
-	reset(mini);
+	mini_reset(mini);
 }
 
 void	parser_token_error(t_mini *mini, int token)
@@ -55,5 +49,5 @@ void	parser_token_error(t_mini *mini, int token)
 	else if (token == RED_OUT_APP)
 		ft_putstr_fd("'>>'\n", STDERR_FILENO);
 	lst_clear_lexer(&mini->lexer);
-	reset(mini);
+	mini_reset(mini);
 }

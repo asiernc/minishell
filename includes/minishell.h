@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/16 16:56:05 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:09:36 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ void			builtin_test(void);
 // Minishell loop
 
 int 			mini_live(t_mini *mini);
-int				reset(t_mini *mini);
+void			init_mini(t_mini *mini);
+int				mini_reset(t_mini *mini);
 
 // Lexer
 
@@ -217,24 +218,24 @@ int				do_cmd(t_mini *mini, t_cmd *cmd);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
 void			wait_pipes(t_mini *mini, int *pid, int pipes);
+int				check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2]);
+
 
 // Redirections
 
 int				do_redirections(t_mini *mini, t_cmd *cmd);
 int				put_infile(t_mini *mini, char *filename);
-int				pre_outfile(t_lexer *lex, char *filename);
 int				put_outfile(t_mini *mini, t_lexer *lex, char *filename);
 
 
 
 // Hdoc
 
-int				ft_heredoc(t_mini *mini, t_cmd *cmd);
+int				check_if_exists_hdoc(t_mini *mini, t_cmd *cmd);
 char			*generate_filename(void);
 int				check_eof(t_lexer	*redir, char *hdoc_filename);
-int				create_hdoc(t_lexer *redir, char *hdoc_filename, bool quotes);
-void			remove_quotes(t_lexer *node);
-int				sends_hdoc(t_mini *mini, t_cmd *cmd, int fds[2]);
+int				open_save_hdoc(t_lexer *redir, char *hdoc_filename, bool quotes);
+void			remove_eof_quotes(t_lexer *node);
 
 // Utils nodes
 
@@ -253,7 +254,7 @@ void			check_quotes(char *line);
 
 // Errors
 
-void			print_error(t_mini *mini, t_lexer *lexer, int keycode);
+void			print_error(t_mini *mini, int keycode);
 void			parser_token_error(t_mini *mini, int token);
 
 #endif

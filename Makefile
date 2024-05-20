@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/05/16 17:22:13 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/05/18 17:57:36 by asiercara        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC			=	src/main.c 							\
 				src/executor/redirections.c			\
 				src/executor/utils.c				\
 				src/utils/utils.c					\
+				src/utils/mini_live.c				\
 				src/errors/parser_errors.c
 				#src/builtins/builtin_echo.c			\
 				src/builtins/builtin_pwd.c	 		\
