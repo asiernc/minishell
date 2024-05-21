@@ -37,12 +37,11 @@ int	mini_live(t_mini *mini)
 void	init_mini(t_mini *mini)
 {
 	mini->line = NULL;
-	//mini->env = builtin_env??
 	mini->lexer = NULL;
 	mini->cmd = NULL;
 	mini->flag_hdoc = 0;
 	mini->pid = NULL;
-	//min->pwd = find_pwd;
+	get_pwd(mini);
 	//cd exit success get current directory pwd = getcurrent directory
 }
 
@@ -51,11 +50,12 @@ void	init_mini(t_mini *mini)
 
 int	mini_reset(t_mini *mini)
 {
+	// HACERLE FREE A PWD, TIENE MALLOC
 	if (mini->cmd)
 		lst_clear_cmds(&mini->cmd);
 	if (mini->lexer)
 		lst_clear_lexer(&mini->lexer);
-	//init_mini(mini);
+	init_mini(mini);
 	mini_live(mini);
 	return (0);
 }

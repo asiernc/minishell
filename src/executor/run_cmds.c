@@ -38,10 +38,10 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	if (cmd->redirections)
 		if (do_redirections(mini, cmd))
 			exit(1); 
-	path = find_check_path(cmd_head, mini->env); // mandar 127 si no lo encuentra
+	path = find_check_path(cmd_head, mini->original_env); // mandar 127 si no lo encuentra
 	if (!path)
 		print_error(mini, CMD_NOT_FOUND_ERROR);
-	execve(path, cmd->str, mini->env);
+	execve(path, cmd->str, mini->original_env);
 	exit(1);
 	//exit(127);
 }
@@ -81,8 +81,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	if (cmd->builtin != NOT_HAVE)
 	{	//write(1, "", 1);
 		do_builtin(mini, cmd);
-		fprintf(stderr, "own\n");
-		exit(0); // reset
+		mini_reset(mini);
 	}
 	check_if_exists_hdoc(mini, mini->cmd);
 	pid = fork();

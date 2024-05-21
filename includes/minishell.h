@@ -31,14 +31,24 @@
 
 // STRUCTS
 
+// Builtins
+typedef struct	s_builtin
+{
+	char				*key;
+	char				*value;
+	int					index;//this variable may be useless
+	struct s_builtin	*next;
+}				t_builtin;
+
 // 		Main struct
 
 typedef struct s_mini
 {
 	char					*line;
-	char					**env;
-	// struct env
-	// strcut export
+	char					**original_env;
+	char					*pwd;
+	char					*old_pwd;
+	t_builtin				*env;
 	struct s_lexer			*lexer;
 	int						pipes;
 	int						count_infiles;
@@ -103,6 +113,15 @@ typedef struct s_lexer
 
 //		Struct for parser
 
+typedef struct s_parser
+{
+	t_lexer			*lexer;
+	t_lexer			*redirections;
+	int				num_redirections;
+	struct s_mini	*mini;
+}	t_parser;
+
+
 //typedef void (*builtin)(t_mini *mini, t_cmd *cmd);
 
 typedef struct s_cmd
@@ -115,24 +134,6 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 	struct s_cmd		*previous;
 }	t_cmd;
-
-
-typedef struct s_parser
-{
-	t_lexer			*lexer;
-	t_lexer			*redirections;
-	int				num_redirections;
-	struct s_mini	*mini;
-}	t_parser;
-
-// Builtins
-typedef struct	s_builtin
-{
-	char				*key;
-	char				*value;
-	int					index;//this variable may be useless
-	struct s_builtin	*next;
-}				t_builtin;
 
 // Test functions
 
@@ -147,6 +148,9 @@ void			builtin_test(void);
 int 			mini_live(t_mini *mini);
 void			init_mini(t_mini *mini);
 int				mini_reset(t_mini *mini);
+
+// Init main struct
+t_builtin		*create_env(t_mini *mini, t_builtin *lst_env);
 
 // Lexer
 
@@ -185,7 +189,6 @@ void			free_cmd_line(char **str);
 
 int				builtin_pwd(t_mini *mini);
 int				builtin_exit(t_mini *mini, t_cmd *cmd);
-int				builtin_pwd(t_mini *mini);
 int				builtin_env(t_mini *mini);
 int				builtin_export(t_mini *mini, char **cmd);
 //void			builtin_unset(t_builtin **head, char *str);
@@ -195,14 +198,15 @@ int				builtin_echo(t_mini *mini, t_cmd *command);
 
 // Utils builtins
 
-t_builtin		*create_builtin_lst(char **env);
-t_builtin		*ft_lstnew_builtin(char *str, int i);
+int				get_pwd(t_mini *mini);
+t_builtin		*create_builtin_lst(t_mini *mini, char **env);
+t_builtin		*ft_lstnew_builtin(t_mini *mini, char *str, int i);
 void			ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new);
 void			ft_lstclear_builtin(t_builtin **lst);
 int				ft_lstsize_builtin(t_builtin *lst);
 void			print_list(t_builtin **lst_env);//do you really use it ?
-char			*get_key_from_env(char *str);
-char			*get_value_from_env(char *str);
+char			*get_key_from_env(t_mini *mini, char *str);
+char			*get_value_from_env(t_mini *mini, char *str);
 t_builtin		*init_builtin_node(char **env);
 void			remove_special_node(t_builtin **head);
 t_builtin		*sort_ascii(t_builtin *lst_export, t_builtin *sorted);

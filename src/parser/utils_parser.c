@@ -118,7 +118,7 @@ void	free_cmd_line(char **str)
 	int	i;
 	
 	i = 0;
-	while (str[i])
+	while (str[i] != NULL)
 		i++;
 	while (i > 0)
 	{

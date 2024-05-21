@@ -86,12 +86,11 @@ t_cmd	*create_cmd(t_parser *parser)
 
 int	parser(t_mini *mini)
 {
-	//static int	flag = 0;
+	static int	flag = 0;
 	t_parser	parser;
 	t_cmd		*new;
 
 	count_pipes(mini);
-	//printf("PIPES = %d\n", mini->pipes);
 	while (mini->lexer)
 	{
 		if (mini->lexer && mini->lexer->token == PIPE)
@@ -100,26 +99,19 @@ int	parser(t_mini *mini)
 			return (EXIT_FAILURE);
 		parser = init_struct(mini->lexer, mini);
 		new = create_cmd(&parser);
-		//printf("string %s\n", cmd->str[0]);
 		if (!new)
 			print_error(mini, 0);
-		//if (!mini->cmd)
-		//	mini->cmd = new;
-		//else
 		ft_node_add_back_parser(&mini->cmd, new);
 		mini->lexer = parser.lexer;
 	}
 //	printf("node 1 ls == %s\nnode 2 wc == %s\n", mini->cmd->str[0], mini->cmd->next->str[0]);
 	// !! siguientes dos lineas son para mac m2 !!!
-	/*if (flag == 0)
+	if (flag == 0)
 	{
 		mini->cmd = mini->cmd->next;
 		mini->cmd->previous = NULL;
 		flag = 1;
-	}*/
-	//del_first_cmd(&mini->cmd);
-	//ft_print_parser(mini);
-	//print_error(mini, mini->lexer, 0);
+	}
 	return (EXIT_SUCCESS);
 }
 
