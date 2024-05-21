@@ -38,10 +38,10 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	if (cmd->redirections)
 		if (do_redirections(mini, cmd))
 			exit(1); 
-	path = find_check_path(cmd_head, mini->original_env); // mandar 127 si no lo encuentra
+	path = find_check_path(mini, cmd_head, mini->env_cpy); // mandar 127 si no lo encuentra
 	if (!path)
 		print_error(mini, CMD_NOT_FOUND_ERROR);
-	execve(path, cmd->str, mini->original_env);
+	execve(path, cmd->str, mini->env_cpy);
 	exit(1);
 	//exit(127);
 }
@@ -79,7 +79,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	// expander
 	// comentado para test abajo!
 	if (cmd->builtin != NOT_HAVE)
-	{	//write(1, "", 1);
+	{
 		do_builtin(mini, cmd);
 		mini_reset(mini);
 	}

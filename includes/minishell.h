@@ -28,6 +28,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
+# define QUOTE		39
+# define DQUOTE		34
+# define BACKSLASH	92
 
 // STRUCTS
 
@@ -49,6 +52,8 @@ typedef struct s_mini
 	char					*pwd;
 	char					*old_pwd;
 	t_builtin				*env;
+	// hacer free solo al final exit
+	char					**env_cpy;
 	struct s_lexer			*lexer;
 	int						pipes;
 	int						count_infiles;
@@ -151,6 +156,7 @@ int				mini_reset(t_mini *mini);
 
 // Init main struct
 t_builtin		*create_env(t_mini *mini, t_builtin *lst_env);
+void			concat_lst_env(t_mini *mini);
 
 // Lexer
 
@@ -200,7 +206,7 @@ int				builtin_echo(t_mini *mini, t_cmd *command);
 
 int				get_pwd(t_mini *mini);
 t_builtin		*create_builtin_lst(t_mini *mini, char **env);
-t_builtin		*ft_lstnew_builtin(t_mini *mini, char *str, int i);
+t_builtin		*ft_lstnew_builtin(t_mini *mini, char *str);
 void			ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new);
 void			ft_lstclear_builtin(t_builtin **lst);
 int				ft_lstsize_builtin(t_builtin *lst);
@@ -235,7 +241,9 @@ int				executor(t_mini *mini);
 int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
-char			*find_check_path(char *cmd, char **env);
+char			*find_check_path(t_mini *mini, char *cmd, char **env);
+t_builtin		*find_node_path(t_builtin *lst_env);
+//char			*check_path(char *cmd, t_builtin *lst_env);
 int				do_cmd(t_mini *mini, t_cmd *cmd);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);

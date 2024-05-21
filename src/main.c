@@ -25,6 +25,7 @@ int	main(int argc, char **argv, char **env)
 	lst_env = NULL;
 	mini.original_env = env;
 	mini.env = create_env(&mini, lst_env);
+	concat_lst_env(&mini);
 	get_pwd(&mini);
 	//printf("no %s%s\n", argv[0], env[1]);
 	mini_live(&mini);

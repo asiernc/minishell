@@ -15,13 +15,13 @@ void	print_error(t_mini *mini, int keycode)
 {
 	ft_putstr_fd("minihell: ", STDERR_FILENO);
 	if (keycode == SINTAX_ERROR)
-		ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
+		ft_putstr_fd("syntax error near unexpected token\n", 258);
 	else if (keycode == MALLOC_ERROR)
 		ft_putstr_fd("malloc: cannot allocate memory\n", STDERR_FILENO);
 	else if (keycode == IN_ERROR)
-		ft_putstr_fd("in: RNo such file or directory\n", STDERR_FILENO);
+		ft_putstr_fd("in: No such file or directory\n", STDERR_FILENO);
 	else if (keycode == OUT_ERROR)
-		ft_putstr_fd("out: RNo such file or directory\n", STDERR_FILENO);
+		ft_putstr_fd("out: No such file or directory\n", STDERR_FILENO);
 	else if (keycode == PIPE_ERROR)
 		ft_putstr_fd("pipe: Error\n", STDERR_FILENO);
 	else if (keycode == FORK_ERROR)

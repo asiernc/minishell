@@ -74,8 +74,9 @@ char	*get_value_from_env(t_mini *mini, char *str)//to free once used
 }
 
 //str <=> one line of the env
-t_builtin	*ft_lstnew_builtin(t_mini *mini, char *str, int i)
+t_builtin	*ft_lstnew_builtin(t_mini *mini, char *str)
 {
+	static int	index = 0;
 	t_builtin	*node;
 
 	node = malloc(sizeof(t_builtin));
@@ -86,8 +87,8 @@ t_builtin	*ft_lstnew_builtin(t_mini *mini, char *str, int i)
 		print_error(mini, 2);;
 	node->value = get_value_from_env(mini, str);
 	if (!node->value)
-		print_error(mini, 2);;
-	node->index = i;
+		print_error(mini, 2);
+	node->index = ++index;
 	node->next = NULL;
 	return (node);
 }
@@ -102,7 +103,7 @@ t_builtin	*create_builtin_lst(t_mini *mini, char **env)//to free once used
 	lst_env = NULL;
 	while (env[i])
 	{
-		new_node = ft_lstnew_builtin(mini, env[i], i);
+		new_node = ft_lstnew_builtin(mini, env[i]);
 		if (!new_node)
 			print_error(mini, 2);
 		ft_lstadd_back_builtin(&lst_env, new_node);
@@ -113,19 +114,9 @@ t_builtin	*create_builtin_lst(t_mini *mini, char **env)//to free once used
 
 t_builtin	*create_env(t_mini *mini, t_builtin *lst_env)
 {
-	//t_builtin	*lst_env;
-	//t_builtin	*tmp;
-
 	lst_env = create_builtin_lst(mini, mini->original_env);
 	if (!lst_env)
 		print_error(mini, 2); //print error
-	/*tmp = lst_env;
-	while (tmp)
-	{
-		printf("%s=%s\n", tmp->key, tmp->value);
-		tmp = tmp->next;
-	}*/
-	//ft_lstclear_builtin(&lst_env);
 	return (lst_env);
 }
 
@@ -141,13 +132,3 @@ int	builtin_env(t_mini *mini)
 	}
 	return (EXIT_SUCCESS);
 }
-
-/*int	main(int argc, char **argv, char **env)
-{
-	builtin_export(env);
-	argc = 0;
-	argv[0] = "./a.out";
-	printf("%lu\n", sizeof(t_builtin));
-	return (0);
-}
-*/
