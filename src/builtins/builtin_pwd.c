@@ -11,39 +11,27 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-//int get_pwd
 
-int	builtin_pwd(t_mini *mini)//to free after having used it
+int	get_pwd(t_mini *mini)//to free after having used it
 {
-	char	**env_cpy;
-	int		i;
-	char	*path_prefix;
-	char	*result;
+	t_builtin	*tmp;
 
-	env_cpy = mini->env;
-	path_prefix = ft_strdup("PWD=");
-	if (!path_prefix)
-		print_error(mini, 5); //Allocation memory error
-	i = 0;
-	while (env_cpy[i])
+	tmp = mini->env;
+	while (mini->env)
 	{
-		if (ft_strncmp(env_cpy[i], path_prefix, ft_strlen(path_prefix)) == 0)
+		if (ft_strncmp(mini->env->key, "PWD", 3) == 0)
 		{
-			free(path_prefix);
-			result = ft_strdup(env_cpy[i] + 4);
-			if (!result)
-				print_error(mini, 5);
-			ft_putendl_fd(result, 1);
-			free(result);
+			mini->pwd = mini->env->value;
 			return (EXIT_SUCCESS);
 		}
-		i++;
+		mini->env = mini->env->next;
 	}
-	//mini->pwd = result;
+	mini->env = tmp;
 	return (EXIT_FAILURE);
 }
 
-/*int	builtin_pwd(t_mini *mini)
+int	builtin_pwd(t_mini *mini)
 {
 	ft_putendl_fd(mini->pwd, 1);
-}*/
+	return (EXIT_SUCCESS);
+}

@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:11:30 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/20 16:47:37 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:12:08 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //for each line of our env, we want to get the characters before the '='
 //this will be the content of the 'key' variable in our structure
-char	*get_key_from_env(char *str)//to free once used
+char	*get_key_from_env(t_mini *mini, char *str)//to free once used
 {
 	int		i;
 	int		len_str;
@@ -31,7 +31,7 @@ char	*get_key_from_env(char *str)//to free once used
 	len_str = i;
 	result = malloc((len_str + 1) * sizeof(char));
 	if (!result)
-		return (NULL);
+		print_error(mini, 2);
 	i = 0;
 	while (i < len_str)
 	{
@@ -44,7 +44,7 @@ char	*get_key_from_env(char *str)//to free once used
 
 //for each line of our env, we want to get the characters after the '='
 //this will be the content of the 'value' variable in our structure
-char	*get_value_from_env(char *str)//to free once used
+char	*get_value_from_env(t_mini *mini, char *str)//to free once used
 {
 	int		i;
 	int		j;
@@ -65,7 +65,7 @@ char	*get_value_from_env(char *str)//to free once used
 	len_str = i - j;
 	result = malloc((len_str + 1) * sizeof(char));
 	if (!result)
-		return (NULL);
+		print_error(mini, 2);
 	i = 0;
 	while (j < (int)ft_strlen(str))
 		result[i++] = str[j++];
@@ -74,25 +74,26 @@ char	*get_value_from_env(char *str)//to free once used
 }
 
 //str <=> one line of the env
-t_builtin	*ft_lstnew_builtin(char *str, int i)
+t_builtin	*ft_lstnew_builtin(t_mini *mini, char *str)
 {
+	static int	index = 0;
 	t_builtin	*node;
 
 	node = malloc(sizeof(t_builtin));
 	if (!node)
 		return (NULL);
-	node->key = get_key_from_env(str);
+	node->key = get_key_from_env(mini, str);
 	if (!node->key)
-		return (free(node), NULL);
-	node->value = get_value_from_env(str);
+		print_error(mini, 2);;
+	node->value = get_value_from_env(mini, str);
 	if (!node->value)
-		return (free(node), NULL);
-	node->index = i;
+		print_error(mini, 2);
+	node->index = ++index;
 	node->next = NULL;
 	return (node);
 }
 
-t_builtin	*create_builtin_lst(char **env)//to free once used
+t_builtin	*create_builtin_lst(t_mini *mini, char **env)//to free once used
 {
 	t_builtin	*new_node;
 	t_builtin	*lst_env;
@@ -102,53 +103,21 @@ t_builtin	*create_builtin_lst(char **env)//to free once used
 	lst_env = NULL;
 	while (env[i])
 	{
-		new_node = ft_lstnew_builtin(env[i], i);
+		new_node = ft_lstnew_builtin(mini, env[i]);
 		if (!new_node)
-			return (NULL);
+			print_error(mini, 2);
 		ft_lstadd_back_builtin(&lst_env, new_node);
 		i++;
 	}
 	return (lst_env);
 }
 
-/*int	builtin_env(t_mini *mini)
+t_builtin	*create_env(t_mini *mini, t_builtin *lst_env)
 {
-	t_builtin	*lst_env;
-	t_builtin	*tmp;
-
-	lst_env = create_builtin_lst(mini->env);
-	if (!lst_env)
-		print_error(mini, 2);
-	tmp = lst_env;
-	while (tmp)
-	{
-		printf("%s=%s\n", tmp->key, tmp->value);
-		tmp = tmp->next;
-	}
-	ft_lstclear_builtin(&lst_env);
-	return (EXIT_SUCCESS);
-}*/
-
-///////////////cambios
-
-int	create_env(t_mini *mini)
-{
-	t_builtin	*lst_env;
-	//t_builtin	*tmp;
-
-	if (mini->env)
-		ft_lstclear_builtin(mini->env);
 	lst_env = create_builtin_lst(mini, mini->original_env);
 	if (!lst_env)
-		print_error(mini, 2); //print error
-	/*tmp = lst_env;
-	while (tmp)
-	{
-		printf("%s=%s\n", tmp->key, tmp->value);
-		tmp = tmp->next;
-	}*/
-	//ft_lstclear_builtin(&lst_env);
-	return (EXIT_SUCCESS);
+		print_error(mini, 2);
+	return (lst_env);
 }
 
 int	builtin_env(t_mini *mini)
@@ -161,14 +130,5 @@ int	builtin_env(t_mini *mini)
 		printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
+	return (EXIT_SUCCESS);
 }
-
-/*int	main(int argc, char **argv, char **env)
-{
-	builtin_export(env);
-	argc = 0;
-	argv[0] = "./a.out";
-	printf("%lu\n", sizeof(t_builtin));
-	return (0);
-}
-*/

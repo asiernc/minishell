@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/20 16:45:40 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:35:03 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,32 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
-# define QUOTE	39
-# define DQUOTE	34
+# define QUOTE		39
+# define DQUOTE		34
+# define BACKSLASH	92
 
 // STRUCTS
+
+// Builtins
+typedef struct	s_builtin
+{
+	char				*key;
+	char				*value;
+	int					index;//this variable may be useless
+	struct s_builtin	*next;
+}				t_builtin;
 
 // 		Main struct
 
 typedef struct s_mini
 {
 	char					*line;
-	char					**env;
-	struct t_builtin		*original_env;
+	char					**original_env;
+	char					*pwd;
+	char					*old_pwd;
+	t_builtin				*env;
+	// hacer free solo al final exit
+	char					**env_cpy;
 	struct s_lexer			*lexer;
 	int						pipes;
 	int						count_infiles;
@@ -104,6 +118,15 @@ typedef struct s_lexer
 
 //		Struct for parser
 
+typedef struct s_parser
+{
+	t_lexer			*lexer;
+	t_lexer			*redirections;
+	int				num_redirections;
+	struct s_mini	*mini;
+}	t_parser;
+
+
 //typedef void (*builtin)(t_mini *mini, t_cmd *cmd);
 
 typedef struct s_cmd
@@ -116,24 +139,6 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 	struct s_cmd		*previous;
 }	t_cmd;
-
-
-typedef struct s_parser
-{
-	t_lexer			*lexer;
-	t_lexer			*redirections;
-	int				num_redirections;
-	struct s_mini	*mini;
-}	t_parser;
-
-// Builtins
-typedef struct	s_builtin
-{
-	char				*key;
-	char				*value;
-	int					index;//this variable may be useless
-	struct s_builtin	*next;
-}				t_builtin;
 
 // Test functions
 
@@ -148,6 +153,10 @@ void			builtin_test(void);
 int 			mini_live(t_mini *mini);
 void			init_mini(t_mini *mini);
 int				mini_reset(t_mini *mini);
+
+// Init main struct
+t_builtin		*create_env(t_mini *mini, t_builtin *lst_env);
+void			concat_lst_env(t_mini *mini);
 
 // Lexer
 
@@ -186,7 +195,6 @@ void			free_cmd_line(char **str);
 
 int				builtin_pwd(t_mini *mini);
 int				builtin_exit(t_mini *mini, t_cmd *cmd);
-int				builtin_pwd(t_mini *mini);
 int				builtin_env(t_mini *mini);
 int				builtin_export(t_mini *mini, char **cmd);
 //void			builtin_unset(t_builtin **head, char *str);
@@ -196,20 +204,20 @@ int				builtin_echo(t_mini *mini, t_cmd *command);
 
 // Utils builtins
 
-t_builtin		*create_builtin_lst(char **env);
-t_builtin		*ft_lstnew_builtin(char *str, int i);
+int				get_pwd(t_mini *mini);
+t_builtin		*create_builtin_lst(t_mini *mini, char **env);
+t_builtin		*ft_lstnew_builtin(t_mini *mini, char *str);
 void			ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new);
 void			ft_lstclear_builtin(t_builtin **lst);
 int				ft_lstsize_builtin(t_builtin *lst);
 void			print_list(t_builtin **lst_env);//do you really use it ?
-char			*get_key_from_env(char *str);
-char			*get_value_from_env(char *str);
+char			*get_key_from_env(t_mini *mini, char *str);
+char			*get_value_from_env(t_mini *mini, char *str);
 t_builtin		*init_builtin_node(char **env);
 void			remove_special_node(t_builtin **head);
 t_builtin		*sort_ascii(t_builtin *lst_export, t_builtin *sorted);
 int				check_variable(char *str);
 char			*trim_quotes(char *str);//YOU MIGHT HAVE A LEAK 
-int				create_env(t_mini *mini);
 
 
 // Expander
@@ -218,12 +226,16 @@ void			run_expander(t_mini *mini, t_cmd *cmd);
 char   			*expand_str_line(t_mini *mini, char *str);
 char			**expand_cmd_line(t_mini *mini, char **str);
 
+int				calculate_malloc_size(char *str);
+char			*search_and_replace_variable(t_mini *mini, t_builtin *env_variable, char *expand_name);
+char			*get_expansion_name(t_mini *mini, char *str);
+char			*expanded_string(t_mini *mini, char *str);
+
 
 // Utils expander
 
 int is_dollar(char *str);
 int is_equal(char *str);
-int				check_all_quotes_closed(char *str);
 
 // Executor
 
@@ -234,7 +246,9 @@ int				executor(t_mini *mini);
 int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
-char			*find_check_path(char *cmd, char **env);
+char			*find_check_path(t_mini *mini, char *cmd, char **env);
+t_builtin		*find_node_path(t_builtin *lst_env);
+//char			*check_path(char *cmd, t_builtin *lst_env);
 int				do_cmd(t_mini *mini, t_cmd *cmd);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);

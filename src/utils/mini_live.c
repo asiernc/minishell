@@ -6,7 +6,7 @@
 /*   By: asiercara <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/05/20 16:46:10 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:11:12 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int	mini_live(t_mini *mini)
 
 void	init_mini(t_mini *mini)
 {
-    mini->line = NULL;
-    mini->original_env = create_env(mini);
-    mini->lexer = NULL;
-    mini->cmd = NULL;
-    mini->flag_hdoc = 0;
-    mini->pid = NULL;
+	mini->line = NULL;
+	mini->lexer = NULL;
+	mini->cmd = NULL;
+	mini->flag_hdoc = 0;
+	mini->pid = NULL;
+	get_pwd(mini);
 	//cd exit success get current directory pwd = getcurrent directory
 }
 
@@ -50,11 +50,12 @@ void	init_mini(t_mini *mini)
 
 int	mini_reset(t_mini *mini)
 {
+	// HACERLE FREE A PWD, TIENE MALLOC
 	if (mini->cmd)
 		lst_clear_cmds(&mini->cmd);
 	if (mini->lexer)
 		lst_clear_lexer(&mini->lexer);
-	//init_mini(mini);
+	init_mini(mini);
 	mini_live(mini);
 	return (0);
 }

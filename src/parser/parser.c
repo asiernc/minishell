@@ -91,7 +91,6 @@ int	parser(t_mini *mini)
 	t_cmd		*new;
 
 	count_pipes(mini);
-	//printf("PIPES = %d\n", mini->pipes);
 	while (mini->lexer)
 	{
 		if (mini->lexer && mini->lexer->token == PIPE)
@@ -100,12 +99,8 @@ int	parser(t_mini *mini)
 			return (EXIT_FAILURE);
 		parser = init_struct(mini->lexer, mini);
 		new = create_cmd(&parser);
-		//printf("string %s\n", cmd->str[0]);
 		if (!new)
 			print_error(mini, 0);
-		//if (!mini->cmd)
-		//	mini->cmd = new;
-		//else
 		ft_node_add_back_parser(&mini->cmd, new);
 		mini->lexer = parser.lexer;
 	}
@@ -117,9 +112,5 @@ int	parser(t_mini *mini)
 		mini->cmd->previous = NULL;
 		flag = 1;
 	}*/
-	//del_first_cmd(&mini->cmd);
-	//ft_print_parser(mini);
-	//print_error(mini, mini->lexer, 0);
 	return (EXIT_SUCCESS);
 }
-

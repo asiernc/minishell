@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/20 16:22:01 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/21 17:42:39 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	int	exit_code;
 
 	exit_code = 0;
-		printf("simon\n");
-		printf("check_all_quotes_closed = %i\n", check_all_quotes_closed(mini->line));
+
+		printf("simon business\n");
+		char	*result;
+		result = expanded_string(mini, mini->line);
+		printf("result %p\nresult: _%s_\n", &result, result);
+		write(1, "l.25\n", 5);
+		printf("not anymore\n");
 	if (cmd->redirections)
 		do_redirections(mini, cmd);
 	if(cmd->builtin != NOT_HAVE)
@@ -40,10 +45,10 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	if (cmd->redirections)
 		if (do_redirections(mini, cmd))
 			exit(1); 
-	path = find_check_path(cmd_head, mini->env); // mandar 127 si no lo encuentra
+	path = find_check_path(mini, cmd_head, mini->env_cpy); // mandar 127 si no lo encuentra
 	if (!path)
 		print_error(mini, CMD_NOT_FOUND_ERROR);
-	execve(path, cmd->str, mini->env);
+	execve(path, cmd->str, mini->env_cpy);
 	exit(1);
 	//exit(127);
 }
@@ -81,10 +86,9 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	// expander
 	// comentado para test abajo!
 	if (cmd->builtin != NOT_HAVE)
-	{	
+	{
 		do_builtin(mini, cmd);
-	//	fprintf(stderr, "own\n");
-	//	exit(0); // reset
+		mini_reset(mini);
 	}
 	check_if_exists_hdoc(mini, mini->cmd);
 	pid = fork();

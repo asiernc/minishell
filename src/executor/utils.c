@@ -42,25 +42,94 @@ void	remove_eof_quotes(t_lexer *node)
 		node->str = ft_substr(str, 1, ft_strlen(str) -1);
 }
 
-// esta bien que pase por env de inicio, pero valorar de donde leer, 
-// si de env de shell o de env de nuestra shell
-// hacer otro loop con las env de simon
-
-
 
 // mandar 127 is command not found
-char	*find_check_path(char *cmd, char **env)
+char	*find_check_path(t_mini *mini, char *cmd, char **env)
 {
 	char	**paths;
 	char	*cmd_path;
 	char	*tmp;
 
 	//valorar hacer access por el caso que nos den la ruta absoluta example ./bin/var/cat
-	while (*env && !ft_strnstr(*env, "PATH=", 5))
+	if (!access(mini->cmd->str[0], F_OK | X_OK))
+		execve(mini->cmd->str[0], mini->cmd->str, mini->env_cpy);
+	while (*env && !ft_strnstr(*env, "PATH", 5))
 		env++;
 	tmp = ft_substr(*env, 5, ft_strlen(*env) - 5);
 	paths = ft_split(tmp, ':');
 	free(tmp);
+	tmp = ft_strjoin("/", cmd);
+	while (*paths)
+	{
+		cmd_path = ft_strjoin(*paths, tmp);
+		fprintf(stderr, "PATH = %s\n", cmd_path);
+		if (!cmd_path)
+			return (NULL);
+		if (access(cmd_path, F_OK | X_OK) == 0)
+			break ;
+		free(cmd_path);
+		paths++;
+	}
+	free(tmp);
+	return (cmd_path);
+}
+
+t_builtin	*find_node_path(t_builtin *lst_env)
+{
+	t_builtin	*tmp;
+
+	tmp = lst_env;
+	while (tmp)
+	{
+		if (ft_strcmp(lst_env->key, "PATH") == 0)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+void	concat_lst_env(t_mini *mini)
+{
+	t_builtin	*tmp;
+	int		len;
+	int		i;
+
+	tmp = mini->env;
+	len = ft_lstsize_builtin(tmp);
+	mini->env_cpy = (char **)malloc((len + 1) * sizeof(char *));
+	if (!mini->env_cpy)
+		print_error(mini, 2);
+	i = 0;
+	while (tmp)
+	{
+		mini->env_cpy[i] = (char *)malloc((ft_strlen(tmp->key) + ft_strlen(tmp->value) + 2) * sizeof(char));
+		if (!mini->env_cpy[i])
+		{
+			while (i > 0 )
+			{
+				free(mini->env_cpy[i]);
+				i--;
+			}
+			free(mini->env_cpy);
+			print_error(mini, 2);
+		}
+		mini->env_cpy[i] = ft_strjoin(tmp->key, ft_strjoin("=", tmp->value));
+		tmp = tmp->next;
+		i++;
+	}
+	mini->env_cpy[len] = NULL;
+}
+
+/*char	*check_path(char *cmd, t_builtin *lst_env)
+{
+	char	**paths;
+	char	*cmd_path;
+	char	*tmp;
+	t_builtin	*node_path;
+
+	//valorar hacer access por el caso que nos den la ruta absoluta example ./bin/var/cat
+	node_path = find_path(lst_env);
+	paths = ft_split(node_path->value, ':');
 	tmp = ft_strjoin("/", cmd);
 	while (*paths)
 	{
@@ -74,4 +143,4 @@ char	*find_check_path(char *cmd, char **env)
 	}
 	free(tmp);
 	return (cmd_path);
-}
+}*/

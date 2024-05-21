@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/20 12:32:24 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:20:51 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@ void	print_error(t_mini *mini, int keycode)
 {
 	ft_putstr_fd("minihell: ", STDERR_FILENO);
 	if (keycode == SINTAX_ERROR)
-		ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
+		ft_putstr_fd("syntax error near unexpected token\n", 258);
 	else if (keycode == MALLOC_ERROR)
 		ft_putstr_fd("malloc: cannot allocate memory\n", STDERR_FILENO);
 	else if (keycode == IN_ERROR)
-		ft_putstr_fd("in: RNo such file or directory\n", STDERR_FILENO);
+		ft_putstr_fd("in: No such file or directory\n", STDERR_FILENO);
 	else if (keycode == OUT_ERROR)
-		ft_putstr_fd("out: RNo such file or directory\n", STDERR_FILENO);
+		ft_putstr_fd("out: No such file or directory\n", STDERR_FILENO);
 	else if (keycode == PIPE_ERROR)
 		ft_putstr_fd("pipe: Error\n", STDERR_FILENO);
 	else if (keycode == FORK_ERROR)
@@ -34,11 +34,11 @@ void	print_error(t_mini *mini, int keycode)
 		ft_putstr_fd("execve error\n", STDERR_FILENO);
 	else if (keycode == EXIT_ERROR)
 	{
-		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);//necesitas escribir la string tb
+		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);//necesitas escribir tb la string
 		exit(255);
 	}
 	else if (keycode == CD_ERROR)
-		ft_putstr_fd("cd: No such file or directory\n", STDERR_FILENO);//necesitas escribir la string tb
+		ft_putstr_fd("cd: No such file or directory\n", STDERR_FILENO);//necesitas escribir tb la string
 	mini_reset(mini);
 }
 
