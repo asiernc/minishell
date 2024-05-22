@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:49:37 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/22 11:40:16 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:50:28 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,11 +226,11 @@ int	calculate_malloc_size(char *str)
 //we suppose that there is a string with only 1 variable to expand
 //let's say that the string in argument is everything from the beginning until the end of the expanded variable
 //if there is others variables to expand, we have to recall this function starting from this index
-//you can cut the fonction to lower up to 25 l. easily
 char	*expanded_string(t_mini *mini, char *str)
 {
 	int		i;
 	int		j;
+	int		k;
 	char	*result;
 	char	*expanded_key;
 	char	*expanded_value;
@@ -248,43 +248,83 @@ char	*expanded_string(t_mini *mini, char *str)
 		print_error(mini, 2);
 	i = 0;
 	j = 0;
+	k = 0;
 	while (str[i])
 	{
-		if (str[i] != '$')
+		if (str[i] == BACKSLASH)
+			i++;
+		if ((i > 0 && str[i] == '$' && str[i - 1] == BACKSLASH) || (str[i] != '$'))
 			result[j++] = str[i++];
 		else
 		{
-			while (*expanded_value)
-				result[j++] = *(expanded_value++);//use another iterator ie: k <=> expanded_value[k++]
+			while (expanded_value[k])
+				result[j++] = expanded_value[k++];
 			i += (int)ft_strlen(expanded_key) + 1;//+ 1 for the $
 		}
 	}
-	return (free(expanded_key), free(expanded_value - ft_strlen(expanded_value) + 1), result);
+	return (free(expanded_key), free(expanded_value), result);
 }
 
 //⚠️  You have to check when it's written, for example, '$HOME' && '$HOME.'  ⚠️
 
 
-
 //function that counts how many env variable are written in the command line
 //to know how many do we have to manage
-/*int	count_env_variable(t_mini *mini, char *line)
+int	count_env_variable(t_mini *mini, char *line)
 {
-	int	env_counter;
-	int	i;
+	int			env_counter;
+	int			i;
+	char		*env_key;
+	t_builtin	*tmp;
+	int			j;
+	int			k;
 
 	env_counter = 0;
 	i = 0;
+	printf("mini->line = %s\n", line);
 	while (line[i])
 	{
-		if (str[i] == '$')
-			env_counter++;
+//		printf("entered in the while line[i]\n");
+		if (line[i] == BACKSLASH)
+			i++;
+		if ((i > 0 && line[i] == '$' && line[i - 1] == BACKSLASH) || (line[i] != '$'))
+			i++;
+		else
+		{
+			i++;//to forget the '$'
+//			printf("entered in the else\n");
+			k = i;
+			j = 0;
+			while (line[i] && line[i++] != ' ')
+				j++;
+//			write(1, "interesting\n", 12);
+//			printf("before the malloc: j = %i\n", j); 
+			env_key = malloc(sizeof(char) * j + 1);
+			if (!env_key)
+				print_error(mini, 2);
+			i = k;
+			j = 0;
+			while (line[i] != ' ')
+				env_key[j++] = line[i++];
+//			printf("env_key = %s\n", env_key);
+			tmp = mini->env;
+			while (tmp)
+			{
+//				printf("tmp->key = %s\n", tmp->key);
+				if (ft_strcmp_simple(env_key, tmp->key) == 0) 
+					env_counter++;
+				tmp = tmp->next;
+			}
+			free(env_key);
+//			printf("count_env_variable: env_counter = %i\n", env_counter);
+		}
 		i++;
 	}
-}*/
+	return (env_counter);
+}
 
 //now let's make it work for several env variables
-//you have to check if there is several env variables => to a function for it
+//you have to check if there is several env variables => do a function for it
 //
 //
 //
