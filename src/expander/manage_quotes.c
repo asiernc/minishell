@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:49:37 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/22 13:50:28 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:39:00 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,79 +62,6 @@ int	expand_or_not(char *str)
 		return (1);
 	return (0);
 }*/
-
-//in this function we want the name/key of the variable to expand
-//then when we got it, we will know which value to look for, thanks to that result
-//if we find a dollar, we want to know if after it's not a '?'
-//if it's not, we will store the characters until we found a character that is different from letters || _
-char	*get_expansion_name(t_mini *mini, char *str)//malloc ⚠️
-{
-	char	*result;
-	int		counter;
-	int		tmp;
-	int		i;
-
-	result = NULL;
-	counter = 0;
-	i = 0;
-	while (str[i] != '$')
-		i++;
-	i++;
-	if (i < (int)ft_strlen(str) - 1
-		&& (ft_isalpha((int)str[i + 1]) == 1 || str[i + 1] == '_'))//we want to check if the next one is a letter, to be sure that is valid && not a '?'
-	{
-		tmp = i;
-		while (str[++i] != ' ') 
-			counter++;
-		result = malloc(sizeof(char) * counter + 1);
-		if (!result)
-			print_error(mini, 2);
-		i = tmp;
-		tmp = 0;
-		while (str[i] != ' ')
-			result[tmp++] = str[i++];
-		result[tmp] = '\0';
-	}
-	return (result);
-}
-
-char	*search_and_replace_variable(t_builtin *env_variable, char *expand_name)//malloc ⚠️
-{
-	t_builtin	*tmp;
-
-	tmp = env_variable;
-	while (tmp)
-	{
-		if (ft_strcmp_simple(tmp->key, expand_name) == 0)
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-//we calculate the size only for the character (the one that are not related to the expansion)
-//ei: if we have: 'test $HOME' => the result will be 5
-int	calculate_malloc_size(char *str)
-{
-	int	to_remove;
-	int	i;
-
-	i = 0;
-	to_remove = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			while (str[i] != ' ')
-			{
-				to_remove++;
-				i++;
-			}
-		}
-		i++;
-	}
-	return (i - to_remove);
-}
 
 //we have to check if in this str there is sth to expand
 //int	check_expansion
@@ -219,14 +146,87 @@ int	calculate_malloc_size(char *str)
 	return (len_str + len_expansion_value);
 }*/
 
+//in this function we want the name/key of the variable to expand
+//then when we got it, we will know which value to look for, thanks to that result
+//if we find a dollar, we want to know if after it's not a '?'
+//if it's not, we will store the characters until we found a character that is different from letters || _
+char	*get_expansion_key(t_mini *mini, char *str)//malloc ⚠️
+{
+	char	*result;
+	int		counter;
+	int		tmp;
+	int		i;
 
+	result = NULL;
+	counter = 0;
+	i = 0;
+	while (str[i] != '$')
+		i++;
+	i++;
+	if (i < (int)ft_strlen(str) - 1
+		&& (ft_isalpha((int)str[i + 1]) == 1 || str[i + 1] == '_'))//we want to check if the next one is a letter, to be sure that is valid && not a '?'
+	{
+		tmp = i;
+		while (str[++i] != ' ') 
+			counter++;
+		result = malloc(sizeof(char) * counter + 1);
+		if (!result)
+			print_error(mini, 2);
+		i = tmp;
+		tmp = 0;
+		while (str[i] != ' ')
+			result[tmp++] = str[i++];
+		result[tmp] = '\0';
+	}
+	return (result);
+}
+
+char	*search_and_replace_variable(t_builtin *env_variable, char *expand_name)//malloc ⚠️
+{
+	t_builtin	*tmp;
+
+	tmp = env_variable;
+	while (tmp)
+	{
+		if (ft_strcmp_simple(tmp->key, expand_name) == 0)
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+//we calculate the size only for the character (the one that are not related to the expansion)
+//ei: if we have: 'test $HOME' => the result will be 5
+int	calculate_malloc_size(char *str)
+{
+	int	to_remove;
+	int	i;
+
+	i = 0;
+	to_remove = 0;
+	while (str[i])
+	{
+		if ((i > 0 && str[i - 1] != BACKSLASH && str[i] == '$')|| str[i] == '$')
+		{
+			while (str[i] != ' ')
+			{
+				to_remove++;
+				i++;
+			}
+		}
+		i++;
+	}
+	return (i - to_remove);
+}
 
 //we want a function that returns the string with the characters:
 // - before the expanded value && the value of the expanded variable
 //we suppose that there is a string with only 1 variable to expand
 //let's say that the string in argument is everything from the beginning until the end of the expanded variable
 //if there is others variables to expand, we have to recall this function starting from this index
-char	*expanded_string(t_mini *mini, char *str)
+//
+//if we have sth to expand => we expand it
+/*char	*expanded_string(t_mini *mini, char *str)
 {
 	int		i;
 	int		j;
@@ -235,7 +235,7 @@ char	*expanded_string(t_mini *mini, char *str)
 	char	*expanded_key;
 	char	*expanded_value;
 
-	i = calculate_malloc_size(str);//we calculate the size only for the character (the one that are not related to the expansion)
+//	i = calculate_malloc_size(str);//we calculate the size only for the character (the one that are not related to the expansion)
 	expanded_key = get_expansion_name(mini, str);//to protect && to free
 	if (!expanded_key)
 		print_error(mini, 2);
@@ -263,10 +263,37 @@ char	*expanded_string(t_mini *mini, char *str)
 		}
 	}
 	return (free(expanded_key), free(expanded_value), result);
-}
+}*/
 
 //⚠️  You have to check when it's written, for example, '$HOME' && '$HOME.'  ⚠️
 
+//in this function, str receives only the name of the variable to expand
+//if we have sth to expand => we expand it
+//ie: '$HOME' has to give '/Users/login'
+char	*expanded_string(t_mini *mini, char *str)
+{
+	int		i;
+	int		j;
+	char	*result;
+	char	*expanded_key;
+	char	*expanded_value;
+
+	expanded_key = get_expansion_key(mini, str);//to protect && to free
+	if (!expanded_key)
+		print_error(mini, 2);
+	expanded_value = search_and_replace_variable(mini->env, expanded_key);//to protect && to free
+	if (!expanded_value)
+		print_error(mini, 2);
+	j = (int)ft_strlen(expanded_value);
+	result = malloc(sizeof(char) * j + 1);
+	if (!result)
+		print_error(mini, 2);
+	i = 0;
+	j = 0;
+	while (expanded_value[i])
+		result[j++] = expanded_value[i++];
+	return (free(expanded_key), free(expanded_value), result);
+}
 
 //function that counts how many env variable are written in the command line
 //to know how many do we have to manage
@@ -282,9 +309,9 @@ int	count_env_variable(t_mini *mini, char *line)
 	env_counter = 0;
 	i = 0;
 	printf("mini->line = %s\n", line);
-	while (line[i])
+	while (line[i] != '\0')
 	{
-//		printf("entered in the while line[i]\n");
+		printf("entered in the while line[i]\n");
 		if (line[i] == BACKSLASH)
 			i++;
 		if ((i > 0 && line[i] == '$' && line[i - 1] == BACKSLASH) || (line[i] != '$'))
@@ -292,13 +319,14 @@ int	count_env_variable(t_mini *mini, char *line)
 		else
 		{
 			i++;//to forget the '$'
-//			printf("entered in the else\n");
+			printf("entered in the else\n");
 			k = i;
 			j = 0;
+			printf("before moving i, i = %i\n", i);
 			while (line[i] && line[i++] != ' ')
 				j++;
 //			write(1, "interesting\n", 12);
-//			printf("before the malloc: j = %i\n", j); 
+			printf("before the malloc: j = %i\n", j); 
 			env_key = malloc(sizeof(char) * j + 1);
 			if (!env_key)
 				print_error(mini, 2);
@@ -306,20 +334,24 @@ int	count_env_variable(t_mini *mini, char *line)
 			j = 0;
 			while (line[i] != ' ')
 				env_key[j++] = line[i++];
-//			printf("env_key = %s\n", env_key);
+			printf("env_key = %s\n", env_key);
 			tmp = mini->env;
 			while (tmp)
 			{
-//				printf("tmp->key = %s\n", tmp->key);
 				if (ft_strcmp_simple(env_key, tmp->key) == 0) 
+				{
 					env_counter++;
+					printf("tmp->key = %s\n", tmp->key);
+				}
 				tmp = tmp->next;
 			}
 			free(env_key);
-//			printf("count_env_variable: env_counter = %i\n", env_counter);
+			printf("count_env_variable: env_counter = %i\n", env_counter);
 		}
+		printf("character _%c_\n", line[i]);
 		i++;
 	}
+	write(1, "finito\n", 7);
 	return (env_counter);
 }
 

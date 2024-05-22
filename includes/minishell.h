@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/22 13:14:18 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:18:10 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ char			**expand_cmd_line(t_mini *mini, char **str);
 int				calculate_malloc_size(char *str);
 char			*search_and_replace_variable(t_builtin *env_variable, char *expand_name);
 //char			*search_and_replace_variable(t_mini *mini, t_builtin *env_variable, char *expand_name);
-char			*get_expansion_name(t_mini *mini, char *str);
+char			*get_expansion_key(t_mini *mini, char *str);
 char			*expanded_string(t_mini *mini, char *str);
 int				count_env_variable(t_mini *mini, char *line);
 
