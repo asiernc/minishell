@@ -37,6 +37,6 @@ int	builtin_exit(t_mini *mini, t_cmd *cmd)
 			return (print_error(mini, 10), 255);
 		exit(ft_atoi(cmd->str[1]) % 256);
 	}
-	exit(0);
+	exit(0);//instead of writing exit(0) you have to exit(mini->last_error_code);
 	return (EXIT_SUCCESS);
 }

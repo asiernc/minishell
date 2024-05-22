@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:49:37 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/21 19:54:50 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/22 11:40:16 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*get_expansion_name(t_mini *mini, char *str)//malloc ⚠️
 	return (result);
 }
 
-char	*search_and_replace_variable(t_mini *mini, t_builtin *env_variable, char *expand_name)
+char	*search_and_replace_variable(t_builtin *env_variable, char *expand_name)//malloc ⚠️
 {
 	t_builtin	*tmp;
 
@@ -106,22 +106,14 @@ char	*search_and_replace_variable(t_mini *mini, t_builtin *env_variable, char *e
 	while (tmp)
 	{
 		if (ft_strcmp_simple(tmp->key, expand_name) == 0)
-		{
-			printf("entered just before the get_value_from_env\n");
-			char *result;
-			result = get_value_from_env(mini, tmp->key);//malloc ⚠️
-			printf("get_value_from_env = %s\n", result);
-			return (result);
-		}
+			return (tmp->value);
 		tmp = tmp->next;
 	}
 	return (NULL);
 }
 
-//tu dois creer une fonction pour joindre les caracteres de result 
-//et ceux de la valeur de l'expansion
-//puis continuer a iterer la ligne/str jusqu'a la fin
-//
+//we calculate the size only for the character (the one that are not related to the expansion)
+//ei: if we have: 'test $HOME' => the result will be 5
 int	calculate_malloc_size(char *str)
 {
 	int	to_remove;
@@ -207,57 +199,98 @@ int	calculate_malloc_size(char *str)
 	return (result);
 }*/
 
+/*int	calculate_size_for_expansion(t_mini *mini, char *str)
+{
+	int		len_str;
+	int		len_expansion_value;
+	char	*expanded_key;
+	char	*expanded_value;
+
+	len_str = calculate_malloc_size(str);//we calculate the size only for the character (the one that are not related to the expansion)
+	expanded_key = get_expansion_name(mini, str);//to protect && to free
+	if (!expanded_key)
+		print_error(mini, 2);
+	expanded_value = search_and_replace_variable(mini->env, expanded_key);//to protect && to free
+	if (!expanded_value)
+		print_error(mini, 2);
+	len_expansion_value = (int)ft_strlen(expanded_value);
+	free(expanded_key);
+	free(expanded_value);
+	return (len_str + len_expansion_value);
+}*/
+
+
+
 //we want a function that returns the string with the characters:
 // - before the expanded value && the value of the expanded variable
 //we suppose that there is a string with only 1 variable to expand
 //let's say that the string in argument is everything from the beginning until the end of the expanded variable
 //if there is others variables to expand, we have to recall this function starting from this index
+//you can cut the fonction to lower up to 25 l. easily
 char	*expanded_string(t_mini *mini, char *str)
 {
 	int		i;
 	int		j;
-	int		k;
 	char	*result;
 	char	*expanded_key;
 	char	*expanded_value;
 
-	write(1, "1\n", 2);
 	i = calculate_malloc_size(str);//we calculate the size only for the character (the one that are not related to the expansion)
 	expanded_key = get_expansion_name(mini, str);//to protect && to free
 	if (!expanded_key)
 		print_error(mini, 2);
-	write(1, "2\n", 2);
-	expanded_value = search_and_replace_variable(mini, mini->env, expanded_key);//to protect && to free
+	expanded_value = search_and_replace_variable(mini->env, expanded_key);//to protect && to free
 	if (!expanded_value)
 		print_error(mini, 2);
-	write(1, "3\n", 2);
 	j = (int)ft_strlen(expanded_value);
 	result = malloc(sizeof(char) * (i + j) + 1);
-	printf("--------------------------\n");
-	printf("result size = %i\n", i + j + 1);
-	printf("expanded key = %s\n",  expanded_key);
-	printf("expanded value = %s\n", expanded_value);
-	printf("--------------------------\n");
 	if (!result)
 		print_error(mini, 2);
 	i = 0;
 	j = 0;
-	k = 0;
-	write(1, "4\n", 2);
 	while (str[i])
 	{
 		if (str[i] != '$')
 			result[j++] = str[i++];
 		else
 		{
-			while (expanded_value[k])
-				result[j++] = expanded_value[k++];
+			while (*expanded_value)
+				result[j++] = *(expanded_value++);//use another iterator ie: k <=> expanded_value[k++]
 			i += (int)ft_strlen(expanded_key) + 1;//+ 1 for the $
 		}
-		write(1, "5\n", 2);
 	}
-	return (free(expanded_key), free(expanded_value), result);
+	return (free(expanded_key), free(expanded_value - ft_strlen(expanded_value) + 1), result);
 }
+
+//⚠️  You have to check when it's written, for example, '$HOME' && '$HOME.'  ⚠️
+
+
+
+//function that counts how many env variable are written in the command line
+//to know how many do we have to manage
+/*int	count_env_variable(t_mini *mini, char *line)
+{
+	int	env_counter;
+	int	i;
+
+	env_counter = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (str[i] == '$')
+			env_counter++;
+		i++;
+	}
+}*/
+
+//now let's make it work for several env variables
+//you have to check if there is several env variables => to a function for it
+//
+//
+//
+//
+//
+//
 
 //you have to do a function that returns an int
 //this int means that is it or in a DQUOTE or in a simple QUOTE
