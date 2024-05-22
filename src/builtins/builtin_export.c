@@ -14,8 +14,9 @@
 
 //lst refers to the list that contains all the lines of the export env
 //in this function, str refers to the new export variable. ie: 'abc=test'
-t_builtin	*add_export_variable(t_builtin *lst, char *str, char *value_trimmed)
+static t_builtin	*add_export_variable(t_mini *mini, t_builtin *lst, char *str, char *value_trimmed)
 {
+	static int	index = 10000;
 	t_builtin	*new_node;
 	t_builtin	*tmp;
 	int			lst_size;
@@ -24,34 +25,37 @@ t_builtin	*add_export_variable(t_builtin *lst, char *str, char *value_trimmed)
 	lst_size = ft_lstsize_builtin(lst);
 	new_node = malloc(sizeof(t_builtin));
 	if (!new_node)
-		return (NULL);
-	new_node->key = get_key_from_env(str);
+		print_error(mini, 2);
+	new_node->key = get_key_from_env(mini, str);
 	if (!new_node->key)
-		return (free(new_node), NULL);
+		print_error(mini, 2);
 	new_node->value = value_trimmed;
-	if (!new_node->value)
-		return (free(new_node), NULL);
-	new_node->index = lst_size - 1;
+	/*if (!new_node->value)
+	{
+		fprintf(stderr, "INSIDE\n");
+		print_error(mini, 2);
+	}*/
+	new_node->index = index++;
 	new_node->next = NULL;
 	ft_lstadd_back_builtin(&lst, new_node);
 //	lst = sort_ascii(lst, NULL);
 	return (lst);
 }
 
-void	join_values(t_builtin **lst_export, char *str)
+static void	join_values(t_mini *mini, t_builtin **lst_export, char *str)
 {
 	t_builtin	*tmp;
 	char		*key_str;
 	char		*value_str;
 	char		*value_node;
 
-	key_str = get_key_from_env(str);
+	key_str = get_key_from_env(mini, str);
 	if (!key_str)
 		return ;
-	value_str = get_value_from_env(str);
+	value_str = get_value_from_env(mini, str);
 	value_str = trim_quotes(str);
 	if (!value_str)
-		return (free(key_str));
+		print_error(mini, 2);
 	tmp = *lst_export;
 	while (ft_strcmp(tmp->key, key_str))//while it's different
 		tmp = tmp->next;
@@ -63,7 +67,7 @@ void	join_values(t_builtin **lst_export, char *str)
 }
 
 //if the variable already exists and we want to change it complelty
-char	*check_key_already_exists(t_builtin *lst_export, char *str)
+static void	check_key_already_exists(t_mini *mini, t_builtin *lst_export, char *str)
 {
 	t_builtin	*tmp;
 	char		*key_str;
@@ -71,58 +75,87 @@ char	*check_key_already_exists(t_builtin *lst_export, char *str)
 	tmp = lst_export;
 	while (tmp)
 	{
-		key_str = get_key_from_env(str);
+		key_str = get_key_from_env(mini, str);
 		if (!key_str)
-			perror("malloc error src/builtins/builtin_export.c l.102");
+			print_error(mini, 2);
 		if (ft_strcmp_simple(tmp->key, key_str) == 0)
-			return (key_str);
+		// free value
+		{
+			fprintf(stderr, "index %d\n", tmp->index);
+			delone_node_env(tmp->index, &lst_export);
+		}
 		tmp = tmp->next;
 	}
-	return (NULL);
-}
-
-int	builtin_export_1(t_builtin *lst_export)
-{
-	t_builtin	*tmp;
-
-	lst_export = sort_ascii(lst_export, NULL);
-	tmp = lst_export;
-	remove_special_node(&tmp);
-	while (tmp)
-	{
-		printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
-		tmp = tmp->next;
-	}
-//	ft_lstclear_builtin(&lst_export);//this line will be written at the very last step of the pgrm. Just before return (0) of the main
-	return (1);
 }
 
 //I had norminette issues so I had to cut this functions in two
-int	builtin_export(t_mini *mini, char **cmd)
+/*int	builtin_export(t_mini *mini, t_cmd *cmd)
 {
 	t_builtin	*lst_export;
 	char		*key_str;
 	char		*value_trimmed;
 
-	lst_export = create_builtin_lst(mini->env);
+//create_builtin_lst(mini, mini->env_cpy);
+	lst_export = mini->env;
 	if (!lst_export)
-		return (perror("error creating the list for the env"), 0);
-	if (cmd[1] != NULL)
+		print_error(mini, 2);
+	if (ft_strcmp(cmd->str[0], "export") == 0 && cmd->str[1] == NULL)
+		print_env_export(mini, mini->env_cpy, 1);
+	if (cmd->str[1] != NULL)
 	{
-		if (check_variable(cmd[1]) == 1)
+		if (check_variable(cmd->str[1]) == 1)
 		{
-			key_str = check_key_already_exists(lst_export, cmd[1]);
+			key_str = check_key_already_exists(mini, lst_export, cmd->str[1]);
 			if (key_str)
-				builtin_unset(&lst_export, key_str);
-			value_trimmed = trim_quotes(cmd[1]);
+				builtin_unset(mini, &mini->env, cmd);
+				//builtin_unset(mini, cmd);
+			value_trimmed = trim_quotes(cmd->str[1]);
 			if (!value_trimmed)
 				return (0);
-			lst_export = add_export_variable(lst_export, cmd[1], value_trimmed);
+			lst_export = add_export_variable(mini, lst_export, cmd->str[1], value_trimmed);
 		}
-		else if (check_variable(cmd[1]) == 2)
-			join_values(&lst_export, cmd[1]);
+		else if (check_variable(cmd->str[1]) == 2)
+			join_values(mini, &lst_export, cmd->str[1]);
 	}
-	return (builtin_export_1(lst_export));
+	concat_lst_env(mini);
+	return (EXIT_SUCCESS);
+}*/
+
+int	builtin_export(t_mini *mini, t_cmd *cmd)
+{
+	t_builtin	*lst_export;
+	//char		*key_str;
+	char		*value_trimmed;
+	int			i;
+	
+	lst_export = mini->env;
+	if (!lst_export)
+		print_error(mini, 2);
+	if (ft_strcmp(cmd->str[0], "export") == 0 && cmd->str[1] == NULL)
+		print_env_export(mini, mini->env_cpy, 1);
+	i = 1;
+	while (cmd->str[i] != NULL)
+	{
+		if (check_variable(cmd->str[i]) == 1)
+		{
+			check_key_already_exists(mini, lst_export, cmd->str[i]);
+			//if (key_str)
+			//	builtin_unset(mini, &mini->env, cmd);
+				//builtin_unset(mini, cmd);
+			value_trimmed = trim_quotes(cmd->str[i]);
+			//if (ft_strlen(value_trimmed) == 0)
+			//	value_trimmed = NULL;
+			fprintf(stderr, "TRIMED VALUE: %s\n", value_trimmed);
+			//if (!value_trimmed)
+			//	return (0);
+			lst_export = add_export_variable(mini, lst_export, cmd->str[i], value_trimmed);
+		}
+		else if (check_variable(cmd->str[i]) == 2)
+			join_values(mini, &lst_export, cmd->str[i]);
+		i++;
+	}
+	concat_lst_env(mini);
+	return (EXIT_SUCCESS);
 }
 
 /*int	main(int argc, char **argv, char **env)

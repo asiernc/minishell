@@ -12,6 +12,37 @@
 
 #include "minishell.h"
 
+void	print_env_export(t_mini *mini, char **env, int flag)//t_builtin *lst_env, )
+{
+	t_builtin	*tmp;
+	int	i;
+
+	i = 0;
+	tmp = mini->env;
+	//lst_export = sort_ascii(lst_export, NULL);
+	//remove_special_node(&tmp);
+	//tmp = lst_env;
+	if (flag == 0)
+	{
+		while (tmp)
+		{
+			if (tmp->key && tmp->value)
+				printf("%s=%s\n", tmp->key, tmp->value);
+			tmp = tmp->next;
+		}
+	}
+	else if (flag == 1)
+	{
+		while (env[i]) 
+		{
+			if (ft_strncmp(env[i], "_=", 2) != 0)
+				printf("declare -x %s\n", env[i]);
+			i++;
+		}
+	}
+//	ft_lstclear_builtin(&lst_export);//this line will be written at the very last step of the pgrm. Just before return (0) of the main
+}
+
 //I HAVE TO REMOVE THE NODE->KEY = _ BECAUSE IT ISN'T IN EXPORT
 void	remove_special_node(t_builtin **head)
 {
@@ -104,6 +135,9 @@ char	*trim_quotes(char *str)//YOU MIGHT HAVE A LEAK HERE BECAUSE YOU MALLOC WITH
 	while (str[i] != '=')
 		i++;
 	i++;
+	//FLAGGGGGGGGGGG
+	if (str[i] == '\0')
+		return (ft_strdup(""));
 	while (str[i] == 34 || str[i] == 39)
 		i++;
 	j = (int)ft_strlen(str) - 1;
@@ -111,5 +145,8 @@ char	*trim_quotes(char *str)//YOU MIGHT HAVE A LEAK HERE BECAUSE YOU MALLOC WITH
 		j--;
 	j++;
 	len = j - i;
-	return (ft_substr(str, i, len));
+	if (i > (int)ft_strlen(str))
+		return (NULL);
+	else
+		return (ft_substr(str, i, len));
 }

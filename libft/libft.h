@@ -51,6 +51,7 @@ int		ft_atoi(const char *str);
 //int		ft_atoi_base(char *str, char *base);
 unsigned int	ft_atoi_base(const char *str, const char *base);
 void	*ft_calloc(size_t number, size_t size);
+void    ft_free_double_array(char **str);
 char	*ft_strdup(const char *str);
 
 char	*ft_substr(char const *str, unsigned int start, size_t len);

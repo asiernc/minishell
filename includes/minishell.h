@@ -35,6 +35,8 @@
 // STRUCTS
 
 // Builtins
+
+//s_env
 typedef struct	s_builtin
 {
 	char				*key;
@@ -196,9 +198,9 @@ void			free_cmd_line(char **str);
 int				builtin_pwd(t_mini *mini);
 int				builtin_exit(t_mini *mini, t_cmd *cmd);
 int				builtin_env(t_mini *mini);
-int				builtin_export(t_mini *mini, char **cmd);
-//void			builtin_unset(t_builtin **head, char *str);
-int				builtin_unset(t_builtin **head, char *str);
+int				builtin_export(t_mini *mini, t_cmd *cmd);
+int				builtin_unset(t_mini *mini, t_builtin **head, t_cmd *cmd);
+//int				builtin_unset(t_mini *mini, t_cmd *cmd);
 int				builtin_echo(t_mini *mini, t_cmd *command);
 // cd
 
@@ -217,8 +219,16 @@ t_builtin		*init_builtin_node(char **env);
 void			remove_special_node(t_builtin **head);
 t_builtin		*sort_ascii(t_builtin *lst_export, t_builtin *sorted);
 int				check_variable(char *str);
-char			*trim_quotes(char *str);//YOU MIGHT HAVE A LEAK 
+char			*trim_quotes(char *str);//YOU MIGHT HAVE A LEAK
 
+void			print_env_export(t_mini *mini, char **str, int flag);
+char			**delete_variable(char **old_env, char *str);
+char			**create_new_env(char **old_env, char **new_env, char *variable);
+int				detect_unset_error(t_cmd *cmd);
+
+t_builtin		*clear_one_node_env(t_builtin **lst);
+void			del_first_node_env(t_builtin **lst);
+void			delone_node_env(int num_del, t_builtin **lst);
 
 // Expander
 
@@ -229,8 +239,8 @@ char			**expand_cmd_line(t_mini *mini, char **str);
 
 // Utils expander
 
-int is_dollar(char *str);
-int is_equal(char *str);
+int 			is_dollar(char *str);
+int 			is_equal(char *str);
 
 // Executor
 

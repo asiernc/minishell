@@ -31,7 +31,6 @@ int executor(t_mini *mini)
 			print_error(mini, PIPE_ERROR);
 		check_if_exists_hdoc(mini, mini->cmd);
 		ft_fork(mini, mini->cmd, fds, fd_in);
-		//close(fds[1]);
 		if (mini->cmd->previous != NULL)
 			close(fd_in);
 		fd_in = check_next_fd_in(mini, mini->cmd, fds);
@@ -65,15 +64,17 @@ void	ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in)
 	{
 		if (dup2(fd_in, STDIN_FILENO) == -1)
 			print_error(mini, DUP2_ERROR);
-		close(fds[0]);
+		//close(fds[0]);
 		//close(fd_in);
 	}
+	close(fds[0]);
 	if (cmd->next)
 	{
 		if (dup2(fds[1], STDOUT_FILENO) == -1)
 			print_error(mini, DUP2_ERROR);
-		close(fds[1]);
+		//close(fds[1]);
 	}
+	close(fds[1]);
 	if (cmd->previous)
 		close(fd_in);
 	ft_exec_cmd(mini, cmd);

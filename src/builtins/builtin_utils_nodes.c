@@ -78,3 +78,55 @@ void	ft_lstclear_builtin(t_builtin **lst)
 	}
 	lst = NULL;
 }
+
+t_builtin	*clear_one_node_env(t_builtin **lst)
+{
+	if ((*lst)->key)
+	{
+		free((*lst)->key);
+		(*lst)->key = NULL;
+	}
+	if ((*lst)->value)
+	{
+		free((*lst)->value);
+		(*lst)->value = NULL;
+	}
+	free(*lst);
+	*lst = NULL;
+	return (NULL);
+}
+
+void	del_first_node_env(t_builtin **lst)
+{
+	t_builtin	*tmp;
+
+	tmp = *lst;
+	*lst = tmp->next;
+	clear_one_node_env(&tmp);
+}
+
+void delone_node_env(int num_del, t_builtin **lst)
+{
+	t_builtin *node;
+	t_builtin *prev;
+	t_builtin *start;
+
+	start = *lst;
+	node = start;
+	if ((*lst)->index == num_del)
+	{
+		del_first_node_env(lst);
+		return ;
+	}
+	while (node && node->index != num_del)
+	{
+		prev = node;
+		node = node->next;
+	}
+	if (node)
+		prev->next = node->next;
+	else
+		prev->next = NULL;
+	clear_one_node_env(&node);
+	*lst = start;
+}

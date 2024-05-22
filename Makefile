@@ -46,10 +46,11 @@ SRC			=	src/main.c 							\
 				src/builtins/builtin_env.c			\
 				src/builtins/builtin_exit.c			\
 				src/builtins/builtin_utils_nodes.c	\
-				#src/builtins/builtin_export.c		\
+				src/builtins/builtin_export.c		\
 				src/builtins/builtin_export_helper.c\
 				src/builtins/builtin_unset.c		\
-				src/builtins/builtin_utils_nodes.c	\
+				src/expander/utils_expander.c		\
+				#src/builtins/builtin_utils_nodes.c	\
 				src/builtins/builtin_cd.c			\
 
 

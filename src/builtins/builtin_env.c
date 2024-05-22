@@ -116,19 +116,13 @@ t_builtin	*create_env(t_mini *mini, t_builtin *lst_env)
 {
 	lst_env = create_builtin_lst(mini, mini->original_env);
 	if (!lst_env)
-		print_error(mini, 2); //print error
+		print_error(mini, 2);
+	//concat_lst_env(mini);
 	return (lst_env);
 }
 
 int	builtin_env(t_mini *mini)
 {
-	t_builtin	*tmp;
-	
-	tmp = mini->env;
-	while (tmp)
-	{
-		printf("%s=%s\n", tmp->key, tmp->value);
-		tmp = tmp->next;
-	}
+	print_env_export(mini, mini->env_cpy, 0);
 	return (EXIT_SUCCESS);
 }

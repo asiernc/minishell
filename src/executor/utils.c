@@ -62,7 +62,6 @@ char	*find_check_path(t_mini *mini, char *cmd, char **env)
 	while (*paths)
 	{
 		cmd_path = ft_strjoin(*paths, tmp);
-		fprintf(stderr, "PATH = %s\n", cmd_path);
 		if (!cmd_path)
 			return (NULL);
 		if (access(cmd_path, F_OK | X_OK) == 0)

@@ -59,11 +59,11 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 		exit = builtin_cd(mini, cmd);*/
 	else if (cmd->builtin == PWD)
 		exit = builtin_pwd(mini);
-//	else if (cmd->builtin == EXPORT)
-//		exit = builtin_export(mini, cmd->str);
-//	else if (cmd->builtin == UNSET)
-//		exit = builtin_export(mini, cmd->str);//check yourunset
-		//exit = builtin_unset(mini, cmd->str);
+	else if (cmd->builtin == EXPORT)
+		exit = builtin_export(mini, cmd);
+	else if (cmd->builtin == UNSET)
+		//exit = builtin_export(mini, cmd->str);//check yourunset
+		exit = builtin_unset(mini, &mini->env, cmd);
 	else if (cmd->builtin == ENV)
 		exit = builtin_env(mini);
 	else if (cmd->builtin == EXIT)
