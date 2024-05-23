@@ -80,7 +80,6 @@ int	builtin_unset(t_mini *mini, t_builtin **head, t_cmd *cmd)
 	current = *head;
 	while (current)
 	{
-		fprintf(stderr, "UNSET ARG %s\n", unset_arg);
 		if (ft_strlen(current->key) == ft_strlen(unset_arg) &&
 			ft_strcmp_simple(current->key, unset_arg) == 0)
 		{

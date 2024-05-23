@@ -12,16 +12,11 @@
 
 #include "minishell.h"
 
-void	print_env_export(t_mini *mini, char **env, int flag)//t_builtin *lst_env, )
+void	print_env_export(t_mini *mini, int flag)//t_builtin *lst_env, )
 {
 	t_builtin	*tmp;
-	int	i;
 
-	i = 0;
 	tmp = mini->env;
-	//lst_export = sort_ascii(lst_export, NULL);
-	//remove_special_node(&tmp);
-	//tmp = lst_env;
 	if (flag == 0)
 	{
 		while (tmp)
@@ -33,11 +28,16 @@ void	print_env_export(t_mini *mini, char **env, int flag)//t_builtin *lst_env, )
 	}
 	else if (flag == 1)
 	{
-		while (env[i]) 
+		while (tmp)
 		{
-			if (ft_strncmp(env[i], "_=", 2) != 0)
-				printf("declare -x %s\n", env[i]);
-			i++;
+			if (ft_strncmp(tmp->key, "_", 1) != 0)
+			{
+				if (tmp->value == NULL)
+					printf("declare -x %s\n", tmp->key);
+				else
+					printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
+			}
+			tmp = tmp->next;
 		}
 	}
 //	ft_lstclear_builtin(&lst_export);//this line will be written at the very last step of the pgrm. Just before return (0) of the main
@@ -107,17 +107,24 @@ t_builtin	*sort_ascii(t_builtin *lst_export, t_builtin *sorted)
 //here: str <=> 'simon=test'
 int	check_variable(char *str)
 {
+	char	*tmp;
 	int	i;
 	
 	i = 0;
-	while (str[i] != '=')
+	tmp = str;
+	if (ft_strchr(tmp, '=') != NULL)
 	{
-		if (i == 0 && str[i] == 34)
+		while (str[i] != '=')// || str[i])
+		{
+			if (i == 0 && str[i] == 34)
+				i++;
+			else if (i == 0 && str[i] != '_' && !ft_isalpha(str[i]))//si ce n'est pas un _ ou une lettre de l'alphabet
+				return (perror("export: not a valid identifier"), 0);//alors cest mal ecrit
 			i++;
-		else if (i == 0 && str[i] != '_' && !ft_isalpha(str[i]))//si ce n'est pas un _ ou une lettre de l'alphabet
-			return (perror("export: not a valid identifier"), 0);//alors cest mal ecrit
-		i++;
+		}
 	}
+	else
+		i = 1;
 	if (i > 0 && str[i] == '=' && str[i - 1] == '+')
 		return (2);//in the case for joining the values
 	if (i > 0)
@@ -125,17 +132,18 @@ int	check_variable(char *str)
 	return (0);
 }
 
-char	*trim_quotes(char *str)//YOU MIGHT HAVE A LEAK HERE BECAUSE YOU MALLOC WITHOUT FREE THE PREVIOUS CONTENT
+char	*clean_value(char *str)//YOU MIGHT HAVE A LEAK HERE BECAUSE YOU MALLOC WITHOUT FREE THE PREVIOUS CONTENT
 {
 	int		i;
 	int		j;
 	int		len;
 
+	if (ft_strchr(str, '=') == NULL)
+		return (NULL);
 	i = 0;
 	while (str[i] != '=')
 		i++;
 	i++;
-	//FLAGGGGGGGGGGG
 	if (str[i] == '\0')
 		return (ft_strdup(""));
 	while (str[i] == 34 || str[i] == 39)
@@ -145,8 +153,5 @@ char	*trim_quotes(char *str)//YOU MIGHT HAVE A LEAK HERE BECAUSE YOU MALLOC WITH
 		j--;
 	j++;
 	len = j - i;
-	if (i > (int)ft_strlen(str))
-		return (NULL);
-	else
-		return (ft_substr(str, i, len));
+	return (ft_substr(str, i, len));
 }

@@ -29,21 +29,50 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	exit(exit_code);
 }
 
-int	do_cmd(t_mini *mini, t_cmd *cmd)
+/*int	do_cmd(t_mini *mini, t_cmd *cmd)
 {
 	char	*cmd_head;
 	char	*path;
 
 	cmd_head = cmd->str[0];
-	if (cmd->redirections)
-		if (do_redirections(mini, cmd))
-			exit(1); 
 	path = find_check_path(mini, cmd_head, mini->env_cpy); // mandar 127 si no lo encuentra
 	if (!path)
 		print_error(mini, CMD_NOT_FOUND_ERROR);
 	execve(path, cmd->str, mini->env_cpy);
 	exit(1);
 	//exit(127);
+}*/
+
+// mandar 127 is command not found
+int	do_cmd(t_mini *mini, t_cmd *cmd_lst)
+{
+	char	**env;
+	char	**paths;
+	char	*cmd_path;
+	char	*tmp;
+
+	env = mini->env_cpy;
+	//valorar hacer access por el caso que nos den la ruta absoluta example ./bin/var/cat
+	if (!access(mini->cmd->str[0], F_OK | X_OK))
+		execve(mini->cmd->str[0], mini->cmd->str, mini->env_cpy);
+	while (*env && !ft_strnstr(*env, "PATH", 5))
+		env++;
+	tmp = ft_substr(*env, 5, ft_strlen(*env) - 5);
+	paths = ft_split(tmp, ':');
+	free(tmp);
+	tmp = ft_strjoin("/", cmd_lst->str[0]);
+	while (*paths)
+	{
+		cmd_path = ft_strjoin(*paths, tmp);
+		if (!cmd_path)
+			print_error(mini, 2);
+		if (access(cmd_path, F_OK | X_OK) == 0)
+			execve(cmd_path, mini->cmd->str, mini->env_cpy);
+		free(cmd_path);
+		paths++;
+	}
+	free(tmp);
+	return (127);
 }
 
 int	do_builtin(t_mini *mini, t_cmd *cmd)
@@ -53,11 +82,11 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 	exit = 0;
 //	if (mini && cmd)
 //		fprintf(stderr, "");
-	if (cmd->builtin == ECHO)
-		exit = builtin_echo(mini, cmd);
+	//if (cmd->builtin == ECHO)
+	//	exit = builtin_echo(mini, cmd);
 /*	else if (cmd->builtin == CD)
 		exit = builtin_cd(mini, cmd);*/
-	else if (cmd->builtin == PWD)
+	if (cmd->builtin == PWD)
 		exit = builtin_pwd(mini);
 	else if (cmd->builtin == EXPORT)
 		exit = builtin_export(mini, cmd);

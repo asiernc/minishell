@@ -123,6 +123,6 @@ t_builtin	*create_env(t_mini *mini, t_builtin *lst_env)
 
 int	builtin_env(t_mini *mini)
 {
-	print_env_export(mini, mini->env_cpy, 0);
+	print_env_export(mini, 0);
 	return (EXIT_SUCCESS);
 }

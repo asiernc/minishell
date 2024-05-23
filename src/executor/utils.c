@@ -44,12 +44,14 @@ void	remove_eof_quotes(t_lexer *node)
 
 
 // mandar 127 is command not found
-char	*find_check_path(t_mini *mini, char *cmd, char **env)
+/*char	*find_check_path(t_mini *mini, char *cmd, char **env)
 {
+	int		flag;
 	char	**paths;
 	char	*cmd_path;
 	char	*tmp;
 
+	flag = 0;
 	//valorar hacer access por el caso que nos den la ruta absoluta example ./bin/var/cat
 	if (!access(mini->cmd->str[0], F_OK | X_OK))
 		execve(mini->cmd->str[0], mini->cmd->str, mini->env_cpy);
@@ -65,13 +67,16 @@ char	*find_check_path(t_mini *mini, char *cmd, char **env)
 		if (!cmd_path)
 			return (NULL);
 		if (access(cmd_path, F_OK | X_OK) == 0)
+		{
+			flag = 1;
 			break ;
+		}
 		free(cmd_path);
 		paths++;
 	}
 	free(tmp);
 	return (cmd_path);
-}
+}*/
 
 t_builtin	*find_node_path(t_builtin *lst_env)
 {
@@ -104,15 +109,13 @@ void	concat_lst_env(t_mini *mini)
 		mini->env_cpy[i] = (char *)malloc((ft_strlen(tmp->key) + ft_strlen(tmp->value) + 2) * sizeof(char));
 		if (!mini->env_cpy[i])
 		{
-			while (i > 0 )
-			{
-				free(mini->env_cpy[i]);
-				i--;
-			}
-			free(mini->env_cpy);
+			ft_free_double_array(mini->env_cpy);
 			print_error(mini, 2);
 		}
-		mini->env_cpy[i] = ft_strjoin(tmp->key, ft_strjoin("=", tmp->value));
+		if (tmp->value != NULL)
+			mini->env_cpy[i] = ft_strjoin(tmp->key, ft_strjoin("=", tmp->value));
+		else
+			mini->env_cpy[i] = tmp->key;
 		tmp = tmp->next;
 		i++;
 	}

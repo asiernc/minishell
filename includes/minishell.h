@@ -219,9 +219,9 @@ t_builtin		*init_builtin_node(char **env);
 void			remove_special_node(t_builtin **head);
 t_builtin		*sort_ascii(t_builtin *lst_export, t_builtin *sorted);
 int				check_variable(char *str);
-char			*trim_quotes(char *str);//YOU MIGHT HAVE A LEAK
+char			*clean_value(char *str);//YOU MIGHT HAVE A LEAK
 
-void			print_env_export(t_mini *mini, char **str, int flag);
+void			print_env_export(t_mini *mini, int flag);
 char			**delete_variable(char **old_env, char *str);
 char			**create_new_env(char **old_env, char **new_env, char *variable);
 int				detect_unset_error(t_cmd *cmd);
@@ -251,10 +251,10 @@ int				executor(t_mini *mini);
 int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
-char			*find_check_path(t_mini *mini, char *cmd, char **env);
+//char			*find_check_path(t_mini *mini, char *cmd, char **env);
 t_builtin		*find_node_path(t_builtin *lst_env);
 //char			*check_path(char *cmd, t_builtin *lst_env);
-int				do_cmd(t_mini *mini, t_cmd *cmd);
+int				do_cmd(t_mini *mini, t_cmd *cmd_lst);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
 void			wait_pipes(t_mini *mini, int *pid, int pipes);
