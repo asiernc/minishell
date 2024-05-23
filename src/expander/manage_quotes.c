@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:49:37 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/23 14:32:20 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:47:28 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ char	*get_expansion_key(t_mini *mini, char *str)//malloc ⚠️
 	return (result);
 }
 
-char	*search_and_replace_variable(t_builtin *env_variable, char *expand_name)//malloc ⚠️
+char	*search_and_replace_variable(t_builtin *env_variable, char *expand_name)
 {
 	t_builtin	*tmp;
 

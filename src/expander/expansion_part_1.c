@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:38:12 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/23 14:45:49 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:14:25 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	send_line(t_mini *mini, char *str)
 		}
 		else
 		{
-			if (variable_existence(mini, str, &i) == 1)
+			if (variable_existence(mini, str, i) == 1)
 			{
 				expanded_value = expanded_string(mini, str); //malloc ⚠️  
 				if (write(1, expanded_value, ft_strlen(expanded_value)) == -1)
@@ -98,68 +98,87 @@ static void	forget_the_variable(char *str, int *i)
 		(*i)++;
 }
 
-char	*catch_expansion_key(t_mini, char *str, int *i)//malloc ⚠️  
+char	*catch_expansion_key(t_mini *mini, char *str, int *i)//malloc ⚠️  
 {
 	char	*result;
 	int		counter;
 	int		tmp;
 
+	printf("------IN CATCH_EXPANSION_KEY------\n");
 	result = NULL;
 	counter = 0;
+	printf("i memory adress = %p\ncatch_expansion_key, i = %i\n", &i, *i); 
+	(*i)++;//to forget the $ && to go on 
+	printf("i memory adress = %p\ncatch_expansion_key, i = %i\n", &i, *i); 
+	tmp = *i;
+	while (str[*i] && str[(*i)++] != ' ')
+	{
+		printf("i memory adress = %p\ncatch_expansion_key, i = %i\n", &i, *i); 
+		counter++;
+	}
+	result = malloc(sizeof(char) * counter + 1);
+	if (!result)
+		print_error(mini, 2);
+	printf("after malloc i memory adress = %p\ncatch_expansion_key, i = %i\n", &i, *i); 
+	*i = tmp;
+	tmp = 0;
+	printf("i memory adress = %p\ncatch_expansion_key, i = %i\n", &i, *i); 
 	while (str[*i] && str[*i] != ' ')
 	{
-		tmp = *i;
-		while (str[++(*i)] != ' ')//to forget the $ && to go on 
-			counter++;
-		result = malloc(sizeof(char) * counter + 1);
-		if (!result)
-			print_error(mini, 2);
-		*i = tmp;
-		tmp = 0;
-		while (str[*i] != ' ')
-			result[tmp++] = str[(*i)++];
-		result[tmp] = '\0';
+		printf("i memory adress = %p\ncatch_expansion_key, i = %i\n", &i, *i); 
+		result[tmp++] = str[(*i)++];
 	}
+	result[tmp] = '\0';
+	printf("i memory adress = %p\ncatch_expansion_key, i = %i\n", &i, *i); 
+	printf("------OUT CATCH_EXPANSION_KEY------\n");
 	return (result);
 }
 
-// if we have 'this is a $TEST for $HOME $USER \$PAGE"
-// the result 'this is a  for /Users/login login $PAGE"
+// if we have "this is a $TEST for $HOME $USER \$PAGE"
+// the result "this is a  for /Users/login login $PAGE"
 // this function has to return: 39
-int	calculate_right_size_malloc(t_mini, char *str)
+//
+int	calculate_right_malloc_size(t_mini *mini, char *str)
 {
 	int			i;
 	int			counter;
 	char		*env_key;
 	char		*env_value;
-	t_builtin	*tmp;
+	int			check;
 	
 	i = 0;
 	counter = 0;
-	if (str[i] == BACKSLASH)
-		i++;
-	if ((i > 0 && str[i] == '$' && str[i - 1] == BACKSLASH) || (str[i] != '$'))//random characters
+	check = 0;
+	printf("len str = %i\n", (int)ft_strlen(str));
+	while (str[i] && i < (int)ft_strlen(str))//ca c'est moche
 	{
-		counter++;
-		i++;
-	}
-	else
-	{
-		if (variable_existence(mini, mini->line, i) == 1)//malloc ⚠️  
-		{
-			env_key = catch_expansion_key(mini, str, &i);
-			tmp = mini->env;			
-			while (tmp)
-			{
-
-				tmp = tmp->next;
-			}
-			//we will stock the name of the variable
-			//and add the len of the value to the counter
-		}
+		if (str[i] == BACKSLASH)
+			i++;
+		printf("i memory adress = %p-----\nstr[i] = %c\ni = %i\n", &i, str[i], i);
+		if ((i > 0 && str[i] == '$' && str[i - 1] == BACKSLASH) || (str[i] != '$'))//random characters
+			counter++;
 		else
-			forget_the_variable(str, &i);
-
+		{
+			if (variable_existence(mini, str, i) == 1)
+			{
+				write(1, "entered in if\n", 14);
+				env_key = catch_expansion_key(mini, str, &i);//malloc ⚠️  
+				printf("i memory adress = %p\nafter catch_expansion_key, i = %i\n", &i, i); 
+				printf("env_key memory adress = %p-----\nenv_key: %s\n", &env_key, env_key);
+				env_value = search_and_replace_variable(mini->env, env_key);
+				printf("env_value: %s\n", env_value);
+				counter += ft_strlen(env_value);
+				printf("counter = %i\n", counter);
+				free(env_key);
+				check++;
+				if (check > 1)
+					counter++;
+			}
+			else
+				forget_the_variable(str, &i);
+		}
+		i++;
+		printf("counter = %i\n", counter);
 	}
-	
+	return (counter);
 }

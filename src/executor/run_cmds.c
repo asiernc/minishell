@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/23 12:28:11 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:53:05 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	exit_code = 0;
 
 		printf("simon business\n");
+		printf("mini->line = %s\n", mini->line);
 //		char	*result;
 //		int		env_counter;
 //		result = expanded_string(mini, mini->line);
@@ -26,18 +27,26 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 //		printf("mini->line = %s\n", mini->line);
 //		env_counter = count_env_variable(mini, mini->line);
 //		printf("env_counter %p\nenv_counter: %i\n", &env_counter, env_counter); 
-		write(1, "_", 1);
-		send_line(mini, mini->line);
-		write(1, "_\n", 2);
+
+/*		char	*expansion_key;
+		int		i;
+		i = 6;
+		expansion_key = catch_expansion_key(mini, mini->line, &i);
+		printf("expansion_key---%p\nexpansion_key: _%s_\n", &expansion_key, expansion_key);*/
+		
+
+		int	malloc_size;
+		malloc_size = calculate_right_malloc_size(mini, mini->line);
+		printf("malloc_size---%p\nmalloc_size = %i\n", &malloc_size, malloc_size);
 
 /*		int	var_existence;
 		int	i;
 		i = 0;
-		printf("mini->line = %s\n", mini->line);
 		var_existence = variable_existence(mini, mini->line, &i);
 		printf("variable_existence = %i\n", var_existence);*/
 		write(1, "l.25\n", 5);
 		printf("not anymore\n");
+		exit(0);
 
 	if (cmd->redirections)
 		do_redirections(mini, cmd);
