@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 11:20:51 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:35:23 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	print_error(t_mini *mini, int keycode)
 	}
 	else if (keycode == CD_ERROR)
 		ft_putstr_fd("cd: No such file or directory\n", STDERR_FILENO);//necesitas escribir tb la string
+	else if (keycode == WRITE_ERROR)
+		ft_putstr_fd("write error\n", STDERR_FILENO);//necesitas escribir tb la string
 	mini_reset(mini);
 }
 
