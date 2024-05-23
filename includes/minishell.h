@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/22 16:18:10 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/23 10:55:49 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ enum	e_error_codes
 	EXECVE_ERROR,
 	EXIT_ERROR,
 	CD_ERROR,
+	WRITE_ERROR,
 };
 //		Enum for operators
 
@@ -232,6 +233,7 @@ char			*search_and_replace_variable(t_builtin *env_variable, char *expand_name);
 char			*get_expansion_key(t_mini *mini, char *str);
 char			*expanded_string(t_mini *mini, char *str);
 int				count_env_variable(t_mini *mini, char *line);
+int				variable_existence(t_mini *mini, char *line, int *i);
 
 
 // Utils expander

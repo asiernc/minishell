@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/22 16:21:53 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/23 11:13:37 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,20 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	exit_code = 0;
 
 		printf("simon business\n");
-		char	*result;
+//		char	*result;
 //		int		env_counter;
-		result = expanded_string(mini, mini->line);
-		printf("result %p\nresult: _%s_\n", &result, result);
+//		result = expanded_string(mini, mini->line);
+//		printf("result %p\nresult: _%s_\n", &result, result);
 //		printf("mini->line = %s\n", mini->line);
 //		env_counter = count_env_variable(mini, mini->line);
 //		printf("env_counter %p\nenv_counter: %i\n", &env_counter, env_counter); 
+		int	var_existence;
+		int	i;
+		i = 0;
+		printf("mini->line = %s\n", mini->line);
+		var_existence = variable_existence(mini, mini->line, &i);
+
+		printf("variable_existence = %i\n", var_existence);
 		write(1, "l.25\n", 5);
 		printf("not anymore\n");
 
