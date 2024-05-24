@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/23 15:25:30 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:08:28 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,9 @@ char			*expanded_string(t_mini *mini, char *str);
 int				count_env_variable(t_mini *mini, char *line);
 int				variable_existence(t_mini *mini, char *line, int i);
 void			send_line(t_mini *mini, char *str);
+void			forget_the_variable(char *str, int *i);
 int				calculate_right_malloc_size(t_mini *mini, char *str);
+char			*expand_the_line(t_mini *mini, char *str);
 
 
 // Utils expander

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/23 15:53:05 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:11:20 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,13 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 		printf("expansion_key---%p\nexpansion_key: _%s_\n", &expansion_key, expansion_key);*/
 		
 
-		int	malloc_size;
+/*		int	malloc_size;
 		malloc_size = calculate_right_malloc_size(mini, mini->line);
-		printf("malloc_size---%p\nmalloc_size = %i\n", &malloc_size, malloc_size);
+		printf("malloc_size---%p\nmalloc_size = %i\n", &malloc_size, malloc_size);*/
+
+		char	*final_line;
+		final_line = expand_the_line(mini, mini->line);
+		printf("final_line---%p\nfinal_line= _%s_\n", &final_line, final_line);
 
 /*		int	var_existence;
 		int	i;
