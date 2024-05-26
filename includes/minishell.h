@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/26 18:20:25 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:44:56 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ typedef struct s_cmd
 	enum e_builtins			builtin;
 	int						num_redirections;
 	char					*hdoc_filename;
-	t_lexer					*redirections; < out
+	t_lexer					*redirections;// < out
 	struct s_cmd		*next;
 	struct s_cmd		*previous;
 }	t_cmd;

@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/05/24 11:24:01 by simarcha         ###   ########.fr        #
+#    Updated: 2024/05/26 19:34:24 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ SRC			=	src/main.c 							\
 				src/builtins/builtin_utils_nodes.c	\
 				src/expander/manage_quotes.c		\
 				src/expander/calculate_right_malloc_size.c\
-				src/expander/expansion_part_2.c		\
+				src/expander/expand_the_line.c		\
 				#src/builtins/builtin_export.c		\
 				src/builtins/builtin_export_helper.c\
 				src/builtins/builtin_unset.c		\
