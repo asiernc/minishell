@@ -6,22 +6,22 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:23:35 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/24 12:08:01 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:39:06 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // the goal is to write the line correctly
-// if we have 'this is a $TEST for $HOME $USER \$PAGE"
-// the result 'this is a  for /Users/login login $PAGE"
+// if we have: "this is a $TEST for $HOME $USER \$PAGE"
+// the result: this is a  for /Users/login login $PAGE"
 //
 //we have the function to change the $HOME with the expanded value
 //we have the function to forget $TEST
 //we have the function to calculate_right_malloc_size 
 //we have the function to know the env variable_existence
 
-char	*expand_the_line(t_mini *mini, char *str)
+char	*expand_the_line(t_mini *mini, char *str)//malloc ⚠️  
 {
 	int		i;
 	int		j;
@@ -62,6 +62,7 @@ char	*expand_the_line(t_mini *mini, char *str)
 		j++;
 		i++;
 	}
+	result[j] = '\0';
 	return (result);
 }
 

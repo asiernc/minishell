@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/20 11:54:14 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:20:25 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@ void    run_expander(t_mini *mini, t_cmd *cmd)
     t_cmd   *tmp;
 
     tmp = cmd;
-    tmp->str = expand_cmd_line(mini, tmp->str);
+    tmp->str = expand_cmd_line(mini, tmp->str); // contiene char** cmd line ==> [[cat] [hola.c]] [[echo] [$HELLO]]
     while (tmp->redirections)
     {
         if (tmp->redirections->token != HDOC) // lo unico que no se expande es el eof de hdoc, todo lo demas son posibles archivos
-            tmp->redirections->str = expand_str_line(mini, tmp->redirections->str);
+            tmp->redirections->str = expand_str_line(mini, tmp->redirections->str); // lexer->token && lexer->str(filename) char *
         tmp->redirections = tmp->redirections->next;
     }
 }
 
+// expand cmd line. only cmd flags and args of the cmd
 char	**expand_cmd_line(t_mini *mini, char **str)
 {
     char    *new;
@@ -45,6 +46,8 @@ char	**expand_cmd_line(t_mini *mini, char **str)
     }
 }
 
+
+// expand str==> filename
 char    *expand_str_line(t_mini *mini, char *str)
 {
     char    *new;

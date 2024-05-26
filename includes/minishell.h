@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/24 12:08:28 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:20:25 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,11 @@ typedef struct s_parser
 
 typedef struct s_cmd
 {
-	char					**str;
+	char					**str;//la command line sin redirections cmd with flags and arguments cat hola.c == arg
 	enum e_builtins			builtin;
 	int						num_redirections;
 	char					*hdoc_filename;
-	t_lexer					*redirections;
+	t_lexer					*redirections; < out
 	struct s_cmd		*next;
 	struct s_cmd		*previous;
 }	t_cmd;
