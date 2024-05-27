@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:17:51 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/27 12:57:09 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:26:18 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	variable_existence(t_mini *mini, char *str, int i)
 	i++;
 	k = i;
 	j = 0;
-	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_')) //ft_strncmp(, env_key, ft_strlen(mini->env
+	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_'))
 	{
 		j++;
 		i++;
@@ -63,14 +63,9 @@ int	variable_existence(t_mini *mini, char *str, int i)
 //any memory space. And our iterator is just counting until the end of the word
 void	forget_the_variable(char *str, int *i)
 {
-//	printf("\nentered forget_the_variable\n");
 	(*i)++;
-	while (str[*i] && (ft_isalpha(str[*i]) || str[*i] == '_')) //to change because the space is not the limiter
-	{
+	while (str[*i] && (ft_isalpha(str[*i]) || str[*i] == '_'))
 		(*i)++;
-//		printf("entered in the while\n");
-	}
-//	printf("i memory address: %p---value of i = %i\n\n", i, *i);
 }
 
 //this function returns the name of the key in our env list
@@ -84,7 +79,7 @@ char	*catch_expansion_key(t_mini *mini, char *str, int *i)//malloc ⚠️
 	counter = 0;
 	(*i)++;
 	tmp = *i;
-	while (str[*i] && (ft_isalpha(str[*i]) || str[*i] == '_')) //to change because the space is not the limiter
+	while (str[*i] && (ft_isalpha(str[*i]) || str[*i] == '_'))
 	{
 		counter++;
 		(*i)++;
@@ -96,11 +91,11 @@ char	*catch_expansion_key(t_mini *mini, char *str, int *i)//malloc ⚠️
 	tmp = 0;
 	while (str[*i] && (ft_isalpha(str[*i]) || str[*i] == '_'))
 		result[tmp++] = str[(*i)++];
-//	printf("i memory address: %p---value of i at the end of INCATCH_EXPANSION_KEY = %i\n", i, *i);
 	result[tmp] = '\0';
 	return (result);
 }
 
+//I had norminette issues so I had to cut the calculate_len_for_malloc function
 void	manage_dollar_variable(t_mini *mini, char *str, int *i, int *counter)
 {
 	char		*env_key;
@@ -108,20 +103,18 @@ void	manage_dollar_variable(t_mini *mini, char *str, int *i, int *counter)
 
 	if (variable_existence(mini, str, *i) == 1)
 	{
-//		printf("entered in if\n");
-		env_key = catch_expansion_key(mini, str, i); //malloc ⚠️  //should you protect it
+		env_key = catch_expansion_key(mini, str, i);
 		if (!env_key)
 			print_error(mini, 2);
 		env_value = search_and_replace_variable(mini->env, env_key);
 		(*counter) += ft_strlen(env_value);
-//		printf("i memory address: %p---value of i = %i\n", i, *i);
-//		printf("len of env_value = %i\n", (int)ft_strlen(env_value));
 		free(env_key);
 	}
 	else
 		forget_the_variable(str, i);
 }
 
+//92 in the ascii table <=> BACKSLASH
 //if we have the line to expand, this function returns the size that we will
 //need for the malloc
 int	calculate_len_for_malloc(t_mini *mini, char *str)
@@ -133,14 +126,11 @@ int	calculate_len_for_malloc(t_mini *mini, char *str)
 	i = 0;
 	counter = 0;
 	check = 0;
-	while (str[i] && i < (int)ft_strlen(str)) //ca c'est moche
+	while (str[i] && i < (int)ft_strlen(str))
 	{
-//		printf("i memory address: %p---value of i = %i\n", &i, i);
-//		printf("str[i] = %c\n", str[i]);
 		if (str[i] == BACKSLASH)
 			i++;
-		if ((i > 0 && str[i] == '$' && str[i - 1] == BACKSLASH)
-			|| (str[i] != '$')) //random characters
+		if ((i > 0 && str[i] == '$' && str[i - 1] == 92) || (str[i] != '$'))
 		{
 			counter++;
 			i++;
@@ -153,8 +143,5 @@ int	calculate_len_for_malloc(t_mini *mini, char *str)
 				counter++;
 		}
 	}
-	//printf("end of calculate_right_malloc_size function\n");
 	return (counter);
 }
-
-//tu peux faire une fonction qui check s'il faut faire une expansion ou non

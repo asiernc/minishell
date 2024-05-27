@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:23:35 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/26 20:07:44 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:42:32 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ char	*expand_the_line(t_mini *mini, char *str)//malloc ⚠️
 	int		i;
 	int		j;
 	char	*result;
-	
+
 	i = 0;
 	result = NULL;
-	j = calculate_right_malloc_size(mini, str);
+	j = calculate_len_for_malloc(mini, str);
 	result = malloc(sizeof(char) * j + 1);
 	if (!result)
 		print_error(mini, 2);
@@ -68,60 +68,10 @@ char	*expand_the_line(t_mini *mini, char *str)//malloc ⚠️
 		if (str[i] == BACKSLASH)
 			i++;
 		if ((i > 0 && str[i] == '$' && str[i - 1] == BACKSLASH) || (str[i] != '$')) //random characters*/
-			result[j] = str[i];
+			result[j++] = str[i++];
 		else
 			j += expand_dollar_variable(mini, str, &i, &result[j]);
-		i++;
-		j++;
 	}
 	result[j] = '\0';
 	return (result);
 }
-
-
-/*at the beginning
-//
-char	*expand_the_line(t_mini *mini, char *str)//malloc ⚠️
-{
-	int		i;
-	int		j;
-	int		k;
-	int		len_expansion;
-	char	*result;
-	char	*env_key;
-	char	*env_value;
-
-	i = 0;
-	j = 0;
-	result = NULL;
-	len_expansion = calculate_right_malloc_size(mini, str);
-	result = malloc(sizeof(char) * len_expansion + 1);
-	if (!result)
-		print_error(mini, 2);
-	while (str[i])
-	{
-		if (str[i] == BACKSLASH)
-			i++;
-		if ((i > 0 && str[i] == '$' && str[i - 1] == BACKSLASH) || (str[i] != '$'))//random characters
-			result[j] = str[i];
-		else
-		{
-			if (variable_existence(mini, str, i) == 1)
-			{
-				env_key = catch_expansion_key(mini, str, &i);//malloc ⚠️ //should you protect it ?
-				env_value = search_and_replace_variable(mini->env, env_key);
-				k = 0;
-				while (env_value[k])
-					result[j++] = env_value[k++];
-				free(env_key);
-			}
-			else
-				forget_the_variable(str, &i);
-			result[j] = str[i];
-		}
-		j++;
-		i++;
-	}
-	result[j] = '\0';
-	return (result);
-}*/
