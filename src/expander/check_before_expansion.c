@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/28 13:10:33 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:12:40 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@ int	check_before_expansion(t_mini *mini, char *str)
 //index are:             0              1
 //the result has to be: loginthis is a test
 //so we have to remove the doubles quotes
+//we suppose that the string received has been checked to have closed quotes
 int	return_position_next_quote(char c, char *str, int i)
 {
-	i++;//to forget the first quote
+//	i++;//to forget the first quote
 	while (str[i] && str[i] != c)
 		i++;
+	printf("i memory adress = %p\ni = %i\n", &i, i);
 	return (i);
 }
 
@@ -68,6 +70,7 @@ int	about_quotes(t_mini *mini, char *str)
 	char	*result;
 	char	*tmp;
 	char	*aux;
+	int		check;
 
 	i = 0;
 //	printf("1\n");
@@ -75,29 +78,35 @@ int	about_quotes(t_mini *mini, char *str)
 	if (!aux)
 		print_error(mini, 2);
 //	printf("1.1\n");
-	printf("aux memory adress = %p\naux = _%s_\n", &aux, aux);
-	printf("i memory adress = %p\ni = %i\n", &i, i);
-	printf("str[i] = %c\n", str[i]);
+//	printf("aux memory adress = %p\naux = _%s_\n", &aux, aux);
+//	printf("i memory adress = %p\ni = %i\n", &i, i);
+//	printf("str[i] = %c\n", str[i]);
+	check = 0;
 	while (str[i])
 	{
 //		printf("2\n");
 		if (str[i] == QUOTE && i + 1 < (int)ft_strlen(str))
 		{
 //			printf("3\n");
-			k = return_position_next_quote((char)39, str, i + 1); 	
-			printf("for simple quotes at index %i, k = %i\n", i, k);
+			k = return_position_next_quote(QUOTE, str, i + 1); 	
+//			printf("for simple quotes at index %i, k = %i\n", i, k);
 			tmp = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
+//			printf("tmp for substring result memory adress = %p\ntmp = _%s_\n", &aux, aux);
+			if (check == 1)
+				free(result);
 			result = ft_strjoin(aux, tmp);
+			check = 1;
 			free(aux);
 			free(tmp);
 			aux = ft_strdup(result);
+//			free(result);//⚠️  you have to free result once used
 		}
 		else if (str[i] == DQUOTE && i + 1 < (int)ft_strlen(str))
 		{
-			k = return_position_next_quote((char)34, str, i + 1); 	
+			k = return_position_next_quote(DQUOTE, str, i + 1); 	
 			printf("for double quotes at index %i, k = %i\n", i, k);
 			result = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
-			printf("result = %s\n", result);
+//			printf("result = %s\n", result);
 			free(result);
 		}
 		i++;
