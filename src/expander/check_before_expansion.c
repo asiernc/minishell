@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/28 14:12:40 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:55:04 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 //the expand_the_line function that should return: 'my name is $login'
 
 //this function checks if we have to expand the line or we just have to write it 
-int	check_before_expansion(t_mini *mini, char *str)
+int	is_expansion_required(t_mini *mini, char *str)
 {
 	int	i;
 
@@ -70,45 +70,62 @@ int	about_quotes(t_mini *mini, char *str)
 	char	*result;
 	char	*tmp;
 	char	*aux;
+	
 	int		check;
+	int		quote_counter;
+	int		dquote_counter;
 
 	i = 0;
-//	printf("1\n");
 	aux = ft_strdup("");//⚠️  malloc ⚠️ 
 	if (!aux)
 		print_error(mini, 2);
-//	printf("1.1\n");
-//	printf("aux memory adress = %p\naux = _%s_\n", &aux, aux);
-//	printf("i memory adress = %p\ni = %i\n", &i, i);
-//	printf("str[i] = %c\n", str[i]);
 	check = 0;
+	quote_counter = 0;
+	dquote_counter = 0;
 	while (str[i])
 	{
 //		printf("2\n");
 		if (str[i] == QUOTE && i + 1 < (int)ft_strlen(str))
 		{
-//			printf("3\n");
-			k = return_position_next_quote(QUOTE, str, i + 1); 	
-//			printf("for simple quotes at index %i, k = %i\n", i, k);
+//			if (quote_counter % 2 == 0)
+//			{
+				printf("we are in simple quotes\n");
+//				printf("3\n");
+				k =	return_position_next_quote(QUOTE, str, i + 1); 	
+//				printf("for simple quotes at index %i, k = %i\n", i, k);
+				tmp = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
+//				printf("tmp for substring result memory adress = %p\ntmp = _%s_\n", &aux, aux);
+				if (check == 1)
+					free(result);
+				printf("aux memory adress = %p\naux = _%s_\n", &aux, aux);
+				printf("tmp memory adress = %p\ntmp = _%s_\n", &tmp, tmp);
+				result = ft_strjoin(aux, tmp);
+				check = 1;
+				free(aux);
+				free(tmp);
+				aux = ft_strdup(result);
+//			}
+			quote_counter++;
+//			free(result);//⚠️  you have to free result once used
+		}
+/*		else if (str[i] == DQUOTE && i + 1 < (int)ft_strlen(str))
+		{
+			printf("we are in double quotes\n");
+			k = return_position_next_quote(DQUOTE, str, i + 1); 	
+			printf("for double quotes at index %i, k = %i\n", i, k);
 			tmp = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
-//			printf("tmp for substring result memory adress = %p\ntmp = _%s_\n", &aux, aux);
+//			printf("result = %s\n", result);
 			if (check == 1)
 				free(result);
+			printf("aux memory adress = %p\naux = _%s_\n", &aux, aux);
+			printf("tmp memory adress = %p\ntmp = _%s_\n", &tmp, tmp);
 			result = ft_strjoin(aux, tmp);
 			check = 1;
 			free(aux);
 			free(tmp);
+			dquote_counter++;
 			aux = ft_strdup(result);
-//			free(result);//⚠️  you have to free result once used
-		}
-		else if (str[i] == DQUOTE && i + 1 < (int)ft_strlen(str))
-		{
-			k = return_position_next_quote(DQUOTE, str, i + 1); 	
-			printf("for double quotes at index %i, k = %i\n", i, k);
-			result = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
-//			printf("result = %s\n", result);
-			free(result);
-		}
+		}*/
 		i++;
 	}
 	printf("result = %s\n", result);
@@ -116,7 +133,43 @@ int	about_quotes(t_mini *mini, char *str)
 }
 
 //we want a function that checks if we are in a simple quotes or not
-/*int	in_simple_quote(char *str)
+int	are_we_in_simple_quote(char *str)
 {
 	while (str[i]
-}*/
+}
+
+char	*quit_quotes(t_mini *mini, char *str)
+{
+	int		i;
+	int		k;
+	char	*result;
+	char	*tmp;
+	char	*aux;
+	
+	int		check;
+	i = 0;
+	aux = ft_strdup("");//⚠️  malloc ⚠️ 
+	if (!aux)
+		print_error(mini, 2);
+	check = 0;
+	while (str[i])
+	{
+		if (str[i] == QUOTE && i + 1 < (int)ft_strlen(str))
+		{
+			k =	return_position_next_quote(QUOTE, str, i + 1); 	
+			tmp = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
+			if (check == 1)
+				free(result);
+			result = ft_strjoin(aux, tmp);
+			check = 1;
+			free(aux);
+			free(tmp);
+			aux = ft_strdup(result);
+			quote_counter++;
+//			free(result);//⚠️  you have to free result once used
+		}
+		i++;
+	}
+//	printf("result = %s\n", result);
+	return (free(aux), result);
+}
