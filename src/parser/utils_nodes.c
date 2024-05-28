@@ -96,29 +96,3 @@ void	del_first_cmd(t_cmd **lst)
 	*lst = tmp->next;
 	clear_one_cmd(&tmp);
 }
-
-void	lst_clear_cmds(t_cmd **cmd)
-{
-	t_cmd	*tmp_cmd;
-	t_lexer	*tmp_redirects;
-
-    if (!*cmd)
-        return;
-    tmp_cmd = *cmd;
-    while (tmp_cmd && tmp_cmd->previous)
-        tmp_cmd = tmp_cmd->previous;
-	*cmd = tmp_cmd;
-	while (*cmd)
-	{
-		tmp_cmd = (*cmd)->next;
-		tmp_redirects = (*cmd)->redirections;
-		lexer_clear(&tmp_redirects);
-		if ((*cmd)->hdoc_filename)
-			free((*cmd)->hdoc_filename);
-		if ((*cmd)->str)
-			free_cmd_line((*cmd)->str);
-		free(*cmd);
-		*cmd = tmp_cmd;
-	}
-	*cmd = NULL;
-}

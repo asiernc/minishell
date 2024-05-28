@@ -37,7 +37,6 @@ void	clear_line(t_mini *mini)
 	tmp = ft_strtrim(mini->line, " ");
 	free(mini->line);
 	mini->line = tmp;
-	//free(tmp); // esto soluciona los leaks que hay del trim
 }
 
 // Traverse the string from that quote until the next character that

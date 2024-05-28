@@ -15,7 +15,7 @@ void	print_error(t_mini *mini, int keycode)
 {
 	ft_putstr_fd("minihell: ", STDERR_FILENO);
 	if (keycode == SINTAX_ERROR)
-		ft_putstr_fd("syntax error near unexpected token\n", 258);
+		ft_putstr_fd("syntax error near unexpected token\n", 1);
 	else if (keycode == MALLOC_ERROR)
 		ft_putstr_fd("malloc: cannot allocate memory\n", STDERR_FILENO);
 	else if (keycode == IN_ERROR)
@@ -34,11 +34,11 @@ void	print_error(t_mini *mini, int keycode)
 		ft_putstr_fd("execve error\n", STDERR_FILENO);
 	else if (keycode == EXIT_ERROR)
 	{
-		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);//necesitas escribir tb la string
+		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 		exit(255);
 	}
-	else if (keycode == CD_ERROR)
-		ft_putstr_fd("cd: No such file or directory\n", STDERR_FILENO);//necesitas escribir tb la string
+	else if (keycode == UNLINK_ERROR)
+		ft_putstr_fd("unlink: No such file or directory\n", STDERR_FILENO);
 	mini_reset(mini);
 }
 

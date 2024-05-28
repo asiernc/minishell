@@ -117,7 +117,7 @@ static void	check_key_already_exists(t_mini *mini, t_builtin *lst_export, char *
 
 int	builtin_export(t_mini *mini, t_cmd *cmd)
 {
-	t_builtin	*lst_export;
+	//t_builtin	*lst_export;
 	char		**line;
 	//char		*value_trimmed;
 	int			i;
@@ -132,12 +132,13 @@ int	builtin_export(t_mini *mini, t_cmd *cmd)
 		{
 			check_key_already_exists(mini, mini->env, line[i]);
 			//value_trimmed = clean_value(line[i]);
-			lst_export = add_export_variable(mini, mini->env, line[i], clean_value(line[i]));
+			mini->env = add_export_variable(mini, mini->env, line[i], clean_value(line[i]));
 		}
 		else if (check_variable(line[i]) == 2)
 			join_values(mini, &mini->env, cmd->str[i]);
 		i++;
 	}
+	ft_free_double_array(mini->env_cpy);
 	concat_lst_env(mini);
 	return (EXIT_SUCCESS);
 }

@@ -16,10 +16,8 @@ void    ft_free_double_array(char **str)
 {
     int i;
 
-    while (str[i])
-    {
+    i = -1;
+    while (str[++i])
         free(str[i]);
-        i++;
-    }
     free(str);
 }

@@ -70,6 +70,7 @@ char	*get_value_from_env(t_mini *mini, char *str)//to free once used
 	while (j < (int)ft_strlen(str))
 		result[i++] = str[j++];
 	result[j] = '\0';
+
 	return (result);
 }
 
@@ -86,12 +87,48 @@ t_builtin	*ft_lstnew_builtin(t_mini *mini, char *str)
 	if (!node->key)
 		print_error(mini, 2);;
 	node->value = get_value_from_env(mini, str);
+	/*if (!node->value) {
+        free(node->key);  // Libera key en caso de error
+        free(node);  // Libera node en caso de error
+        return NULL;
+    }*/
 	if (!node->value)
 		print_error(mini, 2);
 	node->index = ++index;
 	node->next = NULL;
 	return (node);
 }
+
+/*t_builtin 	*create_builtin_lst(t_mini *mini, char **env)//to free once used
+{
+	t_builtin	*new_node;
+	t_builtin	*lst_env;
+	int			i;
+
+	i = 0;
+	lst_env = NULL;
+	while (env[i])
+	{
+		new_node = ft_lstnew_builtin(mini, env[i]);
+		if (!new_node)
+			print_error(mini, 2);
+		ft_lstadd_back_builtin(&lst_env, new_node);
+		i++;
+	}
+	return (lst_env);
+}
+
+void 	create_env(t_mini *mini)
+{
+	//t_builtin	*lst_env;
+
+	//lst_env = NULL;
+	mini->env = create_builtin_lst(mini, mini->original_env);
+	if (!mini->env)
+		print_error(mini, 2);
+	//concat_lst_env(mini);
+	//return (lst_env);
+}*/
 
 t_builtin	*create_builtin_lst(t_mini *mini, char **env)//to free once used
 {

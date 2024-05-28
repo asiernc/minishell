@@ -25,6 +25,7 @@ UTILSDIR	=	src/utils/
 OBJDIR		=	build/obj/
 
 SRC			=	src/main.c 							\
+				src/verify_quotes.c 				\
 				src/lexer/tokenizer.c				\
 				src/lexer/utils_lexer.c				\
 				src/lexer/utils_nodes.c				\
@@ -50,8 +51,8 @@ SRC			=	src/main.c 							\
 				src/builtins/builtin_export_helper.c\
 				src/builtins/builtin_unset.c		\
 				src/expander/utils_expander.c		\
-				#src/builtins/builtin_utils_nodes.c	\
 				src/builtins/builtin_cd.c			\
+				src/utils/signals.c 				\
 
 
 #OBJS		=	$(addprefix $(OBJDIR), $(notdir $(patsubst %.c, %.o, $(src))))

@@ -64,15 +64,12 @@ void	ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in)
 	{
 		if (dup2(fd_in, STDIN_FILENO) == -1)
 			print_error(mini, DUP2_ERROR);
-		//close(fds[0]);
-		//close(fd_in);
 	}
 	close(fds[0]);
 	if (cmd->next)
 	{
 		if (dup2(fds[1], STDOUT_FILENO) == -1)
 			print_error(mini, DUP2_ERROR);
-		//close(fds[1]);
 	}
 	close(fds[1]);
 	if (cmd->previous)

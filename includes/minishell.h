@@ -45,6 +45,18 @@ typedef struct	s_builtin
 	struct s_builtin	*next;
 }				t_builtin;
 
+// signals global variable
+
+typedef struct	s_global_var
+{
+	int		inside_cmd;
+	int		inside_hdoc;
+	int		outside_hdoc; //stop
+	int		error_code;
+}				t_global_var;
+
+t_global_var		g_global_var;
+
 // 		Main struct
 
 typedef struct s_mini
@@ -96,6 +108,7 @@ enum	e_error_codes
 	EXECVE_ERROR,
 	EXIT_ERROR,
 	CD_ERROR,
+	UNLINK_ERROR,
 };
 //		Enum for operators
 
@@ -157,7 +170,7 @@ void			init_mini(t_mini *mini);
 int				mini_reset(t_mini *mini);
 
 // Init main struct
-t_builtin		*create_env(t_mini *mini, t_builtin *lst_env);
+//t_builtin		*create_env(t_mini *mini, t_builtin *lst_env);
 void			concat_lst_env(t_mini *mini);
 
 // Lexer
@@ -200,14 +213,16 @@ int				builtin_exit(t_mini *mini, t_cmd *cmd);
 int				builtin_env(t_mini *mini);
 int				builtin_export(t_mini *mini, t_cmd *cmd);
 int				builtin_unset(t_mini *mini, t_builtin **head, t_cmd *cmd);
-//int				builtin_unset(t_mini *mini, t_cmd *cmd);
-int				builtin_echo(t_mini *mini, t_cmd *command);
+int				builtin_echo(t_mini *mini, t_cmd *cmd);
+int				builtin_cd(t_mini *mini, t_cmd *cmd);
 // cd
 
 // Utils builtins
 
 int				get_pwd(t_mini *mini);
-t_builtin		*create_builtin_lst(t_mini *mini, char **env);
+t_builtin		*create_env(t_mini *mini, t_builtin *lst_env);
+t_builtin	*create_builtin_lst(t_mini *mini, char **env);
+//t_builtin		*create_builtin_lst(t_mini *mini, char **env);
 t_builtin		*ft_lstnew_builtin(t_mini *mini, char *str);
 void			ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new);
 void			ft_lstclear_builtin(t_builtin **lst);
@@ -288,9 +303,20 @@ void			delone_node(int num_del, t_lexer **lst);
 int				lst_size_lexer(t_mini *mini);
 void			lst_clear_lexer(t_lexer **lst);
 void			lexer_clear(t_lexer **list);
+
+// Signals
+
+void    init_signals(void);
+void    sigquit_handler(int signal);
+void    sigint_handler(int signal);
+
+
+
 // Random utils
 
-void			check_quotes(char *line);
+//void			check_quotes(char *line);
+int				 check_quotes_is_married(char *line);
+
 
 // Errors
 

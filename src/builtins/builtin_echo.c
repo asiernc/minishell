@@ -23,7 +23,7 @@ int	lines_counter(char **array)
 	return (i);
 }
 
-//we have to check if the flag of the echo command is written in that way :
+//we have to check if the flag of the echo cmd is written in that way :
 //-nnnnnnnnnnnnn -> that is also considered as correct
 static int	check_flag(char *flag)
 {
@@ -48,49 +48,49 @@ static int	check_flag(char *flag)
 	return (0);
 }
 
-static int	builtin_echo_flag_n(t_mini *mini, t_cmd *command, int i, int wc)
+static int	builtin_echo_flag_n(t_mini *mini, t_cmd *cmd, int i, int wc)
 {
-	while (command->str[i])
+	while (cmd->str[i])
 	{
-		while (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
-				|| check_flag(command->str[i]) == 1))
+		while (cmd->str[i] && (ft_strcmp_simple(cmd->str[i], "-n") == 0
+				|| check_flag(cmd->str[i]) == 1))
 			i++;
-		if (write(1, command->str[i], ft_strlen(command->str[i])) == -1)
-			return (print_error(mini, 0), 0);//keycode = write has failed
+		if (write(1, cmd->str[i], ft_strlen(cmd->str[i])) == -1)
+			print_error(mini, 0);//keycode = write has failed
 		if (i < wc - 1)
 			if (write(1, " ", 1) == -1)
-				return (print_error(mini, 0), 0);//keycode = write has failed
+				print_error(mini, 0);//keycode = write has failed
 		i++;
 	}
 	return (1);
 }
 
-int	builtin_echo(t_mini *mini, t_cmd *command)
+int	builtin_echo(t_mini *mini, t_cmd *cmd)
 {
 	int	wordcount;
 	int	i;
 
-	wordcount = lines_counter(command->str);
+	wordcount = lines_counter(cmd->str);
 	i = 1;
-	if (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
-			|| check_flag(command->str[i]) == 1))
-		return (builtin_echo_flag_n(mini, command, 2, wordcount));
+	if (cmd->str[i] && (ft_strcmp_simple(cmd->str[i], "-n") == 0
+			|| check_flag(cmd->str[i]) == 1))
+		return (builtin_echo_flag_n(mini, cmd, 2, wordcount));
 	//you have to check if the first letter of the flag is a $ => $expander && $?
-	//else if (command->str[i] && (ft_strcmp(command->str[i], "$?") == 0))
+	//else if (cmd->str[i] && (ft_strcmp(cmd->str[i], "$?") == 0))
 		//printf("%i\n", mini->exit_code);
 	else
 	{
-		while (command->str[i])
+		while (cmd->str[i])
 		{
-			if (write(1, command->str[i], ft_strlen(command->str[i])) == -1)
+			if (write(1, cmd->str[i], ft_strlen(cmd->str[i])) == -1)
 				print_error(mini, 0);//keycode = write has failed
 			if (i < wordcount - 1)
 				if (write(1, " ", 1) == -1)
-					return (print_error(mini, 0), 0);//keycode = write has failed
+					print_error(mini, 0);//keycode = write has failed
 			i++;
 		}
 		if (write(1, "\n", 1) == -1)
-			return (print_error(mini, 0), 0);//keycode = write has failed
+			print_error(mini, 0);//keycode = write has failed
 	}
 	return (1);
 }

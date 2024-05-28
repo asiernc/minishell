@@ -61,7 +61,10 @@ int	check_eof(t_lexer *redir, char *hdoc_filename)
 	}
 	else
 		quotes = false;
+	g_global_var.outside_hdoc = 0;
+	g_global_var.inside_hdoc = 1;
 	error = open_save_hdoc(redir, hdoc_filename, quotes);
+	g_global_var.inside_hdoc = 0;
 	return (error);
 }
 
@@ -70,20 +73,20 @@ int	open_save_hdoc(t_lexer *redir, char *hdoc_filename, bool quotes)
 	char	*line;
 	int		fd;
 
-	fprintf(stderr, "inside good\n");
 	fd = open(hdoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	line = readline(">");
-	while (line && ft_strcmp(redir->str, line) != 0)
+	while (line != NULL && ft_strcmp_simple(redir->str, line) != 0 && g_global_var.outside_hdoc == 0)
 	{
 		if (quotes == false)
-			write(1, "", 1);
+			ft_putendl_fd(line, fd);
 		//	line = expand_line(mini, line);
-		ft_putendl_fd(line, fd);
+		else
+			ft_putendl_fd(line, fd);
 		free(line);
 		line = readline(">");
 	}
 	free(line);
-	if (!line)
+	if (g_global_var.outside_hdoc == 1)
 		return (EXIT_FAILURE);
 	close(fd);
 	return (EXIT_SUCCESS);

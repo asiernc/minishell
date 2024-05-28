@@ -42,9 +42,9 @@
 
 int	prepare_builtin(char *str)
 {
-	if (ft_strcmp(str, "echo") == 0)
+	/*f (ft_strcmp(str, "echo") == 0)
 		return (ECHO);
-	else if (ft_strcmp(str, "cd") == 0)
+	else */if (ft_strcmp(str, "cd") == 0)
 		return (CD);
 	else if (ft_strcmp(str, "pwd") == 0)
 		return (PWD);
@@ -120,7 +120,7 @@ void	free_cmd_line(char **str)
 	i = 0;
 	while (str[i] != NULL)
 		i++;
-	while (i > 0)
+	while (i >= 0)
 	{
 		free(str[i]);
 		i--;

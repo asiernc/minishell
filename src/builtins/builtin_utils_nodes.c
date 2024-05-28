@@ -61,7 +61,7 @@ int	ft_lstsize_builtin(t_builtin *lst)
 	return (i);
 }
 
-void	ft_lstclear_builtin(t_builtin **lst)
+/*void	ft_lstclear_builtin(t_builtin **lst)
 {
 	t_builtin	*tmp;
 
@@ -77,6 +77,26 @@ void	ft_lstclear_builtin(t_builtin **lst)
 		tmp = NULL;
 	}
 	lst = NULL;
+}*/
+
+void	ft_lstclear_builtin(t_builtin **lst)
+{
+	t_builtin	*tmp;
+	t_builtin	*current;
+
+	//tmp = lst;
+	if (!lst | !*lst)
+		return ;
+	tmp = *lst;
+	while (tmp)
+	{
+		current = tmp->next;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
+		tmp = current;
+	}
+	*lst = NULL;
 }
 
 t_builtin	*clear_one_node_env(t_builtin **lst)

@@ -29,22 +29,37 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	exit(exit_code);
 }
 
-/*int	do_cmd(t_mini *mini, t_cmd *cmd)
+int	do_builtin(t_mini *mini, t_cmd *cmd)
 {
-	char	*cmd_head;
-	char	*path;
+	int	exit_code;
 
-	cmd_head = cmd->str[0];
-	path = find_check_path(mini, cmd_head, mini->env_cpy); // mandar 127 si no lo encuentra
-	if (!path)
-		print_error(mini, CMD_NOT_FOUND_ERROR);
-	execve(path, cmd->str, mini->env_cpy);
-	exit(1);
-	//exit(127);
-}*/
+	exit_code = 0;
+	if (cmd->builtin == ECHO)
+		exit_code = builtin_echo(mini, cmd);
+	else if (cmd->builtin == CD)
+		exit_code = builtin_cd(mini, cmd);
+	else if (cmd->builtin == PWD)
+		exit_code = builtin_pwd(mini);
+	else if (cmd->builtin == EXPORT)
+		exit_code = builtin_export(mini, cmd);
+	else if (cmd->builtin == UNSET)
+		exit_code = builtin_unset(mini, &mini->env, cmd);
+	else if (cmd->builtin == ENV)
+		exit_code = builtin_env(mini);
+	else if (cmd->builtin == EXIT)
+		exit_code = builtin_exit(mini, cmd);
+	return (exit_code);
+}
 
-// mandar 127 is command not found
-int	do_cmd(t_mini *mini, t_cmd *cmd_lst)
+static int	not_found(char *str)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	return (127);
+}
+
+int	do_cmd(t_mini *mini, t_cmd *cmd)
 {
 	char	**env;
 	char	**paths;
@@ -52,52 +67,26 @@ int	do_cmd(t_mini *mini, t_cmd *cmd_lst)
 	char	*tmp;
 
 	env = mini->env_cpy;
-	//valorar hacer access por el caso que nos den la ruta absoluta example ./bin/var/cat
-	if (!access(mini->cmd->str[0], F_OK | X_OK))
-		execve(mini->cmd->str[0], mini->cmd->str, mini->env_cpy);
+	if (!access(cmd->str[0], F_OK | X_OK))
+		execve(cmd->str[0], cmd->str, mini->env_cpy);
 	while (*env && !ft_strnstr(*env, "PATH", 5))
 		env++;
 	tmp = ft_substr(*env, 5, ft_strlen(*env) - 5);
 	paths = ft_split(tmp, ':');
 	free(tmp);
-	tmp = ft_strjoin("/", cmd_lst->str[0]);
+	tmp = ft_strjoin("/", cmd->str[0]);
 	while (*paths)
 	{
 		cmd_path = ft_strjoin(*paths, tmp);
 		if (!cmd_path)
 			print_error(mini, 2);
 		if (access(cmd_path, F_OK | X_OK) == 0)
-			execve(cmd_path, mini->cmd->str, mini->env_cpy);
+			execve(cmd_path, cmd->str, mini->env_cpy);
 		free(cmd_path);
 		paths++;
 	}
 	free(tmp);
-	return (127);
-}
-
-int	do_builtin(t_mini *mini, t_cmd *cmd)
-{
-	int	exit;
-
-	exit = 0;
-//	if (mini && cmd)
-//		fprintf(stderr, "");
-	//if (cmd->builtin == ECHO)
-	//	exit = builtin_echo(mini, cmd);
-/*	else if (cmd->builtin == CD)
-		exit = builtin_cd(mini, cmd);*/
-	if (cmd->builtin == PWD)
-		exit = builtin_pwd(mini);
-	else if (cmd->builtin == EXPORT)
-		exit = builtin_export(mini, cmd);
-	else if (cmd->builtin == UNSET)
-		//exit = builtin_export(mini, cmd->str);//check yourunset
-		exit = builtin_unset(mini, &mini->env, cmd);
-	else if (cmd->builtin == ENV)
-		exit = builtin_env(mini);
-	else if (cmd->builtin == EXIT)
-		exit = builtin_exit(mini, cmd);
-	return (exit);
+	return (not_found(cmd->str[0]));
 }
 
 void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
@@ -106,7 +95,6 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	int	status;
 
 	// expander
-	// comentado para test abajo!
 	if (cmd->builtin != NOT_HAVE)
 	{
 		do_builtin(mini, cmd);

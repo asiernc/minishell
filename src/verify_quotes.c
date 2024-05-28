@@ -15,7 +15,7 @@
 
 // NEW NEW NEW NEW
 
-void	print_error(char *str)
+/*void	print_error(char *str)
 {
 	perror(str);
 //	exit(1);//you don't have to exit => tu have to display a newline
@@ -55,63 +55,47 @@ void	check_quotes(char *line)
 		}
 		i++;
 	}
-}
-
-
-//you have to check that in the line read, all the quotes are closed
-//and the end of the line is not a PIPE
-//=>Otherwise we gave error
-
-/*int	print_error(char *str)
-{
-	perror(str);
-	exit(1);
 }*/
 
-// PREVIOUS PREVIOUS PREVIOUS
-
-/*int	find_next_quote(char *line, int *counter, int i, int ch)
+static int find_married_quote(char *line, int start_index, int *num_quotes, int delimiter)
 {
-	int	index;
+    int index;
 
-	index = 0;
-	*counter += 1;
-	if (line[i] == ch)
-	{
-		index++;
-		while (line[index] && line[index] != ch)
-			index++;
-	}
-	//index++;
-	if (line[index] == ch)
-		*counter += 1;
-	return (index);
+    index = start_index + 1;
+    *num_quotes += 1; // Incrementa el contador de quotes
+    while (line[index] && line[index] != delimiter)
+        index++;
+    if (line[index] == delimiter)
+        *num_quotes += 1; // Incrementa el contador de delimitadores si se encuentra una coincidencia
+    return (index - start_index); // Devuelve la longitud hasta el delimitador coincidente
 }
 
-int	check_quotes(char *line)
+int check_quotes_is_married(char *line)
 {
-	int	simple_quotes;
-	int	double_quotes;
-	int	i;
+    int i;
+	int	offset;
+    int single_quote_count = 0;
+    int double_quote_count = 0;
 
 	i = 0;
-	simple_quotes= 0;
-	double_quotes= 0;
-	while (line[i])
+    single_quote_count = 0;
+    double_quote_count = 0;
+    while (line[i])
 	{
-		if (line[i] == 39)//39 refers to ' in the ascii table
-			i += find_next_quote(line, &simple_quotes, i, 39);	
-		if (line[i] == 34)//34 refers to " in the ascii table
-			i += find_next_quote(line, &double_quotes, i, 34);
-		i++;
-	}
-	if (simple_quotes % 2 == 0 || double_quotes % 2 == 0)// ||
-	//	line[i] == '|' || line[i] == '>' || line[i] == '<')
-	{
-		printf("The line was not well written. Please try again.");
-		return (1);
-	}
-	printf("everything's good");
-	return (0);
-	// Here's a function that looks for a pipe character and then continues searching to find any letter character
-}*/
+        if (line[i] == '"') 
+		{
+            offset = find_married_quote(line, i, &double_quote_count, '"');
+            i += offset;
+        }
+		else if (line[i] == '\'')
+		{
+            offset = find_married_quote(line, i, &single_quote_count, '\'');
+            i += offset;
+        }
+        i++;
+    }
+    // Verifica si hay un número impar de comillas
+    if ((double_quote_count % 2 != 0) || (single_quote_count % 2 != 0))
+        return 0;
+    return 1;
+}

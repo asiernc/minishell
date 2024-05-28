@@ -14,21 +14,35 @@
 
 int		pre_executor(t_mini *mini)
 {
+	g_global_var.inside_cmd = 1;
 	if (mini->pipes == 0)
 		handle_single_cmd(mini, mini->cmd);
 	else
 		executor(mini);
+	g_global_var.inside_cmd = 0;
 	return (0);
+}
+
+static int generate_random_number(void)
+{
+    static unsigned int seed = 12345;
+
+    // Generador de números pseudoaleatorios lineal congruencial (LCG)
+    seed = (seed * 1103515245 + 12345) & 0x7fffffff; // LCG: valores típicos para un generador simple
+    return (seed % 10000);
 }
 
 char	*generate_filename(void)
 {
-	static int	i = 1;
+	//static int	i = 1;
 	char		*str;
+	char		*num;
 
-	str = ft_strjoin("hdoc_tmp_file", ft_itoa(i));
-	str = ft_strjoin(str, ".c");
-	i++;
+	num = ft_itoa(generate_random_number());
+	str = ft_strjoin("hdoc_tmp_file", num);
+	//str = ft_strjoin(str, ".hdoc");
+	free(num);
+	//i++;
 	return (str);
 }
 
@@ -41,42 +55,6 @@ void	remove_eof_quotes(t_lexer *node)
 	if (str[0] == '\"' || str[0] == '\'')
 		node->str = ft_substr(str, 1, ft_strlen(str) -1);
 }
-
-
-// mandar 127 is command not found
-/*char	*find_check_path(t_mini *mini, char *cmd, char **env)
-{
-	int		flag;
-	char	**paths;
-	char	*cmd_path;
-	char	*tmp;
-
-	flag = 0;
-	//valorar hacer access por el caso que nos den la ruta absoluta example ./bin/var/cat
-	if (!access(mini->cmd->str[0], F_OK | X_OK))
-		execve(mini->cmd->str[0], mini->cmd->str, mini->env_cpy);
-	while (*env && !ft_strnstr(*env, "PATH", 5))
-		env++;
-	tmp = ft_substr(*env, 5, ft_strlen(*env) - 5);
-	paths = ft_split(tmp, ':');
-	free(tmp);
-	tmp = ft_strjoin("/", cmd);
-	while (*paths)
-	{
-		cmd_path = ft_strjoin(*paths, tmp);
-		if (!cmd_path)
-			return (NULL);
-		if (access(cmd_path, F_OK | X_OK) == 0)
-		{
-			flag = 1;
-			break ;
-		}
-		free(cmd_path);
-		paths++;
-	}
-	free(tmp);
-	return (cmd_path);
-}*/
 
 t_builtin	*find_node_path(t_builtin *lst_env)
 {
@@ -92,7 +70,7 @@ t_builtin	*find_node_path(t_builtin *lst_env)
 	return (NULL);
 }
 
-void	concat_lst_env(t_mini *mini)
+/*void	concat_lst_env(t_mini *mini)
 {
 	t_builtin	*tmp;
 	int		len;
@@ -120,29 +98,51 @@ void	concat_lst_env(t_mini *mini)
 		i++;
 	}
 	mini->env_cpy[len] = NULL;
-}
-
-/*char	*check_path(char *cmd, t_builtin *lst_env)
-{
-	char	**paths;
-	char	*cmd_path;
-	char	*tmp;
-	t_builtin	*node_path;
-
-	//valorar hacer access por el caso que nos den la ruta absoluta example ./bin/var/cat
-	node_path = find_path(lst_env);
-	paths = ft_split(node_path->value, ':');
-	tmp = ft_strjoin("/", cmd);
-	while (*paths)
-	{
-		cmd_path = ft_strjoin(*paths, tmp);
-		if (!cmd_path)
-			return (NULL);
-		if (access(cmd_path, F_OK | X_OK) == 0)
-			break ;
-		free(cmd_path);
-		paths++;
-	}
-	free(tmp);
-	return (cmd_path);
 }*/
+
+void concat_lst_env(t_mini *mini)
+{
+	t_builtin	*tmp;
+	int			i;
+	char		*joined_value;
+	char 		*temp;
+
+	tmp = mini->env;
+	mini->env_cpy = (char **)malloc((ft_lstsize_builtin(tmp) + 1) * sizeof(char *));
+	if (!mini->env_cpy)
+		print_error(mini, 2);
+	i = 0;
+	while (tmp)
+	{
+		joined_value = NULL;
+		if (tmp->value != NULL)
+		{
+			temp = ft_strjoin("=", tmp->value);
+			if (!temp)
+			{
+				ft_free_double_array(mini->env_cpy);
+				print_error(mini, 2);
+			}
+			joined_value = ft_strjoin(tmp->key, temp);
+			free(temp);
+			if (!joined_value)
+			{
+				ft_free_double_array(mini->env_cpy);
+				print_error(mini, 2);
+			}
+		}
+		else
+		{
+			joined_value = ft_strdup(tmp->key);
+			if (!joined_value)
+			{
+				ft_free_double_array(mini->env_cpy);
+				print_error(mini, 2);
+			}
+		}
+		mini->env_cpy[i] = joined_value;
+		tmp = tmp->next;
+		i++;
+	} 
+	mini->env_cpy[i] = NULL;
+}

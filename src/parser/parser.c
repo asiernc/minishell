@@ -66,7 +66,7 @@ t_cmd	*create_cmd(t_parser *parser)
 	num_args = count_args(parser->lexer);
 	str = ft_calloc((num_args + 1), sizeof(char *));
 	if (!str)
-		print_error(parser->mini, 1);
+		print_error(parser->mini, 2);
 	i = 0;
 	tmp = parser->lexer;
 	while (i < num_args)
@@ -74,7 +74,6 @@ t_cmd	*create_cmd(t_parser *parser)
 		if (tmp->str)
 		{
 			str[i] = ft_strdup(tmp->str);
-			//printf("NEW CMD: %s\n", str[i]);
 			delone_node(tmp->num_node, &parser->lexer);
 			//del_first_node(&parser->lexer);
 			tmp = parser->lexer;
@@ -104,7 +103,6 @@ int	parser(t_mini *mini)
 		ft_node_add_back_parser(&mini->cmd, new);
 		mini->lexer = parser.lexer;
 	}
-//	printf("node 1 ls == %s\nnode 2 wc == %s\n", mini->cmd->str[0], mini->cmd->next->str[0]);
 	// !! siguientes dos lineas son para mac m2 !!!
 	/*if (flag == 0)
 	{
