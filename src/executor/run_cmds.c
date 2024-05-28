@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/28 13:06:58 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:14:44 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 		printf("simon business\n");
 		printf("mini->line = %s\n", mini->line);
 
-		about_quotes(mini, mini->line);
+//		about_quotes(mini, mini->line);
+//		quit_single_quotes(mini, mini->line);
+		
+		char	*final_line;
+		final_line = final_expansion(mini, mini->line);
+		printf("final_line---%p\nfinal_line= _%s_\n", &final_line, final_line);
 
 /*		char	*final_line;
 		final_line = expand_the_line(mini, mini->line);
