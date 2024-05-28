@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/28 11:56:30 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:10:33 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,37 +61,49 @@ int	return_position_next_quote(char c, char *str, int i)
 //if we are in double quotes => we have to know where are the other double 
 //quotes that closes the current quotes.
 //we supposed that the quotes are closed => if we found one, there will be another one
-int	about_quotes(char *str)
+int	about_quotes(t_mini *mini, char *str)
 {
 	int		i;
 	int		k;
 	char	*result;
-//	char	*subline;
+	char	*tmp;
+	char	*aux;
 
 	i = 0;
+//	printf("1\n");
+	aux = ft_strdup("");//⚠️  malloc ⚠️ 
+	if (!aux)
+		print_error(mini, 2);
+//	printf("1.1\n");
+	printf("aux memory adress = %p\naux = _%s_\n", &aux, aux);
+	printf("i memory adress = %p\ni = %i\n", &i, i);
+	printf("str[i] = %c\n", str[i]);
 	while (str[i])
 	{
+//		printf("2\n");
 		if (str[i] == QUOTE && i + 1 < (int)ft_strlen(str))
 		{
+//			printf("3\n");
 			k = return_position_next_quote((char)39, str, i + 1); 	
 			printf("for simple quotes at index %i, k = %i\n", i, k);
-			result = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
-			printf("result = %s\n", result);
-			free(result);
+			tmp = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
+			result = ft_strjoin(aux, tmp);
+			free(aux);
+			free(tmp);
+			aux = ft_strdup(result);
 		}
-		if (str[i] == DQUOTE && i + 1 < (int)ft_strlen(str))
+		else if (str[i] == DQUOTE && i + 1 < (int)ft_strlen(str))
 		{
 			k = return_position_next_quote((char)34, str, i + 1); 	
-//			subline
 			printf("for double quotes at index %i, k = %i\n", i, k);
 			result = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
 			printf("result = %s\n", result);
 			free(result);
 		}
-		else
 		i++;
 	}
-	return (0);
+	printf("result = %s\n", result);
+	return (free(aux), 0);
 }
 
 //we want a function that checks if we are in a simple quotes or not
