@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/27 18:37:34 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:56:30 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,12 @@ int	check_before_expansion(t_mini *mini, char *str)
 //index are:             0              1
 //the result has to be: loginthis is a test
 //so we have to remove the doubles quotes
-
-int	return_index_for_next_quote(char c, char *str, int i)
+int	return_position_next_quote(char c, char *str, int i)
 {
-	int	j;
-
-	j = 1;
-	while (str[i + j] && str[i + j] != c)
+	i++;//to forget the first quote
+	while (str[i] && str[i] != c)
 		i++;
-	j++;
-//	if (j != (int)ft_strlen(str) - 1)
-//		return (j);
-	return (j);
+	return (i);
 }
 
 //34 in the ascii table <=> " 
@@ -69,22 +63,32 @@ int	return_index_for_next_quote(char c, char *str, int i)
 //we supposed that the quotes are closed => if we found one, there will be another one
 int	about_quotes(char *str)
 {
-	int	i;
-	int	k;
+	int		i;
+	int		k;
+	char	*result;
+//	char	*subline;
 
 	i = 0;
 	while (str[i])
 	{
+		if (str[i] == QUOTE && i + 1 < (int)ft_strlen(str))
+		{
+			k = return_position_next_quote((char)39, str, i + 1); 	
+			printf("for simple quotes at index %i, k = %i\n", i, k);
+			result = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
+			printf("result = %s\n", result);
+			free(result);
+		}
 		if (str[i] == DQUOTE && i + 1 < (int)ft_strlen(str))
 		{
-			k = return_index_for_next_quote((char)34, str, i + 1); 	
-			printf("for double quotes k = %i\n", k);
+			k = return_position_next_quote((char)34, str, i + 1); 	
+//			subline
+			printf("for double quotes at index %i, k = %i\n", i, k);
+			result = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
+			printf("result = %s\n", result);
+			free(result);
 		}
-		else if (str[i] == QUOTE && i + 1 < (int)ft_strlen(str))
-		{
-			k = return_index_for_next_quote((char)39, str, i + 1); 	
-			printf("k = %i\n", k);
-		}
+		else
 		i++;
 	}
 	return (0);
