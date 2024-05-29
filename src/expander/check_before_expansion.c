@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/29 18:05:28 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:32:52 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,55 +188,6 @@ char	*quit_single_quotes(t_mini *mini, char *str)
 
 
 
-/*char	*final_expansion(t_mini *mini, char *str)
-{
-	int		i;
-	int		lead;
-	int		start;
-	char	*string;
-	char	*result;
-
-	i = 0;
-	lead = 0;
-	printf("str[i] = %c\n", str[i]);
-//	printf("lead = %i\n"
-	printf("lead memory adress = %p\nlead = %i\n", &lead, lead);
-	while (str[i])
-	{
-		printf("1\n");
-		if (update_the_situation(str[i], &lead) == 1)//currently in simple quotes
-		{
-			printf("1.1\n");
-			start = i;
-			while (str[i] && update_the_situation(str[i], &lead) == 1)
-				i++;
-			string = ft_substr(str, start + 1, i - (start + 1 + 1));//⚠️  malloc ⚠️  to protect && to free
-			if (!string)
-				print_error(mini, 2);
-			//appelle une fonction qui quittes les singles quotes
-		}
-		else
-		{
-			printf("3\n");
-			start = i;
-			while (str[i] && update_the_situation(str[i], &lead) != 1)
-				i++;
-			string = ft_substr(str, start + 1, i - (start + 1 + 1));//⚠️  malloc ⚠️  to protect && to free
-			if (!string)
-				print_error(mini, 2);
-			printf("string = %s\n", string);
-			result = expand_the_line(mini, string);//⚠️  malloc ⚠️  to protect && to free
-			if (!result)
-				print_error(mini, 2);
-			// on va copier les characters
-			// si on trouve un $ et que l'on realise que c'est une env
-			//		on expand
-		}
-		i++;
-	}
-	return (result);
-}*/
-
 /*void	check_the_situation(char *str)
 {
 	int	i;
@@ -284,92 +235,6 @@ int	update_the_situation(char c, int lead)
 //	printf("at the end of the fonction update_the_situation\nlead memory adress = %p\nlead = %i\n", lead, *lead);
 	return (lead);
 }
-
-/*char	*final_expansion(t_mini *mini, char *str)
-{
-	char	*final_line;
-	int		i;
-	int		lead;
-	int		start;
-	char	*substring;
-
-	i = 0;
-	lead = 0;
-	lead = update_the_situation(str[i], lead);
-	final_line = NULL;
-//	int check = 0;
-	while (str[i])
-	{
-//		lead = update_the_situation(str[i], lead);//this will update the variable lead 
-		printf("---------str[i] = _%c_------in while - out of condition - lead memory adress = %p\nlead = %i------------\n", str[i], &lead, lead);
-		if (lead == 0)
-		{
-			start = i;
-			while (str[i] && lead == 0)
-			{
-				lead = update_the_situation(str[i], lead);
-				if (lead != 0)
-					break ;
-//				printf("lead memory adress = %p\nlead = %i\n", &lead, lead);
-//				printf("str[i] = _%c_\n", str[i]);
-				i++;
-			}
-			printf("in if 0 - after the while loop, str[i] = _%c_\n", str[i]);
-			substring = ft_substr(str, start, i);
-			if (!substring)
-				print_error(mini, 2);
-			printf("0 substring = _%s_\n", substring);
-			printf("i memory adress = %p\ni = %i\n", &i, i);
-			printf("lead memory adress = %p\nlead = %i\n", &lead, lead);
-		}
-		else if (lead == 1)
-		{
-			start = i;
-			while (str[i] && lead == 1)
-			{
-				lead = update_the_situation(str[i], lead);
-				if (lead != 1)
-					break ;
-//				printf("lead memory adress = %p\nlead = %i\n", &lead, lead);
-//				printf("str[i] = _%c_\n", str[i]);
-				i++;
-			}
-			printf("in if 1 - after the while loop, str[i] = _%c_\n", str[i]);
-			substring = ft_substr(str, start, i);
-			if (!substring)
-				print_error(mini, 2);
-			printf("1 substring = _%s_\n", substring);
-			printf("i memory adress = %p\ni = %i\n", &i, i);
-			printf("lead memory adress = %p\nlead = %i\n", &lead, lead);
-		}
-		else if (lead == 2)
-		{
-			start = i + 1;
-			while (str[i] && lead == 2)
-			{
-				i++;
-				printf("entered\n");
-				lead = update_the_situation(str[i], lead);
-				if (lead != 2)
-					break ;
-				printf("lead memory adress = %p\nlead = %i\n", &lead, lead);
-				printf("str[i] = _%c_\n", str[i]);
-			}
-			printf("in if 2 - after the while loop, str[i] = _%c_\n", str[i]);
-			printf("i = %i\n", i);
-			substring = ft_substr(str, start, i - start);
-			if (!substring)
-				print_error(mini, 2);
-			printf("2 substring = _%s_\n", substring);
-			printf("i memory adress = %p\ni = %i\n", &i, i);
-			printf("lead memory adress = %p\nlead = %i\n", &lead, lead);
-		}
-//		if (check++ > 5)
-//			break;
-//		printf("-----------------------------i memory adress = %p\ni = %i\n", &i, i);
-	}
-	return (final_line);
-}*/
 
 /*char	*manage_no_quote(t_mini *mini, char *str, int *i)
 {
@@ -428,7 +293,7 @@ char	*final_expansion(t_mini *mini, char *str)
 			{
 				i++;
 				lead = update_the_situation(str[i], lead);
-				if (lead != 0)
+				if (lead != 0 || str[i] == '$')
 					break ;
 			}
 			if (start != i)
@@ -477,24 +342,30 @@ char	*final_expansion(t_mini *mini, char *str)
 		}
 		else if (lead == 2)
 		{
-			start = i + 1;
+			//printf("str[i] = _%c_\n", str[i]);
+			if (str[i] == DQUOTE)
+				start = i + 1;
+			else
+				start = i;
+			printf("start = %i && str[i] = _%c_\n", start, str[i]);
 			while (str[i] && lead == 2)
 			{
-				i++;
+				//if (str[i] != '$')
+					i++;
 				lead = update_the_situation(str[i], lead);
-				if (lead != 2)
+				if (lead != 2 || str[i] == '$')
 					break ;
 			}
 			if (start != i)
 			{
 				substring = ft_substr(str, start, i - start);
+				printf("2 substring = _%s_\n", substring);
 				if (!substring)
 					print_error(mini, 2);
 				expansion_line = expand_the_line(mini, substring);	
 				if (!expansion_line)
 					print_error(mini, 2);
 				free(substring);
-				printf("2 substring = _%s_\n", substring);
 				if (final_line)
 					free(final_line);
 				final_line = ft_strjoin(tmp, expansion_line);
