@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/29 17:56:01 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:05:28 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -408,6 +408,7 @@ char	*final_expansion(t_mini *mini, char *str)
 	int		start;
 	char	*substring;
 	char	*tmp;
+	char	*expansion_line;
 
 	i = 0;
 	lead = 0;
@@ -435,14 +436,18 @@ char	*final_expansion(t_mini *mini, char *str)
 				substring = ft_substr(str, start, i - start);
 				if (!substring)
 					print_error(mini, 2);
+				expansion_line = expand_the_line(mini, substring);	
+				if (!expansion_line)
+					print_error(mini, 2);
+				free(substring);
 				printf("0 substring = _%s_\n", substring);
 				if (final_line)
 					free(final_line);
-				final_line = ft_strjoin(tmp, substring);
+				final_line = ft_strjoin(tmp, expansion_line);
 				if (!final_line)
 					print_error(mini, 2);
 				tmp = ft_strdup(final_line);
-				free(substring);
+				free(expansion_line);
 			}
 		}
 		else if (lead == 1)
@@ -485,14 +490,18 @@ char	*final_expansion(t_mini *mini, char *str)
 				substring = ft_substr(str, start, i - start);
 				if (!substring)
 					print_error(mini, 2);
+				expansion_line = expand_the_line(mini, substring);	
+				if (!expansion_line)
+					print_error(mini, 2);
+				free(substring);
 				printf("2 substring = _%s_\n", substring);
 				if (final_line)
 					free(final_line);
-				final_line = ft_strjoin(tmp, substring);
+				final_line = ft_strjoin(tmp, expansion_line);
 				if (!final_line)
 					print_error(mini, 2);
 				tmp = ft_strdup(final_line);
-				free(substring);	
+				free(expansion_line);	
 			}
 		}
 	}
