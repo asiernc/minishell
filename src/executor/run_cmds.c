@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/28 19:14:44 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:13:30 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 
 //		about_quotes(mini, mini->line);
 //		quit_single_quotes(mini, mini->line);
+		//check_the_situation(mini->line);
 		
 		char	*final_line;
 		final_line = final_expansion(mini, mini->line);

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/28 19:12:56 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:10:18 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,8 @@ char			*expand_the_line(t_mini *mini, char *str);
 
 int				about_quotes(t_mini *mini, char *str);
 char			*quit_single_quotes(t_mini *mini, char *str);
+int				update_the_situation(char c, int lead);
+void			check_the_situation(char *str);
 char			*final_expansion(t_mini *mini, char *str);
 
 
