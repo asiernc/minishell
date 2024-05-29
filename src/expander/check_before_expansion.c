@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/29 17:45:42 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:56:01 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,8 +412,9 @@ char	*final_expansion(t_mini *mini, char *str)
 	i = 0;
 	lead = 0;
 	lead = update_the_situation(str[i], lead);
+	final_line = NULL;
 	tmp = ft_strdup("");
-	if (!final_line)
+	if (!tmp)
 		print_error(mini, 2);
 	while (str[i])
 	{
@@ -435,9 +436,13 @@ char	*final_expansion(t_mini *mini, char *str)
 				if (!substring)
 					print_error(mini, 2);
 				printf("0 substring = _%s_\n", substring);
+				if (final_line)
+					free(final_line);
 				final_line = ft_strjoin(tmp, substring);
 				if (!final_line)
 					print_error(mini, 2);
+				tmp = ft_strdup(final_line);
+				free(substring);
 			}
 		}
 		else if (lead == 1)
@@ -456,7 +461,13 @@ char	*final_expansion(t_mini *mini, char *str)
 				if (!substring)
 					print_error(mini, 2);
 				printf("1 substring = _%s_\n", substring);
-
+				if (final_line)
+					free(final_line);
+				final_line = ft_strjoin(tmp, substring);
+				if (!final_line)
+					print_error(mini, 2);
+				tmp = ft_strdup(final_line);
+				free(substring);	
 			}
 		}
 		else if (lead == 2)
@@ -475,8 +486,15 @@ char	*final_expansion(t_mini *mini, char *str)
 				if (!substring)
 					print_error(mini, 2);
 				printf("2 substring = _%s_\n", substring);
+				if (final_line)
+					free(final_line);
+				final_line = ft_strjoin(tmp, substring);
+				if (!final_line)
+					print_error(mini, 2);
+				tmp = ft_strdup(final_line);
+				free(substring);	
 			}
 		}
 	}
-	return (NULL);
+	return (free(tmp), final_line);
 }
