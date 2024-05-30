@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/30 15:42:30 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:56:54 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,16 +239,16 @@ char	*final_expansion(t_mini *mini, char *str)
 		if (lead == 0)
 		{
 			start = i;
-			if (str[i] == DQUOTE || str[i] == QUOTE)//for the second time that we update_the_situation, lead can be = 0  && str[i] can be == quote
-				start = i + 1;//we want to forget it
+			if (str[i] == DQUOTE || str[i] == QUOTE)
+				start = i + 1;
 			while (str[i] && lead == 0)
 			{
 				i++;
 				lead = update_the_situation(str[i], lead);
-				if (lead != 0 || str[i] == '$')//if there is two env sticked: $PWD$USER
+				if (lead != 0 || str[i] == '$')
 					break ;
 			}
-			if (start != i)//I have to create this condition otherwise we call the ft_substr a lot of time for sth empty (with start == i)
+			if (start != i)
 			{
 				substring = ft_substr(str, start, i - start);
 				if (!substring)
@@ -260,12 +260,12 @@ char	*final_expansion(t_mini *mini, char *str)
 				if (!expansion_line)
 					print_error(mini, 2);
 				free(substring);
-				if (final_line)//if it's not the first time that we call for final_line, we will have to free the previous final_line, otherwise we will have some leaks. 
+				if (final_line)
 					free(final_line);
 				final_line = ft_strjoin(tmp, expansion_line);
 				if (!final_line)
 					print_error(mini, 2);
-				tmp = ft_strdup(final_line);//this is how I keep the characters of final line, to join them just before
+				tmp = ft_strdup(final_line);
 				free(expansion_line);
 			}
 		}
@@ -296,34 +296,34 @@ char	*final_expansion(t_mini *mini, char *str)
 		else if (lead == 2)
 		{
 			start = i;
-			if (str[i] == DQUOTE)
-				start = i + 1;
+			if (str[i] == DQUOTE)//for the second time that we update_the_situation, lead can be = 0  && str[i] can be == quote
+				start = i + 1;//we want to forget it
 			while (str[i] && lead == 2)
 			{
 				i++;
 				lead = update_the_situation(str[i], lead);
-				if (lead != 2 || str[i] == '$')
+				if (lead != 2 || str[i] == '$')//if the situation has changed || there is two env sticked: $PWD$USER
 					break ;
 			}
-			if (start != i)
+			if (start != i)//I have to create this condition otherwise we call the ft_substr a lot of time for sth empty (with start == i)
 			{
 				substring = ft_substr(str, start, i - start);
 				if (!substring)
 					print_error(mini, 2);
-				if (invalid_characters(substring) == 1)
+				if (invalid_characters(substring) == 1)//if there is $$ => we consider it as invalid
 					expansion_line = ft_strdup(substring); 
-				else
-					expansion_line = expand_the_line(mini, substring);
+				else//if the characters are valid <=> $letters_
+					expansion_line = expand_the_line(mini, substring);//we expand the line, or we show nothing if the env doesn't exist
 				if (!expansion_line)
 					print_error(mini, 2);
 				free(substring);
-				if (final_line)
+				if (final_line)//if it's not the first time that we call for final_line, we will have to free the previous final_line, otherwise we will have some leaks. 
 					free(final_line);
 				final_line = ft_strjoin(tmp, expansion_line);
 				if (!final_line)
 					print_error(mini, 2);
-				tmp = ft_strdup(final_line);
-				free(expansion_line);	
+				tmp = ft_strdup(final_line);//this is how I keep the characters of final line, to join them just before
+				free(expansion_line);
 			}
 		}
 	}
