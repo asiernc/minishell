@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/30 13:57:07 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:42:30 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,18 @@ int	possible_env(char *str, int i)
 	return (0);
 }
 
+int	invalid_characters(const char *str)
+{
+	int	i;
+
+	i = 0;
+	printf("in invalid_characters str = _%s_\n", str);
+	i++;//to forget the '$'
+	if (!str[i] || !(ft_isalpha(str[i]) == 1 || str[i] == '_'))
+		return (1);
+	return (0);
+}
+
 char	*final_expansion(t_mini *mini, char *str)
 {
 	char	*final_line;
@@ -241,11 +253,13 @@ char	*final_expansion(t_mini *mini, char *str)
 				substring = ft_substr(str, start, i - start);
 				if (!substring)
 					print_error(mini, 2);
-				expansion_line = expand_the_line(mini, substring);	
+				if (invalid_characters(substring) == 1)
+					expansion_line = ft_strdup(substring); 
+				else
+					expansion_line = expand_the_line(mini, substring);
 				if (!expansion_line)
 					print_error(mini, 2);
 				free(substring);
-//				printf("0 substring = _%s_\n", substring);
 				if (final_line)//if it's not the first time that we call for final_line, we will have to free the previous final_line, otherwise we will have some leaks. 
 					free(final_line);
 				final_line = ft_strjoin(tmp, expansion_line);
@@ -270,7 +284,6 @@ char	*final_expansion(t_mini *mini, char *str)
 				substring = ft_substr(str, start, i - start);
 				if (!substring)
 					print_error(mini, 2);
-//				printf("1 substring = _%s_\n", substring);
 				if (final_line)
 					free(final_line);
 				final_line = ft_strjoin(tmp, substring);
@@ -282,29 +295,25 @@ char	*final_expansion(t_mini *mini, char *str)
 		}
 		else if (lead == 2)
 		{
-//			printf("str[i] = _%c_\n", str[i]);
 			start = i;
 			if (str[i] == DQUOTE)
 				start = i + 1;
-//			printf("start = %i && str[i] = _%c_\n", start, str[i]);
 			while (str[i] && lead == 2)
 			{
 				i++;
 				lead = update_the_situation(str[i], lead);
-				if (lead != 2 || possible_env(str, i) == 1)
+				if (lead != 2 || str[i] == '$')
 					break ;
 			}
 			if (start != i)
 			{
 				substring = ft_substr(str, start, i - start);
-				printf("2 substring = _%s_\n", substring);
 				if (!substring)
 					print_error(mini, 2);
-				printf("ft_strlen(substring) = %i\n", (int)ft_strlen(substring));
-				if (variable_existence(mini, substring, 0) == 1)
-					expansion_line = expand_the_line(mini, substring);
-				else
+				if (invalid_characters(substring) == 1)
 					expansion_line = ft_strdup(substring); 
+				else
+					expansion_line = expand_the_line(mini, substring);
 				if (!expansion_line)
 					print_error(mini, 2);
 				free(substring);
@@ -316,8 +325,6 @@ char	*final_expansion(t_mini *mini, char *str)
 				tmp = ft_strdup(final_line);
 				free(expansion_line);	
 			}
-	//		else
-	//			i++;
 		}
 	}
 	return (free(tmp), final_line);
