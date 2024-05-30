@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:17:51 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/27 13:26:18 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:01:32 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	variable_existence(t_mini *mini, char *str, int i)
 	int			j;
 	char		*env_key;
 
-	i++;
+//	if (str[i] != '$' && str[i + 1] == '\0')
+		i++;
 	k = i;
 	j = 0;
 	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_'))

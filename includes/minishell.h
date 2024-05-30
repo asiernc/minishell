@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/29 14:10:18 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:34:49 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,7 @@ char			*quit_single_quotes(t_mini *mini, char *str);
 int				update_the_situation(char c, int lead);
 void			check_the_situation(char *str);
 char			*final_expansion(t_mini *mini, char *str);
+int				possible_env(char *str, int i);
 
 
 // Utils expander

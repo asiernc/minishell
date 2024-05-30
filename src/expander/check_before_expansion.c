@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/29 19:32:52 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:57:07 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 //index are:	 0              1
 //there is str[1] to expand due to $USER. We have to call for
 //the expand_the_line function that should return: 'my name is $login'
+//because we are in the double quotes
 
 //this function checks if we have to expand the line or we just have to write it 
 int	is_expansion_required(t_mini *mini, char *str)
@@ -75,69 +76,6 @@ int	we_are_in_simple_quote(char character)
 //if we are in double quotes => we have to know where are the other double 
 //quotes that closes the current quotes.
 //we supposed that the quotes are closed => if we found one, there will be another one
-int	about_quotes(t_mini *mini, char *str)
-{
-	int		i;
-	int		k;
-	char	*result;
-	char	*tmp;
-	char	*aux;
-	
-	int		check;
-
-	i = 0;
-	aux = ft_strdup("");//⚠️  malloc ⚠️ 
-	if (!aux)
-		print_error(mini, 2);
-	check = 0;
-	while (str[i])
-	{
-//		printf("2\n");
-/*		if (str[i] == QUOTE && i + 1 < (int)ft_strlen(str))
-		{
-			if (quote_counter % 2 == 0)
-*/		while (we_are_in_simple_quote(str[i]) == 1)
-		{
-//				printf("we are in simple quotes\n");
-//				printf("3\n");
-				k =	return_position_next_quote(QUOTE, str, i + 1); 	
-//				printf("for simple quotes at index %i, k = %i\n", i, k);
-				tmp = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
-//				printf("tmp for substring result memory adress = %p\ntmp = _%s_\n", &aux, aux);
-				if (check == 1)
-					free(result);
-//				printf("aux memory adress = %p\naux = _%s_\n", &aux, aux);
-//				printf("tmp memory adress = %p\ntmp = _%s_\n", &tmp, tmp);
-				result = ft_strjoin(aux, tmp);
-				check = 1;
-				free(aux);
-				free(tmp);
-				aux = ft_strdup(result);
-		}
-		printf("at the end of the simple quote: result = %s\n", result);
-//			free(result);//⚠️  you have to free result once used
-//		else if (str[i] == DQUOTE && i + 1 < (int)ft_strlen(str))
-//		{
-//			printf("we are in double quotes\n");
-			k = return_position_next_quote(DQUOTE, str, i + 1); 	
-//			printf("for double quotes at index %i, k = %i\n", i, k);
-			tmp = ft_substr(str, i + 1, k - (i + 1));//⚠️  malloc ⚠️ 
-//			printf("result = %s\n", result);
-			if (check == 1)
-				free(result);
-//			printf("aux memory adress = %p\naux = _%s_\n", &aux, aux);
-//			printf("tmp memory adress = %p\ntmp = _%s_\n", &tmp, tmp);
-			result = ft_strjoin(aux, tmp);
-			check = 1;
-			free(aux);
-			free(tmp);
-			aux = ft_strdup(result);
-//		}
-		i++;
-	}
-//	printf("result = %s\n", result);
-	return (free(aux), 0);
-}
 
 char	*quit_single_quotes(t_mini *mini, char *str)
 {
@@ -205,16 +143,11 @@ char	*quit_single_quotes(t_mini *mini, char *str)
 
 //this function returns the situation about being or inside single quotes
 //or inside double quotes, or inside none of both.
+//lead = 0 => we are in no quotes
+//lead = 1 => we are in simple quotes
+//lead = 2 => we are in double quotes
 int	update_the_situation(char c, int lead)
 {
-/*	if (c == QUOTE && lead == 0)
-		lead = 1;
-	else if (c == QUOTE && lead == 1)
-		lead = 0;
-	else if (c == DQUOTE && lead == 0)
-		lead = 2;
-	else if (c == DQUOTE && lead == 2)
-		lead = 0;*/
 	if (lead == 0)
 	{
 		if (c == QUOTE)
@@ -265,6 +198,14 @@ int	update_the_situation(char c, int lead)
 	return (str_joined);
 }*/
 
+int	possible_env(char *str, int i)
+{
+	if (str[i] == '$' && i > 0 /*i < (int)ft_strlen(str) - 1*/
+		&& (ft_isalpha(str[i - 1]) == 1 || str[i - 1] == '_'))
+		return (1);
+	return (0);
+}
+
 char	*final_expansion(t_mini *mini, char *str)
 {
 	char	*final_line;
@@ -276,8 +217,7 @@ char	*final_expansion(t_mini *mini, char *str)
 	char	*expansion_line;
 
 	i = 0;
-	lead = 0;
-	lead = update_the_situation(str[i], lead);
+	lead = update_the_situation(str[i], 0);
 	final_line = NULL;
 	tmp = ft_strdup("");
 	if (!tmp)
@@ -287,16 +227,16 @@ char	*final_expansion(t_mini *mini, char *str)
 		if (lead == 0)
 		{
 			start = i;
-			if (str[i] == DQUOTE || str[i] == QUOTE)
-				start = i + 1;
+			if (str[i] == DQUOTE || str[i] == QUOTE)//for the second time that we update_the_situation, lead can be = 0  && str[i] can be == quote
+				start = i + 1;//we want to forget it
 			while (str[i] && lead == 0)
 			{
 				i++;
 				lead = update_the_situation(str[i], lead);
-				if (lead != 0 || str[i] == '$')
+				if (lead != 0 || str[i] == '$')//if there is two env sticked: $PWD$USER
 					break ;
 			}
-			if (start != i)
+			if (start != i)//I have to create this condition otherwise we call the ft_substr a lot of time for sth empty (with start == i)
 			{
 				substring = ft_substr(str, start, i - start);
 				if (!substring)
@@ -305,13 +245,13 @@ char	*final_expansion(t_mini *mini, char *str)
 				if (!expansion_line)
 					print_error(mini, 2);
 				free(substring);
-				printf("0 substring = _%s_\n", substring);
-				if (final_line)
+//				printf("0 substring = _%s_\n", substring);
+				if (final_line)//if it's not the first time that we call for final_line, we will have to free the previous final_line, otherwise we will have some leaks. 
 					free(final_line);
 				final_line = ft_strjoin(tmp, expansion_line);
 				if (!final_line)
 					print_error(mini, 2);
-				tmp = ft_strdup(final_line);
+				tmp = ft_strdup(final_line);//this is how I keep the characters of final line, to join them just before
 				free(expansion_line);
 			}
 		}
@@ -330,7 +270,7 @@ char	*final_expansion(t_mini *mini, char *str)
 				substring = ft_substr(str, start, i - start);
 				if (!substring)
 					print_error(mini, 2);
-				printf("1 substring = _%s_\n", substring);
+//				printf("1 substring = _%s_\n", substring);
 				if (final_line)
 					free(final_line);
 				final_line = ft_strjoin(tmp, substring);
@@ -342,18 +282,16 @@ char	*final_expansion(t_mini *mini, char *str)
 		}
 		else if (lead == 2)
 		{
-			//printf("str[i] = _%c_\n", str[i]);
+//			printf("str[i] = _%c_\n", str[i]);
+			start = i;
 			if (str[i] == DQUOTE)
 				start = i + 1;
-			else
-				start = i;
-			printf("start = %i && str[i] = _%c_\n", start, str[i]);
+//			printf("start = %i && str[i] = _%c_\n", start, str[i]);
 			while (str[i] && lead == 2)
 			{
-				//if (str[i] != '$')
-					i++;
+				i++;
 				lead = update_the_situation(str[i], lead);
-				if (lead != 2 || str[i] == '$')
+				if (lead != 2 || possible_env(str, i) == 1)
 					break ;
 			}
 			if (start != i)
@@ -362,7 +300,11 @@ char	*final_expansion(t_mini *mini, char *str)
 				printf("2 substring = _%s_\n", substring);
 				if (!substring)
 					print_error(mini, 2);
-				expansion_line = expand_the_line(mini, substring);	
+				printf("ft_strlen(substring) = %i\n", (int)ft_strlen(substring));
+				if (variable_existence(mini, substring, 0) == 1)
+					expansion_line = expand_the_line(mini, substring);
+				else
+					expansion_line = ft_strdup(substring); 
 				if (!expansion_line)
 					print_error(mini, 2);
 				free(substring);
@@ -374,6 +316,8 @@ char	*final_expansion(t_mini *mini, char *str)
 				tmp = ft_strdup(final_line);
 				free(expansion_line);	
 			}
+	//		else
+	//			i++;
 		}
 	}
 	return (free(tmp), final_line);

@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:23:35 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/27 16:42:32 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:34:04 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ char	*expand_the_line(t_mini *mini, char *str)//malloc ⚠️
 	{
 		if (str[i] == BACKSLASH)
 			i++;
+/*		if (i < (int)ft_strlen(str) - 1 && str[i] == '$'
+			&& (ft_isalpha(str[i + 1]) != 1 || str[i + 1] != '_'))
+			result[j++] = str[i++];*/
 		if ((i > 0 && str[i] == '$' && str[i - 1] == BACKSLASH) || (str[i] != '$')) //random characters*/
 			result[j++] = str[i++];
 		else
