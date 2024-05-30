@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/30 12:34:49 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:19:26 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,7 @@ void			send_line(t_mini *mini, char *str);
 void			forget_the_variable(char *str, int *i);
 int				calculate_len_for_malloc(t_mini *mini, char *str);
 char			*expand_the_line(t_mini *mini, char *str);
+char			*expand_the_line_lead_zero(t_mini *mini, char *str);
 
 int				about_quotes(t_mini *mini, char *str);
 char			*quit_single_quotes(t_mini *mini, char *str);

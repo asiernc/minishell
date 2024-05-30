@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:59:22 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/30 15:56:54 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:56:09 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,12 +211,42 @@ int	invalid_characters(const char *str)
 	int	i;
 
 	i = 0;
-	printf("in invalid_characters str = _%s_\n", str);
+//	printf("in invalid_characters str = _%s_\n", str);
 	i++;//to forget the '$'
 	if (!str[i] || !(ft_isalpha(str[i]) == 1 || str[i] == '_'))
 		return (1);
 	return (0);
 }
+
+/*void	manage_simple_quote_situation(t_mini *mini, char *str, int *i, int *lead)
+{
+	int		start;
+	char	*substring;
+	char	*tmp;
+	char	*final_line;
+
+	start = *i + 1;
+	while (str[*i] && *lead == 1)
+	{
+		(*i)++;
+		*lead = update_the_situation(str[*i], *lead);
+		if (*lead != 1)
+			break ;
+	}
+	if (start != *i)
+	{
+		substring = ft_substr(str, start, *i - start);
+		if (!substring)
+			print_error(mini, 2);
+		if (final_line)
+			free(final_line);
+		final_line = ft_strjoin(tmp, substring);
+		if (!final_line)
+			print_error(mini, 2);
+		tmp = ft_strdup(final_line);
+		free(substring);	
+	}
+}*/
 
 char	*final_expansion(t_mini *mini, char *str)
 {
@@ -256,7 +286,7 @@ char	*final_expansion(t_mini *mini, char *str)
 				if (invalid_characters(substring) == 1)
 					expansion_line = ft_strdup(substring); 
 				else
-					expansion_line = expand_the_line(mini, substring);
+					expansion_line = expand_the_line_lead_zero(mini, substring);
 				if (!expansion_line)
 					print_error(mini, 2);
 				free(substring);

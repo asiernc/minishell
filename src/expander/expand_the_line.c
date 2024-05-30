@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:23:35 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/30 13:34:04 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:09:44 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	expand_dollar_variable(t_mini *mini, char *str, int *i, char *result)
 	k = 0;
 	if (variable_existence(mini, str, *i) == 1)
 	{
-		env_key = catch_expansion_key(mini, str, i); //malloc ⚠️ 
+		env_key = catch_expansion_key(mini, str, i);
 		if (!env_key)
 			print_error(mini, 2);
 		env_value = search_and_replace_variable(mini->env, env_key);
@@ -67,10 +67,8 @@ char	*expand_the_line(t_mini *mini, char *str)//malloc ⚠️
 	{
 		if (str[i] == BACKSLASH)
 			i++;
-/*		if (i < (int)ft_strlen(str) - 1 && str[i] == '$'
-			&& (ft_isalpha(str[i + 1]) != 1 || str[i + 1] != '_'))
-			result[j++] = str[i++];*/
-		if ((i > 0 && str[i] == '$' && str[i - 1] == BACKSLASH) || (str[i] != '$')) //random characters*/
+		if ((i > 0 && str[i] == '$' && str[i - 1] == BACKSLASH)
+			|| (str[i] != '$'))
 			result[j++] = str[i++];
 		else
 			j += expand_dollar_variable(mini, str, &i, &result[j]);

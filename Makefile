@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 11:09:08 by anovio-c          #+#    #+#              #
-#    Updated: 2024/05/27 17:15:40 by simarcha         ###   ########.fr        #
+#    Updated: 2024/05/30 17:22:07 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRC			=	src/main.c 							\
 				src/expander/calculate_len_for_malloc.c\
 				src/expander/expand_the_line.c		\
 				src/expander/check_before_expansion.c\
+				src/expander/word_splitting.c		\
 				#src/builtins/builtin_export.c		\
 				src/builtins/builtin_export_helper.c\
 				src/builtins/builtin_unset.c		\
