@@ -104,8 +104,6 @@ void concat_lst_env(t_mini *mini)
 	char		*joined_value;
 	char 		*temp;
 
-	//if (mini->env_cpy)
-	//	ft_free_double_array(mini->env_cpy);
 	tmp = mini->env;
 	mini->env_cpy = (char **)malloc((ft_lstsize_builtin(tmp) + 1) * sizeof(char *));
 	if (!mini->env_cpy)

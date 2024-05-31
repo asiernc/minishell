@@ -25,7 +25,7 @@ int executor(t_mini *mini)
 	fd_in = STDIN_FILENO;
 	while (mini->cmd)
 	{
-		//llamar al expander aqui??
+		//llamar al expander aqui
 		//run_expander(mini, mini->cmd);
 		if (mini->cmd->next && pipe(fds) == -1) //mini->cmd->next
 			print_error(mini, PIPE_ERROR);

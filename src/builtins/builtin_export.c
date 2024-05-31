@@ -32,6 +32,7 @@ static t_builtin	*add_export_variable(t_mini *mini, t_builtin *lst, char *str, c
 		new_node->value = NULL;
 	new_node->index = index++;
 	new_node->next = NULL;
+	printf("%p\n", &mini->env);
 	ft_lstadd_back_builtin(&lst, new_node);
 //	lst = sort_ascii(lst, NULL);
 	return (lst);
@@ -79,42 +80,6 @@ static void	check_key_already_exists(t_mini *mini, t_builtin *lst_export, char *
 	}
 }
 
-/*int	builtin_export(t_mini *mini, t_cmd *cmd)
-{
-	t_builtin	*lst_export;
-	char		**list;
-	//char		*key_str;
-	char		*value_trimmed;
-	int			i;
-	
-	lst_export = mini->env;
-	if (!lst_export)
-		print_error(mini, 2);
-	if (ft_strcmp(cmd->str[0], "export") == 0 && cmd->str[1] == NULL)
-		print_env_export(mini, 1);
-	i = 0;
-	list = clear_line_export(cmd->str);
-	while (list[i])
-	{
-		//fprintf(stderr, "STR[%d] ==> %s\n", i, cmd->str[i]);
-		if (check_variable(cmd->str[i]) == 1)
-		{
-			check_key_already_exists(mini, lst_export, cmd->str[i]);
-			//if (key_str)
-			//	builtin_unset(mini, &mini->env, cmd);
-				//builtin_unset(mini, cmd);
-			value_trimmed = trim_quotes(cmd->str[i]);
-			fprintf(stderr, "TRIMMED %s\n", value_trimmed);
-			lst_export = add_export_variable(mini, lst_export, cmd->str[i], value_trimmed);
-		}
-		else if (check_variable(cmd->str[i]) == 2)
-			join_values(mini, &lst_export, cmd->str[i]);
-		i++;
-	}
-	concat_lst_env(mini);
-	return (EXIT_SUCCESS);
-}*/
-
 int	builtin_export(t_mini *mini, t_cmd *cmd)
 {
 	//t_builtin	*lst_export;
@@ -131,7 +96,6 @@ int	builtin_export(t_mini *mini, t_cmd *cmd)
 		if (check_variable(line[i]) == 1)
 		{
 			check_key_already_exists(mini, mini->env, line[i]);
-			//value_trimmed = clean_value(line[i]);
 			mini->env = add_export_variable(mini, mini->env, line[i], clean_value(line[i]));
 		}
 		else if (check_variable(line[i]) == 2)
@@ -139,32 +103,9 @@ int	builtin_export(t_mini *mini, t_cmd *cmd)
 		i++;
 	}
 	//ft_free_double_array(mini->env_cpy);
-	concat_lst_env(mini);
+	//concat_lst_env(mini);
 	return (EXIT_SUCCESS);
 }
-
-/*static char	**clear_line_export(char **str)
-{
-	int		i;
-	char	**result;
-	char	*tmp;
-	char	*previous;
-
-	i = 0;
-	while (str[i])
-	{
-		fprintf(stderr, "STR %s \n", str[i]);
-		tmp = ft_strtrim(str[i], " ");
-		fprintf(stderr, "AFTER STR %s \n", str[i]);
-		previous = ft_strjoin(tmp, " ");
-		//free(tmp);
-		i++;
-	}
-	result = ft_split(previous, ' ');
-	//fprintf(stderr, "TRIMMED2 %s // %s\n", result[0], result[1]);
-	return (result);
-}*/
-
 
 static char **clear_line_export(char **str)
 {

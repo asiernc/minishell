@@ -6,7 +6,7 @@
 /*   By: asiercara <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/05/29 17:34:40 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/31 15:56:38 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	mini_live(t_mini *mini)
 {
 	// valorar hacer un bucle para no forzar a que entre dentor de una funcion de otra de otra de otra
 	//init_mini(mini);
-	mini->line = readline("shelldone 🔥 >");
+	mini->line = readline("\033[0;32mshelldone >\033[0m"); // crear variable con colores.
 	clear_line(mini);
 	if (mini->line == NULL) // uede que segfault este aqui
 	{
@@ -42,9 +42,6 @@ int	mini_live(t_mini *mini)
 
 void	init_mini(t_mini *mini, char **env)
 {
-	t_builtin	*lst_env;
-
-	lst_env = NULL;
 	mini->line = NULL;
 	mini->lexer = NULL;
 	mini->cmd = NULL;
@@ -54,22 +51,6 @@ void	init_mini(t_mini *mini, char **env)
 	g_global_var.inside_cmd = 0;
 	g_global_var.inside_hdoc = 0;
 	g_global_var.outside_hdoc = 0;
-	mini->env = create_builtin_lst(mini, lst_env, env);
-	concat_lst_env(mini);
-	/*int	i = 0;
-	printf("_______________________\n");
-	while (mini->env_cpy[i] != NULL) {
-        printf("%s\n", mini->env_cpy[i]);
-        i++;
-    }
-	printf("_______________________\n");*/
-	/*i = 0;
-	printf("_______________________\n");
-	while (mini->original_env[i] != NULL) {
-        printf("%s\n", mini->original_env[i]);
-        i++;
-    }
-	printf("_______________________\n");*/
 	init_signals();
 	get_pwd(mini);
 	//cd exit success get current directory pwd = getcurrent directory

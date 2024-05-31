@@ -6,7 +6,7 @@
 #    By: asiercara <marvin@42.fr>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/28 19:09:01 by asiercara         #+#    #+#              #
-#    Updated: 2024/05/31 10:40:07 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/05/31 15:53:10 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ src	= 	src/main.c 								\
 
 OBJS	=	$(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
-FLAGS	=	-Wall -Werror -Wextra -g #-fsanitize=address
+FLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
 
 LIBFT	=	./libft/libft.a
 

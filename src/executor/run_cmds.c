@@ -66,7 +66,13 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	char	*cmd_path;
 	char	*tmp;
 
+	//concat_lst_env(mini);
 	env = mini->env_cpy;
+	/*int	i = 0;
+	while (env[i] != NULL) {
+        printf("%s\n", env[i]);
+        i++;
+    }*/
 	if (!access(cmd->str[0], F_OK | X_OK))
 		execve(cmd->str[0], cmd->str, mini->env_cpy);
 	while (*env && !ft_strnstr(*env, "PATH", 5))
@@ -94,7 +100,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	int	pid;
 	int	status;
 
-	run_expander(mini, cmd);
+	//run_expander(mini, cmd);
 	if (cmd->builtin != NOT_HAVE)
 	{
 		g_global_var.error_code = do_builtin(mini, cmd);

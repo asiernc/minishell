@@ -84,7 +84,7 @@ void	lexer_clear(t_lexer **list)
 		tmp = (*list)->next;
 		if ((*list)->str)
 			free((*list)->str);
-		free(*list);
+		free(*list); //flag
 		*list = tmp;
 	}
 	*list = NULL;

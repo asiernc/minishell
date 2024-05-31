@@ -39,7 +39,7 @@ char	**expand_cmd_line(t_mini *mini, char **str)
         //if (is_dollar(str[i]) != 0 && str[i][is_dollar(str[i])] != '\0' && str[i][is_dollar(str[i]) - 2])
         //{
         new = final_expansion(mini, str[i]);
-        printf("NEW : %s\n", new);
+        //printf("NEW : %s\n", new);
         free(str[i]);
         str[i] = new;
         // ft_strdup(new)
@@ -60,7 +60,7 @@ char    *expand_str_line(t_mini *mini, char *str)
     //if (is_dollar(str) != 0 && str[is_dollar(str)] != '\0' && str[is_dollar(str) - 2])
     //{
     new = final_expansion(mini, str);
-    printf("NEW : %s\n", new);
+    //printf("NEW : %s\n", new);
     free(str);
     str = new;
     //}

@@ -149,6 +149,7 @@ t_builtin	*create_builtin_lst(t_mini *mini, t_builtin *lst_env, char **env)//to 
 		ft_lstadd_back_builtin(&lst_env, new_node);
 		i++;
 	}
+	//printf("%p\n", &mini->env);
 	return (lst_env);
 }
 

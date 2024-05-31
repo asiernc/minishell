@@ -125,7 +125,7 @@ enum e_operator
 
 typedef struct s_lexer
 {
-	char				*str;
+	char				*str; //filename o el eof en el hdoc
 	enum e_operator		token;
 	int					num_node;
 	struct s_lexer		*next;

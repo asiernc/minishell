@@ -13,6 +13,7 @@
 #include "minishell.h"
 int	print_error(t_mini *mini, int keycode)
 {
+	
 	ft_putstr_fd("shelldone: ", STDERR_FILENO);
 	if (keycode == SINTAX_ERROR)
 		ft_putstr_fd("syntax error near unexpected token\n", 1);

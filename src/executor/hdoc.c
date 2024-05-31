@@ -79,16 +79,17 @@ int	open_save_hdoc(t_lexer *redir, char *hdoc_filename, bool quotes)
 	int		fd;
 
 	fd = open(hdoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	line = readline(">");
+	line = readline("\033[0;35m>\033[0m");
 	while (line != NULL && ft_strcmp_simple(redir->str, line) != 0 && g_global_var.outside_hdoc == 0)
 	{
+		//if (quotes == false)
+		//	line = expand_str_line(mini, line); //EXPANDERRR STR*
 		if (quotes == false)
 			ft_putendl_fd(line, fd);
-		//	line = expand_line(mini, line);
 		else
 			ft_putendl_fd(line, fd);
 		free(line);
-		line = readline(">");
+		line = readline("\033[0;35m>\033[0m");
 	}
 	free(line);
 	if (g_global_var.outside_hdoc == 1)
