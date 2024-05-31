@@ -6,13 +6,13 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:38:51 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/31 10:32:31 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:58:48 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	count_lines_in_array(char **array)
+static int	count_lines_in_array(char **array)//you can use as well lines_counter
 {
 	int	i;
 	int	j;

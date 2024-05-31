@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/20 11:05:27 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:32:45 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	check_flag(char *flag)
 	check = 0;
 	while (flag[i])
 	{
-		if (flag[i] == '-' && i == 0)
+		if (flag[0] == '-' && i == 0)
 		{
 			i++;
 			check = 1;
@@ -48,46 +48,66 @@ static int	check_flag(char *flag)
 	return (0);
 }
 
+//in this function there is the same verification as the previous one
+//because the user can write: echo -n -n -nnnn -nn test
+//and we have to return, without line break: test
 static int	builtin_echo_flag_n(t_mini *mini, t_cmd *command, int i, int wc)
 {
+	char	*content;
+
 	while (command->str[i])
 	{
 		while (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
 				|| check_flag(command->str[i]) == 1))
 			i++;
-		if (write(1, command->str[i], ft_strlen(command->str[i])) == -1)
-			return (print_error(mini, 0), 0);//keycode = write has failed
-		if (i < wc - 1)
+		printf("command->str[i] = _%s_\n", command->str[i]);
+		content = final_expansion(mini, command->str[i]);
+		if (!content)
+			print_error(mini, 2);
+		if (write(1, content, ft_strlen(content)) == -1)
+			print_error(mini, 0);//keycode = write has failed
+		if (i < wordcount - 1)
 			if (write(1, " ", 1) == -1)
 				return (print_error(mini, 0), 0);//keycode = write has failed
 		i++;
+		free(content);
 	}
 	return (1);
 }
 
+//in this function, the argument *command is type: mini->cmd
+//(we could only work with 1 argument)
+//for example: echo hello     world     $PWD
+//index are  :   0    1         2         3
+//the result : hello world /path/
 int	builtin_echo(t_mini *mini, t_cmd *command)
 {
-	int	wordcount;
-	int	i;
+	int		wordcount;
+	int		i;
+	char	*content;
 
 	wordcount = lines_counter(command->str);
 	i = 1;
 	if (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
-			|| check_flag(command->str[i]) == 1))
+			|| check_flag(command->str[i]) == 1))//if we have the flag -n
 		return (builtin_echo_flag_n(mini, command, 2, wordcount));
-	//you have to check if the first letter of the flag is a $ => $expander && $?
 	//else if (command->str[i] && (ft_strcmp(command->str[i], "$?") == 0))
 		//printf("%i\n", mini->exit_code);
-	else
+	else//if there is no flag and only the echo cmd
 	{
 		while (command->str[i])
 		{
-			if (write(1, command->str[i], ft_strlen(command->str[i])) == -1)
+			printf("command->str[i] = _%s_\n", command->str[i]);
+			content = final_expansion(mini, command->str[i]);
+			if (!content)
+				print_error(mini, 2);
+			if (write(1, content, ft_strlen(content)) == -1)
 				print_error(mini, 0);//keycode = write has failed
 			if (i < wordcount - 1)
 				if (write(1, " ", 1) == -1)
 					return (print_error(mini, 0), 0);//keycode = write has failed
 			i++;
+			free(content);
 		}
 		if (write(1, "\n", 1) == -1)
 			return (print_error(mini, 0), 0);//keycode = write has failed
