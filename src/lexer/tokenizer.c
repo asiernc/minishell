@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/18 17:02:21 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/29 17:54:05 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ int	put_operator(char *str, int i, t_lexer **lst)
 	if (operator == RED_IN && check_operator(str[i + 1]) == RED_IN)
 	{
 		operator = HDOC;
-		if (list_add_node(lst, operator, NULL) == 1)
-			return (-2); //create put error because 1 is not a sum
+		if (!list_add_node(lst, operator, NULL))// == 0)
+			return (-1); //create put error because 1 is not a sum
 		return (2);
 	}
 	else if (operator == RED_OUT && check_operator(str[i + 1]) == RED_OUT)
 	{
 		operator = RED_OUT_APP;
-		if (list_add_node(lst, operator, NULL) == 1)
-			return (-2);
+		if (!list_add_node(lst, operator, NULL))// == 0)
+			return (-1);
 		return (2);
 	}
 	else if (operator)
 	{
-		if (list_add_node(lst, operator, NULL) == 1)
-			return (-2);
+		if (!list_add_node(lst, operator, NULL))// == 0)
+			return (-1);
 		return (1);
 	}
 	//printf("OPERATOR %d\n", operator);
@@ -51,14 +51,14 @@ int	put_operator(char *str, int i, t_lexer **lst)
 
 int	put_word(char *str, int i, t_lexer **lst)
 {
-	static unsigned int	flag = 0;
+	//static unsigned int	flag = 0;
 	int			j;
 
-	if (flag == 0)
-	{
-		*lst = NULL;
-		flag = 1;
-	}
+	//if (flag == 0)
+	//{
+	//	*lst = NULL;
+	//	flag = 1;
+	//}
 	j = 0;
 	//printf("STRRRRR: %s\n", str);
 	while (str[i + j] && check_operator(str[i + j]) == 0)
@@ -72,8 +72,8 @@ int	put_word(char *str, int i, t_lexer **lst)
 	}
 	//printf("VALOR J: %d\n", j);
 	//printf("SUBSTRING - %s\n", ft_substr(str, i, j));
-	if (list_add_node(lst, 0, ft_substr(str, i, j)))
-		return (1);
+	if (!list_add_node(lst, 0, ft_substr(str, i, j)))// == 0)
+		return (-1);
 	return (j);
 }
 
@@ -91,7 +91,7 @@ int	lexer_tokenizer(t_mini *mini)
 		diff = 0;
 		while (mini->line[i] == ' ' || (mini->line[i] > 8 && mini->line[i] < 14))
 			i++;
-		if (check_operator(mini->line[i]) != 0)
+		if (check_operator(mini->line[i]))
 			diff = put_operator(mini->line, i, &mini->lexer);
 		else
 			diff = put_word(mini->line, i, &mini->lexer);
@@ -103,5 +103,5 @@ int	lexer_tokenizer(t_mini *mini)
 	}
 //	printf("str1: %s\n", mini->lexer->str);
 	//ft_print(mini);
-	return (0);
+	return (1);
 }

@@ -6,14 +6,14 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/14 11:20:51 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:34:31 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void	print_error(t_mini *mini, int keycode)
+int	print_error(t_mini *mini, int keycode)
 {
-	ft_putstr_fd("minihell: ", STDERR_FILENO);
+	ft_putstr_fd("shelldone: ", STDERR_FILENO);
 	if (keycode == SINTAX_ERROR)
 		ft_putstr_fd("syntax error near unexpected token\n", 1);
 	else if (keycode == MALLOC_ERROR)
@@ -40,11 +40,12 @@ void	print_error(t_mini *mini, int keycode)
 	else if (keycode == UNLINK_ERROR)
 		ft_putstr_fd("unlink: No such file or directory\n", STDERR_FILENO);
 	mini_reset(mini);
+	return (EXIT_FAILURE);
 }
 
-void	parser_token_error(t_mini *mini, int token)
+int	token_error(t_mini *mini, int token)
 {
-	ft_putstr_fd("minihell: syntax error near unexpected token ", STDERR_FILENO);
+	ft_putstr_fd("shelldone: syntax error near unexpected token ", STDERR_FILENO);
 	if (token == PIPE)
 		ft_putstr_fd("'|'\n", STDERR_FILENO);
 	else if (token == RED_IN)
@@ -55,6 +56,9 @@ void	parser_token_error(t_mini *mini, int token)
 		ft_putstr_fd("'<<'\n", STDERR_FILENO);
 	else if (token == RED_OUT_APP)
 		ft_putstr_fd("'>>'\n", STDERR_FILENO);
-	lst_clear_lexer(&mini->lexer);
+	lexer_clear(&mini->lexer);
+	//if (mini->lexer)
+		//lst_clear_lexer(&mini->lexer);
 	mini_reset(mini);
+	return (EXIT_FAILURE); // exit code 258 bash;
 }

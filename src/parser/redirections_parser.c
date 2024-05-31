@@ -19,7 +19,6 @@
 
 void	new_redirection(t_parser *parser, t_lexer *tmp)
 {
-	// es posible que despues del; < no haya str ==> error \n continous loopreset
 	t_lexer	*node;
 	int		num_node_delete;
 
@@ -30,14 +29,15 @@ void	new_redirection(t_parser *parser, t_lexer *tmp)
 	parser->num_redirections++;
 	num_node_delete = tmp->num_node;
 	delone_node(num_node_delete, &parser->lexer);
-	num_node_delete++;
+	//num_node_delete++;
+	num_node_delete = num_node_delete + 1;
 	delone_node(num_node_delete, &parser->lexer);
 }
 
 // Begin redirections, shift the node until the redirect (making verifications),
 // to then send it to new_redirection to create the node.
 
-void	redirections(t_parser *parser)
+void	redirections(t_mini *mini, t_parser *parser)
 {
 	t_lexer *tmp;
 
@@ -45,10 +45,12 @@ void	redirections(t_parser *parser)
 	while (tmp && tmp->token == 0) //str
 		tmp = tmp->next;
 	if (!tmp || tmp->token == PIPE) // 1
-		return ; // there is not redirection
-	if (tmp->token == 0)
-		return ; // not is a correct operation token
+		return ;
+	if (!tmp->next)
+		print_error(mini, SINTAX_ERROR);
+	if (tmp->next->token != 0)
+		token_error(mini, tmp->next->token); // not is a correct position of operation token
 	if (tmp->token >= RED_IN && tmp->token <= RED_OUT_APP)
 		new_redirection(parser, tmp);
-	redirections(parser);
+	redirections(mini, parser);
 }

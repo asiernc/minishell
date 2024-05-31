@@ -98,16 +98,16 @@ t_lexer	*move_to_next_cmd(t_lexer *lst)
 	return (lst);
 }
 
-int	check_line(t_mini *mini, int token)
+int	check_line(t_mini *mini)
 {
-	if (token == PIPE)
+	if (!mini->lexer)
 	{
-		parser_token_error(mini, token);
+		print_error(mini, SINTAX_ERROR);
 		return (EXIT_FAILURE);
 	}
-	else if (!mini->lexer)
+	if (mini->lexer->token == PIPE)
 	{
-		print_error(mini, 0);
+		token_error(mini, mini->lexer->token);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -127,4 +127,3 @@ void	free_cmd_line(char **str)
 	}
 	free(str);
 }
-

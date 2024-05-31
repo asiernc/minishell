@@ -15,19 +15,19 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_mini		mini;
-	t_builtin	*lst_env;
+	//t_builtin	*lst_env;
 
 	if (argc != 1 && argv[0])
 	{
 		printf("Don't write any argument");
 		exit(0);
 	}
-	lst_env = NULL;
+	//lst_env = NULL;
 	mini.original_env = env;
-	mini.env = create_env(&mini, lst_env);
-	concat_lst_env(&mini);
+	//mini.env = create_env(&mini, lst_env);
+	//concat_lst_env(&mini);
 	//get_pwd(&mini);
-	init_mini(&mini);
+	init_mini(&mini, env);
 	mini_live(&mini);
 	return (0);
 }

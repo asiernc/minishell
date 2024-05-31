@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:41:38 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/18 16:20:35 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/29 17:44:53 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ t_parser	init_struct(t_lexer *lexer, t_mini *mini)
 	return (parser);
 }
 
-t_cmd	*create_cmd(t_parser *parser)
+t_cmd	*create_cmd(t_mini *mini, t_parser *parser)
 {
 	char	**str;
 	int		i;
 	int		num_args;
 	t_lexer	*tmp;
 
-	redirections(parser);
+	redirections(mini, parser);
 	num_args = count_args(parser->lexer);
 	str = ft_calloc((num_args + 1), sizeof(char *));
 	if (!str)
@@ -75,7 +75,6 @@ t_cmd	*create_cmd(t_parser *parser)
 		{
 			str[i] = ft_strdup(tmp->str);
 			delone_node(tmp->num_node, &parser->lexer);
-			//del_first_node(&parser->lexer);
 			tmp = parser->lexer;
 		}
 		i++;
@@ -89,15 +88,21 @@ int	parser(t_mini *mini)
 	t_parser	parser;
 	t_cmd		*new;
 
+	mini->cmd = NULL;
 	count_pipes(mini);
+	if (mini->lexer->token == PIPE)
+	{
+		token_error(mini, PIPE);
+		return (EXIT_FAILURE);
+	}
 	while (mini->lexer)
 	{
 		if (mini->lexer && mini->lexer->token == PIPE)
-			del_first_node(&mini->lexer);
-		if (check_line(mini, mini->lexer->token))
+			delone_node(mini->lexer->num_node, &mini->lexer);
+		if (check_line(mini))
 			return (EXIT_FAILURE);
 		parser = init_struct(mini->lexer, mini);
-		new = create_cmd(&parser);
+		new = create_cmd(mini, &parser);
 		if (!new)
 			print_error(mini, 0);
 		ft_node_add_back_parser(&mini->cmd, new);

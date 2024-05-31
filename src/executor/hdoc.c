@@ -29,11 +29,15 @@ int	check_if_exists_hdoc(t_mini *mini, t_cmd *cmd)
 		if (cmd->redirections->token == HDOC)
 		{
 			count++;
+			if (cmd->hdoc_filename)
+				free(cmd->hdoc_filename);
 			cmd->hdoc_filename = generate_filename();
-			error = check_eof(mini->cmd->redirections, cmd->hdoc_filename);
+			error = check_eof(mini, mini->cmd->redirections, cmd->hdoc_filename);
 			if (error) // error == exitFAILURE
+			{
+				g_global_var.error_code = error;
 				mini_reset(mini);
-			mini->flag_hdoc = 1;
+			}
 		}
 		cmd->redirections = cmd->redirections->next;
 	}
@@ -41,7 +45,7 @@ int	check_if_exists_hdoc(t_mini *mini, t_cmd *cmd)
 	return (error);
 }
 
-int	check_eof(t_lexer *redir, char *hdoc_filename)
+int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 {
 	int			error;
 	char		*str;
@@ -65,6 +69,7 @@ int	check_eof(t_lexer *redir, char *hdoc_filename)
 	g_global_var.inside_hdoc = 1;
 	error = open_save_hdoc(redir, hdoc_filename, quotes);
 	g_global_var.inside_hdoc = 0;
+	mini->flag_hdoc = 1;
 	return (error);
 }
 

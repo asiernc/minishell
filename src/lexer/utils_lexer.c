@@ -15,15 +15,15 @@
 void	ft_print(t_mini *mini)
 {
 	t_lexer	*tmp;
-	int	i = 0;
-	int	len = lst_size_lexer(mini);
+	//int	i = 1;
+	//int	len = lst_size_lexer(mini);
 
 	tmp = mini->lexer;
-	while (i <= len)
+	while (tmp)
 	{
-		i++;
 		printf("Node %d, str = %s  token(ope) = %d\n", tmp->num_node, tmp->str, tmp->token);
 		tmp = tmp->next;
+	//	i++;
 	}
 }
 

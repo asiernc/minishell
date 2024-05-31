@@ -24,7 +24,7 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 		exit_code = do_builtin(mini, cmd);
 		exit(exit_code);
 	}
-	if (cmd->str)
+	if (cmd->str[0][0])
 		exit_code = do_cmd(mini, cmd);
 	exit(exit_code);
 }
@@ -94,10 +94,10 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	int	pid;
 	int	status;
 
-	// expander
+	run_expander(mini, cmd);
 	if (cmd->builtin != NOT_HAVE)
 	{
-		do_builtin(mini, cmd);
+		g_global_var.error_code = do_builtin(mini, cmd);
 		mini_reset(mini);
 	}
 	check_if_exists_hdoc(mini, mini->cmd);

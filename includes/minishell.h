@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/18 18:09:36 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/29 16:04:57 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void			builtin_test(void);
 // Minishell loop
 
 int 			mini_live(t_mini *mini);
-void			init_mini(t_mini *mini);
+void			init_mini(t_mini *mini, char **env);
 int				mini_reset(t_mini *mini);
 
 // Init main struct
@@ -186,8 +186,8 @@ void			clear_line(t_mini *mini);
 
 int				parser(t_mini *mini);
 t_parser		init_struct(t_lexer *lexer, t_mini *mini);
-t_cmd			*create_cmd(t_parser *parser);
-void			redirections(t_parser *parser);
+t_cmd			*create_cmd(t_mini *mini, t_parser *parser);
+void			redirections(t_mini *mini, t_parser *parser);
 void			lst_clear_parser(t_cmd **lst);
 
 // Parser utils
@@ -198,7 +198,7 @@ void			count_pipes(t_mini *mini);
 int				count_args(t_lexer *lst);
 t_lexer			*move_to_next_cmd(t_lexer *lst);
 void			ft_node_add_back_parser(t_cmd **lst, t_cmd *node);
-int				check_line(t_mini *mini, int token);
+int				check_line(t_mini *mini);
 
 int				lst_size_cmd(t_mini *mini);
 t_cmd			*clear_one_cmd(t_cmd **lst);
@@ -220,8 +220,8 @@ int				builtin_cd(t_mini *mini, t_cmd *cmd);
 // Utils builtins
 
 int				get_pwd(t_mini *mini);
-t_builtin		*create_env(t_mini *mini, t_builtin *lst_env);
-t_builtin	*create_builtin_lst(t_mini *mini, char **env);
+//t_builtin		*create_env(t_mini *mini, t_builtin *lst_env);
+t_builtin		*create_builtin_lst(t_mini *mini, t_builtin *lst_env, char **env);
 //t_builtin		*create_builtin_lst(t_mini *mini, char **env);
 t_builtin		*ft_lstnew_builtin(t_mini *mini, char *str);
 void			ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new);
@@ -250,6 +250,25 @@ void			delone_node_env(int num_del, t_builtin **lst);
 void			run_expander(t_mini *mini, t_cmd *cmd);
 char   			*expand_str_line(t_mini *mini, char *str);
 char			**expand_cmd_line(t_mini *mini, char **str);
+int				calculate_malloc_size(char *str);
+char			*search_and_replace_variable(t_builtin *env_variable, char *expand_name);
+//char			*search_and_replace_variable(t_mini *mini, t_builtin *env_variable, char *expand_name);
+char			*get_expansion_key(t_mini *mini, char *str);
+char			*catch_expansion_key(t_mini *mini, char *str, int *i);
+char			*expanded_string(t_mini *mini, char *str);
+int				count_env_variable(t_mini *mini, char *line);
+int				variable_existence(t_mini *mini, char *line, int i);
+//void			send_line(t_mini *mini, char *str);
+void			forget_the_variable(char *str, int *i);
+int				calculate_len_for_malloc(t_mini *mini, char *str);
+char			*expand_the_line(t_mini *mini, char *str);
+char			*expand_the_line_lead_zero(t_mini *mini, char *str);
+//int				about_quotes(t_mini *mini, char *str);
+char			*quit_single_quotes(t_mini *mini, char *str);
+int				update_the_situation(char c, int lead);
+//void			check_the_situation(char *str);
+char			*final_expansion(t_mini *mini, char *str);
+int				possible_env(char *str, int i);
 
 
 // Utils expander
@@ -288,7 +307,7 @@ int				put_outfile(t_mini *mini, t_lexer *lex, char *filename);
 
 int				check_if_exists_hdoc(t_mini *mini, t_cmd *cmd);
 char			*generate_filename(void);
-int				check_eof(t_lexer	*redir, char *hdoc_filename);
+int				check_eof(t_mini *mini, t_lexer	*redir, char *hdoc_filename);
 int				open_save_hdoc(t_lexer *redir, char *hdoc_filename, bool quotes);
 void			remove_eof_quotes(t_lexer *node);
 
@@ -297,7 +316,7 @@ void			remove_eof_quotes(t_lexer *node);
 t_lexer			*ft_new_node(char *str, int token);
 void			ft_node_add_back(t_lexer **lst, t_lexer *node);
 int				list_add_node(t_lexer **lst, enum e_operator token, char *str);
-t_lexer			*clear_one_node(t_lexer **lst);
+void			clear_one_node(t_lexer **lst);
 void			del_first_node(t_lexer **lst);
 void			delone_node(int num_del, t_lexer **lst);
 int				lst_size_lexer(t_mini *mini);
@@ -320,7 +339,7 @@ int				 check_quotes_is_married(char *line);
 
 // Errors
 
-void			print_error(t_mini *mini, int keycode);
-void			parser_token_error(t_mini *mini, int token);
+int				print_error(t_mini *mini, int keycode);
+int				token_error(t_mini *mini, int token);
 
 #endif

@@ -18,9 +18,9 @@ int	list_add_node(t_lexer **lexer_list, enum e_operator token, char *str)
 
 	node = ft_new_node(str, token);
 	if (!node)
-		return (1);
+		return (0);
 	ft_node_add_back(lexer_list, node);
-	return (0);
+	return (1);
 }
 
 t_lexer	*ft_new_node(char *str, int token)
@@ -32,7 +32,7 @@ t_lexer	*ft_new_node(char *str, int token)
 	if (!new)
 		return (0);
 	new->str = str;
-	new->num_node = ++i;
+	new->num_node = i++;
 	new->token = token;
 	new->next = NULL;
 	return (new);
@@ -53,7 +53,7 @@ void	ft_node_add_back(t_lexer **lst, t_lexer *node)
 	tmp->next = node;
 }
 
-t_lexer	*clear_one_node(t_lexer **lst)
+void	clear_one_node(t_lexer **lst)
 {
 	if ((*lst)->str)
 	{
@@ -62,7 +62,6 @@ t_lexer	*clear_one_node(t_lexer **lst)
 	}
 	free(*lst);
 	*lst = NULL;
-	return (NULL);
 }
 
 void	del_first_node(t_lexer **lst)

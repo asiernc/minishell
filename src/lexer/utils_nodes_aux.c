@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void delone_node(int num_del, t_lexer **lst)
+/*void delone_node(int num_del, t_lexer **lst)
 {
 	t_lexer *node;
 	t_lexer *prev;
@@ -36,6 +36,34 @@ void delone_node(int num_del, t_lexer **lst)
 		prev->next = NULL;
 	clear_one_node(&node);
 	*lst = start;
+}*/
+
+void delone_node(int num_del, t_lexer **lst)
+{
+    t_lexer *node;
+    t_lexer *prev;
+
+	node = *lst;
+	prev = NULL;
+    if (node && node->num_node == num_del)
+	{
+		//printf("FLAG 1\n");
+        del_first_node(lst);
+        return;
+    }
+    while (node && node->num_node != num_del)
+	{
+		//printf("FLAG 2\n");
+        prev = node;
+        node = node->next;
+    }
+    if (node) 
+	{
+        if (prev)
+            prev->next = node->next;
+		//printf("FLAG 3\n");
+        clear_one_node(&node);
+    }
 }
 
 void	lst_clear_lexer(t_lexer **lst)

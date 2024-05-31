@@ -66,12 +66,11 @@ char	*get_value_from_env(char *str)//to free once used
 	char	*result;
 
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '=')
-			break ;
+	while (str[i] && str[i] != '-')
 		i++;
-	}
+	if (str[i] == '\0') {
+        return NULL;
+    }
 	i++;
 	j = i;
 	while (str[i])
@@ -79,11 +78,11 @@ char	*get_value_from_env(char *str)//to free once used
 	len_str = i - j;
 	result = malloc((len_str + 1) * sizeof(char));
 	if (!result)
-		return (perror("malloc failed to create the env value"), NULL);
+		return (perror("malloc failed to create the env value"), NULL); // print_error
 	i = 0;
-	while (j < (int)ft_strlen(str))
+	while (str[j] != '\0')
 		result[i++] = str[j++];
-	result[j] = '\0';
+	result[i] = '\0';
 	return (result);
 }
 

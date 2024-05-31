@@ -6,7 +6,7 @@
 /*   By: asiercara <marvin@42.fr>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/05/18 18:11:12 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/05/29 17:34:40 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	mini_live(t_mini *mini)
 	add_history(mini->line);
 	if (!check_quotes_is_married(mini->line))
 		print_error(mini, 1);
-	if (lexer_tokenizer(mini) != 0)
-		print_error(mini, 1); //display_error
+	if (!lexer_tokenizer(mini))// != 0)
+		print_error(mini, 1);
 	parser(mini);
 	pre_executor(mini);
 	//free and reset
@@ -40,17 +40,36 @@ int	mini_live(t_mini *mini)
 	return (0);
 }
 
-void	init_mini(t_mini *mini)
+void	init_mini(t_mini *mini, char **env)
 {
+	t_builtin	*lst_env;
 
+	lst_env = NULL;
 	mini->line = NULL;
 	mini->lexer = NULL;
 	mini->cmd = NULL;
 	mini->flag_hdoc = 0;
 	mini->pid = NULL;
+	mini->original_env = env;
 	g_global_var.inside_cmd = 0;
 	g_global_var.inside_hdoc = 0;
 	g_global_var.outside_hdoc = 0;
+	mini->env = create_builtin_lst(mini, lst_env, env);
+	concat_lst_env(mini);
+	/*int	i = 0;
+	printf("_______________________\n");
+	while (mini->env_cpy[i] != NULL) {
+        printf("%s\n", mini->env_cpy[i]);
+        i++;
+    }
+	printf("_______________________\n");*/
+	/*i = 0;
+	printf("_______________________\n");
+	while (mini->original_env[i] != NULL) {
+        printf("%s\n", mini->original_env[i]);
+        i++;
+    }
+	printf("_______________________\n");*/
 	init_signals();
 	get_pwd(mini);
 	//cd exit success get current directory pwd = getcurrent directory
@@ -96,9 +115,9 @@ int	mini_reset(t_mini *mini)
 		lst_clear_cmds(&mini->cmd);
 	if (mini->line)
 		free(mini->line);
-	if (mini->pipes)
+	if (mini->pid)
 		free(mini->pid);
-	init_mini(mini);
+	init_mini(mini, mini->original_env);
 	mini_live(mini);
 	return (0);
 }

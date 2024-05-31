@@ -138,7 +138,7 @@ int	builtin_export(t_mini *mini, t_cmd *cmd)
 			join_values(mini, &mini->env, cmd->str[i]);
 		i++;
 	}
-	ft_free_double_array(mini->env_cpy);
+	//ft_free_double_array(mini->env_cpy);
 	concat_lst_env(mini);
 	return (EXIT_SUCCESS);
 }

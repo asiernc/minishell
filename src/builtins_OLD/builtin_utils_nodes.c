@@ -10,19 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-typedef struct	s_builtin
-{
-	char				*key;//the name of the variable in env
-	char				*value;
-	int					index;
-//	int					checker;//to check if the builtin is ENV or EXPORT
-	struct s_builtin	*next;
-}				t_builtin;//for ENV and EXPORT builtins
-
-char	*get_key_from_env(char *str);
-char	*get_value_from_env(char *str);
+#include "minishell.h"
 
 void	ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new)
 {
