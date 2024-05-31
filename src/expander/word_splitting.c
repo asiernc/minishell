@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:38:51 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/30 17:39:47 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/05/31 10:32:31 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*expand_the_line_lead_zero(t_mini *mini, char *str)//malloc ⚠️
 
 	i = 0;
 	result = NULL;
-	j = calculate_len_for_malloc(mini, str);//you're allocating too much space for word splitting
+	j = calculate_len_for_malloc(mini, str);//you're allocating too much space for word splitting //you should create a function calculate_len_for_malloc_lead_zero
 	result = malloc(sizeof(char) * j + 1);
 	if (!result)
 		print_error(mini, 2);
