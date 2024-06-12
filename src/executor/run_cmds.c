@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 13:39:44 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:17:35 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	int	pid;
 	int	status;
 
+	//printf("REDIREC %d\n", cmd->redirections->token);
 	run_expander(mini, cmd);
+	//printf("TWO TWO REDIREC %d\n", cmd->redirections->token);
+	//printf("CMD LINE %s %s", cmd->str[0], cmd->str[1]);
 	if (cmd->builtin != NOT_HAVE)
 	{
 		g_global_var.error_code = do_builtin(mini, cmd);

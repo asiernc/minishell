@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hdoc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/18 17:23:54 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/06/12 17:30:22 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 		quotes = false;
 	g_global_var.outside_hdoc = 0;
 	g_global_var.inside_hdoc = 1;
-	error = open_save_hdoc(redir, hdoc_filename, quotes);
+	error = open_save_hdoc(mini, redir, hdoc_filename, quotes);
 	g_global_var.inside_hdoc = 0;
 	mini->flag_hdoc = 1;
 	return (error);
 }
 
-int	open_save_hdoc(t_lexer *redir, char *hdoc_filename, bool quotes)
+int	open_save_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename, bool quotes)
 {
 	char	*line;
 	int		fd;
@@ -83,10 +83,8 @@ int	open_save_hdoc(t_lexer *redir, char *hdoc_filename, bool quotes)
 	while (line != NULL && ft_strcmp_simple(redir->str, line) != 0 && g_global_var.outside_hdoc == 0)
 	{
 		if (quotes == false)
-			ft_putendl_fd(line, fd);
-		//	line = expand_line(mini, line);
-		else
-			ft_putendl_fd(line, fd);
+			line = expand_str_line(mini, line);
+		ft_putendl_fd(line, fd);
 		free(line);
 		line = readline(">");
 	}

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 13:45:09 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:54:31 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,7 +328,7 @@ int				put_outfile(t_mini *mini, t_lexer *lex, char *filename);
 int				check_if_exists_hdoc(t_mini *mini, t_cmd *cmd);
 char			*generate_filename(void);
 int				check_eof(t_mini *mini, t_lexer	*redir, char *hdoc_filename);
-int				open_save_hdoc(t_lexer *redir, char *hdoc_filename, bool quotes);
+int				open_save_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename, bool quotes);
 void			remove_eof_quotes(t_lexer *node);
 
 // Utils nodes
