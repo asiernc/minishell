@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 17:17:35 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:48:45 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 		do_redirections(mini, cmd);
 	if(cmd->builtin != NOT_HAVE)
 	{
+		printf("entered here in ft_exec_cmd");
 		exit_code = do_builtin(mini, cmd);
 		exit(exit_code);
 	}
@@ -37,7 +38,10 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 	if (cmd->builtin == ECHO)
 		exit_code = builtin_echo(mini, cmd);
 	else if (cmd->builtin == CD)
+	{
+		printf("entered in CD Builtin condition in do_cmd");
 		exit_code = builtin_cd(mini, cmd);
+	}
 	else if (cmd->builtin == PWD)
 		exit_code = builtin_pwd(mini);
 	else if (cmd->builtin == EXPORT)
@@ -94,10 +98,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	int	pid;
 	int	status;
 
-	//printf("REDIREC %d\n", cmd->redirections->token);
 	run_expander(mini, cmd);
-	//printf("TWO TWO REDIREC %d\n", cmd->redirections->token);
-	//printf("CMD LINE %s %s", cmd->str[0], cmd->str[1]);
 	if (cmd->builtin != NOT_HAVE)
 	{
 		g_global_var.error_code = do_builtin(mini, cmd);

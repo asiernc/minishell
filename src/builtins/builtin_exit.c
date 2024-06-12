@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/12 18:33:23 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:39:07 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ int	builtin_exit(t_mini *mini, t_cmd *cmd)
 				ft_atoi(cmd->str[1]) % 256);
 		}
 	}
-	return (exit(g_global_var.error_code), EXIT_SUCCESS);
+	return (exit(g_global_var.error_code), g_global_var.error_code);
 }
