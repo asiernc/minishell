@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 12:56:16 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:18:54 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int executor(t_mini *mini)
 		else
 			break ;
 	}
-	wait_pipes(mini, mini->pid, mini->pipes);
+	wait_pipes(mini->pid, mini->pipes);
 	//close(fd_in);
 	return (0);
 }
@@ -98,7 +98,7 @@ int check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2])
 	return (fd_in);
 }
 
-void	wait_pipes(t_mini *mini, int *pid, int pipes)
+void	wait_pipes(int *pid, int pipes)
 {
 	int	i;
 	int	status;

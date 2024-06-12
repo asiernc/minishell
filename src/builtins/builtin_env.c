@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:11:30 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/12 12:53:44 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:19:56 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,48 +125,6 @@ t_builtin *ft_lstnew_builtin(t_mini *mini, char *env)
     }
     new_node->next = NULL;
     return (new_node);
-}
-
-/*t_builtin 	*create_builtin_lst(t_mini *mini, char **env)//to free once used
-{
-	t_builtin	*new_node;
-	t_builtin	*lst_env;
-	int			i;
-
-	i = 0;
-	lst_env = NULL;
-	while (env[i])
-	{
-		new_node = ft_lstnew_builtin(mini, env[i]);
-		if (!new_node)
-			print_error(mini, 2);
-		ft_lstadd_back_builtin(&lst_env, new_node);
-		i++;
-	}
-	return (lst_env);
-}
-
-void 	create_env(t_mini *mini)
-{
-	//t_builtin	*lst_env;
-
-	//lst_env = NULL;
-	mini->env = create_builtin_lst(mini, mini->original_env);
-	if (!mini->env)
-		print_error(mini, 2);
-	//concat_lst_env(mini);
-	//return (lst_env);
-}*/
-
-static int lst_lst(t_builtin **lst)
-{
-    int size = 0;
-    t_builtin *tmp = *lst;
-    while (tmp){
-        size++;
-        tmp = tmp->next;
-    }
-    return size;
 }
 
 void	create_builtin_lst(t_mini *mini, t_builtin **lst_env, char **env)//to free once used
