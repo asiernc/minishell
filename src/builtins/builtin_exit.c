@@ -1,15 +1,15 @@
 /* ************************************************************************** */
-/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 13:08:54 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/19 15:37:25 by simarcha         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/06/12 13:34:53 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -46,20 +46,44 @@ static int	check_str_exit(char *str)
 		return (exit_code % 256);
 }
 
+
+int	ft_isdigit_and_signs(char *str)
+{
+	if ((c >= '0' && c <= '9') || str[0] == '-' || c == '+')
+		return (1);
+	return (0);
+}
+
+int	check_exit_many_arguments(t_cmd *cmd)
+{
+	if (ft_isdigit_and_signs(cmd->str[1]) == 1)
+	{
+		//bash: exit: too many arguments
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+		ft_putstr_fd("shelldone: exit: ", STDERR_FILENO);
+		ft_putendl_fd("too many arguments", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	else
+	{
+		//bash: exit: numeric argument required
+		ft_putstr_fd("exit\n", STDERR_FILENO);
+		ft_putstr_fd("shelldone: exit: ", STDERR_FILENO);
+		ft_putendl_fd("too many arguments", STDERR_FILENO);
+		return (2);
+	}
+}
+
 int	builtin_exit(t_mini *mini, t_cmd *cmd)
 {
 	//char	*tmp;
 	int		exit_code;
 
 	mini->original_env = NULL;
+	
 	//free_mini(mini);
 	if (cmd->str[1] && cmd->str[2])
-	{
-		//bash: exit: too many arguments
-		ft_putstr_fd("shelldone: exit: ", STDERR_FILENO);
-		ft_putendl_fd("too many arguments", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
+		return (check_exit_many_arguments(cmd));
 	//tmp = ft_strdup(cmd->str[1]);
 	//ft_lstclear_builtin(&mini->env);
 	free_mini(mini);

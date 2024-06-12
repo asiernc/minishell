@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:07:20 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/04/30 15:45:09 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:42:55 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
 
 #include "minishell.h"
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_splitting.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:38:51 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/10 18:54:55 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:42:26 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	word_splitting(char **env_value, char *result, int *j)
 		l = 0;
 		while (env_value[k][l])
 			result[(*j)++] = env_value[k][l++];
-		if (k + 1 < count_lines_in_array(env_value))
+		if (k + 1 < lines_counter(env_value))
 			result[(*j)++] = ' ';
 		k++;
 	}
@@ -103,7 +103,6 @@ char	*expand_the_line_lead_zero(t_mini *mini, char *str)
 	char	*result;
 
 	i = 0;
-	result = NULL;
 	j = calculate_len_for_malloc(mini, str);
 	result = malloc(sizeof(char) * j + 1);
 	if (!result)
@@ -116,6 +115,9 @@ char	*expand_the_line_lead_zero(t_mini *mini, char *str)
 		if ((i > 0 && str[i] == '$' && str[i - 1] == BACKSLASH)
 			|| (str[i] != '$'))
 			result[j++] = str[i++];
+		else if (i < (int)ft_strlen(str) - 1 && str[i] == '$'
+			&& str[i + 1] == '?')
+			j += expand_error_code(mini, &i, &result[j]);
 		else
 			j += expand_dollar_variable_lead_zero(mini, str, &i, &result[j]);
 	}

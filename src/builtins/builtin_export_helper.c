@@ -6,23 +6,11 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/12 12:33:47 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:36:08 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int lst_lst(t_builtin **lst)
-{
-    int size = 0;
-    t_builtin *tmp = *lst;
-    while (tmp)
-	{
-        size++;
-        tmp = tmp->next;
-    }
-    return size;
-}
 
 void	print_env_export(t_mini *mini, int flag)//t_builtin *lst_env, )
 {
@@ -40,10 +28,9 @@ void	print_env_export(t_mini *mini, int flag)//t_builtin *lst_env, )
 	{
 		while (tmp)
 		{
-			//if ((tmp->key && tmp->value) || tmp->key)
-			printf("%s=%s\n", tmp->key, tmp->value);
+			if (tmp->key && tmp->value)
+				printf("%s=%s\n", tmp->key, tmp->value);
 			tmp = tmp->next;
-			i++;
 		}
 	}
 	else if (flag == 1)
@@ -60,8 +47,6 @@ void	print_env_export(t_mini *mini, int flag)//t_builtin *lst_env, )
 			tmp = tmp->next;
 		}
 	}
-	printf("VALOR DE I %d\n", i);
-//	ft_lstclear_builtin(&lst_export);//this line will be written at the very last step of the pgrm. Just before return (0) of the main
 }
 
 //I HAVE TO REMOVE THE NODE->KEY = _ BECAUSE IT ISN'T IN EXPORT

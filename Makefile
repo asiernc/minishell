@@ -6,13 +6,21 @@
 #    By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2024/06/11 13:17:52 by anovio-c         ###   ########.fr        #
+=======
+#    Updated: 2024/06/11 19:00:54 by simarcha         ###   ########.fr        #
+>>>>>>> simonlinux
 #                                                                              #
 # **************************************************************************** #
 
 #SETUP
 CC                  = gcc
+<<<<<<< HEAD
 CFLAGS              = -Wall -Werror -Wextra -g
+=======
+CFLAGS              = -Wall -Werror -Wextra
+>>>>>>> simonlinux
 NAME                = minishell
 RM                  = rm -rf
 
@@ -49,6 +57,11 @@ SRCS_FILES          = main.c \
                       expander/check_before_expansion.c \
                       expander/word_splitting.c \
                       expander/utils_expander.c \
+<<<<<<< HEAD
+=======
+                      expander/final_expansion_utils.c \
+                      expander/final_expansion.c \
+>>>>>>> simonlinux
                       errors/parser_errors.c \
                       builtins/builtin_echo.c \
                       builtins/builtin_pwd.c \
@@ -59,8 +72,13 @@ SRCS_FILES          = main.c \
                       builtins/builtin_export_helper.c \
                       builtins/builtin_unset.c \
                       builtins/builtin_cd.c \
+<<<<<<< HEAD
                       utils/signals.c
 #                      expander/manage_quotes.c
+=======
+                      builtins/cleaning_builtin_nodes.c \
+                      utils/signals.c
+>>>>>>> simonlinux
 SRCS                = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 OBJ_SRCS            = $(SRCS:.c=.o)
 

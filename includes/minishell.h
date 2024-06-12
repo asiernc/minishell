@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 13:19:16 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:30:13 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ extern t_global_var		g_global_var;
 
 typedef struct s_mini
 {
-	char					*line;//
+	char					*line;
 	char					**original_env;
 	char					*pwd;
 	char					*old_pwd;
@@ -74,7 +74,6 @@ typedef struct s_mini
 	int						pipes;
 	int						count_infiles;
 	int						flag_hdoc;
-	int						flag_reset;
 	int						*pid;
 	int						error_code;//we need to know what was the last error_code number to send it for the exit function
 	struct s_cmd		*cmd;
@@ -161,8 +160,8 @@ typedef struct s_cmd
 	int						num_redirections;//			 :    0          1
 	char					*hdoc_filename;//			 :   NULL	    NULL
 	t_lexer					*redirections;//holds the token '>' and the redirection filename || the oef (for the hdoc)
-	struct s_cmd		*next;
-	struct s_cmd		*previous;
+	struct s_cmd			*next;
+	struct s_cmd			*previous;
 }	t_cmd;
 //⚠️  when the nodes are added to the redirections list, thoses nodes are deleted from the lexer list
 //to manage the redirections and the commands more easily
@@ -257,6 +256,8 @@ char			**delete_variable(char **old_env, char *str);
 char			**create_new_env(char **old_env, char **new_env, char *variable);
 //int				detect_unset_error(t_cmd *cmd);
 
+int				lines_counter(char **array);
+
 t_builtin		*clear_one_node_env(t_builtin **lst);
 void			del_first_node_env(t_builtin **lst);
 void			delone_node_env(int num_del, t_builtin **lst);
@@ -264,29 +265,30 @@ void			delone_node_env(int num_del, t_builtin **lst);
 // Expander
 
 void			run_expander(t_mini *mini, t_cmd *cmd);
-char   			*expand_str_line(t_mini *mini, char *str);
+char			*expand_str_line(t_mini *mini, char *str);
 char			**expand_cmd_line(t_mini *mini, char **str);
 char			*search_and_replace_variable(t_builtin *env_variable, char *expand_name);
 char			*catch_expansion_key(t_mini *mini, char *str, int *i);
 int				variable_existence(t_mini *mini, char *line, int i);
 void			forget_the_variable(char *str, int *i);
-int				count_lines_in_array(char **array);
 int				calculate_len_for_malloc(t_mini *mini, char *str);
+int				expand_error_code(t_mini *mini, int *i, char *result);
 char			*expand_the_line(t_mini *mini, char *str);
 char			*expand_the_line_lead_zero(t_mini *mini, char *str);
 int				update_the_situation(char c, int lead);
+int				invalid_characters(const char *str);
 char			*final_expansion(t_mini *mini, char *str);
 
-//int				possible_env(char *str, int i);
-//int				calculate_malloc_size(char *str);
-//void			check_the_situation(char *str);
-//int				about_quotes(t_mini *mini, char *str);
-//char			*quit_single_quotes(t_mini *mini, char *str);
-//void			send_line(t_mini *mini, char *str);
-//char			*expanded_string(t_mini *mini, char *str);
-//int				count_env_variable(t_mini *mini, char *line);
-//char			*search_and_replace_variable(t_mini *mini, t_builtin *env_variable, char *expand_name);
-//char			*get_expansion_key(t_mini *mini, char *str);
+// int				possible_env(char *str, int i);
+// int				calculate_malloc_size(char *str);
+// void			check_the_situation(char *str);
+// int				about_quotes(t_mini *mini, char *str);
+// char			*quit_single_quotes(t_mini *mini, char *str);
+// void			send_line(t_mini *mini, char *str);
+// char			*expanded_string(t_mini *mini, char *str);
+// int				count_env_variable(t_mini *mini, char *line);
+// char			*search_and_replace_variable(t_mini *mini, t_builtin *env_variable, char *expand_name);
+// char			*get_expansion_key(t_mini *mini, char *str);
 
 // Utils expander
 
@@ -308,7 +310,7 @@ t_builtin		*find_node_path(t_builtin *lst_env);
 int				do_cmd(t_mini *mini, t_cmd *cmd_lst);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
-void			wait_pipes(int *pid, int pipes);
+void			wait_pipes(t_mini *mini, int *pid, int pipes);
 int				check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2]);
 
 

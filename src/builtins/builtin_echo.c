@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/31 19:49:54 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:31:23 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,39 @@ static int	builtin_echo_flag_n(t_mini *mini, t_cmd *command, int i, int wc)
 		while (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
 				|| check_flag(command->str[i]) == 1))
 			i++;
-		//printf("command->str[i] = _%s_\n", command->str[i]);
 		content = final_expansion(mini, command->str[i]);
 		if (!content)
 			print_error(mini, 2);
 		if (write(1, content, ft_strlen(content)) == -1)
-			print_error(mini, 0);//keycode = write has failed
+			print_error(mini, 0);
 		if (i < wc - 1)
 			if (write(1, " ", 1) == -1)
-				return (print_error(mini, 0), 0);//keycode = write has failed
+				return (print_error(mini, 0), 0);
 		i++;
 		free(content);
 	}
+	return (1);
+}
+
+int	builtin_echo_without_flag(t_mini *mini, t_cmd *command, int i, int wc)
+{
+	char	*content;
+
+	while (command->str[i])
+	{
+		content = final_expansion(mini, command->str[i]);
+		if (!content)
+			print_error(mini, 2);
+		if (write(1, content, ft_strlen(content)) == -1)
+			print_error(mini, 0);
+		if (i < wc - 1)
+			if (write(1, " ", 1) == -1)
+				return (print_error(mini, 0), 0);
+		i++;
+		free(content);
+	}
+	if (write(1, "\n", 1) == -1)
+		return (print_error(mini, 0), 0);
 	return (1);
 }
 
@@ -84,34 +105,12 @@ int	builtin_echo(t_mini *mini, t_cmd *command)
 {
 	int		wordcount;
 	int		i;
-	char	*content;
 
 	wordcount = lines_counter(command->str);
-	printf("wordcount = %i\n", wordcount);
 	i = 1;
 	if (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
-			|| check_flag(command->str[i]) == 1))//if we have the flag -n
+			|| check_flag(command->str[i]) == 1))
 		return (builtin_echo_flag_n(mini, command, 2, wordcount));
-	//else if (command->str[i] && (ft_strcmp(command->str[i], "$?") == 0))
-		//printf("%i\n", mini->exit_code);
-	else//if there is no flag and only the echo cmd
-	{
-		while (command->str[i])
-		{
-			//printf("command->str[i] = _%s_\n", command->str[i]);
-			content = final_expansion(mini, command->str[i]);
-			if (!content)
-				print_error(mini, 2);
-			if (write(1, content, ft_strlen(content)) == -1)
-				print_error(mini, 0);//keycode = write has failed
-			if (i < wordcount - 1)
-				if (write(1, " ", 1) == -1)
-					return (print_error(mini, 0), 0);//keycode = write has failed
-			i++;
-			free(content);
-		}
-		if (write(1, "\n", 1) == -1)
-			return (print_error(mini, 0), 0);//keycode = write has failed
-	}
-	return (1);
+	else
+		return (builtin_echo_without_flag(mini, command, i, wordcount));
 }
