@@ -16,6 +16,8 @@ SRCS		=	ft_memchr.c		\
 				ft_bzero.c		\
 				ft_strmapi.c	\
 				ft_calloc.c		\
+				ft_strcmp.c		\
+				ft_strcmp_simple.c	\
 				ft_strncmp.c	\
 				ft_isalnum.c	\
 				ft_putchar_fd.c	\
@@ -40,6 +42,7 @@ SRCS		=	ft_memchr.c		\
 				ft_strdup.c		\
 				ft_striteri.c	\
 				ft_strjoin.c	\
+				ft_free_double_array.c \
 				ft_lstnew_bonus.c		\
 				ft_lstadd_front_bonus.c	\
 				ft_lstsize_bonus.c		\
