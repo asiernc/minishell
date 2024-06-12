@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/12 13:34:53 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:47:28 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,16 @@ static int	check_str_exit(char *str)
 
 int	ft_isdigit_and_signs(char *str)
 {
-	if ((c >= '0' && c <= '9') || str[0] == '-' || c == '+')
-		return (1);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!(str[i] >= '0' && str[i] <= '9') || str[0] == '-' || str[0] == '+')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	check_exit_many_arguments(t_cmd *cmd)

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 13:30:13 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:45:09 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_mini
 	int						pipes;
 	int						count_infiles;
 	int						flag_hdoc;
+	int						flag_reset;
 	int						*pid;
 	int						error_code;//we need to know what was the last error_code number to send it for the exit function
 	struct s_cmd		*cmd;
@@ -310,7 +311,7 @@ t_builtin		*find_node_path(t_builtin *lst_env);
 int				do_cmd(t_mini *mini, t_cmd *cmd_lst);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
-void			wait_pipes(t_mini *mini, int *pid, int pipes);
+void			wait_pipes(int *pid, int pipes);
 int				check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2]);
 
 

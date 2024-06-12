@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/12 13:36:08 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:48:08 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,8 @@
 void	print_env_export(t_mini *mini, int flag)//t_builtin *lst_env, )
 {
 	t_builtin	*tmp;
-	int	i = 0;
 
 	tmp = mini->env;
-	printf("RAUL 1: %s\n", mini->env->key);
-	int size = lst_lst(&mini->env);
-	printf("RAUL 1: %s\n", mini->env->key);
-
-	printf("LEN LEN LEN LEN %d\n_________________________", size);
-	// hacer un listsize;
 	if (flag == 0)
 	{
 		while (tmp)
