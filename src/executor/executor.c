@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 13:38:34 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:44:37 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,6 @@ void	wait_pipes(int *pid, int pipes)
 		waitpid(pid[i], &status, 0);
 		i++;
 	}
-	if (WIFEXITED(status) == false)
+	if (WIFEXITED(status))
 		g_global_var.error_code = WEXITSTATUS(status);
 }

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/06/12 13:42:33 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:22:22 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	mini_reset(t_mini *mini)
 		free(mini->line);
 	if (mini->pid)
 		free(mini->pid);
+	free(mini->pwd);
 	init_mini(mini, mini->original_env);
 	mini_live(mini);
 	return (0);

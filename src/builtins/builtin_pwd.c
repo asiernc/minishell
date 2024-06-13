@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:47:49 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 13:36:37 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:09:00 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	get_pwd(t_mini *mini)//to free after having used it
 	{
 		if (ft_strncmp(tmp->key, "PWD", 3) == 0)
 		{
-			mini->pwd = tmp->value;
+			mini->pwd = ft_strdup(tmp->value);
 			return (EXIT_SUCCESS);
 		}
 		tmp = tmp->next;

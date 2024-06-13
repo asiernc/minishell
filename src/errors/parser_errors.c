@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/13 10:43:45 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:41:02 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	print_fatal_error(t_mini *mini, int keycode)
 {
-	//Full clean mini
-	(void)mini;
+	printf("\n\nFATALFATALFATALFATAL\n\n");
+	free_mini(mini);
 	if (keycode == MALLOC_ERROR)
 		ft_putstr_fd("malloc: cannot allocate memory\n", STDERR_FILENO);
 	else if (keycode == PIPE_ERROR)
