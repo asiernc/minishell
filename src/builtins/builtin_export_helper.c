@@ -6,11 +6,13 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/12 13:48:08 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:08:16 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*value_with_quotes(char *str);
 
 void	print_env_export(t_mini *mini, int flag)//t_builtin *lst_env, )
 {
@@ -134,8 +136,6 @@ int	check_variable(char *str)
 char	*clean_value(char *str)//YOU MIGHT HAVE A LEAK HERE BECAUSE YOU MALLOC WITHOUT FREE THE PREVIOUS CONTENT
 {
 	int		i;
-	int		j;
-	int		len;
 
 	if (ft_strchr(str, '=') == NULL)
 		return (NULL);
@@ -145,12 +145,46 @@ char	*clean_value(char *str)//YOU MIGHT HAVE A LEAK HERE BECAUSE YOU MALLOC WITH
 	i++;
 	if (str[i] == '\0')
 		return (ft_strdup(""));
-	while (str[i] == 34 || str[i] == 39)
-		i++;
-	j = (int)ft_strlen(str) - 1;
-	while (str[j] == 34 || str[j] == 39)
-		j--;
-	j++;
-	len = j - i;
-	return (ft_substr(str, i, len));
+	if (str[i] == 34 || str[i] == 39)
+		return (value_with_quotes(&str[i]));
+	else
+		return (ft_strdup(&str[i]));
 }
+
+static char	*value_with_quotes(char *str)
+{
+	char	del;
+	int		len;
+	char	*res;
+	int		i;
+	char	*final;
+
+	del = str[0];
+	len = (int)ft_strlen(str) - 1;
+	while (str[len])
+	{
+		if (str[len] == del)
+			res = ft_substr(str, 1, len - 1);//proteger
+		len--;
+	}
+	len = (int)ft_strlen(res);
+	i = 0;
+	while (res[i])
+	{
+		if (ft_strchr(res, del))
+			len--;
+		i++;
+	}
+	final = malloc(sizeof(char) * len + 1);
+	i = 0;
+	len = 0;
+	while (res[i])
+	{
+		if (res[i] != del)
+			final[len++] = res[i];
+		i++;
+	}
+	final[len] = '\0';
+	return(free(res), final);
+}
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 18:55:33 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:43:45 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	print_fatal_error(t_mini *mini, int keycode)
 {
+	//Full clean mini
+	(void)mini;
 	if (keycode == MALLOC_ERROR)
 		ft_putstr_fd("malloc: cannot allocate memory\n", STDERR_FILENO);
 	else if (keycode == PIPE_ERROR)
@@ -22,7 +24,7 @@ int	print_fatal_error(t_mini *mini, int keycode)
 		ft_putstr_fd("fork: Error\n", STDERR_FILENO);
 	else if (keycode == DUP2_ERROR)
 		ft_putstr_fd("dup2: Error\n", STDERR_FILENO);
-	ft_putstr_fd("Error System\n");
+	ft_putendl_fd("Error System", STDERR_FILENO);
 	exit(2);
 }
 
@@ -30,7 +32,7 @@ int	print_error(t_mini *mini, int keycode)
 {
 	if (keycode == MALLOC_ERROR || keycode == PIPE_ERROR
 		|| keycode == FORK_ERROR || keycode == DUP2_ERROR)
-		print_fatal_error(mini, keycode)
+		print_fatal_error(mini, keycode);
 	ft_putstr_fd("shelldone: ", STDERR_FILENO);
 	if (keycode == SINTAX_ERROR)
 		ft_putstr_fd("syntax error near unexpected token\n", 1);
