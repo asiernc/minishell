@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/13 14:41:02 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:04:56 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	print_fatal_error(t_mini *mini, int keycode)
 
 int	print_error(t_mini *mini, int keycode)
 {
+	//printf("entered in print_error\n");
 	if (keycode == MALLOC_ERROR || keycode == PIPE_ERROR
 		|| keycode == FORK_ERROR || keycode == DUP2_ERROR)
 		print_fatal_error(mini, keycode);

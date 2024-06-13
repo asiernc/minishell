@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:25:52 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/06 17:18:26 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:53:00 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,16 @@ static	int	detect_unset_error(t_cmd *cmd)
 			STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	while (unset_arg[i++])
+	while (unset_arg[i])
 	{
-		if (unset_arg[i++] == '/')
+		if (unset_arg[i] == '/')
 		{
 			ft_putstr_fd("shelldone: unset: `", STDERR_FILENO);
 			ft_putstr_fd(&unset_arg[1], STDERR_FILENO);
 			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 			return (EXIT_FAILURE);
 		}
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }

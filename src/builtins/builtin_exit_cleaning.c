@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:28:38 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/13 14:35:16 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:04:24 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void	free_mini(t_mini *mini)
 		free(mini->pid);
 	ft_free_double_array(mini->env_cpy);
 	ft_lstclear_builtin(&mini->env);
-	free(mini->pwd);
-	free(mini->old_pwd);
+	if (mini->pwd)
+		free(mini->pwd);
+
 	if (mini->pipes)
 		free(mini->pid);
 }

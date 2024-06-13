@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/13 14:34:21 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:05:19 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 		exit_code = do_builtin(mini, cmd);
 		exit(exit_code);
 	}
-	printf("VALUE %s\n", cmd->str[0]);
+	//printf("VALUE %s\n", cmd->str[0]);
 	if (cmd->str[0] && cmd->str[0][0])
 		exit_code = do_cmd(mini, cmd);
 	exit(exit_code);
