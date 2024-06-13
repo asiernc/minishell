@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 16:54:31 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:33:28 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,7 @@ char			**create_new_env(char **old_env, char **new_env, char *variable);
 //int				detect_unset_error(t_cmd *cmd);
 
 int				lines_counter(char **array);
+void			free_mini(t_mini *mini);
 
 t_builtin		*clear_one_node_env(t_builtin **lst);
 void			del_first_node_env(t_builtin **lst);
