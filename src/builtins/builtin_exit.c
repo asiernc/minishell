@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/14 15:12:22 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:41:58 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	check_exit_many_arguments(char *str)
 	else
 	{
 		ft_putendl_fd("exit", STDERR_FILENO);
-		ft_putstr_fd("shelldone: exit: ", STDERR_FILENO);
+		ft_putstr_fd("shelldone: exit", STDERR_FILENO);
 		ft_putendl_fd(": too many arguments", STDERR_FILENO);
 		return (1);
 	}
@@ -77,17 +77,14 @@ int	builtin_exit(t_mini *mini, t_cmd *cmd)
 	
     str1 = NULL;
     str2 = NULL;
-//	printf("cmd->str[0] = _%s_\n", cmd->str[0]);
-//	printf("cmd->str[1] = _%s_\n", cmd->str[1]);
-//	printf("cmd->str[2] = _%s_\n", cmd->str[2]);
+
 	if (cmd->str && cmd->str[1])
 	{
         str1 = ft_strdup(cmd->str[1]);
         if (cmd->str[2])
 		    str2 = ft_strdup(cmd->str[2]);
 	}
-    //(void)mini;
-    free_mini(mini);
+    //free_mini(mini);
 	printf("str1 memory address %p && str1 = _%s_\n", str1, str1);
 //	printf("cmd->str1 memory address %p && cmd->str[1] = _%s_\n", cmd->str[1], cmd->str[1]);
     printf("str2 memory address %p && str2 = _%s_\n", str2, str2);
@@ -95,25 +92,25 @@ int	builtin_exit(t_mini *mini, t_cmd *cmd)
 	if (str2)
 	{
 		if (check_exit_many_arguments(str1) == 2)
-			return (free(str2), exit(2), 2);
+			return (free_mini(mini), free(str2), exit(2), 2);
         else
-            return (1);
+            return (free_elements(str1, str2), 1);
 	}
 	if (str1)
 	{
 		if (ft_isdigit_and_signs(str1) == 0)
-			return (exit(numeric_argument_required(str1)), 2);
+			return (free_mini(mini), exit(numeric_argument_required(str1)), 2);
 		else
 		{
             printf("l.107");
 			if (check_zero(str1) == 1)
-				return (free_elements(str1, str2), exit(0), 0);
+				return (free_mini(mini), free_elements(str1, str2), exit(0), 0);
             exit_code = ft_atoi(str1) % 256;
             printf("exit_code = %i\n", exit_code);
             free_elements(str1, str2);
-			return (exit(exit_code), exit_code);
+			return (free_mini(mini), exit(exit_code), exit_code);
 		}
 	}
-    free_elements(str1, str2);
-	return (exit(g_global_var.error_code), g_global_var.error_code);
+	return (free_mini(mini), free_elements(str1, str2),
+		exit(g_global_var.error_code), g_global_var.error_code);
 }
