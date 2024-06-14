@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/14 14:41:06 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:07:55 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,12 @@ char			**create_new_env(char **old_env, char **new_env, char *variable);
 //int				detect_unset_error(t_cmd *cmd);
 
 int				lines_counter(char **array);
+int				check_zero(char *str);
+int				ft_isdigit_and_signs(char *str);
+int				numeric_argument_required(char *str);
+int				check_exit_many_arguments(char *str);
+int				exit_with_one_argument(t_mini *mini, char *str1, char *str2);
+
 void			free_elements(char *str1, char *str2);
 void			free_mini(t_mini *mini);
 
