@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/05/31 12:27:44 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:27:00 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	**clear_line_export(char **str);
+//static char	**clear_line_export(char **str);
 //lst refers to the list that contains all the lines of the export env
 //in this function, str refers to the new export variable. ie: 'abc=test'
 static t_builtin	*add_export_variable(t_mini *mini, t_builtin *lst, char *str, char *value_trimmed)
@@ -48,13 +48,15 @@ static void	join_values(t_mini *mini, t_builtin **lst_export, char *str)
 	if (!key_str)
 		return ;
 	value_str = get_value_from_env(mini, str);
+	printf("VALUE STR %s\n", value_str);
 	value_str = clean_value(str);
 	if (!value_str)
 		print_error(mini, 2);
 	tmp = *lst_export;
 	while (ft_strcmp(tmp->key, key_str))//while it's different
 		tmp = tmp->next;
-	value_node = tmp->value;
+	value_node = ft_strdup(tmp->value);
+	//printf("VALUE node %s\n", value_node);
 	free(tmp->value);
 	tmp->value = ft_strjoin(value_node, value_str);
 	free(key_str);
@@ -79,65 +81,32 @@ static void	check_key_already_exists(t_mini *mini, t_builtin *lst_export, char *
 	}
 }
 
-/*int	builtin_export(t_mini *mini, t_cmd *cmd)
-{
-	t_builtin	*lst_export;
-	char		**list;
-	//char		*key_str;
-	char		*value_trimmed;
-	int			i;
-	
-	lst_export = mini->env;
-	if (!lst_export)
-		print_error(mini, 2);
-	if (ft_strcmp(cmd->str[0], "export") == 0 && cmd->str[1] == NULL)
-		print_env_export(mini, 1);
-	i = 0;
-	list = clear_line_export(cmd->str);
-	while (list[i])
-	{
-		//fprintf(stderr, "STR[%d] ==> %s\n", i, cmd->str[i]);
-		if (check_variable(cmd->str[i]) == 1)
-		{
-			check_key_already_exists(mini, lst_export, cmd->str[i]);
-			//if (key_str)
-			//	builtin_unset(mini, &mini->env, cmd);
-				//builtin_unset(mini, cmd);
-			value_trimmed = trim_quotes(cmd->str[i]);
-			fprintf(stderr, "TRIMMED %s\n", value_trimmed);
-			lst_export = add_export_variable(mini, lst_export, cmd->str[i], value_trimmed);
-		}
-		else if (check_variable(cmd->str[i]) == 2)
-			join_values(mini, &lst_export, cmd->str[i]);
-		i++;
-	}
-	concat_lst_env(mini);
-	return (EXIT_SUCCESS);
-}*/
-
 int	builtin_export(t_mini *mini, t_cmd *cmd)
 {
 	//t_builtin	*lst_export;
-	char		**line;
+	//char		**line;
 	char		*value_trimmed;
 	int			i;
 	
 	if (ft_strcmp(cmd->str[0], "export") == 0 && cmd->str[1] == NULL)
 		print_env_export(mini, 1);
-	line = clear_line_export(cmd->str);
+	printf("CLean 1 %s\n", cmd->str[1]);
+	//line = clear_line_export(cmd->str);
+	//printf("CLean 2 %s\n", line[1]);
 	i = 1;
-	while (line[i])
+	while (cmd->str[i])
 	{
-		if (check_variable(line[i]) == 1)
+		if (check_variable(cmd->str[i]) == 1)
 		{
-			check_key_already_exists(mini, mini->env, line[i]);
-			value_trimmed = clean_value(line[i]);
-			mini->env = add_export_variable(mini, mini->env, line[i], value_trimmed);
+			check_key_already_exists(mini, mini->env, cmd->str[i]);
+			value_trimmed = clean_value(cmd->str[i]);
+			mini->env = add_export_variable(mini, mini->env, cmd->str[i], value_trimmed);
 		}
-		else if (check_variable(line[i]) == 2)
+		else if (check_variable(cmd->str[i]) == 2)
 			join_values(mini, &mini->env, cmd->str[i]);
 		i++;
 	}
+	//free(value_trimmed);//?????
 	//ft_free_double_array(mini->env_cpy);
 	concat_lst_env(mini);
 	return (EXIT_SUCCESS);
@@ -166,7 +135,7 @@ int	builtin_export(t_mini *mini, t_cmd *cmd)
 }*/
 
 
-static char **clear_line_export(char **str)
+/*static char **clear_line_export(char **str)
 {
     int		i;
     char	*result_str = NULL;
@@ -193,16 +162,4 @@ static char **clear_line_export(char **str)
 	result = ft_split(result_str, ' ');
     free(result_str);
     return (result);
-}
-
-/*int	main(int argc, char **argv, char **env)
-{
-//	builtin_export(env, "PAGER+=TEEEEEEEEEEEEEEEST");
-	builtin_export(env, "PAGER+=SIIIIIIIIIIIIIIMON");
-	argc = 0;
-	argv[0] = "./a.out";
-//	unset_builtin(env, "PAGER");
-//	printf("%lu\n", sizeof(t_builtin));
-//	printf("%p\n", argc);
-	return (0);
 }*/

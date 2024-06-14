@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 13:30:40 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:45:02 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_mini		mini;
 
-	if (argc != 1 && argv[0])
+	if ((argc != 1 && argv[0]))
 	{
-		printf("Don't write any argument");
+		printf("Don't write any argument\n");
 		exit(0);
 	}
 	mini.env = NULL;
-	create_builtin_lst(&mini, &mini.env, envp);
-	concat_lst_env(&mini);
+	if (envp[0])
+	{
+		create_builtin_lst(&mini, &mini.env, envp);
+		concat_lst_env(&mini);
+	}
 	init_mini(&mini, envp);
 	mini_live(&mini);
 	return (0);

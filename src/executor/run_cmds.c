@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 18:48:45 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:05:19 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 		do_redirections(mini, cmd);
 	if(cmd->builtin != NOT_HAVE)
 	{
-		printf("entered here in ft_exec_cmd");
 		exit_code = do_builtin(mini, cmd);
 		exit(exit_code);
 	}
-	if (cmd->str[0][0])
+	//printf("VALUE %s\n", cmd->str[0]);
+	if (cmd->str[0] && cmd->str[0][0])
 		exit_code = do_cmd(mini, cmd);
 	exit(exit_code);
 }
@@ -38,10 +38,7 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 	if (cmd->builtin == ECHO)
 		exit_code = builtin_echo(mini, cmd);
 	else if (cmd->builtin == CD)
-	{
-		printf("entered in CD Builtin condition in do_cmd");
 		exit_code = builtin_cd(mini, cmd);
-	}
 	else if (cmd->builtin == PWD)
 		exit_code = builtin_pwd(mini);
 	else if (cmd->builtin == EXPORT)
@@ -97,7 +94,9 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 {
 	int	pid;
 	int	status;
+	int	error;
 
+	error = 0;
 	run_expander(mini, cmd);
 	if (cmd->builtin != NOT_HAVE)
 	{
@@ -111,6 +110,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	if (pid == 0)
 		ft_exec_cmd(mini, cmd);
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status) == false)
-		g_global_var.error_code = WEXITSTATUS(status);
+	if (WIFEXITED(status))
+		error = WEXITSTATUS(status);
+	g_global_var.error_code = error;
 }

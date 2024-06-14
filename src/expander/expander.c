@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 18:35:37 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:37:39 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,15 @@
 
 void	run_expander(t_mini *mini, t_cmd *cmd)
 {
-	t_cmd	*tmp;
-	t_lexer	*tmp2;
+	t_lexer	*tmp;
 
-	tmp = cmd;
-	tmp->str = expand_cmd_line(mini, tmp->str);
-	tmp2 = cmd->redirections;
-	while (tmp2)
+	cmd->str = expand_cmd_line(mini, cmd->str);
+	tmp = cmd->redirections;
+	while (tmp)
 	{
-		if (tmp2->token != HDOC)
-			tmp2->str = expand_str_line(mini, tmp2->str);
-		tmp2 = tmp2->next;
+		if (tmp->token != HDOC)
+			tmp->str = expand_str_line(mini, tmp->str);
+		tmp = tmp->next;
 	}
 }
 
