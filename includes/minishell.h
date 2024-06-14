@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/14 19:26:24 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:14:31 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ typedef struct s_mini
 	char					**original_env;
 	char					*pwd;
 	char					*old_pwd;
+	char					*home_env;
 	t_builtin				*env;
-	// hacer free solo al final exit
-	char					**env_cpy;//we need this variable only for one parameter of the execve function
+	char					**env_cpy;
 	struct s_lexer			*lexer;
 	int						pipes;
 	int						count_infiles;
 	int						flag_hdoc;
 	int						flag_reset;
 	int						*pid;
-	int						error_code;//we need to know what was the last error_code number to send it for the exit function
+	int						error_code;
 	struct s_cmd		*cmd;
 }	t_mini;
 
@@ -252,6 +252,11 @@ t_builtin		*sort_ascii(t_builtin *lst_export, t_builtin *sorted);
 int				check_variable(char *str);
 //char			*clean_value(char *str);//YOU MIGHT HAVE A LEAK
 char			*clean_value(t_mini *mini, char *str);
+
+char			*value_to_export(t_mini *mini, const char *str, const char quote_to_del);
+char			*value_with_quotes(t_mini *mini, char *str);
+
+
 
 void			print_env_export(t_mini *mini, int flag);
 char			**delete_variable(char **old_env, char *str);

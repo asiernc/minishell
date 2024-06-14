@@ -6,15 +6,16 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 19:57:23 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/14 19:59:20 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:06:49 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minshell.h"
+#include "minishell.h"
 
 char	*value_to_export(t_mini *mini, const char *str, const char quote_to_del)
 {
-	int	len;
+	int		len;
+	char	*res;
 
 	len = (int)ft_strlen(str) - 1;
 	while (str[len])
