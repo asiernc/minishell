@@ -78,12 +78,12 @@ char	*get_value_from_env(t_mini *mini, char *str)//to free once used
 }
 
 //str <=> one line of the env
-/*t_builtin	*ft_lstnew_builtin(t_mini *mini, char *str)
+/*t_env_lst	*ft_lstnew_builtin(t_mini *mini, char *str)
 {
 	static int	index = 0;
-	t_builtin	*node;
+	t_env_lst	*node;
 
-	node = malloc(sizeof(t_builtin));
+	node = malloc(sizeof(t_env_lst));
 	if (!node)
 		return (NULL);
 	node->key = get_key_from_env(mini, str);
@@ -103,13 +103,13 @@ char	*get_value_from_env(t_mini *mini, char *str)//to free once used
 	return (node);
 }*/
 
-t_builtin *ft_lstnew_builtin(t_mini *mini, char *env)
+t_env_lst *ft_lstnew_builtin(t_mini *mini, char *env)
 {
-    t_builtin	*new_node;
+    t_env_lst	*new_node;
     char		*delimiter;
 
 	(void)mini;
-    new_node = (t_builtin *)malloc(sizeof(t_builtin));
+    new_node = (t_env_lst *)malloc(sizeof(t_env_lst));
     if (!new_node)
         return (NULL);
     delimiter = ft_strchr(env, '=');
@@ -127,9 +127,9 @@ t_builtin *ft_lstnew_builtin(t_mini *mini, char *env)
     return (new_node);
 }
 
-void	create_builtin_lst(t_mini *mini, t_builtin **lst_env, char **env)//to free once used
+void	create_builtin_lst(t_mini *mini, t_env_lst **lst_env, char **env)//to free once used
 {
-	t_builtin	*new_node;
+	t_env_lst	*new_node;
 	int			i;
 
 	i = 0;

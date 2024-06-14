@@ -14,7 +14,7 @@
 
 int	get_pwd(t_mini *mini)//to free after having used it
 {
-	t_builtin	*tmp;
+	t_env_lst	*tmp;
 
 	tmp = mini->env;
 	while (tmp)

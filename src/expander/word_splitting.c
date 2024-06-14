@@ -13,9 +13,9 @@
 #include "minishell.h"
 
 char	**search_and_replace_variable_lead_zero(t_mini *mini,
-				t_builtin *env_variable, char *expand_name)
+				t_env_lst *env_variable, char *expand_name)
 {
-	t_builtin	*tmp;
+	t_env_lst	*tmp;
 	char		**word_splitted;
 
 	tmp = env_variable;

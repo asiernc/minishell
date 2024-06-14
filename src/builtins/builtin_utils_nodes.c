@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void	ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new)
+void	ft_lstadd_back_builtin(t_env_lst **lst, t_env_lst *new)
 {
-	t_builtin	*tmp;
+	t_env_lst	*tmp;
 
 	if (!lst || !new)
 		return ;
@@ -32,26 +32,7 @@ void	ft_lstadd_back_builtin(t_builtin **lst, t_builtin *new)
 	}
 }
 
-//to test
-void	print_list(t_builtin **lst_env)
-{
-	int	i;
-
-	i = 1;
-	printf("list memory adress [%p]\n", lst_env);
-	while (*lst_env)
-	{
-		printf("--------node%i--------\n", i);
-		printf("memory adress [%p]\n", *lst_env);
-		printf("key: %s\n", (*lst_env)->key);
-		printf("value: %s\n", (*lst_env)->value);
-		printf("index: %i\n", (*lst_env)->index);
-		i++;
-		*lst_env = (*lst_env)->next;
-	}
-}
-
-int	ft_lstsize_builtin(t_builtin *lst)
+int	ft_lstsize_builtin(t_env_lst *lst)
 {
 	int	i;
 
@@ -63,4 +44,3 @@ int	ft_lstsize_builtin(t_builtin *lst)
 	}
 	return (i);
 }
-

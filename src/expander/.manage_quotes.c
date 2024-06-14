@@ -53,9 +53,9 @@
 	return (result);
 }*/
 
-char	*search_and_replace_variable(t_builtin *env_variable, char *expand_name)
+char	*search_and_replace_variable(t_env_lst *env_variable, char *expand_name)
 {
-	t_builtin	*tmp;
+	t_env_lst	*tmp;
 
 	tmp = env_variable;
 	while (tmp)
@@ -128,7 +128,7 @@ char	*search_and_replace_variable(t_builtin *env_variable, char *expand_name)
 	int			env_counter;
 	int			i;
 	char		*env_key;
-	t_builtin	*tmp;
+	t_env_lst	*tmp;
 	int			j;
 	int			k;
 

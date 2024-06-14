@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/13 15:51:46 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/06/13 20:35:48 by asiercara        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDE_DIR         = includes/
 INCLUDE_FILES       = minishell.h \
                       libft.h
 INCLUDE             = $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
-INCLUDE_FLAGS       = -I$(INCLUDE_DIR) -I$(LIBFT_DIR)
+INCLUDE_FLAGS       = -I$(INCLUDE_DIR) -I$(LIBFT_DIR) -I$(READLINE_DIR)/include 
 
 #SRCS - Where the main files for this project are located
 SRCS_DIR            = src/
@@ -63,13 +63,18 @@ SRCS_FILES          = main.c \
                       builtins/builtin_unset.c \
                       builtins/builtin_cd.c \
                       builtins/cleaning_builtin_nodes.c \
-                      utils/signals.c
+                      utils/signals.c                   \
+                      utils/utils.c
 SRCS                = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 OBJ_SRCS            = $(SRCS:.c=.o)
 
 #READLINE
-READLINE_DIR        = ./readline-8.1
-READLINE_LIB        = -lreadline -lhistory -L$(READLINE_DIR)
+#READLINE_DIR        = ./readline-8.1
+#READLINE_LIB        = -lreadline -lhistory -L$(READLINE_DIR)
+
+READLINE_DIR = $(shell brew --prefix readline)
+
+READLINE_LIB = -lreadline -lhistory -L $(READLINE_DIR)/lib
 
 #LIBFT 
 LIBFT_DIR           = libft/

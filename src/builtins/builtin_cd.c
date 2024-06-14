@@ -14,7 +14,7 @@
 
 static void	update_list_env(t_mini *mini)
 {
-	t_builtin	*tmp_env;
+	t_env_lst	*tmp_env;
 
 	tmp_env = mini->env;
 	while (tmp_env)
@@ -30,7 +30,7 @@ static void	update_list_env(t_mini *mini)
 			tmp_env->value = ft_strdup(mini->old_pwd);
 		}
 		tmp_env = tmp_env->next;
-	}	
+	}
 }
 
 static void	update_path(t_mini *mini)
@@ -44,7 +44,7 @@ static void	update_path(t_mini *mini)
 
 static	char	*return_value(t_mini *mini, char *str)
 {
-	t_builtin	*tmp;
+	t_env_lst	*tmp;
 
 	tmp = mini->env;
 	while (tmp)
@@ -66,7 +66,6 @@ static int	do_cd(t_mini *mini, char *path)
 	free(tmp_key);
 	return (error);
 }
-
 
 int	builtin_cd(t_mini *mini, t_cmd *cmd)
 {

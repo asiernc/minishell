@@ -19,12 +19,11 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	exit_code = 0;
 	if (cmd->redirections)
 		do_redirections(mini, cmd);
-	if(cmd->builtin != NOT_HAVE)
+	if (cmd->builtin != NOT_HAVE)
 	{
 		exit_code = do_builtin(mini, cmd);
 		exit(exit_code);
 	}
-	//printf("VALUE %s\n", cmd->str[0]);
 	if (cmd->str[0] && cmd->str[0][0])
 		exit_code = do_cmd(mini, cmd);
 	exit(exit_code);
@@ -86,8 +85,7 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 		free(cmd_path);
 		paths++;
 	}
-	free(tmp);
-	return (not_found(cmd->str[0]));
+	return (free(tmp), not_found(cmd->str[0]));
 }
 
 void	handle_single_cmd(t_mini *mini, t_cmd *cmd)

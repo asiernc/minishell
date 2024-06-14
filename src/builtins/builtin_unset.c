@@ -64,8 +64,8 @@ static	int	detect_unset_error(t_cmd *cmd)
 	return (EXIT_SUCCESS);
 }
 
-static	void	remove_env_variable(t_builtin **head, t_builtin *current,
-							t_builtin *previous)
+static	void	remove_env_variable(t_env_lst **head, t_env_lst *current,
+							t_env_lst *previous)
 {
 	if (previous == NULL)
 		*head = current->next;
@@ -88,11 +88,11 @@ static	int	unset_check(t_cmd *cmd)
 // hacer que si el index es <1000 no se elimine, pero de el success
 // porque? porque asi no tendremos errores o segs
 // que eliminen una env del sistema como home
-int	builtin_unset(t_mini *mini, t_builtin **head, t_cmd *cmd)
+int	builtin_unset(t_mini *mini, t_env_lst **head, t_cmd *cmd)
 {
 	int			i;
-	t_builtin	*current;
-	t_builtin	*previous;
+	t_env_lst	*current;
+	t_env_lst	*previous;
 
 	i = 0;
 	while (cmd->str[++i])

@@ -14,27 +14,28 @@
 
 int	print_fatal_error(t_mini *mini, int keycode)
 {
-	printf("\n\nFATALFATALFATALFATAL\n\n");
 	free_mini(mini);
 	if (keycode == MALLOC_ERROR)
-		ft_putstr_fd("malloc: cannot allocate memory\n", STDERR_FILENO);
+		ft_putendl_fd("malloc: cannot allocate memory", STDERR_FILENO);
 	else if (keycode == PIPE_ERROR)
-		ft_putstr_fd("pipe: Error\n", STDERR_FILENO);
+		ft_putendl_fd("pipe: Error", STDERR_FILENO);
 	else if (keycode == FORK_ERROR)
-		ft_putstr_fd("fork: Error\n", STDERR_FILENO);
+		ft_putendl_fd("fork: Error", STDERR_FILENO);
 	else if (keycode == DUP2_ERROR)
-		ft_putstr_fd("dup2: Error\n", STDERR_FILENO);
-	ft_putendl_fd("Error System", STDERR_FILENO);
+		ft_putendl_fd("dup2: Error", STDERR_FILENO);
+	else if (keycode == MAX_HDOC)
+		ft_putendl_fd("maximum here-document count exceeded", STDERR_FILENO);
+	ft_putendl_fd("exi", STDERR_FILENO);
 	exit(2);
 }
 
 int	print_error(t_mini *mini, int keycode)
 {
-	//printf("entered in print_error\n");
-	if (keycode == MALLOC_ERROR || keycode == PIPE_ERROR
-		|| keycode == FORK_ERROR || keycode == DUP2_ERROR)
-		print_fatal_error(mini, keycode);
 	ft_putstr_fd("shelldone: ", STDERR_FILENO);
+	if (keycode == MALLOC_ERROR || keycode == PIPE_ERROR
+		|| keycode == FORK_ERROR || keycode == DUP2_ERROR
+		|| keycode == MAX_HDOC)
+		print_fatal_error(mini, keycode);
 	if (keycode == SINTAX_ERROR)
 		ft_putstr_fd("syntax error near unexpected token\n", 1);
 	else if (keycode == IN_ERROR)
@@ -58,7 +59,8 @@ int	print_error(t_mini *mini, int keycode)
 
 int	token_error(t_mini *mini, int token)
 {
-	ft_putstr_fd("shelldone: syntax error near unexpected token ", STDERR_FILENO);
+	ft_putstr_fd("shelldone: syntax error near unexpected token ",
+		STDERR_FILENO);
 	if (token == PIPE)
 		ft_putstr_fd("'|'\n", STDERR_FILENO);
 	else if (token == RED_IN)
@@ -70,8 +72,6 @@ int	token_error(t_mini *mini, int token)
 	else if (token == RED_OUT_APP)
 		ft_putstr_fd("'>>'\n", STDERR_FILENO);
 	lexer_clear(&mini->lexer);
-	//if (mini->lexer)
-		//lst_clear_lexer(&mini->lexer);
 	mini_reset(mini);
 	return (EXIT_FAILURE); // exit code 258 bash;
 }

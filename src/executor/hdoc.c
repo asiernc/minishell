@@ -12,36 +12,47 @@
 
 #include "minishell.h"
 
+static void	check_max_hdoc(t_mini *mini, t_lexer *redirects)
+{
+	t_lexer	*tmp;
+	int		count;
+
+	count = 0;
+	tmp = redirects;
+	while (tmp)
+	{
+		if (tmp->token == HDOC)
+			count++;
+		tmp = tmp->next;
+	}
+	if (count > 16)
+		print_error(mini, MAX_HDOC);
+}
+
 int	check_if_exists_hdoc(t_mini *mini, t_cmd *cmd)
 {
 	t_lexer	*tmp;
 	int		error;
-	int		count;
 
 	tmp = cmd->redirections;
+	check_max_hdoc(mini, tmp);
 	error = EXIT_SUCCESS;
-	count = 0;
-	while (cmd->redirections)
+	while (tmp)
 	{
-		if (count >= 16)
-			break ;
-			//bash: maximum here-document count exceeded == exit (sale de bash)
-		if (cmd->redirections->token == HDOC)
+		if (tmp->token == HDOC)
 		{
-			count++;
 			if (cmd->hdoc_filename)
 				free(cmd->hdoc_filename);
 			cmd->hdoc_filename = generate_filename();
-			error = check_eof(mini, mini->cmd->redirections, cmd->hdoc_filename);
-			if (error) // error == exitFAILURE
+			error = check_eof(mini, tmp, cmd->hdoc_filename);
+			if (error)
 			{
 				g_global_var.error_code = error;
 				mini_reset(mini);
 			}
 		}
-		cmd->redirections = cmd->redirections->next;
+		tmp = tmp->next;
 	}
-	cmd->redirections = tmp;
 	return (error);
 }
 
@@ -55,8 +66,6 @@ int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 	error = EXIT_SUCCESS;
 	str = redir->str;
 	len = ft_strlen(str) - 1;
-	// hacer un strchr que encuentre la pareja, si hay alguna comilla no se expande
-	// hacer un check quotes, que sea par
 	if ((str[0] == '\"' && str[len] == '\"')
 		|| (str[0] == '\'' && str[len] == '\''))
 	{
@@ -73,14 +82,16 @@ int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 	return (error);
 }
 
-int	open_save_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename, bool quotes)
+int	open_save_hdoc(t_mini *mini, t_lexer *redir,
+	char *hdoc_filename, bool quotes)
 {
 	char	*line;
 	int		fd;
 
 	fd = open(hdoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	line = readline(">");
-	while (line != NULL && ft_strcmp_simple(redir->str, line) != 0 && g_global_var.outside_hdoc == 0)
+	while (line != NULL && ft_strcmp_simple(redir->str, line) != 0
+		&& g_global_var.outside_hdoc == 0)
 	{
 		if (quotes == false)
 			line = expand_str_line(mini, line);

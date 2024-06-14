@@ -12,22 +12,19 @@
 
 #include "minishell.h"
 
-int executor(t_mini *mini)
+int	executor(t_mini *mini)
 {
 	int	fds[2];
 	int	fd_in;
-	int	count_pipes;
 
-	count_pipes = mini->pipes;
-	mini->pid = ft_calloc((count_pipes + 2), sizeof(int));
+	mini->pid = ft_calloc((mini->pipes + 2), sizeof(int));
 	if (!mini->pid)
 		print_error(mini, MALLOC_ERROR);
 	fd_in = STDIN_FILENO;
 	while (mini->cmd)
 	{
-		//llamar al expander aqui??
 		run_expander(mini, mini->cmd);
-		if (mini->cmd->next && pipe(fds) == -1) //mini->cmd->next
+		if (mini->cmd->next && pipe(fds) == -1)
 			print_error(mini, PIPE_ERROR);
 		check_if_exists_hdoc(mini, mini->cmd);
 		ft_fork(mini, mini->cmd, fds, fd_in);
@@ -40,7 +37,6 @@ int executor(t_mini *mini)
 			break ;
 	}
 	wait_pipes(mini->pid, mini->pipes);
-	//close(fd_in);
 	return (0);
 }
 
@@ -82,7 +78,7 @@ void	ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in)
 	ft_exec_cmd(mini, cmd);
 }
 
-int check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2])
+int	check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2])
 {
 	int	fd_in;
 

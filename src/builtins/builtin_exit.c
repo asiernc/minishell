@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/13 14:32:40 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/14 09:52:45 by asiercara        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	builtin_exit(t_mini *mini, t_cmd *cmd)
 	char	*str;
 	char	*str2;
 	
-	str = cmd->str[1];
+	str = ft_strdup(cmd->str[1]);
 	if (cmd->str && cmd->str[1] && cmd->str[2])
 		str2 = cmd->str[2];
 	//mini->original_env = NULL;

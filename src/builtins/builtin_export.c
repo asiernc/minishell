@@ -15,12 +15,12 @@
 //static char	**clear_line_export(char **str);
 //lst refers to the list that contains all the lines of the export env
 //in this function, str refers to the new export variable. ie: 'abc=test'
-static t_builtin	*add_export_variable(t_mini *mini, t_builtin *lst, char *str, char *value_trimmed)
+static t_env_lst	*add_export_variable(t_mini *mini, t_env_lst *lst, char *str, char *value_trimmed)
 {
 	static int	index = 10000;
-	t_builtin	*new_node;
+	t_env_lst	*new_node;
 
-	new_node = malloc(sizeof(t_builtin));
+	new_node = malloc(sizeof(t_env_lst));
 	if (!new_node)
 		print_error(mini, 2);
 	new_node->key = get_key_from_env(mini, str);
@@ -37,9 +37,9 @@ static t_builtin	*add_export_variable(t_mini *mini, t_builtin *lst, char *str, c
 	return (lst);
 }
 
-static void	join_values(t_mini *mini, t_builtin **lst_export, char *str)
+static void	join_values(t_mini *mini, t_env_lst **lst_export, char *str)
 {
-	t_builtin	*tmp;
+	t_env_lst	*tmp;
 	char		*key_str;
 	char		*value_str;
 	char		*value_node;
@@ -64,9 +64,9 @@ static void	join_values(t_mini *mini, t_builtin **lst_export, char *str)
 }
 
 //if the variable already exists and we want to change it complelty
-static void	check_key_already_exists(t_mini *mini, t_builtin *lst_export, char *str)
+static void	check_key_already_exists(t_mini *mini, t_env_lst *lst_export, char *str)
 {
-	t_builtin	*tmp;
+	t_env_lst	*tmp;
 	char		*key_str;
 
 	tmp = lst_export;
@@ -83,7 +83,7 @@ static void	check_key_already_exists(t_mini *mini, t_builtin *lst_export, char *
 
 int	builtin_export(t_mini *mini, t_cmd *cmd)
 {
-	//t_builtin	*lst_export;
+	//t_env_lst	*lst_export;
 	//char		**line;
 	char		*value_trimmed;
 	int			i;

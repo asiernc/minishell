@@ -14,9 +14,9 @@
 
 static char	*value_with_quotes(char *str);
 
-void	print_env_export(t_mini *mini, int flag)//t_builtin *lst_env, )
+void	print_env_export(t_mini *mini, int flag)//t_env_lst *lst_env, )
 {
-	t_builtin	*tmp;
+	t_env_lst	*tmp;
 
 	tmp = mini->env;
 	if (flag == 0)
@@ -45,10 +45,10 @@ void	print_env_export(t_mini *mini, int flag)//t_builtin *lst_env, )
 }
 
 //I HAVE TO REMOVE THE NODE->KEY = _ BECAUSE IT ISN'T IN EXPORT
-void	remove_special_node(t_builtin **head)
+void	remove_special_node(t_env_lst **head)
 {
-	t_builtin	*current;
-	t_builtin	*previous;
+	t_env_lst	*current;
+	t_env_lst	*previous;
 
 	previous = NULL;
 	current = *head;
@@ -74,11 +74,11 @@ void	remove_special_node(t_builtin **head)
 
 //there is a second argument whereas I only need one. I had norminette issues.
 //This second argument has to be set as NULL
-t_builtin	*sort_ascii(t_builtin *lst_export, t_builtin *sorted)
+t_env_lst	*sort_ascii(t_env_lst *lst_export, t_env_lst *sorted)
 {
-	t_builtin	*current;
-	t_builtin	*the_next;
-	t_builtin	*tmp;
+	t_env_lst	*current;
+	t_env_lst	*the_next;
+	t_env_lst	*tmp;
 
 	current = lst_export;
 	while (current)
