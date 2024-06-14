@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/14 17:08:17 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:25:09 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	free_elements(char *str1, char *str2)
 {
 	if (str1)
-    {
-        if (str2)
-            free(str2);
-        free(str1);
-    }
+	{
+		if (str2)
+			free(str2);
+		free(str1);
+	}
 }
 
 void	free_mini(t_mini *mini)
@@ -42,21 +42,21 @@ int	builtin_exit(t_mini *mini, t_cmd *cmd)
 {
 	char	*str1;
 	char	*str2;
-	
-    str1 = NULL;
-    str2 = NULL;
+
+	str1 = NULL;
+	str2 = NULL;
 	if (cmd->str && cmd->str[1])
 	{
-        str1 = ft_strdup(cmd->str[1]);
-        if (cmd->str[2])
-		    str2 = ft_strdup(cmd->str[2]);
+		str1 = ft_strdup(cmd->str[1]);
+		if (cmd->str[2])
+			str2 = ft_strdup(cmd->str[2]);
 	}
 	if (str2)
 	{
 		if (check_exit_many_arguments(str1) == 2)
 			return (free_mini(mini), free(str2), exit(2), 2);
-        else
-            return (free_elements(str1, str2), 1);
+		else
+			return (free_elements(str1, str2), 1);
 	}
 	if (str1)
 		return (exit_with_one_argument(mini, str1, str2));

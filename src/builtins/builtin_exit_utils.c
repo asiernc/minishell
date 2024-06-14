@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 16:58:48 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/14 17:07:36 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:25:19 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	numeric_argument_required(char *str)
 	ft_putstr_fd("shelldone: exit: ", STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-    free(str);
+	free(str);
 	return (2);
 }
 
@@ -69,7 +69,7 @@ int	check_exit_many_arguments(char *str)
 
 int	exit_with_one_argument(t_mini *mini, char *str1, char *str2)
 {
-    int     exit_code;
+	int	exit_code;
 
 	if (ft_isdigit_and_signs(str1) == 0)
 		return (free_mini(mini), exit(numeric_argument_required(str1)), 2);
@@ -77,8 +77,8 @@ int	exit_with_one_argument(t_mini *mini, char *str1, char *str2)
 	{
 		if (check_zero(str1) == 1)
 			return (free_mini(mini), free_elements(str1, str2), exit(0), 0);
-        exit_code = ft_atoi(str1) % 256;
-    	free_elements(str1, str2);
+		exit_code = ft_atoi(str1) % 256;
+		free_elements(str1, str2);
 		return (free_mini(mini), exit(exit_code), exit_code);
 	}
 }

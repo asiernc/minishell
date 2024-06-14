@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:32:12 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/13 13:12:02 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:29:06 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	update_list_env(t_mini *mini)
 			tmp_env->value = ft_strdup(mini->old_pwd);
 		}
 		tmp_env = tmp_env->next;
-	}	
+	}
 }
 
 static void	update_path(t_mini *mini)
@@ -66,7 +66,6 @@ static int	do_cd(t_mini *mini, char *path)
 	free(tmp_key);
 	return (error);
 }
-
 
 int	builtin_cd(t_mini *mini, t_cmd *cmd)
 {

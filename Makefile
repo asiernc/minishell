@@ -6,7 +6,7 @@
 #    By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/14 17:16:35 by simarcha         ###   ########.fr        #
+#    Updated: 2024/06/14 19:58:48 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ SRCS_FILES          = main.c \
                       builtins/builtin_utils_nodes.c \
                       builtins/builtin_export.c \
                       builtins/builtin_export_helper.c \
+					  builtins/builtin_export_value_with_quotes.c \
                       builtins/builtin_unset.c \
                       builtins/builtin_cd.c \
                       builtins/cleaning_builtin_nodes.c \

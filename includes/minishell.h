@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/14 17:07:55 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/14 19:26:24 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,8 @@ t_builtin		*init_builtin_node(char **env);
 void			remove_special_node(t_builtin **head);
 t_builtin		*sort_ascii(t_builtin *lst_export, t_builtin *sorted);
 int				check_variable(char *str);
-char			*clean_value(char *str);//YOU MIGHT HAVE A LEAK
+//char			*clean_value(char *str);//YOU MIGHT HAVE A LEAK
+char			*clean_value(t_mini *mini, char *str);
 
 void			print_env_export(t_mini *mini, int flag);
 char			**delete_variable(char **old_env, char *str);
