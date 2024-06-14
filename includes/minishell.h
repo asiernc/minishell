@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/13 10:33:28 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:41:06 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,7 @@ char			**create_new_env(char **old_env, char **new_env, char *variable);
 //int				detect_unset_error(t_cmd *cmd);
 
 int				lines_counter(char **array);
+void			free_elements(char *str1, char *str2);
 void			free_mini(t_mini *mini);
 
 t_builtin		*clear_one_node_env(t_builtin **lst);

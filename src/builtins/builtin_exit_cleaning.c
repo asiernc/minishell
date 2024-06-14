@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit_cleaning.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:28:38 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/13 16:04:24 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:40:30 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_elements(char *str1, char *str2)
+{
+	if (str1)
+    {
+        if (str2)
+            free(str2);
+        free(str1);
+    }
+}
 
 void	free_mini(t_mini *mini)
 {
