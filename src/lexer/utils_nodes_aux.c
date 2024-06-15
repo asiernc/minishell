@@ -66,3 +66,20 @@ int	lst_size_lexer(t_mini *mini)
 	}
 	return (len);
 }
+
+void	lexer_clear(t_lexer **list)
+{
+	t_lexer	*tmp;
+
+	if (!*list)
+		return ;
+	while (*list)
+	{
+		tmp = (*list)->next;
+		if ((*list)->str)
+			free((*list)->str);
+		free(*list);
+		*list = tmp;
+	}
+	*list = NULL;
+}
