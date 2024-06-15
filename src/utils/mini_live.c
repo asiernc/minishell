@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/06/14 20:18:20 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 12:49:35 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ void	init_mini(t_mini *mini, char **env)
 	get_pwd(mini);
 }
 
-static void	lst_clear_cmds_helper(t_cmd **cmd)
+static void	lst_clear_cmds_helper(t_cmd **cmd, t_cmd *tmp_cmd)
 {
+	t_lexer	*tmp_redirects;
+
 	while (*cmd)
 	{
 		tmp_cmd = (*cmd)->next;
@@ -75,7 +77,6 @@ static void	lst_clear_cmds_helper(t_cmd **cmd)
 void	lst_clear_cmds(t_cmd **cmd)
 {
 	t_cmd	*tmp_cmd;
-	t_lexer	*tmp_redirects;
 
 	if (!*cmd)
 		return ;
@@ -85,7 +86,7 @@ void	lst_clear_cmds(t_cmd **cmd)
 		tmp_cmd = tmp_cmd->previous;
 	}
 	*cmd = tmp_cmd;
-	lst_clear_cmds_helper(cmd);
+	lst_clear_cmds_helper(cmd, tmp_cmd);
 }
 
 // function for free all and call another time mini_live for create a loop

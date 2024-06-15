@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 20:12:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/14 20:29:07 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 12:48:31 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ int	check_operator(int c)
 	int	i;
 	int	operator[3][2];
 
-	operator[3][2] = {
-	{'|', PIPE},
-	{'<', RED_IN},
-	{'>', RED_OUT},
-	};
+	operator[0][0] = '|';
+	operator[0][1] = PIPE;
+	operator[1][0] = '<';
+	operator[1][1] = RED_IN;
+	operator[2][0] = '>';
+	operator[2][1] = RED_OUT;
 	i = -1;
 	while (++i <= 2)
 		if (operator[i][0] == c)
