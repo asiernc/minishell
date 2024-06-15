@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/15 17:24:01 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:57:04 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_mini
 	char					*pwd;
 	char					*old_pwd;
 	char					*home_env;
-	t_builtin				*env;
+	struct s_env_lst		*env;
 	char					**env_cpy;
 	struct s_lexer			*lexer;
 	int						pipes;
@@ -96,7 +96,8 @@ enum	e_error_codes
 	EXIT_ERROR,
 	CD_ERROR,
 	UNLINK_ERROR,
-	MAX_HDOC
+	MAX_HDOC,
+	UNSET_HOME
 };
 
 enum e_operator
@@ -107,28 +108,6 @@ enum e_operator
 	HDOC,
 	RED_OUT_APP
 };
-
-// ------------------------------------------------------------------------ //
-
-// 		Main struct
-
-typedef struct s_mini
-{
-	char					*line;
-	char					**original_env;
-	char					*pwd;
-	char					*old_pwd;
-	struct s_env_lst		*env;
-	char					**env_cpy;
-	struct s_lexer			*lexer;
-	int						pipes;
-	int						count_infiles;
-	int						flag_hdoc;
-	int						flag_reset;
-	int						*pid;
-	int						error_code;//eliminar
-	struct s_cmd			*cmd;
-}	t_mini;
 
 // ------------------------------------------------------------------------ //
 

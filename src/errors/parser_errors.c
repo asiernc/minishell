@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/13 15:04:56 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:01:01 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	print_fatal_error(t_mini *mini, int keycode)
 		ft_putendl_fd("dup2: Error", STDERR_FILENO);
 	else if (keycode == MAX_HDOC)
 		ft_putendl_fd("maximum here-document count exceeded", STDERR_FILENO);
-	ft_putendl_fd("exi", STDERR_FILENO);
+	ft_putendl_fd("exit", STDERR_FILENO);
 	exit(2);
 }
 
@@ -34,7 +34,7 @@ int	print_error(t_mini *mini, int keycode)
 	ft_putstr_fd("shelldone: ", STDERR_FILENO);
 	if (keycode == MALLOC_ERROR || keycode == PIPE_ERROR
 		|| keycode == FORK_ERROR || keycode == DUP2_ERROR
-		|| keycode == MAX_HDOC)
+		|| keycode == MAX_HDOC || keycode == UNSET_HOME)
 		print_fatal_error(mini, keycode);
 	if (keycode == SINTAX_ERROR)
 		ft_putstr_fd("syntax error near unexpected token\n", 1);

@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:32:12 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/15 17:24:10 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:25:37 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,20 @@ static int	do_cd(t_mini *mini, char *path)
 	int		error;
 	char	*tmp_key;
 
+	tmp_key = NULL;
+	error = 0;
 	tmp_key = return_value(mini, path);
-	error = chdir(tmp_key);
-	free(tmp_key);
+	if (tmp_key != NULL)
+	{
+		error = chdir(tmp_key);
+		free(tmp_key);
+	}
 	if (error != 0)
 	{
-		path = ft_substr(path, 0, ft_strlen(path) - 1);
-		ft_putstr_fd(path, STDERR_FILENO);
-		free(path);
-		ft_putendl_fd(" not set", STDERR_FILENO);
+		//path = ft_substr(path, 0, ft_strlen(path) - 1);
+		//ft_putstr_fd(path, STDERR_FILENO);
+		//free(path);
+		print_error(mini, UNSET_HOME);
 	}
 	return (error);
 }

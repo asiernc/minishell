@@ -6,13 +6,13 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/15 17:25:22 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:42:15 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	print_env_flag(t_builtin *tmp)
+static void	print_env_flag(t_env_lst *tmp)
 {
 	while (tmp)
 	{
@@ -75,7 +75,7 @@ void	remove_special_node(t_env_lst **head)
 
 //there is a second argument whereas I only need one. I had norminette issues.
 //This second argument has to be set as NULL
-/*t_builtin	*sort_ascii(t_builtin *lst_export, t_builtin *sorted)
+/*t_env_lst	*sort_ascii(t_env_lst *lst_export, t_env_lst *sorted)
 {
 	t_env_lst	*current;
 	t_env_lst	*the_next;

@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 11:53:12 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/10 19:12:02 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:02:51 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_free_double_array(char ***str)
 	counter = 0;
 	while ((*str)[counter])
 		counter++;
-	printf("Counter %d\n", counter);
 	while (counter >= 0)
 		free((*str)[counter--]);
 	free(*str);

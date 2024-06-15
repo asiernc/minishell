@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:11:30 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/15 17:24:43 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:42:15 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ char	*get_value_from_env(t_mini *mini, char *str)//to free once used
 	return (result);
 }
 
-t_builtin	*ft_lstnew_builtin(t_mini *mini, char *env)
+t_env_lst	*ft_lstnew_builtin(t_mini *mini, char *env)
 {
-	t_builtin	*new_node;
+	t_env_lst	*new_node;
 	char		*delimiter;
 
 	(void)mini;
-	new_node = (t_builtin *)malloc(sizeof(t_builtin));
+	new_node = (t_env_lst *)malloc(sizeof(t_env_lst));
 	if (!new_node)
 		return (NULL);
 	delimiter = ft_strchr(env, '=');
@@ -91,7 +91,7 @@ t_builtin	*ft_lstnew_builtin(t_mini *mini, char *env)
 	return (new_node);
 }
 
-void	create_builtin_lst(t_mini *mini, t_builtin **lst_env, char **env)
+void	create_builtin_lst(t_mini *mini, t_env_lst **lst_env, char **env)
 {
 	t_env_lst	*new_node;
 	int			i;

@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/15 17:25:47 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:42:15 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //static char	**clear_line_export(char **str);
 //lst refers to the list that contains all the lines of the export env
 //in this function, str refers to the new export variable. ie: 'abc=test'
-static t_builtin	*add_export_variable(t_mini *mini, t_builtin *lst,
+static t_env_lst	*add_export_variable(t_mini *mini, t_env_lst *lst,
 				char *str, char *value_trimmed)
 {
 	static int	index = 10000;
@@ -62,7 +62,7 @@ static void	join_values(t_mini *mini, t_env_lst **lst_export, char *str)
 }
 
 //if the variable already exists and we want to change it complelty
-static void	check_key_already_exists(t_mini *mini, t_builtin *lst_export,
+static void	check_key_already_exists(t_mini *mini, t_env_lst *lst_export,
 					char *str)
 {
 	t_env_lst	*tmp;

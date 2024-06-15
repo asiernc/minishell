@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/15 16:03:24 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:16:32 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ void	run_expander(t_mini *mini, t_cmd *cmd)
 
 	cmd->str = expand_cmd_line(mini, cmd->str);
 	if (cmd->str && (ft_strcmp_simple(cmd->str[0], "cd") == 0)
-		&& (ft_strcmp_simple(cmd->str[1], "~") == 0
-			|| ft_strcmp_simple(cmd->str[1], "~/") == 0))
+		&& (cmd->str[1] && (ft_strcmp_simple(cmd->str[1], "~") == 0
+			|| ft_strcmp_simple(cmd->str[1], "~/") == 0)))
 	{
 		if (variable_existence(mini, "$HOME", 0) == 0)
 		{
-			if (mini->home_env)
-				cmd->str[1] = ft_strdup(mini->home_env);
-			else
-				print_error(mini, 2);
+			if (!mini->home_env)
+				print_error(mini, UNSET_HOME);
 		}
 	}
 	tmp = cmd->redirections;

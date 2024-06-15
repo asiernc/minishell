@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:07:20 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/15 17:27:40 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:45:43 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_home_value(t_mini *mini)
 {
-	t_builtin	*tmp_builtin;
+	t_env_lst	*tmp_builtin;
 	char		*result;
 	
 	result = NULL;
@@ -27,9 +27,6 @@ char	*get_home_value(t_mini *mini)
 	}
 	return (result);
 }
-static int	find_next(char *line, int *counter, int i, int lim)
-{
-	int	index;
 
 void	count_pipes(t_mini *mini)
 {
