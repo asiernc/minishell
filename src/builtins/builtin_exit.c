@@ -73,7 +73,9 @@ int	builtin_exit(t_mini *mini, t_cmd *cmd)
 	char	*str;
 	char	*str2;
 	
-	str = ft_strdup(cmd->str[1]);
+	str = NULL;
+	if (cmd->str[1])
+		str = ft_strdup(cmd->str[1]);
 	if (cmd->str && cmd->str[1] && cmd->str[2])
 		str2 = cmd->str[2];
 	//mini->original_env = NULL;

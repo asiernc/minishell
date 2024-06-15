@@ -45,6 +45,7 @@ void	init_mini(t_mini *mini, char **env)
 	mini->flag_hdoc = 0;
 	mini->flag_reset = 0;
 	mini->pid = NULL;
+	mini->pwd = NULL;
 	mini->original_env = env;
 	g_global_var.inside_cmd = 0;
 	g_global_var.inside_hdoc = 0;
@@ -93,6 +94,10 @@ int	mini_reset(t_mini *mini)
 		free(mini->line);
 	if (mini->pid)
 		free(mini->pid);
+	if (*mini->pwd)
+		free(mini->pwd);
+	if (*mini->old_pwd)
+		free(mini->old_pwd);
 	init_mini(mini, mini->original_env);
 	mini_live(mini);
 	return (0);

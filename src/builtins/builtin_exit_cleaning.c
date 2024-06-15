@@ -20,11 +20,12 @@ void	free_mini(t_mini *mini)
 		free(mini->line);
 	if (mini->pid)
 		free(mini->pid);
-	ft_free_double_array(mini->env_cpy);
+	ft_free_double_array(&mini->env_cpy);
 	ft_lstclear_builtin(&mini->env);
-	if (mini->pwd)
+	if (*mini->pwd)
 		free(mini->pwd);
-
+	if (*mini->old_pwd)
+		free(mini->old_pwd);
 	if (mini->pipes)
 		free(mini->pid);
 }

@@ -112,7 +112,7 @@ int	builtin_unset(t_mini *mini, t_env_lst **head, t_cmd *cmd)
 			current = current->next;
 		}
 	}
-	ft_free_double_array(mini->env_cpy);
+	ft_free_double_array(&mini->env_cpy);
 	concat_lst_env(mini);
 	return (EXIT_SUCCESS);
 }

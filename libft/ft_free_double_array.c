@@ -11,15 +11,24 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-void	ft_free_double_array(char **str)
+void	ft_free_double_array(char ***str)
 {
 	int	i;
+	int	counter;
 
+	if (str == NULL || *str == NULL)
+		return;
 	i = -1;
-	while (str[++i])
-		free(str[i]);
-	free(str);
+	counter = 0;
+	while ((*str)[counter])
+		counter++;
+	printf("Counter %d\n", counter);
+	while (counter >= 0)
+		free((*str)[counter--]);
+	free(*str);
+	*str = NULL;
 }
 
 //si falla mira eso con Linux

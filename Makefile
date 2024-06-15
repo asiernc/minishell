@@ -12,7 +12,7 @@
 
 #SETUP
 CC                  = gcc
-CFLAGS              = -Wall -Werror -Wextra -g #-fsanitize=address #-g
+CFLAGS              = -Wall -Werror -Wextra -g #-g
 NAME                = minishell
 RM                  = rm -rf
 

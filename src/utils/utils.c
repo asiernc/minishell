@@ -63,14 +63,14 @@ void	concat_lst_env(t_mini *mini)
 			temp = ft_strjoin("=", tmp->value);
 			if (!temp)
 			{
-				ft_free_double_array(mini->env_cpy);
+				ft_free_double_array(&mini->env_cpy);
 				print_error(mini, 2);
 			}
 			joined_value = ft_strjoin(tmp->key, temp);
 			free(temp);
 			if (!joined_value)
 			{
-				ft_free_double_array(mini->env_cpy);
+				ft_free_double_array(&mini->env_cpy);
 				print_error(mini, 2);
 			}
 		}
@@ -79,7 +79,7 @@ void	concat_lst_env(t_mini *mini)
 			joined_value = ft_strdup(tmp->key);
 			if (!joined_value)
 			{
-				ft_free_double_array(mini->env_cpy);
+				ft_free_double_array(&mini->env_cpy);
 				print_error(mini, 2);
 			}
 		}
@@ -89,3 +89,5 @@ void	concat_lst_env(t_mini *mini)
 	}
 	mini->env_cpy[i] = NULL;
 }
+
+

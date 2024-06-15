@@ -38,7 +38,9 @@ static void	update_path(t_mini *mini)
 	char	*old;
 
 	old = ft_strdup(mini->pwd);
+	//free(mini->old_pwd);
 	mini->old_pwd = old;
+	//free(mini->pwd);
 	mini->pwd = getcwd(NULL, 0);
 }
 
@@ -64,6 +66,13 @@ static int	do_cd(t_mini *mini, char *path)
 	tmp_key = return_value(mini, path);
 	error = chdir(tmp_key);
 	free(tmp_key);
+	if (error != 0)
+	{
+		path = ft_substr(path, 0, ft_strlen(path) - 1);
+		ft_putstr_fd(path, STDERR_FILENO);
+		free(path);
+		ft_putendl_fd(" not set", STDERR_FILENO);
+	}
 	return (error);
 }
 
@@ -89,6 +98,6 @@ int	builtin_cd(t_mini *mini, t_cmd *cmd)
 	}
 	update_path(mini);
 	update_list_env(mini);
-	concat_lst_env(mini);
+	//concat_lst_env(mini);
 	return (error);
 }
