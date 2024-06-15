@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/14 20:23:48 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 13:58:06 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	put_word(char *str, int i, t_lexer **lst)
 {
 	int			j;
 
+	j = 0;
 	while (str[i + j] && check_operator(str[i + j]) == 0)
 	{
 		if (str[i + j] == 34 || str[i + j] == 39)
@@ -65,7 +66,7 @@ int	put_word(char *str, int i, t_lexer **lst)
 	return (j);
 }
 
-// This function separate the command line, separated between operator and word
+// This function separate the command line, separated between operator and word.
 int	lexer_tokenizer(t_mini *mini)
 {
 	int	i;
