@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/14 20:14:31 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 15:54:13 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,6 +369,7 @@ void    sigint_handler(int signal);
 
 //void			check_quotes(char *line);
 int				 check_quotes_is_married(char *line);
+char			*get_home_value(t_mini *mini);
 
 
 // Errors

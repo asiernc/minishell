@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/13 10:37:39 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:03:24 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@ void	run_expander(t_mini *mini, t_cmd *cmd)
 	t_lexer	*tmp;
 
 	cmd->str = expand_cmd_line(mini, cmd->str);
+	if (cmd->str && (ft_strcmp_simple(cmd->str[0], "cd") == 0)
+		&& (ft_strcmp_simple(cmd->str[1], "~") == 0
+			|| ft_strcmp_simple(cmd->str[1], "~/") == 0))
+	{
+		if (variable_existence(mini, "$HOME", 0) == 0)
+		{
+			if (mini->home_env)
+				cmd->str[1] = ft_strdup(mini->home_env);
+			else
+				print_error(mini, 2);
+		}
+	}
 	tmp = cmd->redirections;
 	while (tmp)
 	{
