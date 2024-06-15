@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/13 20:35:48 by asiercara        ###   ########.fr        #
+#    Updated: 2024/06/15 16:06:29 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDE_DIR         = includes/
 INCLUDE_FILES       = minishell.h \
                       libft.h
 INCLUDE             = $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
-INCLUDE_FLAGS       = -I$(INCLUDE_DIR) -I$(LIBFT_DIR) -I$(READLINE_DIR)/include 
+INCLUDE_FLAGS       = -I$(INCLUDE_DIR) -I$(LIBFT_DIR)# -I$(READLINE_DIR)/include 
 
 #SRCS - Where the main files for this project are located
 SRCS_DIR            = src/
@@ -69,12 +69,12 @@ SRCS                = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 OBJ_SRCS            = $(SRCS:.c=.o)
 
 #READLINE
-#READLINE_DIR        = ./readline-8.1
-#READLINE_LIB        = -lreadline -lhistory -L$(READLINE_DIR)
+READLINE_DIR        = ./readline-8.1
+READLINE_LIB        = -lreadline -lhistory -L$(READLINE_DIR)
 
-READLINE_DIR = $(shell brew --prefix readline)
+#READLINE_DIR = $(shell brew --prefix readline)
 
-READLINE_LIB = -lreadline -lhistory -L $(READLINE_DIR)/lib
+#READLINE_LIB = -lreadline -lhistory -L $(READLINE_DIR)/lib
 
 #LIBFT 
 LIBFT_DIR           = libft/

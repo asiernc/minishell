@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:11:30 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/12 13:32:03 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:46:35 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ t_env_lst *ft_lstnew_builtin(t_mini *mini, char *env)
     }
     new_node->next = NULL;
     return (new_node);
+	
 }
 
 void	create_builtin_lst(t_mini *mini, t_env_lst **lst_env, char **env)//to free once used

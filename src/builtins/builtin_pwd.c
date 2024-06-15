@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:47:49 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/13 13:09:00 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:19:19 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	get_pwd(t_mini *mini)//to free after having used it
 {
 	t_env_lst	*tmp;
 
-	if (mini->pwd != NULL)
-		free(mini->pwd);
+	//if (mini->pwd)
+	//	free(mini->pwd);
 	tmp = mini->env;
 	mini->pwd = NULL;
 	while (tmp)
