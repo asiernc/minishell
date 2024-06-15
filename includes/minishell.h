@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/13 10:33:28 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:24:01 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,28 @@ typedef struct s_global_var
 
 extern t_global_var		g_global_var;
 
-// ------------------------------------------------------------------------ //
+// 		Main struct
+
+typedef struct s_mini
+{
+	char					*line;
+	char					**original_env;
+	char					*pwd;
+	char					*old_pwd;
+	char					*home_env;
+	t_builtin				*env;
+	char					**env_cpy;
+	struct s_lexer			*lexer;
+	int						pipes;
+	int						count_infiles;
+	int						flag_hdoc;
+	int						flag_reset;
+	int						*pid;
+	int						error_code;
+	struct s_cmd		*cmd;
+}	t_mini;
+
+//		Enum for builtins
 
 enum	e_builtins
 {
@@ -265,9 +286,23 @@ char			*get_value_from_env(t_mini *mini, char *str);
 void			remove_special_node(t_env_lst **head);
 t_env_lst		*sort_ascii(t_env_lst *lst_export, t_env_lst *sorted);
 int				check_variable(char *str);
-char			*clean_value(char *str);
+//char			*clean_value(char *str);//YOU MIGHT HAVE A LEAK
+char			*clean_value(t_mini *mini, char *str);
+
+char			*value_to_export(t_mini *mini, const char *str, const char quote_to_del);
+char			*value_with_quotes(t_mini *mini, char *str);
+
+
+
 void			print_env_export(t_mini *mini, int flag);
 int				lines_counter(char **array);
+int				check_zero(char *str);
+int				ft_isdigit_and_signs(char *str);
+int				numeric_argument_required(char *str);
+int				check_exit_many_arguments(char *str);
+int				exit_with_one_argument(t_mini *mini, char *str1, char *str2);
+
+void			free_elements(char *str1, char *str2);
 void			free_mini(t_mini *mini);
 t_env_lst		*clear_one_node_env(t_env_lst **lst);
 void			del_first_node_env(t_env_lst **lst);
@@ -346,7 +381,10 @@ void			sigint_handler(int signal);
 
 // Random utils
 
-int				check_quotes_is_married(char *line);
+//void			check_quotes(char *line);
+int				 check_quotes_is_married(char *line);
+char			*get_home_value(t_mini *mini);
+
 
 // Errors
 

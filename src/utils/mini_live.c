@@ -6,14 +6,11 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/06/15 17:19:46 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:26:24 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// this function is for do the cycle of live for every
-// line receives from readline
 
 int	mini_live(t_mini *mini)
 {
@@ -37,6 +34,8 @@ int	mini_live(t_mini *mini)
 	return (0);
 }
 
+
+
 void	init_mini(t_mini *mini, char **env)
 {
 	mini->line = NULL;
@@ -46,6 +45,7 @@ void	init_mini(t_mini *mini, char **env)
 	mini->flag_reset = 0;
 	mini->pid = NULL;
 	mini->original_env = env;
+	mini->home_env = get_value_from_env(mini, "HOME");//HOME TO INITIALIZE
 	g_global_var.inside_cmd = 0;
 	g_global_var.inside_hdoc = 0;
 	g_global_var.outside_hdoc = 0;
@@ -53,17 +53,10 @@ void	init_mini(t_mini *mini, char **env)
 	get_pwd(mini);
 }
 
-void	lst_clear_cmds(t_cmd **cmd)
+static void	lst_clear_cmds_helper(t_cmd **cmd, t_cmd *tmp_cmd)
 {
-	t_cmd	*tmp_cmd;
 	t_lexer	*tmp_redirects;
 
-	if (!*cmd)
-		return ;
-	tmp_cmd = *cmd;
-	while (tmp_cmd && tmp_cmd->previous)
-		tmp_cmd = tmp_cmd->previous;
-	*cmd = tmp_cmd;
 	while (*cmd)
 	{
 		tmp_cmd = (*cmd)->next;
@@ -82,8 +75,22 @@ void	lst_clear_cmds(t_cmd **cmd)
 	}
 }
 
-// function for free all and call another time mini_live for create a loop
+void	lst_clear_cmds(t_cmd **cmd)
+{
+	t_cmd	*tmp_cmd;
 
+	if (!*cmd)
+		return ;
+	tmp_cmd = *cmd;
+	while (tmp_cmd && tmp_cmd->previous)
+	{
+		tmp_cmd = tmp_cmd->previous;
+	}
+	*cmd = tmp_cmd;
+	lst_clear_cmds_helper(cmd, tmp_cmd);
+}
+
+// function for free all and call another time mini_live for create a loop
 int	mini_reset(t_mini *mini)
 {
 	if (mini->cmd)

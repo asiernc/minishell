@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
+#    By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/15 16:06:29 by simarcha         ###   ########.fr        #
+#    Updated: 2024/06/15 17:28:24 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,11 +55,12 @@ SRCS_FILES          = main.c \
                       builtins/builtin_echo.c \
                       builtins/builtin_pwd.c \
                       builtins/builtin_env.c \
-                      builtins/builtin_exit_cleaning.c \
+                      builtins/builtin_exit_utils.c \
                       builtins/builtin_exit.c \
                       builtins/builtin_utils_nodes.c \
                       builtins/builtin_export.c \
                       builtins/builtin_export_helper.c \
+					  builtins/builtin_export_value_with_quotes.c \
                       builtins/builtin_unset.c \
                       builtins/builtin_cd.c \
                       builtins/cleaning_builtin_nodes.c \

@@ -3,99 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/14 09:52:45 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/06/15 17:29:01 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-static int	check_zero(char *str)
+void	free_elements(char *str1, char *str2)
 {
-	int	i;
-
-	i = -1;
-	while (str[++i])
+	if (str1)
 	{
-		if (str[i] != '0')
-		{
-			if (i != 0 && (str[i] != '-' || str[i] != '+'))
-				return (0);
-		}
+		if (str2)
+			free(str2);
+		free(str1);
 	}
-	return (1);
 }
 
-static int	ft_isdigit_and_signs(char *str)
+void	free_mini(t_mini *mini)
 {
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (ft_isdigit(str[i]) == 0)
-		{
-			if (i != 0 && (str[i] != '-' || str[i] != '+'))
-				return (0);
-		}
-	}
-	return (1);
-}
-
-static int	numeric_argument_required(char *str)
-{
-	ft_putendl_fd("exit", STDERR_FILENO);
-	ft_putstr_fd("shelldone: exit: ", STDERR_FILENO);
-	ft_putstr_fd(str, STDERR_FILENO);
-	ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-	return (2);
-}
-
-static int	check_exit_many_arguments(char *str)
-{
-	if (ft_isdigit_and_signs(str) == 0)
-		return (numeric_argument_required(str));
-	else
-	{
-		ft_putendl_fd("exit", STDERR_FILENO);
-		ft_putstr_fd("shelldone: exit: ", STDERR_FILENO);
-		ft_putstr_fd(str, STDERR_FILENO);
-		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		return (2);
-	}
+	if (mini->cmd)
+		lst_clear_cmds(&mini->cmd);
+	if (mini->line)
+		free(mini->line);
+	if (mini->pid)
+		free(mini->pid);
+	ft_free_double_array(mini->env_cpy);
+	ft_lstclear_builtin(&mini->env);
+	if (mini->pwd)
+		free(mini->pwd);
+	if (mini->pipes)
+		free(mini->pid);
 }
 
 int	builtin_exit(t_mini *mini, t_cmd *cmd)
 {
-	char	*str;
+	char	*str1;
 	char	*str2;
-	
-	str = NULL;
-	if (cmd->str[1])
-		str = ft_strdup(cmd->str[1]);
-	if (cmd->str && cmd->str[1] && cmd->str[2])
-		str2 = cmd->str[2];
-	//mini->original_env = NULL;
-	free_mini(mini);
-	if (str && str2)
+
+	str1 = NULL;
+	str2 = NULL;
+	if (cmd->str && cmd->str[1])
 	{
-		return (exit(check_exit_many_arguments(str)),
-			check_exit_many_arguments(str));
+		str1 = ft_strdup(cmd->str[1]);
+		if (cmd->str[2])
+			str2 = ft_strdup(cmd->str[2]);
 	}
-	if (str)
+	if (str2)
 	{
-		if (ft_isdigit_and_signs(str) == 0)
-			return (exit(numeric_argument_required(str)), 2);
+		if (check_exit_many_arguments(str1) == 2)
+			return (free_mini(mini), free(str2), exit(2), 2);
 		else
-		{
-			if (check_zero(str) == 1)
-				return (exit(0), 0);
-			return (exit(ft_atoi(str) % 256),
-				ft_atoi(str) % 256);
-		}
+			return (free_elements(str1, str2), 1);
 	}
-	return (exit(g_global_var.error_code), g_global_var.error_code);
+	if (str1)
+		return (exit_with_one_argument(mini, str1, str2));
+	return (free_mini(mini), free_elements(str1, str2),
+		exit(g_global_var.error_code), g_global_var.error_code);
 }

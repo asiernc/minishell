@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcel>       +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:58:37 by simarcha          #+#    #+#             */
-/*   Updated: 2024/04/26 14:24:41 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:28:10 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ static int	find_married_quote(char *line, int start_index,
 	while (line[index] && line[index] != delimiter)
 		index++;
 	if (line[index] == delimiter)
-	{
 		*num_quotes += 1;
-		return (index - start_index);
-	}
 	return (index - start_index);
 }
 
@@ -41,9 +38,9 @@ int	check_quotes_is_married(char *line)
 	double_quote_count = 0;
 	while (line[i])
 	{
-		if (line[i] == '"')
+		if (line[i] == DQUOTE)
 		{
-			offset = find_married_quote(line, i, &double_quote_count, '"');
+			offset = find_married_quote(line, i, &double_quote_count, DQUOTE);
 			i += offset;
 		}
 		else if (line[i] == '\'')

@@ -3,16 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:07:20 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 13:42:55 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:27:40 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Function responsible for counting pipes, for further processing.
+char	*get_home_value(t_mini *mini)
+{
+	t_builtin	*tmp_builtin;
+	char		*result;
+	
+	result = NULL;
+	tmp_builtin = mini->env;
+	while (tmp_builtin)
+	{
+		if (ft_strcmp_simple(tmp_builtin->key, "HOME") == 0)
+			result = get_value_from_env(mini, tmp_builtin->key);
+		tmp_builtin = tmp_builtin->next;
+	}
+	return (result);
+}
+static int	find_next(char *line, int *counter, int i, int lim)
+{
+	int	index;
 
 void	count_pipes(t_mini *mini)
 {
