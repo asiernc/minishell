@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/17 11:51:34 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:58:11 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ static void	check_key_already_exists(t_mini *mini, t_env_lst *lst_export,
 	while (tmp)
 	{
 		if (ft_strcmp_simple(tmp->key, key_str) == 0)
+		{
 			delone_node_env(tmp->index, &lst_export);
+			break ;
+		}
 		tmp = tmp->next;
 	}
 	free(key_str);

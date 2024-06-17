@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/17 12:39:02 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:54:36 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 
 	exit_code = 0;
 	if (cmd->redirections)
-		do_redirections(mini, cmd);
+		if (do_redirections(mini, cmd))
+			exit(1);
 	if (cmd->builtin != NOT_HAVE)
 	{
 		exit_code = do_builtin(mini, cmd);
@@ -59,12 +60,28 @@ static int	not_found(char *str)
 	return (127);
 }
 
+static void	ft_free_paths(char **str)
+{
+	int	i;
+
+	if (!str || *str == NULL)
+		return ;
+	i = -1;
+	while (str[++i])
+	{
+		free(str[i]);
+	}
+	free(str);
+	str = NULL;
+}
+
 int	do_cmd(t_mini *mini, t_cmd *cmd)
 {
 	char	**env;
 	char	**paths;
 	char	*cmd_path;
 	char	*tmp;
+	int		i;
 
 	env = mini->env_cpy;
 	if (!access(cmd->str[0], F_OK | X_OK))
@@ -75,16 +92,18 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	paths = ft_split(tmp, ':');
 	free(tmp);
 	tmp = ft_strjoin("/", cmd->str[0]);
-	while (*paths)
+	i = 0;
+	while (paths[i])
 	{
-		cmd_path = ft_strjoin(*paths, tmp);
+		cmd_path = ft_strjoin(paths[i], tmp);
 		if (!cmd_path)
 			print_error(mini, 2);
 		if (access(cmd_path, F_OK | X_OK) == 0)
 			execve(cmd_path, cmd->str, mini->env_cpy);
 		free(cmd_path);
-		paths++;
+		i++;
 	}
+	ft_free_paths(paths);
 	return (free(tmp), not_found(cmd->str[0]));
 }
 
@@ -96,7 +115,6 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 
 	error = 0;
 	run_expander(mini, cmd);
-	
 	if (cmd->builtin != NOT_HAVE)
 	{
 		g_global_var.error_code = do_builtin(mini, cmd);

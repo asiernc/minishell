@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/06/17 10:59:30 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:38:38 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	mini_live(t_mini *mini)
 	if (mini->line[0] == '\0')
 		mini_reset(mini);
 	add_history(mini->line);
-	if (!check_quotes_is_married(mini->line))
-		print_error(mini, 1);
+	//if (!check_quotes_is_married(mini->line))
+	//	print_error(mini, 1);
 	if (!lexer_tokenizer(mini))
 		print_error(mini, 1);
 	parser(mini);

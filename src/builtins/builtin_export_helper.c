@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_helper.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/15 17:42:15 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:50:18 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,35 +73,6 @@ void	remove_special_node(t_env_lst **head)
 	}
 }
 
-//there is a second argument whereas I only need one. I had norminette issues.
-//This second argument has to be set as NULL
-/*t_env_lst	*sort_ascii(t_env_lst *lst_export, t_env_lst *sorted)
-{
-	t_env_lst	*current;
-	t_env_lst	*the_next;
-	t_env_lst	*tmp;
-
-	current = lst_export;
-	while (current)
-	{
-		the_next = current->next;
-		if (!sorted || ft_strcmp(current->key, sorted->key) < 0)
-		{
-			current->next = sorted;
-			sorted = current;
-		}
-		else
-		{
-			tmp = sorted;
-			while (tmp->next && ft_strcmp(current->key, tmp->next->key) >= 0)
-				tmp = tmp->next;
-			current->next = tmp->next;
-			tmp->next = current;
-		}
-		current = the_next;
-	}
-	return (sorted);
-}*/
 
 //we want to check if everything is well written before the '='.
 //It means if there is a key name to the str.
@@ -147,18 +118,9 @@ char	*clean_value(t_mini *mini, char *str)
 	i++;
 	if (str[i] == '\0')
 		return (ft_strdup(""));
-	if (str[i] == QUOTE || str[i] == DQUOTE)
-	{
-		result = value_with_quotes(mini, &str[i]);
-		if (!result)
-			print_error(mini, 2);
-		return (result);
-	}
-	else
-	{
-		result = ft_strdup(&str[i]);
-		if (!result)
-			print_error(mini, 2);
-		return (result);
-	}
+	result = ft_strdup(&str[i]);
+	if (!result)
+		print_error(mini, 2);
+	return (result);
+	//}
 }

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/17 11:40:00 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:20:49 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	init_mini(&mini, envp);
 	mini_live(&mini);
-	//free_mini(&mini);
 	return (0);
 }
