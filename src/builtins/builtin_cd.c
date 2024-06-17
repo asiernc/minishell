@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:32:12 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/15 18:25:37 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:03:33 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void	update_list_env(t_mini *mini)
 	{
 		if (ft_strcmp_simple(tmp_env->key, "PWD") == 0)
 		{
-			//if (i != 0)
+			//if (&tmp_env->value[0])
 			free(tmp_env->value);
 			tmp_env->value = ft_strdup(mini->pwd);
 			//i++;
 		}
-		else if (ft_strcmp_simple(tmp_env->key, "OLDPWD") == 0)
+		if (ft_strcmp_simple(tmp_env->key, "OLDPWD") == 0)
 		{
 			free(tmp_env->value);
 			tmp_env->value = ft_strdup(mini->old_pwd);
@@ -38,14 +38,15 @@ static void	update_list_env(t_mini *mini)
 
 static void	update_path(t_mini *mini)
 {
-	//char	*old;
 	char	*buffer;
-
-	buffer = NULL;
 	
-	//old = ft_strdup(mini->pwd);
+	buffer = NULL;
+	if (mini->old_pwd)
+		free(mini->old_pwd);
 	mini->old_pwd = ft_strdup(mini->pwd);
-	buffer = getcwd(buffer, 0);
+	buffer = getcwd(NULL, 0);
+	if (mini->pwd)
+		free(mini->pwd);
 	mini->pwd = ft_strdup(buffer);
 	free(buffer);
 }

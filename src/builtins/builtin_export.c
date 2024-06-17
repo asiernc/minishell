@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/15 17:42:15 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:51:34 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static void	check_key_already_exists(t_mini *mini, t_env_lst *lst_export,
 			delone_node_env(tmp->index, &lst_export);
 		tmp = tmp->next;
 	}
+	free(key_str);
 }
 
 int	builtin_export(t_mini *mini, t_cmd *cmd)
@@ -101,6 +102,7 @@ int	builtin_export(t_mini *mini, t_cmd *cmd)
 			join_values(mini, &mini->env, cmd->str[i]);
 		i++;
 	}
+	ft_free_double_array(&mini->env_cpy);
 	concat_lst_env(mini);
 	return (EXIT_SUCCESS);
 }

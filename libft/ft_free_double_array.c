@@ -3,31 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_double_array.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 11:53:12 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/15 18:02:51 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:54:18 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-void	ft_free_double_array(char ***str)
+void ft_free_double_array(char ***str)
 {
-	int	i;
-	int	counter;
+    int i;
+    int counter;
 
-	if (str == NULL || *str == NULL)
-		return;
-	i = -1;
-	counter = 0;
-	while ((*str)[counter])
-		counter++;
-	while (counter >= 0)
-		free((*str)[counter--]);
-	free(*str);
-	*str = NULL;
+    if (str == NULL || *str == NULL)
+        return;
+    i = 0;
+    while ((*str)[i])
+        free((*str)[i++]);
+    free(*str);
+    *str = NULL;
 }
 
 //si falla mira eso con Linux

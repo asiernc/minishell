@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtin_exit_cleaning.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/17 11:40:00 by anovio-c         ###   ########.fr       */
+/*   Created: 2024/06/12 18:28:38 by simarcha          #+#    #+#             */
+/*   Updated: 2024/06/17 10:44:59 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_global_var	g_global_var = {0, 0, 0, 0};
-
-int	main(int argc, char **argv, char **envp)
+void	free_mini(t_mini *mini)
 {
-	t_mini		mini;
-
-	if ((argc != 1 && argv[0]))
-	{
-		printf("Don't write any argument\n");
-		exit(0);
-	}
-	mini.env = NULL;
-	if (envp[0])
-	{
-		create_builtin_lst(&mini, &mini.env, envp);
-		concat_lst_env(&mini);
-	}
-	init_mini(&mini, envp);
-	mini_live(&mini);
-	//free_mini(&mini);
-	return (0);
+	if (mini->cmd)
+		lst_clear_cmds(&mini->cmd);
+	if (mini->line)
+		free(mini->line);
+	if (mini->pid)
+		free(mini->pid);
+	ft_free_double_array(mini->env_cpy);
+	ft_lstclear_builtin(&mini->env);
+	//if (mini->pwd && *mini->pwd)
+	//	free(mini->pwd);
+	if (mini->old_pwd && *mini->old_pwd)
+		free(mini->old_pwd);
+	if (mini->pipes)
+		free(mini->pid);
 }

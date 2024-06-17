@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:47:49 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/15 17:19:19 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:53:40 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,14 @@ int	get_pwd(t_mini *mini)//to free after having used it
 {
 	t_env_lst	*tmp;
 
-	//if (mini->pwd)
-	//	free(mini->pwd);
 	tmp = mini->env;
-	mini->pwd = NULL;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, "PWD", 3) == 0)
 		{
-			mini->pwd = tmp->value;
+			if (mini->pwd)
+                free(mini->pwd);
+			mini->pwd = ft_strdup(tmp->value);
 			break ;
 		}
 		/*if (ft_strncmp(tmp->key, "OLD_PWD", 3) == 0)
@@ -35,7 +34,13 @@ int	get_pwd(t_mini *mini)//to free after having used it
 		tmp = tmp->next;
 	}
 	if (mini->pwd == NULL)
-		mini->pwd = getcwd(NULL, 0);
+	{
+		char	*buffer = NULL;
+		buffer = getcwd(NULL, 0);
+		//if (buffer == NULL);
+		mini->pwd = ft_strdup(buffer);
+		free(buffer);
+	}
 	return (EXIT_SUCCESS);
 }
 

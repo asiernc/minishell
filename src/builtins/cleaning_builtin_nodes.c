@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning_builtin_nodes.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 19:00:09 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/11 19:04:09 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:44:47 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

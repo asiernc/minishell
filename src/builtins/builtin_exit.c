@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/15 17:55:11 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:53:25 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,11 @@ void	free_mini(t_mini *mini)
 		free(mini->pid);
 	ft_free_double_array(&mini->env_cpy);
 	ft_lstclear_builtin(&mini->env);
-	//if (*mini->pwd)
-	//	free(mini->pwd);
-	//if (*mini->old_pwd)
-	//	free(mini->old_pwd);
-	//free(mini->pwd);
-	//free(mini->old_pwd);
-	if (mini->pipes)
-		free(mini->pid);
+	free(mini->env);
+	if (mini->pwd && *mini->pwd)
+		free(mini->pwd);
+	if (mini->old_pwd && *mini->old_pwd)
+		free(mini->old_pwd);
 }
 
 int	builtin_exit(t_mini *mini, t_cmd *cmd)
