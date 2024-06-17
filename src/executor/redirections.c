@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:27:35 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/05/18 16:58:28 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/06/17 16:56:12 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ int	put_infile(t_mini *mini, char *filename)
 
 	fd_in = open(filename, O_RDONLY);
 	if (fd_in == -1)
+	{
 		print_error(mini, IN_ERROR);
-	if (fd_in > 0)
+		return (EXIT_FAILURE);
+	}
+	else
 	{
 		if (dup2(fd_in, STDIN_FILENO) == -1)
 			print_error(mini, DUP2_ERROR);
@@ -58,8 +61,11 @@ int	put_outfile(t_mini *mini, t_lexer *lex, char *filename)
 	else if (lex->token == RED_OUT_APP)
 		fd_out = open(filename, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd_out == -1)
+	{
 		print_error(mini, OUT_ERROR);
-	if (fd_out > 0)
+		return (EXIT_FAILURE);
+	}
+	else
 	{
 		if (dup2(fd_out, STDOUT_FILENO) == -1)
 			print_error(mini, DUP2_ERROR);

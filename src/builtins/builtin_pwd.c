@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:47:49 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/17 11:53:40 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:53:59 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,20 @@ int	get_pwd(t_mini *mini)//to free after having used it
 	tmp = mini->env;
 	while (tmp)
 	{
+		if (mini->pwd && mini->old_pwd)
+			break ;
 		if (ft_strncmp(tmp->key, "PWD", 3) == 0)
 		{
 			if (mini->pwd)
                 free(mini->pwd);
 			mini->pwd = ft_strdup(tmp->value);
-			break ;
 		}
-		/*if (ft_strncmp(tmp->key, "OLD_PWD", 3) == 0)
+		if (ft_strncmp(tmp->key, "OLD_PWD", 3) == 0)
 		{
+			if (mini->old_pwd)
+				free(mini->old_pwd);
 			mini->old_pwd = ft_strdup(tmp->value);
-			break ;
-		}*/
+		}
 		tmp = tmp->next;
 	}
 	if (mini->pwd == NULL)
@@ -39,6 +41,7 @@ int	get_pwd(t_mini *mini)//to free after having used it
 		buffer = getcwd(NULL, 0);
 		//if (buffer == NULL);
 		mini->pwd = ft_strdup(buffer);
+		mini->old_pwd = ft_strdup(buffer);
 		free(buffer);
 	}
 	return (EXIT_SUCCESS);
@@ -46,8 +49,14 @@ int	get_pwd(t_mini *mini)//to free after having used it
 
 int	builtin_pwd(t_mini *mini)
 {
-	//if (!mini->pwd)
-	//	mini->pwd = getcwd(NULL, 0);
-	ft_putendl_fd(mini->pwd, 1);
+	if (mini->pwd != NULL && chdir(mini->pwd) == -1)
+	{
+		ft_putendl_fd(mini->pwd, 1);
+		free(mini->pwd);
+		mini->pwd = ft_strdup(mini->old_pwd);
+		//chdir(mini->pwd);
+	}
+	else
+		ft_putendl_fd(mini->pwd, 1);
 	return (EXIT_SUCCESS);
 }
