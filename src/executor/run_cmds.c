@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/14 16:12:04 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:39:02 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 
 	error = 0;
 	run_expander(mini, cmd);
+	
 	if (cmd->builtin != NOT_HAVE)
 	{
 		g_global_var.error_code = do_builtin(mini, cmd);
