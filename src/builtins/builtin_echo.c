@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/12 13:31:23 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:26:43 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ static int	builtin_echo_flag_n(t_mini *mini, t_cmd *command, int i, int wc)
 				|| check_flag(command->str[i]) == 1))
 			i++;
 		content = final_expansion(mini, command->str[i]);
-		if (!content)
-			print_error(mini, 2);
+				if (!content)
+		{
+			write(1, "", 1);
+			return (1);
+		}
 		if (write(1, content, ft_strlen(content)) == -1)
 			print_error(mini, 0);
 		if (i < wc - 1)
@@ -82,7 +85,10 @@ int	builtin_echo_without_flag(t_mini *mini, t_cmd *command, int i, int wc)
 	{
 		content = final_expansion(mini, command->str[i]);
 		if (!content)
-			print_error(mini, 2);
+		{
+			write(1, "", 1);
+			return (1);
+		}
 		if (write(1, content, ft_strlen(content)) == -1)
 			print_error(mini, 0);
 		if (i < wc - 1)
@@ -106,11 +112,21 @@ int	builtin_echo(t_mini *mini, t_cmd *command)
 	int		wordcount;
 	int		i;
 
-	wordcount = lines_counter(command->str);
 	i = 1;
-	if (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
-			|| check_flag(command->str[i]) == 1))
-		return (builtin_echo_flag_n(mini, command, 2, wordcount));
-	else
-		return (builtin_echo_without_flag(mini, command, i, wordcount));
+	wordcount = lines_counter(command->str);
+	while (command->str[i])
+	{
+		if (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
+				|| check_flag(command->str[i])))
+		{
+			while (command->str[i] && (ft_strcmp_simple(command->str[i], "-n") == 0
+				|| check_flag(command->str[i]) == 1))
+				i++;
+			builtin_echo_flag_n(mini, command, i, wordcount);
+		}
+		else
+			builtin_echo_without_flag(mini, command, i, wordcount);
+		i++;
+	}
+	return (1);
 }
