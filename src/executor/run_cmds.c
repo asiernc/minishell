@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/17 16:54:36 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:56:03 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 		exit_code = do_builtin(mini, cmd);
 		exit(exit_code);
 	}
-	if (cmd->str[0] && cmd->str[0][0])
+	else if (cmd->str[0] && cmd->str[0][0])
 		exit_code = do_cmd(mini, cmd);
 	exit(exit_code);
 }
@@ -111,14 +111,14 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 {
 	int	pid;
 	int	status;
-	int	error;
 
-	error = 0;
 	run_expander(mini, cmd);
+	//printf("first out: %s\n second %s\n", cmd->redirections->str, cmd->redirections->next->str);
 	if (cmd->builtin != NOT_HAVE)
 	{
 		g_global_var.error_code = do_builtin(mini, cmd);
-		mini_reset(mini);
+		//mini_reset(mini);
+		return ;
 	}
 	check_if_exists_hdoc(mini, mini->cmd);
 	pid = fork();
@@ -128,6 +128,5 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 		ft_exec_cmd(mini, cmd);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		error = WEXITSTATUS(status);
-	g_global_var.error_code = error;
+		g_global_var.error_code = WEXITSTATUS(status);
 }

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/17 16:22:11 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:00:19 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@
 # define QUOTE		39
 # define DQUOTE		34
 # define BACKSLASH	92
+
+# define RED     "\x1b[31m"
+# define GREEN   "\x1b[32m"
+# define BLUE    "\x1b[34m"
+# define WHITE   "\x1b[37m"
+# define BLACK   "\x1b[30m"
+# define YELLOW  "\x1b[33m"
+# define CYAN    "\x1b[36m"
+# define MAGENTA "\x1b[35m"
+# define RESET   "\x1b[0m"
 
 // STRUCTS
 
