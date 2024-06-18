@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:32:12 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/17 11:03:33 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:53:43 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	update_list_env(t_mini *mini)
 {
-	//static int	i = 0;
 	t_env_lst	*tmp_env;
 
 	tmp_env = mini->env;
@@ -22,10 +21,8 @@ static void	update_list_env(t_mini *mini)
 	{
 		if (ft_strcmp_simple(tmp_env->key, "PWD") == 0)
 		{
-			//if (&tmp_env->value[0])
 			free(tmp_env->value);
 			tmp_env->value = ft_strdup(mini->pwd);
-			//i++;
 		}
 		if (ft_strcmp_simple(tmp_env->key, "OLDPWD") == 0)
 		{
@@ -39,7 +36,7 @@ static void	update_list_env(t_mini *mini)
 static void	update_path(t_mini *mini)
 {
 	char	*buffer;
-	
+
 	buffer = NULL;
 	if (mini->old_pwd)
 		free(mini->old_pwd);
@@ -79,12 +76,7 @@ static int	do_cd(t_mini *mini, char *path)
 		free(tmp_key);
 	}
 	if (error != 0)
-	{
-		//path = ft_substr(path, 0, ft_strlen(path) - 1);
-		//ft_putstr_fd(path, STDERR_FILENO);
-		//free(path);
 		print_error(mini, UNSET_HOME);
-	}
 	return (error);
 }
 

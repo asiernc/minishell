@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:23:35 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/13 12:46:18 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:40:25 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	expand_error_code(t_mini *mini, int *i, char *result)
 	number = ft_itoa(g_global_var.error_code);
 	if (!number)
 		print_error(mini, 2);
-	while (number[j])
-		result[k++] = number[j++];
+	while (number[j++])
+		result[k++] = number[j];
 	return (free(number), j);
 }
 

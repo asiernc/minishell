@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/15 18:16:32 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:50:24 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	run_expander(t_mini *mini, t_cmd *cmd)
 	cmd->str = expand_cmd_line(mini, cmd->str);
 	if (cmd->str && (ft_strcmp_simple(cmd->str[0], "cd") == 0)
 		&& (cmd->str[1] && (ft_strcmp_simple(cmd->str[1], "~") == 0
-			|| ft_strcmp_simple(cmd->str[1], "~/") == 0)))
+				|| ft_strcmp_simple(cmd->str[1], "~/") == 0)))
 	{
 		if (variable_existence(mini, "$HOME", 0) == 0)
 		{
