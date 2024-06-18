@@ -6,13 +6,13 @@
 #    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/18 09:56:42 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/06/18 16:04:23 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #SETUP
 CC                  = gcc
-CFLAGS              = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS              = -Wall -Werror -Wextra -g -fsanitize=address
 NAME                = minishell
 RM                  = rm -rf
 

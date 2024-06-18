@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/17 11:53:25 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:07:31 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,19 @@ void	free_elements(char *str1, char *str2)
 
 void	free_mini(t_mini *mini)
 {
+	printf("hola\n");
 	if (mini->cmd)
 		lst_clear_cmds(&mini->cmd);
 	if (mini->line)
 		free(mini->line);
-	if (mini->pid)
+	if (mini->pipes)
 		free(mini->pid);
 	ft_free_double_array(&mini->env_cpy);
 	ft_lstclear_builtin(&mini->env);
 	free(mini->env);
-	if (mini->pwd && *mini->pwd)
+	if (mini->pwd)
 		free(mini->pwd);
-	if (mini->old_pwd && *mini->old_pwd)
+	if (mini->old_pwd)
 		free(mini->old_pwd);
 }
 
