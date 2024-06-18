@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/18 18:44:28 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:57:32 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_export_expansion(t_cmd *cmd)
 //une fois que l'on aura cette substring,
 
 //managing export function	
-	flag_export = check_export_expansion(cmd);
+/*	flag_export = check_export_expansion(cmd);
 	printf("flag_export = %i\n", flag_export);
 	if (flag_export == 1)
 	{
@@ -64,20 +64,20 @@ int	check_export_expansion(t_cmd *cmd)
 		}
 		return (array);
 	}
-
+*/
 void	run_expander(t_mini *mini, t_cmd *cmd)
 {
 	t_lexer	*tmp;
 	int		flag_export;
 
-//check to see what are the inputs given
+/*check to see what are the inputs given
 	int	i = 0;
 	while (cmd->str[i])
 	{
 		printf("before expansion cmd->str[%i] = _%s_\n",i, cmd->str[i]);
 		i++;
 	}
-//
+*/
 	cmd->str = expand_cmd_line(mini, cmd->str);
 	check_cd_home(mini, cmd);
 	//need the Manage expand function

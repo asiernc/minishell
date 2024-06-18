@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 18:53:36 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:57:59 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ int	builtin_export(t_mini *mini, t_cmd *cmd)
 		if (check_variable(cmd->str[i]) == 1)
 		{
 			check_key_already_exists(mini, mini->env, cmd->str[i]);
-			value_trimmed = get_value_from_env(mini, cmd->str[i]);
+			value_trimmed = get_value_from_env(mini, cmd->str[i]);//I changed it a bit
 			//value_trimmed = clean_value(mini, cmd->str[i]);
 			printf("value_trimmed = _%s_\n", value_trimmed);
 			mini->env = add_export_variable(mini, mini->env, cmd->str[i],
