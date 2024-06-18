@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/06/17 15:38:38 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:33:10 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int	mini_live(t_mini *mini)
 {
-	mini->line = readline("shelldone >");
+	if (g_global_var.error_code != 0)
+		mini->line = readline("\x1b[31mshelldone >\x1b[0m");
+	else
+		mini->line = readline("\x1b[32mshelldone >\x1b[0m");
 	clear_line(mini);
 	if (mini->line == NULL)
 	{
@@ -24,8 +27,8 @@ int	mini_live(t_mini *mini)
 	if (mini->line[0] == '\0')
 		mini_reset(mini);
 	add_history(mini->line);
-	//if (!check_quotes_is_married(mini->line))
-	//	print_error(mini, 1);
+	if (!check_quotes_is_married(mini->line))
+		print_error(mini, 1);
 	if (!lexer_tokenizer(mini))
 		print_error(mini, 1);
 	parser(mini);
