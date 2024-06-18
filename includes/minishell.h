@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/18 10:00:19 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:53:09 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,6 @@
 # define QUOTE		39
 # define DQUOTE		34
 # define BACKSLASH	92
-
-# define RED     "\x1b[31m"
-# define GREEN   "\x1b[32m"
-# define BLUE    "\x1b[34m"
-# define WHITE   "\x1b[37m"
-# define BLACK   "\x1b[30m"
-# define YELLOW  "\x1b[33m"
-# define CYAN    "\x1b[36m"
-# define MAGENTA "\x1b[35m"
-# define RESET   "\x1b[0m"
 
 // STRUCTS
 
@@ -75,7 +65,7 @@ typedef struct s_mini
 	int						flag_reset;
 	int						*pid;
 	int						error_code;
-	struct s_cmd		*cmd;
+	struct s_cmd			*cmd;
 }	t_mini;
 
 //		Enum for builtins
@@ -278,7 +268,8 @@ int				check_variable(char *str);
 //char			*clean_value(char *str);//YOU MIGHT HAVE A LEAK
 char			*clean_value(t_mini *mini, char *str);
 
-char			*value_to_export(t_mini *mini, const char *str, const char quote_to_del);
+char			*value_to_export(t_mini *mini, const char *str,
+					const char quote_to_del);
 char			*value_with_quotes(t_mini *mini, char *str);
 
 
@@ -370,10 +361,8 @@ void			sigint_handler(int signal);
 
 // Random utils
 
-//void			check_quotes(char *line);
-int				 check_quotes_is_married(char *line);
+int				check_quotes_is_married(char *line);
 char			*get_home_value(t_mini *mini);
-
 
 // Errors
 

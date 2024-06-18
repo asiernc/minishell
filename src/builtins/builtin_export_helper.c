@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/17 15:50:18 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 12:42:38 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,4 @@ char	*clean_value(t_mini *mini, char *str)
 	if (!result)
 		print_error(mini, 2);
 	return (result);
-	//}
 }

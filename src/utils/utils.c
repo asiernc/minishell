@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:07:20 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/15 17:45:43 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/18 12:23:22 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	concat_lst_env(t_mini *mini)
 
 	tmp = mini->env;
 	mini->env_cpy = (char **)malloc(
-			(ft_lstsize_builtin(tmp) + 1) * sizeof(char *));
+			(ft_lstsize_builtin(mini->env) + 1) * sizeof(char *));
 	if (!mini->env_cpy)
 		print_error(mini, 2);
 	i = 0;
