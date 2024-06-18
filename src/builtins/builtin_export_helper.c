@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_helper.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 12:42:38 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:10:44 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	remove_special_node(t_env_lst **head)
 		current = current->next;
 	}
 }
-
 
 //we want to check if everything is well written before the '='.
 //It means if there is a key name to the str.

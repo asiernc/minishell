@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 15:01:38 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:53:36 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	join_values(t_mini *mini, t_env_lst **lst_export, char *str)
 	if (!key_str)
 		return ;
 	value_str = clean_value(mini, str);
+	printf("value_str = _%s_\n", value_str);
 	if (!value_str)
 	{
 		free(key_str);
@@ -108,38 +109,95 @@ static void	check_key_already_exists(t_mini *mini, t_env_lst *lst_export,
 	free(key_str);
 }
 
+//on veut creer une fonction qui check si apres l'egal il y a une QUOTE || DQUOTE
+/*int	check_quote_after_equal(char *str)
+{
+	int	i;
+
+	if (ft_strchr(str, '=') == NULL)
+		return (-1);
+	i = 0;
+	while (str[i] != '=')
+		i++;
+	i++;
+	if (str[i] == QUOTE || str[i] == DQUOTE)
+		return (1);
+	return (0);
+}*/
+
+//le but est de retourner un array de string qui contient toutes les variables a expandre
+//par exemple: 			str  : var1="this  is a test " var2="for export" var3=ok
+//the result has to be: array: [[var1="this  is a test "], [var2="for export"], [var3=ok], [NULL]]
+char	**array_of_variables_to_expand(t_mini *mini, char *str)
+{
+	int		i;
+	char	**array;
+	int		k;
+
+	i = 0;
+	k = ;
+	array = malloc(sizeof(char) * k + 1);
+	if (!array)
+		print_error(mini, 2);
+	k = 0;
+	while (str[i])
+	{
+		array[k] = get_key_from_env(mini, str);//proteger et free
+		k++;
+		while (str[i])
+		{
+			if (str[i] == '=')
+				break ;
+			i++;
+		}
+		if (str[i] == QUOTE || str[i] == DQUOTE)
+		{
+			array[k] = value_in_quotes(mini, str, i);
+			k++;
+		}
+		i++;
+	}
+	array[k] = NULL;
+	return (array);
+}
+
+/*
+	while (cmd->str[i])//check to see if there is quote or not => if theere is not, wee don't have to split it because it's well done by default
+	{
+		while (cmd->str[i][j])
+		{
+			if (cmd->str[i][j] == QUOTE || DQUOTE)
+				check = 1;
+			j++;
+		}
+		i++;
+	}
+	if (check == 0)
+}*/
+
 int	builtin_export(t_mini *mini, t_cmd *cmd)
 {
-	char		**new_cmd;
+	//char		**cmd->str;
 	char		*value_trimmed;
 	int			i;
-	//char		*str;
 
-/*	while (cmd->str[i])
-	{
-		if (cmd->str[i + 1])
-		{
-			str = ft_strjoin(cmd->str[i], " ")
-		}
-	}*/
-	new_cmd = ft_split(cmd->str[1], ' ');
-	if (ft_strcmp(new_cmd[0], "export") == 0 && new_cmd[1] == NULL)
+	if (ft_strcmp(cmd->str[0], "export") == 0 && cmd->str[1] == NULL)
 		print_env_export(mini, 1);
 	i = 1;
-	printf("NEW CMD 1 %s, %s, %s\n", new_cmd[0], new_cmd[1], new_cmd[2]);
-	while (new_cmd[i])
+	while (cmd->str[i])
 	{
-		printf("STR %s\n", new_cmd[i]);
-		if (check_variable(new_cmd[i]) == 1)
+		printf("cmd->str = _%s_\n", cmd->str[i]);
+		if (check_variable(cmd->str[i]) == 1)
 		{
-			check_key_already_exists(mini, mini->env, new_cmd[i]);
-			value_trimmed = clean_value(mini, new_cmd[i]);
+			check_key_already_exists(mini, mini->env, cmd->str[i]);
+			value_trimmed = get_value_from_env(mini, cmd->str[i]);
+			//value_trimmed = clean_value(mini, cmd->str[i]);
 			printf("value_trimmed = _%s_\n", value_trimmed);
-			mini->env = add_export_variable(mini, mini->env, new_cmd[i],
+			mini->env = add_export_variable(mini, mini->env, cmd->str[i],
 					value_trimmed);
 		}
-		else if (check_variable(new_cmd[i]) == 2)
-			join_values(mini, &mini->env, new_cmd[i]);
+		else if (check_variable(cmd->str[i]) == 2)
+			join_values(mini, &mini->env, cmd->str[i]);
 		i++;
 	}
 	ft_free_double_array(&mini->env_cpy);

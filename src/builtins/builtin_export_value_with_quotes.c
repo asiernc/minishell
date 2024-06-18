@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_value_with_quotes.c                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 19:57:23 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/17 15:41:55 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:49:59 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char	*value_with_quotes(t_mini *mini, char *str)
 
 	quote_to_del = str[0];
 	res = value_to_export(mini, str, quote_to_del);
-	
 	len = (int)ft_strlen(res);
 	i = -1;
 	while (res[++i])
