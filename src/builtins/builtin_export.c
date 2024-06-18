@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 18:57:59 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:57:15 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ static void	check_key_already_exists(t_mini *mini, t_env_lst *lst_export,
 //le but est de retourner un array de string qui contient toutes les variables a expandre
 //par exemple: 			str  : var1="this  is a test " var2="for export" var3=ok
 //the result has to be: array: [[var1="this  is a test "], [var2="for export"], [var3=ok], [NULL]]
-char	**array_of_variables_to_expand(t_mini *mini, char *str)
+/*char	**array_of_variables_to_expand(t_mini *mini, char *str)
 {
 	int		i;
 	char	**array;
@@ -159,7 +159,7 @@ char	**array_of_variables_to_expand(t_mini *mini, char *str)
 	}
 	array[k] = NULL;
 	return (array);
-}
+}*/
 
 /*
 	while (cmd->str[i])//check to see if there is quote or not => if theere is not, wee don't have to split it because it's well done by default

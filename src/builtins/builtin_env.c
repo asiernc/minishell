@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:11:30 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 18:35:24 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:57:33 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,19 @@ char	*get_value_from_env(t_mini *mini, char *str)//to free once used
 	int		j;
 	char	*result;
 
-	printf("au debut de get_value_from_env = _%s_\n", str);
+	//printf("au debut de get_value_from_env = _%s_\n", str);
 	if (!mini)
 		return (NULL);
 	i = 0;
 	while (str[i] && str[i] != '=')
 	{
-		printf("str[i] = _%c_\n", str[i]);
+	//	printf("str[i] = _%c_\n", str[i]);
 		i++;
 	}
 	if (str[i] == '\0')
 		return (NULL);
 	i++;
-	printf("juste apres l'egal: str[i] = _%c_\n", str[i]);
+	//printf("juste apres l'egal: str[i] = _%c_\n", str[i]);
 	if (str[i] == QUOTE || str[i] == DQUOTE)
 		return (value_in_quotes(mini, str, i));
 	j = i;

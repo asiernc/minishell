@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/18 18:57:32 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:58:07 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_export_expansion(t_cmd *cmd)
 void	run_expander(t_mini *mini, t_cmd *cmd)
 {
 	t_lexer	*tmp;
-	int		flag_export;
+//	int		flag_export;
 
 /*check to see what are the inputs given
 	int	i = 0;
@@ -104,7 +104,7 @@ char	**expand_cmd_line(t_mini *mini, char **str)
 		new = final_expansion(mini, str[i]);
 		free(str[i]);
 		str[i] = new;
-		printf("cmd->str[%i] = _%s_\n", i, new);
+		//printf("cmd->str[%i] = _%s_\n", i, new);
 		i++;
 	}
 	return (str);
