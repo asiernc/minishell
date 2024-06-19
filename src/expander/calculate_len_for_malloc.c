@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:17:51 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 19:56:02 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:29:44 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ int	calculate_len_for_malloc(t_mini *mini, char *str)
 		{
 			num_len = ft_itoa(g_global_var.error_code);
 			counter += (int)ft_strlen(num_len);
-		//	printf("--------------Counter %d-----------\n", counter);
 			free(num_len);
 			i++;
 		}
