@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/06/19 12:00:47 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:14:15 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,11 @@ void	init_mini(t_mini *mini, char **env)
 	mini->flag_reset = 0;
 	mini->pid = NULL;
 	mini->original_env = env;
-	mini->pwd = NULL;
-	mini->old_pwd = NULL;
 	mini->home_env = get_value_from_env(mini, "HOME");
 	g_global_var.inside_cmd = 0;
 	g_global_var.inside_hdoc = 0;
 	g_global_var.outside_hdoc = 0;
 	init_signals();
-	get_pwd(mini);
 }
 
 static void	lst_clear_cmds_helper(t_cmd **cmd, t_cmd *tmp_cmd)
@@ -105,10 +102,6 @@ int	mini_reset(t_mini *mini)
 		free(mini->line);
 	if (mini->pid)
 		free(mini->pid);
-	if (mini->pwd)
-		free(mini->pwd);
-	if (mini->old_pwd)
-		free(mini->old_pwd);
 	init_mini(mini, mini->original_env);
 	mini_live(mini);
 	return (0);

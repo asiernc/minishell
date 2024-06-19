@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:32:12 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 11:53:43 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:13:48 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ static void	update_path(t_mini *mini)
 	char	*buffer;
 
 	buffer = NULL;
-	if (mini->old_pwd)
-		free(mini->old_pwd);
+	free(mini->old_pwd);
 	mini->old_pwd = ft_strdup(mini->pwd);
 	buffer = getcwd(NULL, 0);
-	if (mini->pwd)
-		free(mini->pwd);
-	mini->pwd = ft_strdup(buffer);
-	free(buffer);
+	free(mini->pwd);
+	if (buffer)
+	{
+		mini->pwd = ft_strdup(buffer);
+		free(buffer);
+	}
 }
 
 static	char	*return_value(t_mini *mini, char *str)

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:58:37 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 12:22:00 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:18:54 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,22 @@ int	check_quotes_is_married(char *line)
 	offset = 0;
 	single_quote_count = 0;
 	double_quote_count = 0;
-	while (line[i])
+	if (line[i])
 	{
-		if (line[i] == DQUOTE)
+		while (line[i])
 		{
-			offset = find_married_quote(line, i, &double_quote_count, DQUOTE);
-			i += offset;
+			if (line[i] == DQUOTE)
+			{
+				offset = find_married_quote(line, i, &double_quote_count, DQUOTE);
+				i += offset;
+			}
+			else if (line[i] == QUOTE)
+			{
+				offset = find_married_quote(line, i, &single_quote_count, QUOTE);
+				i += offset;
+			}
+			i++;
 		}
-		else if (line[i] == QUOTE)
-		{
-			offset = find_married_quote(line, i, &single_quote_count, QUOTE);
-			i += offset;
-		}
-		i++;
 	}
 	if ((double_quote_count > 0 && double_quote_count % 2 != 0)
 		|| (single_quote_count > 0 && single_quote_count % 2 != 0))
