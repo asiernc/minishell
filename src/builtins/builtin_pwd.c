@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:47:49 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 11:15:28 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:13:57 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,18 @@
 int	get_pwd(t_mini *mini)
 {
 	t_env_lst	*tmp;
-	char		*buffer;
+	//char		*buffer;
 
-	tmp = mini->env;
-	if (mini->pwd == NULL)
+	//tmp = mini->env;
+	/*if (mini->pwd == NULL)
 	{
 		buffer = NULL;
 		buffer = getcwd(NULL, 0);
 		mini->pwd = ft_strdup(buffer);
-		mini->old_pwd = ft_strdup(buffer);
+		mini->old_pwd = ft_strdup(mini->pwd);
 		free(buffer);
-	}
+		return (EXIT_SUCCESS);
+	}*/
 	while (tmp)
 	{
 		if (mini->pwd && mini->old_pwd)
@@ -49,7 +50,7 @@ int	get_pwd(t_mini *mini)
 
 int	builtin_pwd(t_mini *mini)
 {
-	if (mini->pwd != NULL && chdir(mini->pwd) == -1)
+	if (mini->pwd == NULL)
 	{
 		ft_putendl_fd(mini->pwd, 1);
 		free(mini->pwd);
