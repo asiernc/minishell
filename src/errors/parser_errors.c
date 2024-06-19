@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 09:48:57 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:30:35 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ int	print_error(t_mini *mini, int keycode)
 		ft_putstr_fd("unlink: No such file or directory\n", STDERR_FILENO);
 	else if (keycode == EXPORT_ERROR)
 		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
-	mini_reset(mini);
-	return (EXIT_FAILURE);
+	return (mini_reset(mini), EXIT_FAILURE);
 }
 
 int	token_error(t_mini *mini, int token)
@@ -75,5 +74,5 @@ int	token_error(t_mini *mini, int token)
 		ft_putstr_fd("'>>'\n", STDERR_FILENO);
 	lexer_clear(&mini->lexer);
 	mini_reset(mini);
-	return (EXIT_FAILURE); // exit code 258 bash;
+	return (EXIT_FAILURE);
 }
