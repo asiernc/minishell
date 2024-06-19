@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 19:57:15 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:46:12 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	join_values(t_mini *mini, t_env_lst **lst_export, char *str)
 	if (!key_str)
 		return ;
 	value_str = clean_value(mini, str);
-	printf("value_str = _%s_\n", value_str);
+	//printf("value_str = _%s_\n", value_str);
 	if (!value_str)
 	{
 		free(key_str);
@@ -186,13 +186,13 @@ int	builtin_export(t_mini *mini, t_cmd *cmd)
 	i = 1;
 	while (cmd->str[i])
 	{
-		printf("cmd->str = _%s_\n", cmd->str[i]);
+		//printf("cmd->str = _%s_\n", cmd->str[i]);
 		if (check_variable(cmd->str[i]) == 1)
 		{
 			check_key_already_exists(mini, mini->env, cmd->str[i]);
 			value_trimmed = get_value_from_env(mini, cmd->str[i]);//I changed it a bit
 			//value_trimmed = clean_value(mini, cmd->str[i]);
-			printf("value_trimmed = _%s_\n", value_trimmed);
+			//printf("value_trimmed = _%s_\n", value_trimmed);
 			mini->env = add_export_variable(mini, mini->env, cmd->str[i],
 					value_trimmed);
 		}

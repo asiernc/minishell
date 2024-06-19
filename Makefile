@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
+#    By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/18 09:56:42 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/06/19 10:42:45 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #SETUP
 CC                  = gcc
-CFLAGS              = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS              = -Wall -Werror -Wextra -g -fsanitize=address
 NAME                = minishell
 RM                  = rm -rf
 

@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 10:35:32 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:44:33 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	check_cd_home(t_mini *mini, t_cmd *cmd)
 	}
 }
 
+//this function is called out of the expander folder 
+//this is the only function that does the relation with the principal code
 void	run_expander(t_mini *mini, t_cmd *cmd)
 {
 	t_lexer	*tmp;
