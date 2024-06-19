@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 11:13:38 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:08:23 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,42 @@ static t_env_lst	*add_export_variable(t_mini *mini, t_env_lst *lst,
 	ft_lstadd_back_builtin(&lst, new_node);
 	return (lst);
 }
-
-static void	join_values(t_mini *mini, t_env_lst **lst_export, char *str)
+//we go through our export list that contains every env variables
+//if and only if we found the same, we will change the previous value with the
+//current && the one that thee user wants to add (value_str) by concatenating
+//both 
+int	concat_value_export(t_env_lst **lst_export, char *key_str,
+						char *value_str)
 {
 	t_env_lst	*tmp;
+	char		*value_node;
+
+	tmp = *lst_export;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, key_str))
+		{
+			value_node = ft_strdup(tmp->value);
+			free(tmp->value);
+			tmp->value = ft_strjoin(value_node, value_str);
+			return (free(value_node), 1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+//for the last 5 lines in this function:
+//this is a special case: if we don't have any variables that are called
+//'EXAMPLE' and the user wants to execute: export EXAMPLE+="text"
+//then we have to create it and to add the 'text' to the EXAMPLE variable
+// and to add EXAMPLE in our **lst_export
+static void	join_values(t_mini *mini, t_env_lst **lst_export, char *str)
+{
 	char		*key_str;
 	char		*value_str;
-	char		*value_node;
 	char		*tmp_join;
+	t_env_lst	*tmp;
 
 	key_str = get_key_from_env(mini, str);
 	if (!key_str)
@@ -54,28 +82,14 @@ static void	join_values(t_mini *mini, t_env_lst **lst_export, char *str)
 		free(key_str);
 		print_error(mini, 2);
 	}
-	tmp = *lst_export;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->key, key_str))
-		{
-			value_node = ft_strdup(tmp->value);
-			free(tmp->value);
-			tmp->value = ft_strjoin(value_node, value_str);
-			free(key_str);
-			free(value_str);
-			free(value_node);
-			return ;
-		}
-		tmp = tmp->next;
-	}
+	if (concat_value_export(lst_export, key_str, value_str) == 1)
+		return (free(key_str), free(value_str));
 	tmp_join = ft_strjoin(key_str, "=");
 	free(key_str);
 	key_str = ft_strjoin(tmp_join, value_str);
 	tmp = ft_lstnew_builtin(mini, key_str);
 	ft_lstadd_back_builtin(lst_export, tmp);
-	free(tmp_join);
-	return (free(key_str), free(value_str));
+	return (free(tmp_join), free(key_str), free(value_str));
 }
 
 //if the variable already exists and we want to change it complelty
@@ -111,7 +125,6 @@ int	builtin_export(t_mini *mini, t_cmd *cmd)
 	i = 1;
 	while (cmd->str[i])
 	{
-		printf("STR %s\n", cmd->str[i]);
 		if (check_variable(cmd->str[i]) == 1)
 		{
 			check_key_already_exists(mini, mini->env, cmd->str[i]);

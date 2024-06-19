@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 14:11:30 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 11:08:47 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:38:18 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,6 @@ char	*get_key_from_env(t_mini *mini, char *str)//to free once used
 	return (result);
 }
 
-char	*value_in_quotes(t_mini *mini, char *str, int i)
-{
-	int		j;
-	char	*result;
-
-	//printf("entered in value_in_quotes\n");
-	if (str[i] == QUOTE)
-		j = find_next_quote(QUOTE, str, i);
-	else
-		j = find_next_quote(DQUOTE, str, i);
-	result = ft_substr(str, i, j);
-	if (!result)
-		return (print_error(mini, 2), NULL);
-	return (result);
-}
-
 //for each line of our env, we want to get the characters after the '='
 //this will be the content of the 'value' variable in our structure
 char	*get_value_from_env(t_mini *mini, char *str)//to free once used
@@ -66,21 +50,14 @@ char	*get_value_from_env(t_mini *mini, char *str)//to free once used
 	int		j;
 	char	*result;
 
-	//printf("au debut de get_value_from_env = _%s_\n", str);
 	if (!mini)
 		return (NULL);
 	i = 0;
 	while (str[i] && str[i] != '=')
-	{
-	//	printf("str[i] = _%c_\n", str[i]);
 		i++;
-	}
 	if (str[i] == '\0')
 		return (NULL);
 	i++;
-	//printf("juste apres l'egal: str[i] = _%c_\n", str[i]);
-	if (str[i] == QUOTE || str[i] == DQUOTE)
-		return (value_in_quotes(mini, str, i));
 	j = i;
 	while (str[i])
 		i++;
