@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 10:34:07 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:13:38 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,28 +100,6 @@ static void	check_key_already_exists(t_mini *mini, t_env_lst *lst_export,
 	}
 	free(key_str);
 }
-
-/*static void	check_export_line(t_mini *mini, t_cmd *cmd)
-{
-	int	i;
-	int	counter_args;
-	int	equal;
-
-	i = 1;
-	while (cmd->str[i])
-		i++;
-	counter_args = i - 1;
-	i = 1;
-	equal = 0;
-	while (cmd->str[i])
-	{
-		if (ft_strchr(cmd->str[i], '=') != NULL)
-			equal++;
-		i++;
-	}
-	if (equal != counter_args)
-		print_error(mini, EXPORT_ERROR);
-}*/
 
 int	builtin_export(t_mini *mini, t_cmd *cmd)
 {

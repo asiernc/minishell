@@ -6,17 +6,17 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/18 14:50:24 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:17:14 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_expander(t_mini *mini, t_cmd *cmd)
+//before doing anything, we have to check if the ENV variable HOME is set or not
+//if it's not set, we go out from our minishell because the project didn't asked
+//to manage the system variables as the pwd is doing
+void	check_cd_home(t_mini *mini, t_cmd *cmd)
 {
-	t_lexer	*tmp;
-
-	cmd->str = expand_cmd_line(mini, cmd->str);
 	if (cmd->str && (ft_strcmp_simple(cmd->str[0], "cd") == 0)
 		&& (cmd->str[1] && (ft_strcmp_simple(cmd->str[1], "~") == 0
 				|| ft_strcmp_simple(cmd->str[1], "~/") == 0)))
@@ -27,6 +27,16 @@ void	run_expander(t_mini *mini, t_cmd *cmd)
 				print_error(mini, UNSET_HOME);
 		}
 	}
+}
+
+//this function is called out of the expander folder 
+//this is the only function that does the relation with the principal code
+void	run_expander(t_mini *mini, t_cmd *cmd)
+{
+	t_lexer	*tmp;
+
+	cmd->str = expand_cmd_line(mini, cmd->str);
+	check_cd_home(mini, cmd);
 	tmp = cmd->redirections;
 	while (tmp)
 	{

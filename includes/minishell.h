@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 09:48:19 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:08:28 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,6 @@ int				ft_lstsize_builtin(t_env_lst *lst);
 char			*get_key_from_env(t_mini *mini, char *str);
 char			*get_value_from_env(t_mini *mini, char *str);
 void			remove_special_node(t_env_lst **head);
-t_env_lst		*sort_ascii(t_env_lst *lst_export, t_env_lst *sorted);
 int				check_variable(char *str);
 //char			*clean_value(char *str);//YOU MIGHT HAVE A LEAK
 char			*clean_value(t_mini *mini, char *str);

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:17:51 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 16:43:22 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:16:12 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,12 @@ int	calculate_len_for_malloc(t_mini *mini, char *str)
 		}
 		else if (i < (int)ft_strlen(str) - 1 && str[i] == '$'
 			&& str[i + 1] == '?')
-			{
-				num_len = ft_itoa(g_global_var.error_code);
-				counter += (int)ft_strlen(num_len);
-				printf("--------------Counter %d-----------\n", counter);
-				free(num_len);
-				return (counter);
-			}
+		{
+			num_len = ft_itoa(g_global_var.error_code);
+			counter += (int)ft_strlen(num_len);
+			free(num_len);
+			i++;
+		}
 		else
 		{
 			manage_dollar_variable(mini, str, &i, &counter);

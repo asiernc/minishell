@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 10:29:06 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:15:54 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	if (cmd->builtin != NOT_HAVE)
 	{
 		g_global_var.error_code = do_builtin(mini, cmd);
-		//mini_reset(mini);
 		return ;
 	}
 	check_if_exists_hdoc(mini, mini->cmd);
