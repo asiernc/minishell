@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:58:37 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 11:18:12 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 11:19:42 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_quotes_is_married(char *line)
 	offset = 0;
 	single_quote_count = 0;
 	double_quote_count = 0;
-	while (line[++i])
+	while (line[i])
 	{
 		if (line[i] == DQUOTE)
 		{
