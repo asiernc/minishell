@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 16:30:35 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:39:31 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,13 @@ int	print_fatal_error(t_mini *mini, int keycode)
 	exit(2);
 }
 
-int	print_error(t_mini *mini, int keycode)
+static void	handle_specific_error(int keycode)
 {
-	ft_putstr_fd("shelldone: ", STDERR_FILENO);
-	if (keycode == MALLOC_ERROR || keycode == PIPE_ERROR
-		|| keycode == FORK_ERROR || keycode == DUP2_ERROR
-		|| keycode == MAX_HDOC || keycode == UNSET_HOME)
-		print_fatal_error(mini, keycode);
 	if (keycode == SINTAX_ERROR)
+	{
 		ft_putstr_fd("syntax error near unexpected token\n", 1);
+		g_global_var.error_code = 2;
+	}
 	else if (keycode == IN_ERROR)
 		ft_putstr_fd("in: No such file or directory\n", STDERR_FILENO);
 	else if (keycode == OUT_ERROR)
@@ -55,7 +53,19 @@ int	print_error(t_mini *mini, int keycode)
 		ft_putstr_fd("unlink: No such file or directory\n", STDERR_FILENO);
 	else if (keycode == EXPORT_ERROR)
 		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
-	return (mini_reset(mini), EXIT_FAILURE);
+}
+
+int	print_error(t_mini *mini, int keycode)
+{
+	ft_putstr_fd("shelldone: ", STDERR_FILENO);
+	if (keycode == MALLOC_ERROR || keycode == PIPE_ERROR
+		|| keycode == FORK_ERROR || keycode == DUP2_ERROR
+		|| keycode == MAX_HDOC || keycode == UNSET_HOME)
+		print_fatal_error(mini, keycode);
+	else
+		handle_specific_error(keycode);
+	mini_reset(mini);
+	return (EXIT_FAILURE);
 }
 
 int	token_error(t_mini *mini, int token)

@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 18:08:23 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:40:51 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static t_env_lst	*add_export_variable(t_mini *mini, t_env_lst *lst,
 	ft_lstadd_back_builtin(&lst, new_node);
 	return (lst);
 }
+
 //we go through our export list that contains every env variables
 //if and only if we found the same, we will change the previous value with the
 //current && the one that thee user wants to add (value_str) by concatenating
