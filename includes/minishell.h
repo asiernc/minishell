@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 11:08:28 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:11:31 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,9 +265,7 @@ char			*get_key_from_env(t_mini *mini, char *str);
 char			*get_value_from_env(t_mini *mini, char *str);
 void			remove_special_node(t_env_lst **head);
 int				check_variable(char *str);
-//char			*clean_value(char *str);//YOU MIGHT HAVE A LEAK
 char			*clean_value(t_mini *mini, char *str);
-
 char			*value_to_export(t_mini *mini, const char *str,
 					const char quote_to_del);
 char			*value_with_quotes(t_mini *mini, char *str);
@@ -281,7 +279,6 @@ int				ft_isdigit_and_signs(char *str);
 int				numeric_argument_required(char *str);
 int				check_exit_many_arguments(char *str);
 int				exit_with_one_argument(t_mini *mini, char *str1, char *str2);
-
 void			free_elements(char *str1, char *str2);
 void			free_mini(t_mini *mini);
 t_env_lst		*clear_one_node_env(t_env_lst **lst);
@@ -320,11 +317,12 @@ int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
 t_env_lst		*find_node_path(t_env_lst *lst_env);
-int				do_cmd(t_mini *mini, t_cmd *cmd_lst);
+int				do_cmd(t_mini *mini, t_cmd *cmd_lst, int i);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
 void			wait_pipes(int *pid, int pipes);
 int				check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2]);
+void			ft_free_paths(char **str);
 
 // Redirections
 
@@ -356,13 +354,13 @@ void			lexer_clear(t_lexer **list);
 // Signals
 
 void			init_signals(void);
-void			sigquit_handler(int signal);
 void			sigint_handler(int signal);
 
 // Random utils
 
 int				check_quotes_is_married(char *line);
 char			*get_home_value(t_mini *mini);
+int				save_pwd(t_mini *mini, char **env);
 
 // Errors
 

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/06/19 15:14:15 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:05:13 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	mini_live(t_mini *mini)
 	mini_reset(mini);
 	return (0);
 }
-
-
 
 void	init_mini(t_mini *mini, char **env)
 {

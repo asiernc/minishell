@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 11:15:54 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:12:48 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 		exit(exit_code);
 	}
 	else if (cmd->str[0] && cmd->str[0][0])
-		exit_code = do_cmd(mini, cmd);
+		exit_code = do_cmd(mini, cmd, 0);
 	exit(exit_code);
 }
 
@@ -60,28 +60,12 @@ static int	not_found(char *str)
 	return (127);
 }
 
-static void	ft_free_paths(char **str)
-{
-	int	i;
-
-	if (!str || *str == NULL)
-		return ;
-	i = -1;
-	while (str[++i])
-	{
-		free(str[i]);
-	}
-	free(str);
-	str = NULL;
-}
-
-int	do_cmd(t_mini *mini, t_cmd *cmd)
+int	do_cmd(t_mini *mini, t_cmd *cmd, int i)
 {
 	char	**env;
 	char	**paths;
 	char	*cmd_path;
 	char	*tmp;
-	int		i;
 
 	env = mini->env_cpy;
 	if (!access(cmd->str[0], F_OK | X_OK))
@@ -92,7 +76,6 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 	paths = ft_split(tmp, ':');
 	free(tmp);
 	tmp = ft_strjoin("/", cmd->str[0]);
-	i = 0;
 	while (paths[i])
 	{
 		cmd_path = ft_strjoin(paths[i], tmp);
@@ -103,8 +86,7 @@ int	do_cmd(t_mini *mini, t_cmd *cmd)
 		free(cmd_path);
 		i++;
 	}
-	ft_free_paths(paths);
-	return (free(tmp), not_found(cmd->str[0]));
+	return (ft_free_paths(paths), free(tmp), not_found(cmd->str[0]));
 }
 
 void	handle_single_cmd(t_mini *mini, t_cmd *cmd)

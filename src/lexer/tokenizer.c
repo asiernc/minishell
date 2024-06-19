@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:39 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 10:33:07 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:50:13 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,8 @@ int	put_operator(char *str, int i, t_lexer **lst)
 
 // Identify the word, trim it from spaces, and add it as a new node.
 // Also, identify quotes.
-/*int	put_word(char *str, int i, t_lexer **lst)
-{
-	int			j;
 
-	j = 0;
-	while (str[i + j] && check_operator(str[i + j]) == 0)
-	{
-		if (str[i + j] == 34 || str[i + j] == 39)
-			j += find_next_quote(str[i + j], str, i + j) - 1;
-		else if (str[i + j] != ' ' && str[i + j] != '\t')
-			j++;
-		else
-			break ;
-	}
-	if (!list_add_node(lst, 0, ft_substr(str, i, j)))
-		return (-1);
-	return (j);
-}*/
-
-int put_word(char *str, int i, t_lexer **lst)
+int	put_word(char *str, int i, t_lexer **lst)
 {
 	int		j;
 	char	quote;

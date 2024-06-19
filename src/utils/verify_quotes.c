@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:58:37 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 15:18:54 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:47:48 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,34 @@ static int	find_married_quote(char *line, int start_index,
 	int	index;
 
 	index = start_index + 1;
-	*num_quotes += 1;
+	(*num_quotes) += 1;
 	while (line[index] && line[index] != delimiter)
 		index++;
 	if (line[index] == delimiter)
-		*num_quotes += 1;
+		(*num_quotes)++;
 	return (index - start_index);
 }
 
 int	check_quotes_is_married(char *line)
 {
 	int	i;
-	int	offset;
+	int	len;
 	int	single_quote_count;
 	int	double_quote_count;
 
 	i = 0;
-	offset = 0;
+	len = (int)ft_strlen(line);
 	single_quote_count = 0;
 	double_quote_count = 0;
-	if (line[i])
+	while (i < len)
 	{
-		while (line[i])
-		{
-			if (line[i] == DQUOTE)
-			{
-				offset = find_married_quote(line, i, &double_quote_count, DQUOTE);
-				i += offset;
-			}
-			else if (line[i] == QUOTE)
-			{
-				offset = find_married_quote(line, i, &single_quote_count, QUOTE);
-				i += offset;
-			}
-			i++;
-		}
+		if (line[i] == DQUOTE)
+			i += find_married_quote(line, i, &double_quote_count, DQUOTE);
+		if (line[i] == QUOTE)
+			i += find_married_quote(line, i, &single_quote_count, QUOTE);
+		if (i >= len)
+			break ;
+		i++;
 	}
 	if ((double_quote_count > 0 && double_quote_count % 2 != 0)
 		|| (single_quote_count > 0 && single_quote_count % 2 != 0))

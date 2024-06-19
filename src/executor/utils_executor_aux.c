@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils_executor_aux.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 17:01:16 by anovio-c         ###   ########.fr       */
+/*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
+/*   Updated: 2024/06/19 17:08:01 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_global_var	g_global_var = {0, 0, 0, 0};
-
-int	main(int argc, char **argv, char **original_env)
+void	ft_free_paths(char **str)
 {
-	t_mini		mini;
+	int	i;
 
-	if ((argc != 1 && argv[0]))
+	if (!str || *str == NULL)
+		return ;
+	i = -1;
+	while (str[++i])
 	{
-		printf("Don't write any argument\n");
-		exit(0);
+		free(str[i]);
 	}
-	mini.env = NULL;
-	if (original_env[0])
-	{
-		create_builtin_lst(&mini, &mini.env, original_env);
-		concat_lst_env(&mini);
-	}
-	init_mini(&mini, original_env);
-	save_pwd(&mini, original_env);
-	mini_live(&mini);
-	return (0);
+	free(str);
+	str = NULL;
 }

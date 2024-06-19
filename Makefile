@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/19 11:07:45 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/06/19 17:01:00 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,9 @@ SRCS_FILES          = main.c \
                       builtins/builtin_cd.c \
                       builtins/cleaning_builtin_nodes.c \
                       utils/signals.c                   \
-                      utils/utils.c
+                      utils/utils.c                     \
+                      utils/utils_aux.c
+
 SRCS                = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 OBJ_SRCS            = $(SRCS:.c=.o)
 
