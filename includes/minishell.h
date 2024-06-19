@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 17:11:31 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:33:17 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,6 +306,9 @@ int				update_the_situation(char c, int lead);
 int				invalid_characters(const char *str);
 int				is_dollar(char *str);
 int				is_equal(char *str);
+void			create_space_for_error_code(int *i, int *counter);
+void			iterate_classic_characters(char *str, int *i, int *counter);
+
 int				calculate_len_for_malloc(t_mini *mini, char *str);
 
 // Executor
