@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/15 18:01:01 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/19 09:48:57 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	print_error(t_mini *mini, int keycode)
 	}
 	else if (keycode == UNLINK_ERROR)
 		ft_putstr_fd("unlink: No such file or directory\n", STDERR_FILENO);
+	else if (keycode == EXPORT_ERROR)
+		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
 	mini_reset(mini);
 	return (EXIT_FAILURE);
 }

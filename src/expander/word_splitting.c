@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:38:51 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 16:47:32 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 09:08:48 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,8 @@ char	*expand_the_line_lead_zero(t_mini *mini, char *str)
 	char	*result;
 
 	i = 0;
-	// devuelve 1 cuando deberia de devolver 4, 127'\0'
 	j = calculate_len_for_malloc(mini, str);
 	result = malloc((j + 1) * sizeof(char));
-	printf("VALOR MALLOC BEFORE DE J %d\n", j);
 	if (!result)
 		print_error(mini, 2);
 	j = 0;
@@ -124,6 +122,5 @@ char	*expand_the_line_lead_zero(t_mini *mini, char *str)
 			j += expand_dollar_variable_lead_zero(mini, str, &i, &result[j]);
 	}
 	result[j] = '\0';
-	printf("VALOR AFTER J %d\n", j);
 	return (result);
 }

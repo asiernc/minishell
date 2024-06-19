@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/18 11:53:09 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 09:48:19 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ enum	e_error_codes
 	CD_ERROR,
 	UNLINK_ERROR,
 	MAX_HDOC,
-	UNSET_HOME
+	UNSET_HOME,
+	EXPORT_ERROR
 };
 
 enum e_operator

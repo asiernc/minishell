@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 17:07:31 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 08:45:26 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	free_elements(char *str1, char *str2)
 
 void	free_mini(t_mini *mini)
 {
-	printf("hola\n");
 	if (mini->cmd)
 		lst_clear_cmds(&mini->cmd);
 	if (mini->line)
