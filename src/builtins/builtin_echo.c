@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:29:34 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/17 15:50:04 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:36:36 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static int	check_flag(char *flag)
 //for example: echo hello     world     $PWD
 //index are  :   0    1         2         3
 //the result : hello world /path/
-
 int	builtin_echo(t_mini *mini, t_cmd *cmd)
 {
 	int	flag;
@@ -63,7 +62,7 @@ int	builtin_echo(t_mini *mini, t_cmd *cmd)
 	flag = 0;
 	i = 1;
 	while (cmd->str[i] && (ft_strcmp_simple(cmd->str[i], "-n") == 0
-				|| check_flag(cmd->str[i])))
+			|| check_flag(cmd->str[i])))
 	{
 		flag = 1;
 		i++;

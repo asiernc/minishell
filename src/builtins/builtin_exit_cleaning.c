@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit_cleaning.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:28:38 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 15:02:06 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:38:55 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
