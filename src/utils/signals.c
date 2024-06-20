@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:33:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/14 12:06:58 by asiercara        ###   ########.fr       */
+/*   Updated: 2024/06/20 10:00:22 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	sigquit_handler(int signal)
+{
+	(void)signal;
+	ft_putendl_fd("Quit (core dumped)", STDERR_FILENO);
+}
 
 int	event(void)
 {

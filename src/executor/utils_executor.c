@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 13:39:52 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:57:35 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	pre_executor(t_mini *mini)
 {
+	signal(SIGQUIT, sigquit_handler);
 	g_global_var.inside_cmd = 1;
 	count_pipes(mini);
 	if (mini->pipes == 0)

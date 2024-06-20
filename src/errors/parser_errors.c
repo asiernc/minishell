@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 18:39:31 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:00:13 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ int	print_fatal_error(t_mini *mini, int keycode)
 static void	handle_specific_error(int keycode)
 {
 	if (keycode == SINTAX_ERROR)
-	{
-		ft_putstr_fd("syntax error near unexpected token\n", 1);
-		g_global_var.error_code = 2;
-	}
+		ft_putstr_fd("syntax error near unexpected token\n", STDERR_FILENO);
 	else if (keycode == IN_ERROR)
 		ft_putstr_fd("in: No such file or directory\n", STDERR_FILENO);
 	else if (keycode == OUT_ERROR)
@@ -64,6 +61,7 @@ int	print_error(t_mini *mini, int keycode)
 		print_fatal_error(mini, keycode);
 	else
 		handle_specific_error(keycode);
+	g_global_var.error_code = STDERR_FILENO;
 	mini_reset(mini);
 	return (EXIT_FAILURE);
 }
@@ -83,6 +81,7 @@ int	token_error(t_mini *mini, int token)
 	else if (token == RED_OUT_APP)
 		ft_putstr_fd("'>>'\n", STDERR_FILENO);
 	lexer_clear(&mini->lexer);
+	g_global_var.error_code = STDERR_FILENO;
 	mini_reset(mini);
 	return (EXIT_FAILURE);
 }
