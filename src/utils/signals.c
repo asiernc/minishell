@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:33:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 10:00:22 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:59:49 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	event(void)
 	return (EXIT_SUCCESS);
 }
 
-void	sigint_handler(int signal)
+void	sigint_handler(int signal, t_var g_var)
 {
-	if (!g_global_var.inside_hdoc)
+	if (!g_var.inside_hdoc)
 		ft_putstr_fd("\n", STDERR_FILENO);
-	if (g_global_var.inside_hdoc == 1 && g_global_var.inside_cmd == 1)
+	if (g_var.inside_hdoc == 1 && g_var.inside_cmd == 1)
 	{
-		g_global_var.outside_hdoc = 1;
+		g_var.outside_hdoc = 1;
 		rl_replace_line("", 0);
 		rl_redisplay();
 		rl_done = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:30:10 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 15:05:24 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:09:32 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_mini(t_mini *mini)
 	free(mini->old_pwd);
 }
 
-int	builtin_exit(t_mini *mini, t_cmd *cmd)
+int	builtin_exit(t_mini *mini, t_cmd *cmd, t_var g_var)
 {
 	char	*str1;
 	char	*str2;
@@ -60,5 +60,5 @@ int	builtin_exit(t_mini *mini, t_cmd *cmd)
 	if (str1)
 		return (exit_with_one_argument(mini, str1, str2));
 	return (free_mini(mini), free_elements(str1, str2),
-		exit(g_global_var.error_code), g_global_var.error_code);
+		exit(g_var.error_code), g_var.error_code);
 }

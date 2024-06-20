@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 17:12:48 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:40:44 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	exit(exit_code);
 }
 
-int	do_builtin(t_mini *mini, t_cmd *cmd)
+int	do_builtin(t_mini *mini, t_cmd *cmd, t_var g_var)
 {
 	int	exit_code;
 
@@ -48,7 +48,7 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 	else if (cmd->builtin == ENV)
 		exit_code = builtin_env(mini);
 	else if (cmd->builtin == EXIT)
-		exit_code = builtin_exit(mini, cmd);
+		exit_code = builtin_exit(mini, cmd, g_var);
 	return (exit_code);
 }
 
@@ -89,7 +89,7 @@ int	do_cmd(t_mini *mini, t_cmd *cmd, int i)
 	return (ft_free_paths(paths), free(tmp), not_found(cmd->str[0]));
 }
 
-void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
+void	handle_single_cmd(t_mini *mini, t_cmd *cmd, t_var g_var)
 {
 	int	pid;
 	int	status;
@@ -97,7 +97,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	run_expander(mini, cmd);
 	if (cmd->builtin != NOT_HAVE)
 	{
-		g_global_var.error_code = do_builtin(mini, cmd);
+		g_var.error_code = do_builtin(mini, cmd);
 		return ;
 	}
 	check_if_exists_hdoc(mini, mini->cmd);
@@ -108,5 +108,5 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 		ft_exec_cmd(mini, cmd);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		g_global_var.error_code = WEXITSTATUS(status);
+		g_var.error_code = WEXITSTATUS(status);
 }

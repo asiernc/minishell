@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 17:41:01 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:56:48 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@
 
 // signals global variable
 
-typedef struct s_global_var
+typedef struct s_var
 {
 	int		inside_cmd;
 	int		inside_hdoc;
 	int		outside_hdoc;
 	int		error_code;
-}	t_global_var;
+}	t_var;
 
-extern t_global_var		g_global_var;
+//extern t_global_var		g_global_var;
 
 // 		Main struct
 
@@ -204,9 +204,13 @@ void			ft_print_parser(t_mini *mini);
 
 // Minishell loop
 
-int				mini_live(t_mini *mini);
-void			init_mini(t_mini *mini, char **env);
-int				mini_reset(t_mini *mini);
+//int			mini_live(t_mini *mini);
+int				mini_live(t_mini *mini, t_var g_var);
+//void			init_mini(t_mini *mini, char **env);
+void			init_mini(t_mini *mini, char **env, t_var g_var);
+//int			mini_reset(t_mini *mini);
+int				mini_reset(t_mini *mini, t_var g_var);
+
 
 // Init main struct
 
@@ -245,7 +249,8 @@ void			free_cmd_line(char **str);
 // Built-ins
 
 int				builtin_pwd(t_mini *mini);
-int				builtin_exit(t_mini *mini, t_cmd *cmd);
+//int				builtin_exit(t_mini *mini, t_cmd *cmd);
+int				builtin_exit(t_mini *mini, t_cmd *cmd, t_var g_var);
 int				builtin_env(t_mini *mini);
 int				builtin_export(t_mini *mini, t_cmd *cmd);
 int				builtin_unset(t_mini *mini, t_env_lst **head, t_cmd *cmd);
@@ -287,18 +292,22 @@ void			delone_node_env(int num_del, t_env_lst **lst);
 
 // Expander
 
-void			run_expander(t_mini *mini, t_cmd *cmd);
-char			*expand_str_line(t_mini *mini, char *str);
-char			**expand_cmd_line(t_mini *mini, char **str);
+//void			run_expander(t_mini *mini, t_cmd *cmd);
+void	run_expander(t_mini *mini, t_cmd *cmd, t_var g_var);
+char			*expand_str_line(t_mini *mini, char *str, t_var g_var);
+char			**expand_cmd_line(t_mini *mini, char **str, t_var g_var);
 char			*search_and_replace_variable(t_env_lst *env_variable,
 					char *expand_name);
 char			*catch_expansion_key(t_mini *mini, char *str, int *i);
 int				variable_existence(t_mini *mini, char *line, int i);
 void			forget_the_variable(char *str, int *i);
-int				expand_error_code(t_mini *mini, int *i, char *result);
-char			*expand_the_line(t_mini *mini, char *str);
-char			*expand_the_line_lead_zero(t_mini *mini, char *str);
-char			*final_expansion(t_mini *mini, char *str);
+//int				expand_error_code(t_mini *mini, int *i, char *result);
+int				expand_error_code(t_mini *mini, int *i, char *result, t_var g_var);
+//char			*expand_the_line(t_mini *mini, char *str);
+char			*expand_the_line(t_mini *mini, char *str, t_var g_var);
+//char			*expand_the_line_lead_zero(t_mini *mini, char *str);
+char			*expand_the_line_lead_zero(t_mini *mini, char *str, t_var g_var);
+char			*final_expansion(t_mini *mini, char *str, t_var g_var);
 
 // Utils expander
 
@@ -306,24 +315,28 @@ int				update_the_situation(char c, int lead);
 int				invalid_characters(const char *str);
 int				is_dollar(char *str);
 int				is_equal(char *str);
-void			create_space_for_error_code(int *i, int *counter);
+//void			create_space_for_error_code(int *i, int *counter);
+void			create_space_for_error_code(int *i, int *counter, t_var g_var);
 void			iterate_classic_characters(char *str, int *i, int *counter);
 int				check_cd_home(t_mini *mini, t_cmd *cmd);
 int				calculate_len_for_malloc(t_mini *mini, char *str);
 
 // Executor
 
-int				pre_executor(t_mini *mini);
-void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
+//int				pre_executor(t_mini *mini);
+int	pre_executor(t_mini *mini, t_var g_var);
 int				executor(t_mini *mini);
 int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
 t_env_lst		*find_node_path(t_env_lst *lst_env);
 int				do_cmd(t_mini *mini, t_cmd *cmd_lst, int i);
-int				do_builtin(t_mini *mini, t_cmd *cmd);
-void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
-void			wait_pipes(int *pid, int pipes);
+//int				do_builtin(t_mini *mini, t_cmd *cmd);
+int				do_builtin(t_mini *mini, t_cmd *cmd, t_var g_var);
+//void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
+void			handle_single_cmd(t_mini *mini, t_cmd *cmd, t_var g_var);
+//void			wait_pipes(int *pid, int pipes);
+void	wait_pipes(int *pid, int pipes, t_var g_var);
 int				check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2]);
 void			ft_free_paths(char **str);
 
@@ -335,11 +348,14 @@ int				put_outfile(t_mini *mini, t_lexer *lex, char *filename);
 
 // Hdoc
 
-int				check_if_exists_hdoc(t_mini *mini, t_cmd *cmd);
+//int			check_if_exists_hdoc(t_mini *mini, t_cmd *cmd);
+int				check_if_exists_hdoc(t_mini *mini, t_cmd *cmd, t_var g_var);
 char			*generate_filename(void);
 int				check_eof(t_mini *mini, t_lexer	*redir, char *hdoc_filename);
-int				open_save_hdoc(t_mini *mini, t_lexer *redir,
-					char *hdoc_filename, bool quotes);
+//int				open_save_hdoc(t_mini *mini, t_lexer *redir,
+//					char *hdoc_filename, bool quotes);
+int	open_save_hdoc(t_mini *mini, t_lexer *redir,
+	char *hdoc_filename, bool quotes, t_var g_var);
 void			remove_eof_quotes(t_lexer *node);
 
 // Utils nodes
@@ -357,7 +373,8 @@ void			lexer_clear(t_lexer **list);
 // Signals
 
 void			init_signals(void);
-void			sigint_handler(int signal);
+//void			sigint_handler(int signal);
+void			sigint_handler(int signal, t_var g_var);
 void			sigquit_handler(int signal);
 
 // Random utils
@@ -368,7 +385,10 @@ int				save_pwd(t_mini *mini, char **env);
 
 // Errors
 
-int				print_error(t_mini *mini, int keycode);
-int				token_error(t_mini *mini, int token);
+//int				print_error(t_mini *mini, int keycode);
+int				print_error(t_mini *mini, int keycode, t_var g_var);
+//int				token_error(t_mini *mini, int token);
+int	token_error(t_mini *mini, int token, t_var g_var);
+
 
 #endif

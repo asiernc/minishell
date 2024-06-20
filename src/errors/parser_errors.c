@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 11:00:13 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:49:33 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	handle_specific_error(int keycode)
 		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
 }
 
-int	print_error(t_mini *mini, int keycode)
+int	print_error(t_mini *mini, int keycode, t_var g_var)
 {
 	ft_putstr_fd("shelldone: ", STDERR_FILENO);
 	if (keycode == MALLOC_ERROR || keycode == PIPE_ERROR
@@ -61,12 +61,12 @@ int	print_error(t_mini *mini, int keycode)
 		print_fatal_error(mini, keycode);
 	else
 		handle_specific_error(keycode);
-	g_global_var.error_code = STDERR_FILENO;
-	mini_reset(mini);
+	g_var.error_code = STDERR_FILENO;
+	mini_reset(mini, g_var);
 	return (EXIT_FAILURE);
 }
 
-int	token_error(t_mini *mini, int token)
+int	token_error(t_mini *mini, int token, t_var g_var)
 {
 	ft_putstr_fd("shelldone: syntax error near unexpected token ",
 		STDERR_FILENO);
@@ -81,7 +81,7 @@ int	token_error(t_mini *mini, int token)
 	else if (token == RED_OUT_APP)
 		ft_putstr_fd("'>>'\n", STDERR_FILENO);
 	lexer_clear(&mini->lexer);
-	g_global_var.error_code = STDERR_FILENO;
-	mini_reset(mini);
+	g_var.error_code = STDERR_FILENO;
+	mini_reset(mini, g_var);
 	return (EXIT_FAILURE);
 }

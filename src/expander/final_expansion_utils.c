@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:41:11 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/11 17:32:40 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:07:49 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	lead_is_zero_helper(char *str, t_expansor *expansion)
 	}
 }
 
-void	lead_is_zero(t_mini *mini, char *str, t_expansor *expansion)
+void	lead_is_zero(t_mini *mini, char *str, t_expansor *expansion,
+					t_var g_var)
 {
 	lead_is_zero_helper(str, expansion);
 	if (expansion->start != expansion->i)
@@ -41,7 +42,7 @@ void	lead_is_zero(t_mini *mini, char *str, t_expansor *expansion)
 			expansion->expansion_line = ft_strdup(expansion->substring);
 		else
 			expansion->expansion_line = expand_the_line_lead_zero(mini,
-					expansion->substring);
+					expansion->substring, g_var);
 		if (!expansion->expansion_line)
 			print_error(mini, 2);
 		free(expansion->substring);
@@ -101,7 +102,7 @@ void	lead_is_two_helper(char *str, t_expansor *expansion)
 	}
 }
 
-void	lead_is_two(t_mini *mini, char *str, t_expansor *expansion)
+void	lead_is_two(t_mini *mini, char *str, t_expansor *expansion, t_var g_var)
 {
 	lead_is_two_helper(str, expansion);
 	if (expansion->start != expansion->i)
@@ -114,7 +115,7 @@ void	lead_is_two(t_mini *mini, char *str, t_expansor *expansion)
 			expansion->expansion_line = ft_strdup(expansion->substring);
 		else
 			expansion->expansion_line = expand_the_line(mini,
-					expansion->substring);
+					expansion->substring, g_var);
 		if (!expansion->expansion_line)
 			print_error(mini, 2);
 		free(expansion->substring);

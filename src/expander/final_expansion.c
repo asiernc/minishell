@@ -6,14 +6,14 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:46:27 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/18 20:13:06 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:39:27 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "expander.h"
 
-char	*final_expansion(t_mini *mini, char *str)
+char	*final_expansion(t_mini *mini, char *str, t_var g_var)
 {
 	t_expansor	*expansion;
 	char		*result;
@@ -30,11 +30,11 @@ char	*final_expansion(t_mini *mini, char *str)
 	while (str[expansion->i])
 	{
 		if (expansion->lead == 0)
-			lead_is_zero(mini, str, expansion);
+			lead_is_zero(mini, str, expansion, g_var);
 		else if (expansion->lead == 1)
 			lead_is_one(mini, str, expansion);
 		else if (expansion->lead == 2)
-			lead_is_two(mini, str, expansion);
+			lead_is_two(mini, str, expansion, g_var);
 	}
 	result = ft_strdup(expansion->final_line);
 	return (free(expansion->tmp), free(expansion->final_line), free(expansion),

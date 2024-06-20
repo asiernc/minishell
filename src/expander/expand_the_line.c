@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_the_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:23:35 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 12:12:12 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:08:21 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	expand_dollar_variable(t_mini *mini, char *str, int *i, char *result)
 //the goal of this function is to show the error_code when we have: echo $?
 //the result has to be a number which represents the last error_code
 
-int	expand_error_code(t_mini *mini, int *i, char *result)
+int	expand_error_code(t_mini *mini, int *i, char *result, t_var g_var)
 {
 	int		j;
 	int		k;
@@ -59,7 +59,7 @@ int	expand_error_code(t_mini *mini, int *i, char *result)
 	j = 0;
 	k = 0;
 	(*i) = (*i) + 2;
-	number = ft_itoa(g_global_var.error_code);
+	number = ft_itoa(g_var.error_code);
 	if (!number)
 		print_error(mini, 2);
 	while (number[j])
@@ -70,7 +70,7 @@ int	expand_error_code(t_mini *mini, int *i, char *result)
 //this function will expand the whole line
 //at the beginning we have the str like the example at the line 16
 //and it returns the str like the line 17
-char	*expand_the_line(t_mini *mini, char *str)//malloc ⚠️  
+char	*expand_the_line(t_mini *mini, char *str, t_var g_var)//malloc ⚠️  
 {
 	int		i;
 	int		j;
@@ -91,7 +91,7 @@ char	*expand_the_line(t_mini *mini, char *str)//malloc ⚠️
 			result[j++] = str[i++];
 		else if (i < (int)ft_strlen(str) - 1 && str[i] == '$'
 			&& str[i + 1] == '?')
-			j += expand_error_code(mini, &i, &result[j]);
+			j += expand_error_code(mini, &i, &result[j], g_var);
 		else
 			j += expand_dollar_variable(mini, str, &i, &result[j]);
 	}

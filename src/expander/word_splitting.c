@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_splitting.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 16:38:51 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 09:08:48 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:06:26 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	expand_dollar_variable_lead_zero(t_mini *mini, char *str, int *i,
 //It means that we have to split the word by one space if there is various
 //spaces in the same env
 //watch out you allocate too much space for result.
-char	*expand_the_line_lead_zero(t_mini *mini, char *str)
+char	*expand_the_line_lead_zero(t_mini *mini, char *str, t_var g_var)
 {
 	int		i;
 	int		j;
@@ -117,7 +117,7 @@ char	*expand_the_line_lead_zero(t_mini *mini, char *str)
 			result[j++] = str[i++];
 		else if (i < (int)ft_strlen(str) - 1 && str[i] == '$'
 			&& str[i + 1] == '?')
-			j += expand_error_code(mini, &i, &result[j]);
+			j += expand_error_code(mini, &i, &result[j], g_var);
 		else
 			j += expand_dollar_variable_lead_zero(mini, str, &i, &result[j]);
 	}
