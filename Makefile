@@ -6,13 +6,13 @@
 #    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/20 08:39:06 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/06/20 09:39:24 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #SETUP
 CC                  = gcc
-CFLAGS              = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS              = -Wall -Werror -Wextra -g #-fsanitize=address
 NAME                = minishell
 RM                  = rm -rf
 
@@ -40,7 +40,7 @@ SRCS_FILES          = main.c \
                       executor/run_cmds.c \
                       executor/redirections.c \
                       executor/utils_executor.c \
-                      executor/utils_executor_aux  \
+                      executor/utils_executor_aux.c  \
                       utils/mini_live.c \
                       utils/verify_quotes.c \
                       expander/expander.c \

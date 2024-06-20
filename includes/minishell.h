@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 17:33:17 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:25:37 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,7 +308,7 @@ int				is_dollar(char *str);
 int				is_equal(char *str);
 void			create_space_for_error_code(int *i, int *counter);
 void			iterate_classic_characters(char *str, int *i, int *counter);
-
+int				check_cd_home(t_mini *mini, t_cmd *cmd);
 int				calculate_len_for_malloc(t_mini *mini, char *str);
 
 // Executor
@@ -358,6 +358,7 @@ void			lexer_clear(t_lexer **list);
 
 void			init_signals(void);
 void			sigint_handler(int signal);
+void			sigquit_handler(int signal);
 
 // Random utils
 
