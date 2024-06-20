@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 09:57:35 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:04:50 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,11 @@ void	remove_eof_quotes(t_lexer *node)
 {
 	char	*str;
 
-	str = node->str;
+	str = ft_strdup(node->str);
 	free(node->str);
-	if (str[0] == '\"' || str[0] == '\'')
-		node->str = ft_substr(str, 1, ft_strlen(str) - 1);
+	if (str && (str[0] == '\"' || str[0] == '\''))
+		node->str = ft_substr(str, 1, ft_strlen(str) - 2);
+	free(str);
 }
 
 t_env_lst	*find_node_path(t_env_lst *lst_env)

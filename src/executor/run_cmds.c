@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 17:12:48 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:49:09 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	int	exit_code;
 
 	exit_code = 0;
-	if (cmd->redirections)
-		if (do_redirections(mini, cmd))
-			exit(1);
 	if (cmd->builtin != NOT_HAVE)
 	{
 		exit_code = do_builtin(mini, cmd);
@@ -94,6 +91,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	int	pid;
 	int	status;
 
+	//do_redirections(mini, cmd);
 	run_expander(mini, cmd);
 	if (cmd->builtin != NOT_HAVE)
 	{

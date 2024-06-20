@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 11:25:37 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:33:18 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,9 +269,9 @@ char			*clean_value(t_mini *mini, char *str);
 char			*value_to_export(t_mini *mini, const char *str,
 					const char quote_to_del);
 char			*value_with_quotes(t_mini *mini, char *str);
-
-
-
+char			*modify_line(t_mini *mini, char *str);
+char			*modify_line_aux(char **env, char *tmp);
+char			*return_value(t_mini *mini, char *str);
 void			print_env_export(t_mini *mini, int flag);
 int				lines_counter(char **array);
 int				check_zero(char *str);

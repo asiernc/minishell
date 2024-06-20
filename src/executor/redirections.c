@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:27:35 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/18 09:11:33 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:39:46 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	put_outfile(t_mini *mini, t_lexer *lex, char *filename)
 		fd_out = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else if (lex->token == RED_OUT_APP)
 		fd_out = open(filename, O_CREAT | O_RDWR | O_APPEND, 0644);
+	printf("%d\n", fd_out);
 	if (fd_out < 0)
 	{
 		ft_putendl_fd("shelldone: outfile: Error", STDERR_FILENO);

@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/20 09:39:24 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/06/20 13:15:33 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SRCS_FILES          = main.c \
 					  builtins/builtin_export_value_with_quotes.c \
                       builtins/builtin_unset.c \
                       builtins/builtin_cd.c \
+                      builtins/cd_aux.c                 \
                       builtins/cleaning_builtin_nodes.c \
                       utils/signals.c                   \
                       utils/utils.c                     \
