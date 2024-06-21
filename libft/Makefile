@@ -62,11 +62,11 @@ CFLAGS	= 		-Wall -Wextra -Werror
 
 all:			$(NAME)
 
-$(NAME): 		$(OBJS)	Makefile libft.h $(HEADER)
+$(NAME): 		$(OBJS)	Makefile $(HEADER)
 				$(LIB) $(NAME) $(OBJS)
 
 # Depend. adicionales = solo se ejecutara la regla si cambia make o header
-%.o:			%.c
+%.o:			%.c Makefile $(HEADER)
 				$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

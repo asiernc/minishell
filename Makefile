@@ -6,7 +6,7 @@
 #    By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/21 12:30:20 by simarcha         ###   ########.fr        #
+#    Updated: 2024/06/21 13:47:30 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDE_DIR         = includes/
 INCLUDE_FILES       = minishell.h \
                       ../libft/libft.h
 INCLUDE             = $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
-INCLUDE_FLAGS       = -I$(INCLUDE_DIR) -I$(LIBFT_DIR) # -I$(READLINE_DIR)/include 
+INCLUDE_FLAGS       = -I$(INCLUDE_DIR) -I$(LIBFT_DIR) 
 
 
 #SRCS - Where the main files for this project are located
@@ -142,31 +142,31 @@ OBJ_LIBFT			= $(LIBFT_SRCS:.c=.o)
 #RULES AND COMMANDS
 all:						$(LIBFT_ARCHIVE) $(NAME)
 
-$(SRCS_DIR)%.o:				$(SRCS_DIR)%.c $(INCLUDE)
+$(SRCS_DIR)%.o:				$(SRCS_DIR)%.c Makefile ./libft/Makefile $(INCLUDE)
 							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
-$(SRCS_DIR)lexer/%.o:		$(SRCS_DIR)lexer/%.c $(INCLUDE)
+$(SRCS_DIR)lexer/%.o:		$(SRCS_DIR)lexer/%.c Makefile ./libft/Makefile $(INCLUDE)
 							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
-$(SRCS_DIR)parser/%.o:		$(SRCS_DIR)parser/%.c $(INCLUDE)
+$(SRCS_DIR)parser/%.o:		$(SRCS_DIR)parser/%.c Makefile ./libft/Makefile $(INCLUDE)
 							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
-$(SRCS_DIR)executor/%.o:	$(SRCS_DIR)executor/%.c $(INCLUDE)
+$(SRCS_DIR)executor/%.o:	$(SRCS_DIR)executor/%.c Makefile ./libft/Makefile $(INCLUDE)
 							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
-$(SRCS_DIR)utils/%.o:		$(SRCS_DIR)utils/%.c $(INCLUDE)
+$(SRCS_DIR)utils/%.o:		$(SRCS_DIR)utils/%.c Makefile ./libft/Makefile $(INCLUDE)
 							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
-$(SRCS_DIR)expander/%.o:	$(SRCS_DIR)expander/%.c $(INCLUDE)
+$(SRCS_DIR)expander/%.o:	$(SRCS_DIR)expander/%.c Makefile ./libft/Makefile $(INCLUDE)
 							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
-$(SRCS_DIR)errors/%.o:		$(SRCS_DIR)errors/%.c $(INCLUDE)
+$(SRCS_DIR)errors/%.o:		$(SRCS_DIR)errors/%.c Makefile ./libft/Makefile $(INCLUDE)
 							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
-$(SRCS_DIR)builtins/%.o:	$(SRCS_DIR)builtins/%.c $(INCLUDE)
+$(SRCS_DIR)builtins/%.o:	$(SRCS_DIR)builtins/%.c Makefile ./libft/Makefile $(INCLUDE)
 							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
-$(NAME):					$(OBJ_SRCS) $(OBJ_LIBFT) $(LIBFT_ARCHIVE) Makefile $(INCLUDE) ./libft/Makefile
+$(NAME):					Makefile ./libft/Makefile ./libft/Makefile $(INCLUDE) $(OBJ_SRCS) $(OBJ_LIBFT) $(LIBFT_ARCHIVE) 
 							$(CC) $(CFLAGS) $(OBJ_SRCS) $(LIBFT_LIB) $(READLINE_LIB) -o $(NAME)
 							@echo "\033[1;32m\033[1mSuccessfully built $(NAME).\033[0m"
 
