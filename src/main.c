@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 17:21:41 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/21 12:36:54 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_global_var	g_global_var = {0, 0, 0, 0};
 
 int	main(int argc, char **argv, char **original_env)
 {
@@ -29,6 +27,7 @@ int	main(int argc, char **argv, char **original_env)
 		create_builtin_lst(&mini, &mini.env, original_env);
 		concat_lst_env(&mini);
 	}
+	mini.error_code = 0;
 	init_mini(&mini, original_env);
 	save_pwd(&mini, original_env);
 	mini_live(&mini);

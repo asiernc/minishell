@@ -6,7 +6,7 @@
 #    By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/20 17:38:20 by simarcha         ###   ########.fr        #
+#    Updated: 2024/06/21 12:30:20 by simarcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,10 @@ RM                  = rm -rf
 #INCLUDE - Where the header files are located
 INCLUDE_DIR         = includes/
 INCLUDE_FILES       = minishell.h \
-                      libft.h
+                      ../libft/libft.h
 INCLUDE             = $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
-INCLUDE_FLAGS       = -I$(INCLUDE_DIR) -I$(LIBFT_DIR)# -I$(READLINE_DIR)/include 
+INCLUDE_FLAGS       = -I$(INCLUDE_DIR) -I$(LIBFT_DIR) # -I$(READLINE_DIR)/include 
+
 
 #SRCS - Where the main files for this project are located
 SRCS_DIR            = src/
@@ -82,42 +83,95 @@ READLINE_LIB        = -lreadline -lhistory -L$(READLINE_DIR)
 
 #LIBFT 
 LIBFT_DIR           = libft/
+LIBFT_INC			= libft/libft.h
 LIBFT_ARCHIVE       = $(addprefix $(LIBFT_DIR), libft.a)
+LIBFT_FILES			= ft_memchr.c	\
+					ft_memcmp.c		\
+					ft_memmove.c	\
+					ft_memset.c		\
+					ft_strlcat.c	\
+					ft_strlcpy.c	\
+					ft_strlen.c		\
+					ft_strtrim.c	\
+					ft_atoi.c		\
+					ft_atoi_base.c	\
+					ft_memcpy.c		\
+					ft_bzero.c		\
+					ft_strmapi.c	\
+					ft_calloc.c		\
+					ft_strcmp.c		\
+					ft_strcmp_simple.c	\
+					ft_strncmp.c	\
+					ft_isalnum.c	\
+					ft_putchar_fd.c	\
+					ft_strnstr.c	\
+					ft_isalpha.c	\
+					ft_putendl_fd.c	\
+					ft_strrchr.c	\
+					ft_isascii.c	\
+					ft_putnbr_fd.c	\
+					ft_isdigit.c	\
+					ft_isspace.c	\
+					ft_putstr_fd.c	\
+					ft_substr.c		\
+					ft_isprint.c	\
+					ft_islower.c	\
+					ft_isuper.c		\
+					ft_split.c		\
+					ft_tolower.c	\
+					ft_itoa.c		\
+					ft_strchr.c		\
+					ft_toupper.c	\
+					ft_strdup.c		\
+					ft_striteri.c	\
+					ft_strjoin.c	\
+					ft_free_double_array.c \
+					ft_lstnew_bonus.c		\
+					ft_lstadd_front_bonus.c	\
+					ft_lstsize_bonus.c		\
+					ft_lstlast_bonus.c		\
+					ft_lstadd_back_bonus.c	\
+					ft_lstdelone_bonus.c	\
+					ft_lstclear_bonus.c		\
+					ft_lstiter_bonus.c		\
+					ft_lstmap_bonus.c
 LIBFT_LIB           = -L$(LIBFT_DIR) -lft
+LIBFT_SRCS			= $(addprefix $(LIBFT_DIR), $(LIBFT_FILES))
+OBJ_LIBFT			= $(LIBFT_SRCS:.c=.o)
 
 #RULES AND COMMANDS
 all:						$(LIBFT_ARCHIVE) $(NAME)
 
 $(SRCS_DIR)%.o:				$(SRCS_DIR)%.c $(INCLUDE)
-							@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 $(SRCS_DIR)lexer/%.o:		$(SRCS_DIR)lexer/%.c $(INCLUDE)
-							@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 $(SRCS_DIR)parser/%.o:		$(SRCS_DIR)parser/%.c $(INCLUDE)
-							@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 $(SRCS_DIR)executor/%.o:	$(SRCS_DIR)executor/%.c $(INCLUDE)
-							@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 $(SRCS_DIR)utils/%.o:		$(SRCS_DIR)utils/%.c $(INCLUDE)
-							@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 $(SRCS_DIR)expander/%.o:	$(SRCS_DIR)expander/%.c $(INCLUDE)
-							@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 $(SRCS_DIR)errors/%.o:		$(SRCS_DIR)errors/%.c $(INCLUDE)
-							@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 $(SRCS_DIR)builtins/%.o:	$(SRCS_DIR)builtins/%.c $(INCLUDE)
-							@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+							$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
-$(NAME):					$(OBJ_SRCS) $(LIBFT_ARCHIVE) Makefile
-							@$(CC) $(CFLAGS) $(OBJ_SRCS) $(LIBFT_LIB) $(READLINE_LIB) -o $(NAME)
+$(NAME):					$(OBJ_SRCS) $(OBJ_LIBFT) $(LIBFT_ARCHIVE) Makefile $(INCLUDE) ./libft/Makefile
+							$(CC) $(CFLAGS) $(OBJ_SRCS) $(LIBFT_LIB) $(READLINE_LIB) -o $(NAME)
 							@echo "\033[1;32m\033[1mSuccessfully built $(NAME).\033[0m"
 
 $(LIBFT_ARCHIVE):
-							@$(MAKE) -s -C $(LIBFT_DIR)
+							$(MAKE) -s -C $(LIBFT_DIR)
 							@echo "\033[1;32m\033[1mAll Libft files compiled in $(LIBFT_DIR).\033[0m"
 							
 clean:

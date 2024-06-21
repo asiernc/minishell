@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 09:57:35 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:08:31 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	pre_executor(t_mini *mini)
 {
 	signal(SIGQUIT, sigquit_handler);
-	g_global_var.inside_cmd = 1;
+	mini->inside_cmd = 1;
 	count_pipes(mini);
 	if (mini->pipes == 0)
 		handle_single_cmd(mini, mini->cmd);
 	else
 		executor(mini);
-	g_global_var.inside_cmd = 0;
+	mini->inside_cmd = 0;
 	return (EXIT_SUCCESS);
 }
 // Generador de números pseudoaleatorios lineal congruencial (LCG)

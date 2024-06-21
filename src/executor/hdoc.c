@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hdoc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 17:30:22 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:08:31 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_if_exists_hdoc(t_mini *mini, t_cmd *cmd)
 			error = check_eof(mini, tmp, cmd->hdoc_filename);
 			if (error)
 			{
-				g_global_var.error_code = error;
+				mini->error_code = error;
 				mini_reset(mini);
 			}
 		}
@@ -74,10 +74,10 @@ int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 	}
 	else
 		quotes = false;
-	g_global_var.outside_hdoc = 0;
-	g_global_var.inside_hdoc = 1;
+	mini->outside_hdoc = 0;
+	mini->inside_hdoc = 1;
 	error = open_save_hdoc(mini, redir, hdoc_filename, quotes);
-	g_global_var.inside_hdoc = 0;
+	mini->inside_hdoc = 0;
 	mini->flag_hdoc = 1;
 	return (error);
 }
@@ -91,7 +91,7 @@ int	open_save_hdoc(t_mini *mini, t_lexer *redir,
 	fd = open(hdoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	line = readline(">");
 	while (line != NULL && ft_strcmp_simple(redir->str, line) != 0
-		&& g_global_var.outside_hdoc == 0)
+		&& mini->outside_hdoc == 0)
 	{
 		if (quotes == false)
 			line = expand_str_line(mini, line);
@@ -100,7 +100,7 @@ int	open_save_hdoc(t_mini *mini, t_lexer *redir,
 		line = readline(">");
 	}
 	free(line);
-	if (g_global_var.outside_hdoc == 1)
+	if (mini->outside_hdoc == 1)
 		return (EXIT_FAILURE);
 	close(fd);
 	return (EXIT_SUCCESS);

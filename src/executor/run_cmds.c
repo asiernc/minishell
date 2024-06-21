@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 17:12:48 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:08:31 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	run_expander(mini, cmd);
 	if (cmd->builtin != NOT_HAVE)
 	{
-		g_global_var.error_code = do_builtin(mini, cmd);
+		mini->error_code = do_builtin(mini, cmd);
 		return ;
 	}
 	check_if_exists_hdoc(mini, mini->cmd);
@@ -108,5 +108,5 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 		ft_exec_cmd(mini, cmd);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		g_global_var.error_code = WEXITSTATUS(status);
+		mini->error_code = WEXITSTATUS(status);
 }

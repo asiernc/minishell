@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_live.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/06/19 17:21:43 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:34:12 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	mini_live(t_mini *mini)
 {
-	if (g_global_var.error_code != 0)
+	if (mini->error_code != 0)
 		mini->line = readline("\x1b[31mshelldone >\x1b[0m");
 	else
 		mini->line = readline("\x1b[32mshelldone >\x1b[0m");
@@ -47,10 +47,10 @@ void	init_mini(t_mini *mini, char **env)
 	mini->pid = NULL;
 	mini->original_env = env;
 	mini->home_env = get_value_from_env(mini, "HOME");
-	g_global_var.inside_cmd = 0;
-	g_global_var.inside_hdoc = 0;
-	g_global_var.outside_hdoc = 0;
-	init_signals();
+	mini->inside_cmd = 0;
+	mini->inside_hdoc = 0;
+	mini->outside_hdoc = 0;
+	init_signals(mini);
 }
 
 static void	lst_clear_cmds_helper(t_cmd **cmd, t_cmd *tmp_cmd)

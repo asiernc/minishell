@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 17:33:07 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:14:41 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int	is_equal(char *str)
 	return (0);
 }
 
-void	create_space_for_error_code(int *i, int *counter)
+void	create_space_for_error_code(t_mini *mini, int *i, int *counter)
 {
 	char		*num_len;
 
-	num_len = ft_itoa(g_global_var.error_code);
+	num_len = ft_itoa(mini->error_code);
 	(*counter) += (int)ft_strlen(num_len);
 	free(num_len);
 	(*i)++;

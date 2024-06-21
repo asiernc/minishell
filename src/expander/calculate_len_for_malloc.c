@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:17:51 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 17:32:23 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:15:21 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	calculate_len_for_malloc(t_mini *mini, char *str)
 			iterate_classic_characters(str, &i, &counter);
 		else if (i < (int)ft_strlen(str) - 1 && str[i] == '$'
 			&& str[i + 1] == '?')
-			create_space_for_error_code(&i, &counter);
+			create_space_for_error_code(mini, &i, &counter);
 		else
 		{
 			manage_dollar_variable(mini, str, &i, &counter);

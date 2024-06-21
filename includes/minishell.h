@@ -6,7 +6,7 @@
 /*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 17:41:01 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/21 12:37:02 by simarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,6 @@
 
 // STRUCTS
 
-// signals global variable
-
-typedef struct s_global_var
-{
-	int		inside_cmd;
-	int		inside_hdoc;
-	int		outside_hdoc;
-	int		error_code;
-}	t_global_var;
-
-extern t_global_var		g_global_var;
-
 // 		Main struct
 
 typedef struct s_mini
@@ -64,6 +52,9 @@ typedef struct s_mini
 	int						flag_hdoc;
 	int						flag_reset;
 	int						*pid;
+	int						inside_cmd;
+	int						inside_hdoc;
+	int						outside_hdoc;
 	int						error_code;
 	struct s_cmd			*cmd;
 }	t_mini;
@@ -306,7 +297,8 @@ int				update_the_situation(char c, int lead);
 int				invalid_characters(const char *str);
 int				is_dollar(char *str);
 int				is_equal(char *str);
-void			create_space_for_error_code(int *i, int *counter);
+//void			create_space_for_error_code(int *i, int *counter);
+void	create_space_for_error_code(t_mini *mini, int *i, int *counter);
 void			iterate_classic_characters(char *str, int *i, int *counter);
 int				check_cd_home(t_mini *mini, t_cmd *cmd);
 int				calculate_len_for_malloc(t_mini *mini, char *str);
@@ -323,7 +315,8 @@ t_env_lst		*find_node_path(t_env_lst *lst_env);
 int				do_cmd(t_mini *mini, t_cmd *cmd_lst, int i);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
-void			wait_pipes(int *pid, int pipes);
+//void			wait_pipes(int *pid, int pipes);
+void	wait_pipes(t_mini *mini, int *pid, int pipes);
 int				check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2]);
 void			ft_free_paths(char **str);
 
@@ -356,8 +349,10 @@ void			lexer_clear(t_lexer **list);
 
 // Signals
 
-void			init_signals(void);
-void			sigint_handler(int signal);
+//void			init_signals(void);
+void			init_signals(t_mini *mini);
+//void			sigint_handler(int signal);
+void			sigint_handler(int signum);
 void			sigquit_handler(int signal);
 
 // Random utils
