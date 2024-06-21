@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   mini_live.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:52:42 by asiercara         #+#    #+#             */
-/*   Updated: 2024/06/20 19:48:17 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:21:43 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	mini_live(t_mini *mini, t_var g_var)
+int	mini_live(t_mini *mini)
 {
-	if (g_var.error_code != 0)
+	if (g_global_var.error_code != 0)
 		mini->line = readline("\x1b[31mshelldone >\x1b[0m");
 	else
 		mini->line = readline("\x1b[32mshelldone >\x1b[0m");
@@ -25,19 +25,19 @@ int	mini_live(t_mini *mini, t_var g_var)
 		exit(EXIT_SUCCESS);
 	}
 	if (mini->line[0] == '\0')
-		mini_reset(mini, g_var);
+		mini_reset(mini);
 	if (!check_quotes_is_married(mini->line))
 		print_error(mini, 1);
 	add_history(mini->line);
 	if (!lexer_tokenizer(mini))
 		print_error(mini, 1);
 	parser(mini);
-	pre_executor(mini, g_var);
-	mini_reset(mini, g_var);
+	pre_executor(mini);
+	mini_reset(mini);
 	return (0);
 }
 
-void	init_mini(t_mini *mini, char **env, t_var g_var)
+void	init_mini(t_mini *mini, char **env)
 {
 	mini->line = NULL;
 	mini->lexer = NULL;
@@ -47,9 +47,9 @@ void	init_mini(t_mini *mini, char **env, t_var g_var)
 	mini->pid = NULL;
 	mini->original_env = env;
 	mini->home_env = get_value_from_env(mini, "HOME");
-	g_var.inside_cmd = 0;
-	g_var.inside_hdoc = 0;
-	g_var.outside_hdoc = 0;
+	g_global_var.inside_cmd = 0;
+	g_global_var.inside_hdoc = 0;
+	g_global_var.outside_hdoc = 0;
 	init_signals();
 }
 
@@ -91,7 +91,7 @@ void	lst_clear_cmds(t_cmd **cmd)
 }
 
 // function for free all and call another time mini_live for create a loop
-int	mini_reset(t_mini *mini, t_var g_var)
+int	mini_reset(t_mini *mini)
 {
 	if (mini->cmd)
 		lst_clear_cmds(&mini->cmd);
@@ -100,7 +100,7 @@ int	mini_reset(t_mini *mini, t_var g_var)
 		free(mini->line);
 	if (mini->pid)
 		free(mini->pid);
-	init_mini(mini, mini->original_env, g_var);
-	mini_live(mini, g_var);
+	init_mini(mini, mini->original_env);
+	mini_live(mini);
 	return (0);
 }

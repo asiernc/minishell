@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 19:44:19 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:44:37 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	executor(t_mini *mini, t_var g_var)
+int	executor(t_mini *mini)
 {
 	int	fds[2];
 	int	fd_in;
@@ -23,10 +23,10 @@ int	executor(t_mini *mini, t_var g_var)
 	fd_in = STDIN_FILENO;
 	while (mini->cmd)
 	{
-		run_expander(mini, mini->cmd, g_var);
+		run_expander(mini, mini->cmd);
 		if (mini->cmd->next && pipe(fds) == -1)
 			print_error(mini, PIPE_ERROR);
-		check_if_exists_hdoc(mini, mini->cmd, g_var);
+		check_if_exists_hdoc(mini, mini->cmd);
 		ft_fork(mini, mini->cmd, fds, fd_in);
 		if (mini->cmd->previous != NULL)
 			close(fd_in);
@@ -36,7 +36,7 @@ int	executor(t_mini *mini, t_var g_var)
 		else
 			break ;
 	}
-	wait_pipes(mini->pid, mini->pipes, g_var);
+	wait_pipes(mini->pid, mini->pipes);
 	return (0);
 }
 
@@ -94,7 +94,7 @@ int	check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2])
 	return (fd_in);
 }
 
-void	wait_pipes(int *pid, int pipes, t_var g_var)
+void	wait_pipes(int *pid, int pipes)
 {
 	int	i;
 	int	status;
@@ -106,5 +106,5 @@ void	wait_pipes(int *pid, int pipes, t_var g_var)
 		i++;
 	}
 	if (WIFEXITED(status))
-		g_var.error_code = WEXITSTATUS(status);
+		g_global_var.error_code = WEXITSTATUS(status);
 }

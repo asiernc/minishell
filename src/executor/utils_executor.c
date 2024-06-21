@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 18:42:15 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/20 09:57:35 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pre_executor(t_mini *mini, t_var g_var)
+int	pre_executor(t_mini *mini)
 {
 	signal(SIGQUIT, sigquit_handler);
-	g_var.inside_cmd = 1;
+	g_global_var.inside_cmd = 1;
 	count_pipes(mini);
 	if (mini->pipes == 0)
-		handle_single_cmd(mini, mini->cmd, g_var);
+		handle_single_cmd(mini, mini->cmd);
 	else
 		executor(mini);
-	g_var.inside_cmd = 0;
+	g_global_var.inside_cmd = 0;
 	return (EXIT_SUCCESS);
 }
 // Generador de números pseudoaleatorios lineal congruencial (LCG)
