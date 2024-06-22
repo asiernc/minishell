@@ -63,7 +63,7 @@ char	*value_with_quotes(t_mini *mini, char *str)
 
 //there is a second argument whereas I only need one. I had norminette issues.
 //This second argument has to be set as NULL. I couldn't declare it in the 
-//declaration section otherwise I would have 26 lines.
+//declaration section otherwise I would have 26/27 lines.
 t_env_lst	*sort_ascii(t_env_lst *lst_export, t_env_lst *sorted)
 {
 	t_env_lst	*current;
@@ -82,7 +82,8 @@ t_env_lst	*sort_ascii(t_env_lst *lst_export, t_env_lst *sorted)
 		else
 		{
 			tmp = sorted;
-			while (tmp->next && ft_strcmp_simple(current->key, tmp->next->key) >= 0)
+			while (tmp->next && ft_strcmp_simple(current->key,
+					tmp->next->key) >= 0)
 				tmp = tmp->next;
 			current->next = tmp->next;
 			tmp->next = current;
