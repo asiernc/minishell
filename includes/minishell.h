@@ -271,8 +271,8 @@ int				check_zero(char *str);
 int				ft_isdigit_and_signs(char *str);
 int				numeric_argument_required(char *str);
 int				check_exit_many_arguments(char *str);
-long long int	ft_atolli(const char *str);
-double			ft_atod(const char *str);
+int				check_exit_number(char *str_user, char *positive_lim,
+						char *negative_lim);
 int				exit_with_one_argument(t_mini *mini, char *str1, char *str2);
 void			free_elements(char *str1, char *str2);
 void			free_mini(t_mini *mini);

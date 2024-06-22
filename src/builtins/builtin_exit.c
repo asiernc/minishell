@@ -12,32 +12,33 @@
 
 #include "minishell.h"
 
-long long int	ft_atolli(const char *str)
+int	check_exit_number(char *str_user, char *positive_lim,
+						char *negative_lim)
 {
-	long long int	res;
-	long long int	sign;
+	int	len_user;
 
-	printf("in atolli str = _%s_\n", str);
-
-	if (!str)
+	len_user = ft_strlen(str_user);
+	if (len_user > 20)
 		return (0);
-	res = 0;
-	sign = 1;
-	while (*str == ' ' || *str == '\t' || *str == '\n'
-		|| *str == '\v' || *str == '\f' || *str == '\r')
-		str++;
-	if (*str == '-')
-		sign *= -1;
-	if (*str == '-' || *str == '+')
-		str++;
-	while (ft_isdigit(*str))
+	else if (len_user == 20 || len_user == 19)
 	{
-		res = res * 10 + (*str - '0');
-		str++;
+		if (str_user[0] == '-')
+		{
+			if (ft_strcmp_simple(str_user, negative_lim) > 0)
+				return (0);
+		}
+		else if (str_user[0] == '+')
+		{
+			if (ft_strcmp_simple(&str_user[1], positive_lim) > 0)
+				return (0);
+		}
+		else
+		{
+			if (ft_strcmp_simple(str_user, positive_lim) > 0)
+				return (0);
+		}
 	}
-	res *= sign;
-	printf("res = %lli\n", res);
-	return (res);
+	return (1);
 }
 
 void	free_elements(char *str1, char *str2)
