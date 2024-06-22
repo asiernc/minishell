@@ -264,7 +264,7 @@ char			*value_to_export(t_mini *mini, const char *str,
 char			*value_with_quotes(t_mini *mini, char *str);
 
 
-
+t_env_lst		*sort_ascii(t_env_lst *lst_export, t_env_lst *sorted);
 void			print_env_export(t_mini *mini, int flag);
 int				lines_counter(char **array);
 int				check_zero(char *str);
