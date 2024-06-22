@@ -29,9 +29,11 @@
 # include <readline/history.h>
 # include <stdbool.h>
 
-# define QUOTE		39
-# define DQUOTE		34
-# define BACKSLASH	92
+# define QUOTE			39
+# define DQUOTE			34
+# define BACKSLASH		92
+//# define LONG_LONG_MAX	9223372036854775807
+//# define LONG_LONG_MIN 	-9223372036854775808
 
 // STRUCTS
 
@@ -269,6 +271,8 @@ int				check_zero(char *str);
 int				ft_isdigit_and_signs(char *str);
 int				numeric_argument_required(char *str);
 int				check_exit_many_arguments(char *str);
+long long int	ft_atolli(const char *str);
+double			ft_atod(const char *str);
 int				exit_with_one_argument(t_mini *mini, char *str1, char *str2);
 void			free_elements(char *str1, char *str2);
 void			free_mini(t_mini *mini);

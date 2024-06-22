@@ -12,6 +12,34 @@
 
 #include "minishell.h"
 
+long long int	ft_atolli(const char *str)
+{
+	long long int	res;
+	long long int	sign;
+
+	printf("in atolli str = _%s_\n", str);
+
+	if (!str)
+		return (0);
+	res = 0;
+	sign = 1;
+	while (*str == ' ' || *str == '\t' || *str == '\n'
+		|| *str == '\v' || *str == '\f' || *str == '\r')
+		str++;
+	if (*str == '-')
+		sign *= -1;
+	if (*str == '-' || *str == '+')
+		str++;
+	while (ft_isdigit(*str))
+	{
+		res = res * 10 + (*str - '0');
+		str++;
+	}
+	res *= sign;
+	printf("res = %lli\n", res);
+	return (res);
+}
+
 void	free_elements(char *str1, char *str2)
 {
 	if (str1)
