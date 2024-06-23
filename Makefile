@@ -9,10 +9,9 @@
 #    Updated: 2024/06/20 13:15:33 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-#SETUP
+# SETUP
 CC                  = gcc
-CFLAGS              = -Wall -Werror -Wextra -g #-fsanitize=address
+CFLAGS              = -Wall -Werror -Wextra -g -fsanitize=address
 NAME                = minishell
 RM                  = rm -rf
 
@@ -20,10 +19,6 @@ RM                  = rm -rf
 UNAME_S := $(shell uname -s)
 
 # Determine readline flags based on OS
-#ifeq ($(UNAME_S), Linux)
-#    READLINE_DIR = /usr
-#    READLINE_LIB = -lreadline -lhistory -L$(READLINE_DIR)/lib
-
 ifeq ($(UNAME_S), Linux)
     READLINE_DIR        = ./readline-8.1
     READLINE_LIB        = -lreadline -lhistory -L$(READLINE_DIR)
@@ -36,24 +31,14 @@ else
     $(error Unsupported OS: $(UNAME_S))
 endif
 
-#FILES AND PATHS
-#INCLUDE - Where the header files are located
+# FILES AND PATHS
+# INCLUDE - Where the header files are located
 INCLUDE_DIR         = includes/
 INCLUDE_FILES       =   minishell.h \
                         libft.h
 INCLUDE             = $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
 
-
-#READLINE
-#READLINE_DIR        = ./readline-8.1
-#READLINE_LIB        = -lreadline -lhistory -L$(READLINE_DIR)
-
-# MAC
-#READLINE_DIR = $(shell brew --prefix readline)
-#READLINE_LIB = -lreadline -lhistory -L $(READLINE_DIR)/lib
-
-
-#SRCS - Where the main files for this project are located
+# SRCS - Where the main files for this project are located
 SRCS_DIR            =   src/
 SRCS_FILES          =   main.c \
                         lexer/tokenizer.c \
@@ -102,9 +87,7 @@ SRCS_FILES          =   main.c \
 SRCS                = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 OBJ_SRCS            = $(SRCS:.c=.o)
 
-#LIBFT 
-
-#LIBFT 
+# LIBFT 
 LIBFT_DIR           =   libft/
 LIBFT_SRCS          =   ft_memchr.c ft_memcmp.c ft_memmove.c ft_memset.c ft_strlcat.c \
                         ft_strlcpy.c ft_strlen.c ft_strtrim.c ft_atoi.c ft_atoi_base.c ft_memcpy.c \
@@ -121,37 +104,42 @@ LIBFT_OBJS          = $(addprefix $(LIBFT_DIR), $(LIBFT_SRCS:.c=.o))
 LIBFT_ARCHIVE       = $(addprefix $(LIBFT_DIR), libft.a)
 LIBFT_LIB           = -L$(LIBFT_DIR) -lft
 
+# RULES AND COMMANDS
+all:                $(LIBFT_ARCHIVE) $(NAME)
 
-#RULES AND COMMANDS
-all:						$(LIBFT_ARCHIVE) $(NAME)
+$(NAME):            $(OBJ_SRCS) $(LIBFT_ARCHIVE) Makefile includes/minishell.h includes/libft.h
+					@$(CC) $(CFLAGS) $(OBJ_SRCS) $(INCLUDE_FLAGS) $(LIBFT_LIB) $(READLINE_LIB) -o $(NAME)
+					@echo "\033[1;32m\033[1mSuccessfully built $(NAME).\033[0m"
 
-$(NAME):					$(OBJ_SRCS) $(LIBFT_ARCHIVE) Makefile
-							@$(CC) $(CFLAGS) $(OBJ_SRCS) $(INCLUDE_FLAGS) $(LIBFT_LIB) $(READLINE_LIB) -o $(NAME)
-							@echo "\033[1;32m\033[1mSuccessfully built $(NAME).\033[0m"
+$(LIBFT_ARCHIVE):   $(LIBFT_OBJS)
+					@$(MAKE) -C $(LIBFT_DIR)
+					@echo "\033[1;32m\033[1mAll Libft files compiled in $(LIBFT_DIR).\033[0m"
 
-$(LIBFT_ARCHIVE): $(LIBFT_OBJS)
-							@$(MAKE) -C $(LIBFT_DIR)
-							@echo "\033[1;32m\033[1mAll Libft files compiled in $(LIBFT_DIR).\033[0m"
+# Dependencia de los archivos objeto de `libft` en el archivo de cabecera `libft.h`
+$(LIBFT_DIR)%.o:    $(LIBFT_DIR)%.c $(LIBFT_DIR)libft.h $(LIBFT_DIR)Makefile
+					@echo "\033[1mCompiling $<...\033[0m"
+					@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -c $< -o $@
 
-%.o: %.c $(INCLUDE)
-							@echo "\033[1mCompiling $<...\033[0m"
-							@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+%.o:                %.c $(INCLUDE)
+					@echo "\033[1mCompiling $<...\033[0m"
+					@$(CC) $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
 
 clean:
-							@echo "\033[1;31m\033[1mDeleting every object file\033[0m" 
-							@echo "\033[1mCleaning the object src files\033[0m"
-							$(RM) $(OBJ_SRCS)
-							@echo ""
-							@echo "\033[1mCleaning the object libft files\033[0m"
-							@$(MAKE) clean -C $(LIBFT_DIR)
+					@echo "\033[1;31m\033[1mDeleting every object file\033[0m" 
+					@echo "\033[1mCleaning the object src files\033[0m"
+					$(RM) $(OBJ_SRCS)
+					@echo ""
+					@echo "\033[1mCleaning the object libft files\033[0m"
+					@$(MAKE) clean -C $(LIBFT_DIR)
 
-fclean:						clean
-							@echo "\033[1;31m\033[1mDeleting the executable and archive files\033[0m" 
-							$(RM) $(NAME)
-							@echo ""
-							@echo "\033[1;31m\033[1mCleaning the libft object and archive files\033[0m"
-							@$(MAKE) fclean -C $(LIBFT_DIR)
+fclean:             clean
+					@echo "\033[1;31m\033[1mDeleting the executable and archive files\033[0m" 
+					$(RM) $(NAME)
+					@echo ""
+					@echo "\033[1;31m\033[1mCleaning the libft object and archive files\033[0m"
+					@$(MAKE) fclean -C $(LIBFT_DIR)
 
-re:							fclean all
+re:					fclean all
 
-.PHONY:						all clean fclean re
+.PHONY:				all clean fclean re
+

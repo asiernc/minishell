@@ -67,7 +67,7 @@ $(NAME): 		$(OBJS)	Makefile $(HEADER)
 
 # Depend. adicionales = solo se ejecutara la regla si cambia make o header
 %.o:			%.c
-				$(CC) $(FLAGS) -c $< -o $@
+				$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 				$(RM) $(OBJS)

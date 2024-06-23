@@ -17,6 +17,9 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 	int	exit_code;
 
 	exit_code = 0;
+	if (cmd->redirections)
+		if (do_redirections(mini, cmd))
+			exit(1);
 	if (cmd->builtin != NOT_HAVE)
 	{
 		exit_code = do_builtin(mini, cmd);
@@ -91,9 +94,8 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	int	pid;
 	int	status;
 
-	//do_redirections(mini, cmd);
 	run_expander(mini, cmd);
-	if (cmd->builtin != NOT_HAVE)
+	if (cmd->builtin != NOT_HAVE && cmd->builtin != ECHO && cmd->builtin != PWD)
 	{
 		g_global_var.error_code = do_builtin(mini, cmd);
 		return ;
