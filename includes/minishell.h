@@ -98,7 +98,8 @@ enum	e_error_codes
 	UNLINK_ERROR,
 	MAX_HDOC,
 	UNSET_HOME,
-	EXPORT_ERROR
+	EXPORT_ERROR,
+	RANDOM,
 };
 
 enum e_operator
@@ -351,7 +352,6 @@ void			clear_one_node(t_lexer **lst);
 void			del_first_node(t_lexer **lst);
 void			delone_node(int num_del, t_lexer **lst);
 int				lst_size_lexer(t_mini *mini);
-void			lst_clear_lexer(t_lexer **lst);
 void			lexer_clear(t_lexer **list);
 
 // Signals

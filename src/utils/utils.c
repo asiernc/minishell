@@ -69,5 +69,8 @@ int	save_pwd(t_mini *mini, char **env)
 			mini->old_pwd = ft_substr(env[i], 7, ft_strlen(env[i]) - 7);
 		i++;
 	}
-	return (1);
+	if (!mini->pwd)
+		return (0);
+	else
+		return (1);
 }

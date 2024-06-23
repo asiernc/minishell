@@ -30,7 +30,8 @@ int	main(int argc, char **argv, char **original_env)
 		concat_lst_env(&mini);
 	}
 	init_mini(&mini, original_env);
-	save_pwd(&mini, original_env);
+	if (!save_pwd(&mini, original_env))
+		print_error(&mini, RANDOM);
 	mini_live(&mini);
 	return (0);
 }

@@ -16,6 +16,7 @@ int	get_pwd(t_mini *mini)
 {
 	t_env_lst	*tmp;
 
+	tmp = mini->env;
 	while (tmp)
 	{
 		if (mini->pwd && mini->old_pwd)

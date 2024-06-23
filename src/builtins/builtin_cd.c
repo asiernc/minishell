@@ -21,11 +21,8 @@ static void	update_list_env(t_mini *mini)
 	{
 		if (ft_strcmp_simple(tmp_env->key, "PWD") == 0)
 		{
-			if (mini->pwd)
-			{
-				free(tmp_env->value);
-				tmp_env->value = ft_strdup(mini->pwd);
-			}
+			free(tmp_env->value);
+			tmp_env->value = ft_strdup(mini->pwd);
 		}
 		if (ft_strcmp_simple(tmp_env->key, "OLDPWD") == 0)
 		{
@@ -73,9 +70,12 @@ static int	do_cd(t_mini *mini, char *path)
 	return (error);
 }
 
-static int	builtin_cd_aux(t_cmd *cmd, int *error)
+static int	builtin_cd_aux(t_mini *mini, t_cmd *cmd, int *error)
 {
 	*error = chdir(cmd->str[1]);
+	if (!ft_strcmp_simple(cmd->str[1], ".") && *error == 0
+		&& chdir(mini->old_pwd) < 0)
+		print_error(mini, RANDOM);
 	if (*error == -1)
 	{
 		ft_putstr_fd("shelldone: cd: ", STDERR_FILENO);
@@ -112,7 +112,7 @@ int	builtin_cd(t_mini *mini, t_cmd *cmd)
 			error = 1;
 	}
 	else
-		if (builtin_cd_aux(cmd, &error) == 1)
+		if (builtin_cd_aux(mini, cmd, &error) == 1)
 			return (1);
 	update_path(mini);
 	update_list_env(mini);

@@ -25,7 +25,8 @@ int	print_fatal_error(t_mini *mini, int keycode)
 		ft_putendl_fd("dup2: Error", STDERR_FILENO);
 	else if (keycode == MAX_HDOC)
 		ft_putendl_fd("maximum here-document count exceeded", STDERR_FILENO);
-	ft_putendl_fd("exit", STDERR_FILENO);
+	else if (keycode == RANDOM)
+		ft_putendl_fd("exit", STDERR_FILENO);
 	exit(2);
 }
 
@@ -57,7 +58,8 @@ int	print_error(t_mini *mini, int keycode)
 	ft_putstr_fd("shelldone: ", STDERR_FILENO);
 	if (keycode == MALLOC_ERROR || keycode == PIPE_ERROR
 		|| keycode == FORK_ERROR || keycode == DUP2_ERROR
-		|| keycode == MAX_HDOC || keycode == UNSET_HOME)
+		|| keycode == MAX_HDOC || keycode == UNSET_HOME
+		|| keycode == RANDOM)
 		print_fatal_error(mini, keycode);
 	else
 		handle_specific_error(keycode);
@@ -80,7 +82,7 @@ int	token_error(t_mini *mini, int token)
 		ft_putstr_fd("'<<'\n", STDERR_FILENO);
 	else if (token == RED_OUT_APP)
 		ft_putstr_fd("'>>'\n", STDERR_FILENO);
-	lexer_clear(&mini->lexer);
+	//lexer_clear(&mini->lexer);
 	g_global_var.error_code = STDERR_FILENO;
 	mini_reset(mini);
 	return (EXIT_FAILURE);

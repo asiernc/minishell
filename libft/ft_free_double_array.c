@@ -15,7 +15,6 @@
 void	ft_free_double_array(char ***str)
 {
 	int	i;
-	int	counter;
 
 	if (str == NULL || *str == NULL)
 		return ;
