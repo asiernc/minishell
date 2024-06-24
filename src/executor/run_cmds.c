@@ -97,7 +97,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	run_expander(mini, cmd);
 	if (cmd->builtin != NOT_HAVE && cmd->builtin != ECHO && cmd->builtin != PWD)
 	{
-		g_global_var.error_code = do_builtin(mini, cmd);
+		mini->error_code = do_builtin(mini, cmd);
 		return ;
 	}
 	check_if_exists_hdoc(mini, mini->cmd);
@@ -108,15 +108,15 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 		ft_exec_cmd(mini, cmd);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		g_global_var.error_code = WEXITSTATUS(status);
+		mini->error_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)
-			g_global_var.error_code = 130;
+			mini->error_code = 130;
 		else if (WTERMSIG(status) == SIGQUIT)
 		{
 			ft_putendl_fd("Quit: 3\n", STDERR_FILENO);
-			g_global_var.error_code = 131;
+			mini->error_code = 131;
 		}
 	}
 }

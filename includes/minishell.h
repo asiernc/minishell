@@ -47,6 +47,8 @@ typedef struct s_global_var
 
 extern t_global_var		g_global_var;
 
+extern int	g_status;
+
 // 		Main struct
 
 typedef struct s_mini
@@ -199,6 +201,12 @@ typedef struct s_cmd
 // redirections = List containing redirection tokens and filenames.
 			//    Or in the case of hdoc, it contains the EOF.
 
+typedef struct s_signal_info
+{
+	t_mini	*mini;
+	int		fd;
+}	t_signal_info;
+
 // ------------------------------------------------------------------------ //
 
 // Test functions
@@ -310,7 +318,7 @@ int				update_the_situation(char c, int lead);
 int				invalid_characters(const char *str);
 int				is_dollar(char *str);
 int				is_equal(char *str);
-void			create_space_for_error_code(int *i, int *counter);
+void			create_space_for_error_code(t_mini *mini, int *i, int *counter);
 void			iterate_classic_characters(char *str, int *i, int *counter);
 int				check_cd_home(t_mini *mini, t_cmd *cmd);
 int				calculate_len_for_malloc(t_mini *mini, char *str);
@@ -327,7 +335,7 @@ t_env_lst		*find_node_path(t_env_lst *lst_env);
 int				do_cmd(t_mini *mini, t_cmd *cmd_lst, int i);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
-void			wait_pipes(int *pid, int pipes);
+void			wait_pipes(t_mini *mini, int *pid);
 int				check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2]);
 void			ft_free_paths(char **str);
 

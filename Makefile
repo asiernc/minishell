@@ -38,10 +38,14 @@ endif
 
 INCLUDE_DIR         =   includes/
 INCLUDE_FILES       =   minishell.h \
-                        libft.h
+                        libft.h     \
+                        #get_next_line.h
 INCLUDE             =   $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
 
 # SRCS - Where the main files for this project are located
+
+                        #get_next_line.c \
+                        #get_next_line_utils.c \
 
 SRCS_DIR            =   src/
 SRCS_FILES          =   main.c \

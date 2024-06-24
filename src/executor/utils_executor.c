@@ -15,13 +15,13 @@
 int	pre_executor(t_mini *mini)
 {
 	signal(SIGQUIT, sigquit_handler);
-	g_global_var.inside_cmd = 1;
+	mini->inside_cmd = 1;
 	count_pipes(mini);
 	if (mini->pipes == 0)
 		handle_single_cmd(mini, mini->cmd);
 	else
 		executor(mini);
-	g_global_var.inside_cmd = 0;
+	mini->inside_cmd = 0;
 	return (EXIT_SUCCESS);
 }
 // Generador de números pseudoaleatorios lineal congruencial (LCG)

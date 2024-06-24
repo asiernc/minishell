@@ -72,3 +72,70 @@ void	del_first_node(t_lexer **lst)
 	*lst = tmp->next;
 	clear_one_node(&tmp);
 }
+
+
+
+
+
+
+
+
+
+/*typedef struct s_redir {
+    int type;
+    char *file;
+} t_redir;
+
+#define HERE_DOC 1
+
+static void handle_signals_heredoc(int sig) {
+    if (sig == SIGQUIT) {
+        return;
+    } else if (sig == SIGINT) {
+        close(STDIN_FILENO);
+        write(STDOUT_FILENO, "> \n", 3);
+    }
+}
+
+void set_up_signals_here_doc(void) {
+    struct sigaction sa;
+    sa.sa_flags = SA_SIGINFO;
+    sa.sa_handler = &handle_signals_heredoc;
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGQUIT, &sa, NULL);
+}
+
+int open_save_hdoc(int *pipefd, char *limiter) {
+    char *line;
+
+    set_up_signals_here_doc();
+    line = readline("> ");
+    while (line != NULL) {
+        if (strcmp(limiter, line) == 0) {
+            free(line);
+            break;
+        }
+        write(pipefd[1], line, strlen(line));
+        write(pipefd[1], "\n", 1);
+        free(line);
+        line = readline("> ");
+    }
+    return 0;
+}
+
+int check_eof(t_redir *word, int pid) {
+    int pipefd[2];
+
+    if (word != NULL) {
+        if (word->type == HERE_DOC) {
+            pipe(pipefd);
+            open_save_hdoc(pipefd, word->file);
+            close(pipefd[1]);
+            if (pid != 1) {
+                dup2(pipefd[0], STDIN_FILENO);
+            }
+            close(pipefd[0]);
+        }
+    }
+    return 0;
+}*/

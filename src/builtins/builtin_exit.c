@@ -60,5 +60,5 @@ int	builtin_exit(t_mini *mini, t_cmd *cmd)
 	if (str1)
 		return (exit_with_one_argument(mini, str1, str2));
 	return (free_mini(mini), free_elements(str1, str2),
-		exit(g_global_var.error_code), g_global_var.error_code);
+		exit(mini->error_code), mini->error_code);
 }

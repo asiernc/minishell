@@ -25,16 +25,21 @@ int	event(void)
 
 void	sigint_handler(int signal)
 {
-	if (!g_global_var.inside_hdoc)
+	/*if (!mini->inside_hdoc)
 		ft_putstr_fd("\n", STDERR_FILENO);
-	if (g_global_var.inside_hdoc == 1 && g_global_var.inside_cmd == 1)
+	if (mini->inside_hdoc == 1 && mini->inside_cmd == 1)
 	{
-		g_global_var.outside_hdoc = 1;
+		mini->outside_hdoc = 1;
 		rl_replace_line("", 0);
 		rl_redisplay();
 		rl_done = 1;
 		return ;
 	}
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	(void)signal;*/
+	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
