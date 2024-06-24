@@ -65,6 +65,9 @@ typedef struct s_mini
 	int						flag_reset;
 	int						*pid;
 	int						error_code;
+	int						inside_cmd;
+	int						inside_hdoc;
+	int						outside_hdoc;
 	struct s_cmd			*cmd;
 }	t_mini;
 

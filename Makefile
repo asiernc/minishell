@@ -6,9 +6,10 @@
 #    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/20 13:15:33 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/06/24 12:40:18 by asiercara        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 # SETUP
 CC                  = gcc
 CFLAGS              = -Wall -Werror -Wextra -g -fsanitize=address
@@ -32,13 +33,16 @@ else
 endif
 
 # FILES AND PATHS
+
 # INCLUDE - Where the header files are located
-INCLUDE_DIR         = includes/
+
+INCLUDE_DIR         =   includes/
 INCLUDE_FILES       =   minishell.h \
                         libft.h
-INCLUDE             = $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
+INCLUDE             =   $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
 
 # SRCS - Where the main files for this project are located
+
 SRCS_DIR            =   src/
 SRCS_FILES          =   main.c \
                         lexer/tokenizer.c \
@@ -84,10 +88,10 @@ SRCS_FILES          =   main.c \
                         utils/utils.c                     \
                         utils/utils_aux.c
 
-SRCS                = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
-OBJ_SRCS            = $(SRCS:.c=.o)
+OBJ_SRCS            =   $(addprefix $(SRCS_DIR), $(SRCS_FILES:.c=.o))
 
-# LIBFT 
+# LIBFT
+
 LIBFT_DIR           =   libft/
 LIBFT_SRCS          =   ft_memchr.c ft_memcmp.c ft_memmove.c ft_memset.c ft_strlcat.c \
                         ft_strlcpy.c ft_strlen.c ft_strtrim.c ft_atoi.c ft_atoi_base.c ft_memcpy.c \
@@ -104,7 +108,12 @@ LIBFT_OBJS          = $(addprefix $(LIBFT_DIR), $(LIBFT_SRCS:.c=.o))
 LIBFT_ARCHIVE       = $(addprefix $(LIBFT_DIR), libft.a)
 LIBFT_LIB           = -L$(LIBFT_DIR) -lft
 
+# Progress variables
+TOTAL_FILES         = $(words $(OBJ_SRCS) $(LIBFT_OBJS))
+COMPILED_FILES      = 0
+
 # RULES AND COMMANDS
+
 all:                $(LIBFT_ARCHIVE) $(NAME)
 
 $(NAME):            $(OBJ_SRCS) $(LIBFT_ARCHIVE) Makefile includes/minishell.h includes/libft.h
@@ -115,7 +124,6 @@ $(LIBFT_ARCHIVE):   $(LIBFT_OBJS)
 					@$(MAKE) -C $(LIBFT_DIR)
 					@echo "\033[1;32m\033[1mAll Libft files compiled in $(LIBFT_DIR).\033[0m"
 
-# Dependencia de los archivos objeto de `libft` en el archivo de cabecera `libft.h`
 $(LIBFT_DIR)%.o:    $(LIBFT_DIR)%.c $(LIBFT_DIR)libft.h $(LIBFT_DIR)Makefile
 					@echo "\033[1mCompiling $<...\033[0m"
 					@$(CC) $(CFLAGS) -I$(LIBFT_DIR) -c $< -o $@
@@ -127,17 +135,15 @@ $(LIBFT_DIR)%.o:    $(LIBFT_DIR)%.c $(LIBFT_DIR)libft.h $(LIBFT_DIR)Makefile
 clean:
 					@echo "\033[1;31m\033[1mDeleting every object file\033[0m" 
 					@echo "\033[1mCleaning the object src files\033[0m"
-					$(RM) $(OBJ_SRCS)
-					@echo ""
+					@$(RM) $(OBJ_SRCS)
 					@echo "\033[1mCleaning the object libft files\033[0m"
-					@$(MAKE) clean -C $(LIBFT_DIR)
+					@$(RM) $(LIBFT_OBJS)
 
 fclean:             clean
-					@echo "\033[1;31m\033[1mDeleting the executable and archive files\033[0m" 
+					@echo "\033[1;31m\033[1mDeleting the executable file\033[0m" 
 					$(RM) $(NAME)
-					@echo ""
-					@echo "\033[1;31m\033[1mCleaning the libft object and archive files\033[0m"
-					@$(MAKE) fclean -C $(LIBFT_DIR)
+					@echo "\033[1;31m\033[1mCleaning the libft executable file\033[0m"
+					$(RM) $(LIBFT_ARCHIVE)
 
 re:					fclean all
 

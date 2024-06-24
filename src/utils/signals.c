@@ -43,7 +43,7 @@ void	sigint_handler(int signal)
 
 void	init_signals(void)
 {
-	rl_event_hook = event;
+	rl_event_hook = 0;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
