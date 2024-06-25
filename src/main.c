@@ -6,11 +6,13 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 15:05:25 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:12:46 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_status = 0;
 
 int	main(int argc, char **argv, char **original_env)
 {

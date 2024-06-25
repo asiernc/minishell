@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 13:38:13 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:13:38 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_up_signals_hdoc(void)
 {
-	g_status = 15;
+	g_status = 0;
 }
 
 int	not_found(char *str)

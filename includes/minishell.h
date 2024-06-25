@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 15:03:37 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:26:32 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ typedef struct s_mini
 	int						inside_hdoc;
 	int						outside_hdoc;
 	int						error_code;
-	int						inside_cmd;
-	int						inside_hdoc;
-	int						outside_hdoc;
 	struct s_cmd			*cmd;
 }	t_mini;
 
@@ -268,8 +265,9 @@ char			*clean_value(t_mini *mini, char *str);
 char			*value_to_export(t_mini *mini, const char *str,
 					const char quote_to_del);
 char			*value_with_quotes(t_mini *mini, char *str);
-
-
+char			*modify_line(t_mini *mini, char *str);
+char			*modify_line_aux(char **env, char *tmp);
+char			*return_value(t_mini *mini, char *str);
 t_env_lst		*sort_ascii(t_env_lst *lst_export, t_env_lst *sorted);
 void			print_env_export(t_mini *mini, int flag);
 int				lines_counter(char **array);

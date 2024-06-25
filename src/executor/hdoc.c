@@ -6,13 +6,11 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 15:07:30 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:12:54 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_status = 0;
 
 int	check_if_exists_hdoc(t_mini *mini, t_cmd *cmd)
 {
