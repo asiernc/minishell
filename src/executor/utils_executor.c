@@ -6,21 +6,27 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 16:04:50 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:00:28 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	set_up_signals_in_cmd(void)
+{
+	g_status = 10;
+}
 int	pre_executor(t_mini *mini)
 {
 	signal(SIGQUIT, sigquit_handler);
 	mini->inside_cmd = 1;
+	set_up_signals_in_cmd();
 	count_pipes(mini);
 	if (mini->pipes == 0)
 		handle_single_cmd(mini, mini->cmd);
 	else
 		executor(mini);
+	mini->error_code = g_status;
 	mini->inside_cmd = 0;
 	return (EXIT_SUCCESS);
 }

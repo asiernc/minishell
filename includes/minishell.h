@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 16:33:18 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:37:57 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,6 @@
 # define BACKSLASH	92
 
 // STRUCTS
-
-// signals global variable
-
-typedef struct s_global_var
-{
-	int		inside_cmd;
-	int		inside_hdoc;
-	int		outside_hdoc;
-	int		error_code;
-}	t_global_var;
-
-extern t_global_var		g_global_var;
 
 extern int	g_status;
 
@@ -201,12 +189,6 @@ typedef struct s_cmd
 // redirections = List containing redirection tokens and filenames.
 			//    Or in the case of hdoc, it contains the EOF.
 
-typedef struct s_signal_info
-{
-	t_mini	*mini;
-	int		fd;
-}	t_signal_info;
-
 // ------------------------------------------------------------------------ //
 
 // Test functions
@@ -332,12 +314,13 @@ int				ft_fork(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_dup(t_mini *mini, t_cmd *cmd, int fds[2], int fd_in);
 void			ft_exec_cmd(t_mini *mini, t_cmd *cmd);
 t_env_lst		*find_node_path(t_env_lst *lst_env);
-int				do_cmd(t_mini *mini, t_cmd *cmd_lst, int i);
+int				do_cmd(t_mini *mini, t_cmd *cmd_lst);
 int				do_builtin(t_mini *mini, t_cmd *cmd);
 void			handle_single_cmd(t_mini *mini, t_cmd *cmd);
 void			wait_pipes(t_mini *mini, int *pid);
 int				check_next_fd_in(t_mini *mini, t_cmd *cmd, int fds[2]);
 void			ft_free_paths(char **str);
+int				not_found(char *str);
 
 // Redirections
 
@@ -347,12 +330,14 @@ int				put_outfile(t_mini *mini, t_lexer *lex, char *filename);
 
 // Hdoc
 
+void			set_up_signals_hdoc(void);
 int				check_if_exists_hdoc(t_mini *mini, t_cmd *cmd);
 char			*generate_filename(void);
 int				check_eof(t_mini *mini, t_lexer	*redir, char *hdoc_filename);
 int				open_save_hdoc(t_mini *mini, t_lexer *redir,
 					char *hdoc_filename, bool quotes);
 void			remove_eof_quotes(t_lexer *node);
+void			check_max_hdoc(t_mini *mini, t_lexer *redirects);
 
 // Utils nodes
 

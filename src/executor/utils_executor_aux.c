@@ -6,11 +6,24 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:47:43 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 17:08:01 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:38:13 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	set_up_signals_hdoc(void)
+{
+	g_status = 15;
+}
+
+int	not_found(char *str)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	return (127);
+}
 
 void	ft_free_paths(char **str)
 {
@@ -25,4 +38,21 @@ void	ft_free_paths(char **str)
 	}
 	free(str);
 	str = NULL;
+}
+
+void	check_max_hdoc(t_mini *mini, t_lexer *redirects)
+{
+	t_lexer	*tmp;
+	int		count;
+
+	count = 0;
+	tmp = redirects;
+	while (tmp)
+	{
+		if (tmp->token == HDOC)
+			count++;
+		tmp = tmp->next;
+	}
+	if (count > 16)
+		print_error(mini, MAX_HDOC);
 }

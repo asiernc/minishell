@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/24 12:40:18 by asiercara        ###   ########.fr        #
+#    Updated: 2024/06/25 12:59:58 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,15 +112,11 @@ LIBFT_OBJS          = $(addprefix $(LIBFT_DIR), $(LIBFT_SRCS:.c=.o))
 LIBFT_ARCHIVE       = $(addprefix $(LIBFT_DIR), libft.a)
 LIBFT_LIB           = -L$(LIBFT_DIR) -lft
 
-# Progress variables
-TOTAL_FILES         = $(words $(OBJ_SRCS) $(LIBFT_OBJS))
-COMPILED_FILES      = 0
-
 # RULES AND COMMANDS
 
 all:                $(LIBFT_ARCHIVE) $(NAME)
 
-$(NAME):            $(OBJ_SRCS) $(LIBFT_ARCHIVE) Makefile includes/minishell.h includes/libft.h
+$(NAME):            $(OBJ_SRCS) $(LIBFT_ARCHIVE) ./Makefile includes/minishell.h includes/libft.h
 					@$(CC) $(CFLAGS) $(OBJ_SRCS) $(INCLUDE_FLAGS) $(LIBFT_LIB) $(READLINE_LIB) -o $(NAME)
 					@echo "\033[1;32m\033[1mSuccessfully built $(NAME).\033[0m"
 

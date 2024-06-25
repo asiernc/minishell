@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:07:20 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/19 17:05:26 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:35:17 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	save_pwd(t_mini *mini, char **env)
 			mini->old_pwd = ft_substr(env[i], 7, ft_strlen(env[i]) - 7);
 		i++;
 	}
-	if (!mini->pwd)
+	if (mini->pwd[0] == '\0')
 		return (0);
 	else
 		return (1);

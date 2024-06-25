@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 16:49:09 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:56:23 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_exec_cmd(t_mini *mini, t_cmd *cmd)
 		exit(exit_code);
 	}
 	else if (cmd->str[0] && cmd->str[0][0])
-		exit_code = do_cmd(mini, cmd, 0);
+		exit_code = do_cmd(mini, cmd);
 	exit(exit_code);
 }
 
@@ -52,41 +52,46 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 	return (exit_code);
 }
 
-static int	not_found(char *str)
+static void	aux_do_cmd(t_mini *mini, char **paths, char *tmp)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(str, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	return (127);
+	int 	i;
+	char	*cmd_path;
+
+	i = 0;
+	cmd_path = NULL;
+	while (paths && paths[i])
+	{
+		cmd_path = ft_strjoin(paths[i], tmp);
+		if (!cmd_path)
+			print_error(mini, 2);
+		if (access(cmd_path, F_OK | X_OK) == 0)
+			execve(cmd_path, mini->cmd->str, mini->env_cpy);
+		free(cmd_path);
+		i++;
+	}
 }
 
-int	do_cmd(t_mini *mini, t_cmd *cmd, int i)
+int	do_cmd(t_mini *mini, t_cmd *cmd)
 {
 	char	**env;
 	char	**paths;
-	char	*cmd_path;
 	char	*tmp;
 
+	paths = NULL;
 	env = mini->env_cpy;
 	if (!access(cmd->str[0], F_OK | X_OK))
 		execve(cmd->str[0], cmd->str, mini->env_cpy);
 	while (*env && !ft_strnstr(*env, "PATH", 5))
 		env++;
 	tmp = ft_substr(*env, 5, ft_strlen(*env) - 5);
-	paths = ft_split(tmp, ':');
+	if (tmp[0] != '\0')
+		paths = ft_split(tmp, ':');
 	free(tmp);
 	tmp = ft_strjoin("/", cmd->str[0]);
-	while (paths[i])
-	{
-		cmd_path = ft_strjoin(paths[i], tmp);
-		if (!cmd_path)
-			print_error(mini, 2);
-		if (access(cmd_path, F_OK | X_OK) == 0)
-			execve(cmd_path, cmd->str, mini->env_cpy);
-		free(cmd_path);
-		i++;
-	}
-	return (ft_free_paths(paths), free(tmp), not_found(cmd->str[0]));
+	aux_do_cmd(mini, paths, tmp);
+	if (paths)
+		ft_free_paths(paths);
+	return (free(tmp), not_found(cmd->str[0]));
 }
 
 void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
@@ -112,11 +117,10 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)
-			mini->error_code = 130;
-		else if (WTERMSIG(status) == SIGQUIT)
 		{
-			ft_putendl_fd("Quit: 3\n", STDERR_FILENO);
-			mini->error_code = 131;
+			mini->error_code = 130;
 		}
+		else if (WTERMSIG(status) == SIGQUIT)
+			mini->error_code = 131;
 	}
 }

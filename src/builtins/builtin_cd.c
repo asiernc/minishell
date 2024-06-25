@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:32:12 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/20 16:20:39 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:59:28 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	do_cd(t_mini *mini, char *path)
 		free(tmp_key);
 	}
 	if (error != 0)
-		print_error(mini, UNSET_HOME);
+		print_error(mini, RANDOM);
 	return (error);
 }
 
@@ -74,7 +74,7 @@ static int	builtin_cd_aux(t_mini *mini, t_cmd *cmd, int *error)
 {
 	*error = chdir(cmd->str[1]);
 	if (!ft_strcmp_simple(cmd->str[1], ".") && *error == 0
-		&& chdir(mini->old_pwd) < 0)
+		&& chdir(mini->pwd) < 0)
 		print_error(mini, RANDOM);
 	if (*error == -1)
 	{
@@ -87,9 +87,6 @@ static int	builtin_cd_aux(t_mini *mini, t_cmd *cmd, int *error)
 	return (0);
 }
 
-// regla cd .
-
-
 int	builtin_cd(t_mini *mini, t_cmd *cmd)
 {
 	int		error;
@@ -100,7 +97,14 @@ int	builtin_cd(t_mini *mini, t_cmd *cmd)
 		|| ft_strcmp_simple(cmd->str[1], "~/") == 0)
 		error = do_cd(mini, "HOME");
 	else if (ft_strcmp_simple(cmd->str[1], "-") == 0)
+	{
 		error = do_cd(mini, "OLDPWD");
+		if (error == -1)
+		{
+			printf("hola\n");
+			error = do_cd(mini, "PWD");
+		}
+	}
 	else if (ft_strncmp(cmd->str[1], "~/", 2) == 0 && cmd->str[1][3])
 	{
 		tmp = modify_line(mini, cmd->str[1]);

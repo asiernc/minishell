@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:33:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 10:00:22 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:57:22 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,38 @@ int	event(void)
 
 void	sigint_handler(int signal)
 {
-	/*if (!mini->inside_hdoc)
-		ft_putstr_fd("\n", STDERR_FILENO);
-	if (mini->inside_hdoc == 1 && mini->inside_cmd == 1)
+	if (g_status == 10)
 	{
-		mini->outside_hdoc = 1;
+		printf("\n");
+		g_status = 130;
+		rl_done = 1;
+	}
+	else if (g_status == 15)
+	{
+		g_status = 130;
+		rl_done = 1;
+	}
+	else
+	{
+		printf("\n");
+		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		rl_done = 1;
-		return ;
 	}
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	(void)signal;*/
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
 	(void)signal;
 }
 
 void	init_signals(void)
 {
-	rl_event_hook = 0;
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	struct sigaction	sa;
+
+	rl_event_hook = event;
+	sa.sa_flags = 0;
+	sa.sa_handler = sigint_handler;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
+	rl_catch_signals = 1;
 }
+

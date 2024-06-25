@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:10:41 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/13 12:44:37 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:05:16 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,6 @@ void	wait_pipes(t_mini *mini, int *pid)
 		if (WTERMSIG(status) == SIGINT)
 			mini->error_code = 130;
 		else if (WTERMSIG(status) == SIGQUIT)
-		{
-			ft_putendl_fd("Quit: 3\n", STDERR_FILENO);
 			mini->error_code = 131;
-		}
 	}
 }

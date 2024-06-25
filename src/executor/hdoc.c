@@ -6,30 +6,13 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/12 17:30:22 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:41:48 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_status = 0;
-
-static void	check_max_hdoc(t_mini *mini, t_lexer *redirects)
-{
-	t_lexer	*tmp;
-	int		count;
-
-	count = 0;
-	tmp = redirects;
-	while (tmp)
-	{
-		if (tmp->token == HDOC)
-			count++;
-		tmp = tmp->next;
-	}
-	if (count > 16)
-		print_error(mini, MAX_HDOC);
-}
+int	g_status = 0;
 
 int	check_if_exists_hdoc(t_mini *mini, t_cmd *cmd)
 {
@@ -84,23 +67,15 @@ int	check_eof(t_mini *mini, t_lexer *redir, char *hdoc_filename)
 	return (error);
 }
 
-static void	handle_signals_hdoc(int sig)
+static void	aux_open_save_hdoc(char *line, char *eof)
 {
-
-	if (sig == SIGQUIT)
-		return ;
-	else if (sig == SIGINT)
-		g_status = 130;
-}
-
-static void	set_up_signals_hdoc(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_flags = 0;
-	sa.sa_handler = handle_signals_hdoc;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
+	if (line != NULL)
+		free(line);
+	else if (line == NULL)
+	{
+		fprintf(stderr, "bash: warning: here-document at last line delimited");
+		fprintf(stderr, "by end-of-file (wanted `%s')\n", eof);
+	}
 }
 
 int	open_save_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename,
@@ -109,22 +84,29 @@ int	open_save_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename,
 	char			*line;
 	int				fd;
 
-	g_status = 0;
 	set_up_signals_hdoc();
 	fd = open(hdoc_filename, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	line = readline(">");
-	while (g_status != 130 && line != NULL && ft_strcmp_simple(redir->str, line) != 0
+	while (line != NULL && ft_strcmp_simple(redir->str, line) != 0
 		&& mini->outside_hdoc == 0)
 	{
+		if (g_status == 130)
+		{
+			mini->outside_hdoc = 1;
+			break ;
+		}
 		if (quotes == false)
 			line = expand_str_line(mini, line);
 		ft_putendl_fd(line, fd);
 		free(line);
 		line = readline(">");
 	}
-	free(line);
+	aux_open_save_hdoc(line, redir->str);
 	close(fd);
 	if (mini->outside_hdoc == 1)
-		return (EXIT_FAILURE);
+	{
+		mini->error_code = g_status;
+		return (130);
+	}
 	return (EXIT_SUCCESS);
 }
