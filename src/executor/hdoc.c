@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:01:52 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 15:12:54 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:17:35 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,15 @@ static void	aux_open_save_hdoc(char *line, char *eof)
 		free(line);
 	else if (line == NULL)
 	{
-		fprintf(stderr, "bash: warning: here-document at last line delimited");
+		fprintf(stderr, "bash: warning: here-document at last line delimited ");
 		fprintf(stderr, "by end-of-file (wanted `%s')\n", eof);
 	}
+}
+
+static int	outside_hdoc(t_mini *mini)
+{
+	mini->error_code = g_status + 128;
+	return (130);
 }
 
 int	open_save_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename,
@@ -88,7 +94,7 @@ int	open_save_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename,
 	while (line != NULL && ft_strcmp_simple(redir->str, line) != 0
 		&& mini->outside_hdoc == 0)
 	{
-		if (g_status == 130)
+		if (g_status == 2)
 		{
 			mini->outside_hdoc = 1;
 			break ;
@@ -102,9 +108,6 @@ int	open_save_hdoc(t_mini *mini, t_lexer *redir, char *hdoc_filename,
 	aux_open_save_hdoc(line, redir->str);
 	close(fd);
 	if (mini->outside_hdoc == 1)
-	{
-		mini->error_code = g_status;
-		return (130);
-	}
+		return (outside_hdoc(mini));
 	return (EXIT_SUCCESS);
 }

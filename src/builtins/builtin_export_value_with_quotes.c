@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 19:57:23 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/19 11:10:35 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:24:44 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,17 @@ char	*value_to_export(t_mini *mini, const char *str, const char quote_to_del)
 	int		len;
 	char	*res;
 
-	printf("STR %s\n", str);
 	len = (int)ft_strlen(str) - 1;
 	while (len >= 0)
 	{
 		len--;
 		if (str[len] == quote_to_del)
 		{
-			printf("LEN SUBSTR %d\n", len);
 			res = ft_substr(str, 1, len);
 			if (!res)
 				print_error(mini, 2);
 		}
 	}
-	printf("VALUE %s\n", res);
 	return (res);
 }
 

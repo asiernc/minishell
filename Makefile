@@ -6,7 +6,7 @@
 #    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/25 15:17:46 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/06/25 17:03:08 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,14 +38,8 @@ endif
 
 INCLUDE_DIR         =   includes/
 INCLUDE_FILES       =   minishell.h \
-                        libft.h     \
-                        #get_next_line.h
+                        libft.h
 INCLUDE             =   $(addprefix $(INCLUDE_DIR), $(INCLUDE_FILES))
-
-# SRCS - Where the main files for this project are located
-
-                        #get_next_line.c \
-                        #get_next_line_utils.c \
 
 SRCS_DIR            =   src/
 SRCS_FILES          =   main.c \

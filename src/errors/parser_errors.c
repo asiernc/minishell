@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 10:43:08 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 15:06:25 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:59:36 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	token_error(t_mini *mini, int token)
 		ft_putstr_fd("'<<'\n", STDERR_FILENO);
 	else if (token == RED_OUT_APP)
 		ft_putstr_fd("'>>'\n", STDERR_FILENO);
-	//lexer_clear(&mini->lexer);
 	mini->error_code = STDERR_FILENO;
 	mini_reset(mini);
 	return (EXIT_FAILURE);

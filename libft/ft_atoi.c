@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simarcha <simarcha@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 11:56:28 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 17:34:32 by simarcha         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:02:16 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,28 +36,7 @@ int	ft_atoi(const char *str)
 	res *= sign;
 	return (res);
 }
-/*
-#include <stdio.h>
-#include <stdlib.h>
 
-int     ft_isdigit(int c)
-{
-        if (c >= '0' && c <= '9')
-                return (1);
-        return (0);
-}
-
-int	main(void)
-{
-	char	str[8] = "  --234";
-	int	res = ft_atoi(str);
-
-	printf("  --234: %d\n", ft_atoi(str));
-	printf("  --234: %d\n", atoi(str));
-
-	//printf("El string es: %s, y su conversion a numerico es: %d\n", str, res);
-	return (0);
-}*/
 /*#include <stdio.h>
 int	main(void)
 {
@@ -68,4 +47,3 @@ int	main(void)
 	printf("result = %i\n", result);
 	return (0);
 }*/
-

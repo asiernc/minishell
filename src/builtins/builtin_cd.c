@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:32:12 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/25 15:06:10 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:14:50 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	update_path(t_mini *mini)
 	}
 }
 
-static int	do_cd(t_mini *mini, char *path)
+int	do_cd(t_mini *mini, char *path)
 {
 	int		error;
 	char	*tmp_key;
@@ -97,11 +97,7 @@ int	builtin_cd(t_mini *mini, t_cmd *cmd)
 		|| ft_strcmp_simple(cmd->str[1], "~/") == 0)
 		error = do_cd(mini, "HOME");
 	else if (ft_strcmp_simple(cmd->str[1], "-") == 0)
-	{
-		error = do_cd(mini, "OLDPWD");
-		if (error == -1)
-			error = do_cd(mini, "PWD");
-	}
+		cd_dash(mini, &error);
 	else if (ft_strncmp(cmd->str[1], "~/", 2) == 0 && cmd->str[1][3])
 	{
 		tmp = modify_line(mini, cmd->str[1]);

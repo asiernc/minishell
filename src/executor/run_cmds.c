@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:36:30 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 15:07:43 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:55:32 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	do_builtin(t_mini *mini, t_cmd *cmd)
 
 static void	aux_do_cmd(t_mini *mini, char **paths, char *tmp)
 {
-	int 	i;
+	int		i;
 	char	*cmd_path;
 
 	i = 0;
@@ -117,9 +117,7 @@ void	handle_single_cmd(t_mini *mini, t_cmd *cmd)
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)
-		{
 			mini->error_code = 130;
-		}
 		else if (WTERMSIG(status) == SIGQUIT)
 			mini->error_code = 131;
 	}

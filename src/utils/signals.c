@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:33:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 15:10:58 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:00:45 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,9 @@ int	event(void)
 
 void	sigint_handler(int signal)
 {
-	if (g_status == 10)
+	if (g_status == 0)
 	{
-		printf("\n");
-		g_status = 130;
-		rl_done = 1;
-	}
-	else if (g_status == 15)
-	{
-		g_status = 130;
+		g_status = 2;
 		rl_done = 1;
 	}
 	else

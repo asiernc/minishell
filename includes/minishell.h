@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:38:37 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 15:26:32 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:15:04 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,6 +283,8 @@ void			free_mini(t_mini *mini);
 t_env_lst		*clear_one_node_env(t_env_lst **lst);
 void			del_first_node_env(t_env_lst **lst);
 void			delone_node_env(int num_del, t_env_lst **lst);
+void			cd_dash(t_mini *mini, int *error);
+int				do_cd(t_mini *mini, char *path);
 
 // Expander
 

@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:36:34 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/20 13:28:46 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:08:57 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,11 @@ char	*return_value(t_mini *mini, char *str)
 		tmp = tmp->next;
 	}
 	return (NULL);
+}
+
+void	cd_dash(t_mini *mini, int *error)
+{
+	*error = do_cd(mini, "OLDPWD");
+	if (*error == -1)
+		*error = do_cd(mini, "PWD");
 }
