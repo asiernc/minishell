@@ -71,7 +71,9 @@ int	exit_with_one_argument(t_mini *mini, char *str1, char *str2)
 {
 	int	exit_code;
 
-	if (ft_isdigit_and_signs(str1) == 0)
+	if (ft_isdigit_and_signs(str1) == 0 || (check_zero(str1) == 0
+		&& (check_exit_number(str1, "9223372036854775807",
+		"-9223372036854775808") == 0)))
 		return (free_mini(mini), exit(numeric_argument_required(str1)), 2);
 	else
 	{

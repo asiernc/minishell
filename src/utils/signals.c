@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:33:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 13:57:22 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:10:58 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,3 @@ void	init_signals(void)
 	sigaction(SIGQUIT, &sa, NULL);
 	rl_catch_signals = 1;
 }
-

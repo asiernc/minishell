@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:32:12 by simarcha          #+#    #+#             */
-/*   Updated: 2024/06/25 12:59:28 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:06:10 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,7 @@ int	builtin_cd(t_mini *mini, t_cmd *cmd)
 	{
 		error = do_cd(mini, "OLDPWD");
 		if (error == -1)
-		{
-			printf("hola\n");
 			error = do_cd(mini, "PWD");
-		}
 	}
 	else if (ft_strncmp(cmd->str[1], "~/", 2) == 0 && cmd->str[1][3])
 	{

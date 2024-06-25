@@ -6,7 +6,7 @@
 /*   By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:37:48 by anovio-c          #+#    #+#             */
-/*   Updated: 2024/06/25 13:30:25 by anovio-c         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:05:25 by anovio-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char **argv, char **original_env)
 		create_builtin_lst(&mini, &mini.env, original_env);
 		concat_lst_env(&mini);
 	}
+	mini.error_code = 0;
 	init_mini(&mini, original_env);
 	if (!save_pwd(&mini, original_env))
 		print_error(&mini, RANDOM);

@@ -6,13 +6,13 @@
 #    By: anovio-c <anovio-c@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/06 11:57:11 by simarcha          #+#    #+#              #
-#    Updated: 2024/06/25 12:59:58 by anovio-c         ###   ########.fr        #
+#    Updated: 2024/06/25 15:02:06 by anovio-c         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # SETUP
 CC                  = gcc
-CFLAGS              = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS              = -Wall -Werror -Wextra -g #-fsanitize=address
 NAME                = minishell
 RM                  = rm -rf
 
@@ -110,7 +110,59 @@ LIBFT_SRCS          =   ft_memchr.c ft_memcmp.c ft_memmove.c ft_memset.c ft_strl
 
 LIBFT_OBJS          = $(addprefix $(LIBFT_DIR), $(LIBFT_SRCS:.c=.o))
 LIBFT_ARCHIVE       = $(addprefix $(LIBFT_DIR), libft.a)
+LIBFT_FILES			= ft_memchr.c	\
+					ft_memcmp.c		\
+					ft_memmove.c	\
+					ft_memset.c		\
+					ft_strlcat.c	\
+					ft_strlcpy.c	\
+					ft_strlen.c		\
+					ft_strtrim.c	\
+					ft_atoi.c		\
+					ft_atoi_base.c	\
+					ft_memcpy.c		\
+					ft_bzero.c		\
+					ft_strmapi.c	\
+					ft_calloc.c		\
+					ft_strcmp.c		\
+					ft_strcmp_simple.c	\
+					ft_strncmp.c	\
+					ft_isalnum.c	\
+					ft_putchar_fd.c	\
+					ft_strnstr.c	\
+					ft_isalpha.c	\
+					ft_putendl_fd.c	\
+					ft_strrchr.c	\
+					ft_isascii.c	\
+					ft_putnbr_fd.c	\
+					ft_isdigit.c	\
+					ft_isspace.c	\
+					ft_putstr_fd.c	\
+					ft_substr.c		\
+					ft_isprint.c	\
+					ft_islower.c	\
+					ft_isuper.c		\
+					ft_split.c		\
+					ft_tolower.c	\
+					ft_itoa.c		\
+					ft_strchr.c		\
+					ft_toupper.c	\
+					ft_strdup.c		\
+					ft_striteri.c	\
+					ft_strjoin.c	\
+					ft_free_double_array.c \
+					ft_lstnew_bonus.c		\
+					ft_lstadd_front_bonus.c	\
+					ft_lstsize_bonus.c		\
+					ft_lstlast_bonus.c		\
+					ft_lstadd_back_bonus.c	\
+					ft_lstdelone_bonus.c	\
+					ft_lstclear_bonus.c		\
+					ft_lstiter_bonus.c		\
+					ft_lstmap_bonus.c
 LIBFT_LIB           = -L$(LIBFT_DIR) -lft
+LIBFT_SRCS			= $(addprefix $(LIBFT_DIR), $(LIBFT_FILES))
+OBJ_LIBFT			= $(LIBFT_SRCS:.c=.o)
 
 # RULES AND COMMANDS
 

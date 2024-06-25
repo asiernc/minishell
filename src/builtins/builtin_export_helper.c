@@ -31,6 +31,7 @@ void	print_env_export(t_mini *mini, int flag)
 {
 	t_env_lst	*tmp;
 
+	mini->env = sort_ascii(mini->env, NULL);
 	tmp = mini->env;
 	if (flag == 0)
 	{
