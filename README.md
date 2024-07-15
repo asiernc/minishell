@@ -33,10 +33,10 @@ From there we learned that bash is mainly composed of 4 phases, tokenisation, pa
 - Find and launch executables (using the PATH variable or an absolute path).
 - Handle ' (single) and " (double) quotes like in bash.
 - Implement redirections such as:
-    -- < redirect input.
-    -- > redirect output.
-    -- << heredoc (doesn't affect history).
-    -- >> redirect output in append mode.
+-     < redirect input.
+      > redirect output.
+      << heredoc (doesn't affect history).
+      >> redirect output in append mode.
 - Implement pipes.
 - Handle environment and export variables.
 - Handle $?.
