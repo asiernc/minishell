@@ -28,9 +28,9 @@ From there we learned that bash is mainly composed of 4 phases, tokenisation, pa
 
 # Mandatory functionalities
 
-Display a promt while waiting for a new commmand.
-Have a clean working history.
-Find and launch executables (using the PATH variable or an absolute path).
+Display a promt while waiting for a new commmand.\n
+Have a clean working history.\n
+Find and launch executables (using the PATH variable or an absolute path).\n
 Handle ' (single) and " (double) quotes like in bash.
 Implement redirections such as:
     < redirect input.
