@@ -35,20 +35,20 @@ From there we learned that bash is mainly composed of 4 phases, tokenisation, pa
 - Implement redirections such as:
 -     < redirect input.
       > redirect output.
-      << heredoc (doesn't affect history).
+      << heredoc.
       >> redirect output in append mode.
 - Implement pipes.
 - Handle environment and export variables.
 - Handle $?.
 - Signals ctrl-C, ctrl-D, and ctrl-\ should behave like in bash.
 - Recreate the following builtins:
-  - echo with -n flag.
-  - cd with only a relative or absolute path.
-    pwd (without flags)
-    export (without flags)
-    unset (without flags)
-    env (without flags or arguments)
-    exit (without flags)
+-     echo with -n flag.
+-     cd with only a relative or absolute path.
+-     pwd (without flags)
+-     export (without flags)
+-     unset (without flags)
+-     env (without flags or arguments)
+-     exit (without flags)
 
 
 # Project Breakdown
