@@ -43,13 +43,12 @@ From there we learned that bash is mainly composed of 4 phases, tokenisation, pa
 - Signals ctrl-C, ctrl-D, and ctrl-\ should behave like in bash.
 - Recreate the following builtins:
 -     echo with -n flag.
--     cd with only a relative or absolute path.
--     pwd (without flags)
--     export (without flags)
--     unset (without flags)
--     env (without flags or arguments)
--     exit (without flags)
-
+      cd with only a relative or absolute path.
+      pwd (without flags)
+      export (without flags)
+      unset (without flags)
+      env (without flags or arguments)
+      exit (without flags)
 
 # Project Breakdown
 
