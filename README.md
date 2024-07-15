@@ -75,7 +75,7 @@ We also take the opportunity to analyse if the command introduced is a builtin o
 - pwd = displays the current directory.
 - env = display environment variables.
 - export = adds or modifies an environment variable. If "export hello=world" is run, it creates a new one.
--     If "export hello=world hello+="hello " ==> hello=hello=hello             world" is executed,
+-     If export hello=world hello+="hello    " returns hello=hello=hello    world is executed,
       it checks if it exists, and if so, modifies it, you can use quotes or without quotes for
       the value of the variable. If executed without arguments, it displays the exported variables.
 - unset = can be executed with one or more arguments. It checks if the variable exists, and if so, proceeds to delete it.
