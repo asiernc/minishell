@@ -1,6 +1,5 @@
 <div align="center">
 <h1 align="center">
-    <br>In process...</br>
     <br>Minishell</br>
 </h1>
 <p align="center">
